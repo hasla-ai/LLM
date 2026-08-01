@@ -1,8 +1,3 @@
-## 🏗️ `ARCHITECTURE.md`
-
-Save this file at the root of your project: **`ARCHITECTURE.md`**
-
-```markdown
 # 🏛️ System Architecture
 
 This document describes the architectural design and flow of the `llm-engineering-lab` system.
@@ -15,44 +10,75 @@ This document describes the architectural design and flow of the `llm-engineerin
 2. **Environment Isolation:** Docker is used as the primary runtime to bypass local machine restrictions and ensure consistency across systems.
 3. **Test-Driven Verification:** Every module must include unit tests with mocked API dependencies to enable zero-cost CI/CD validation.
 
----
+## 2. Module Architectures
 
-## 2. Mission 1: Structured LLM Client Flow
+### Mission 1: Structured Inference Engine (`src/core/`)
+
+ASCII Diagram
+
 +------------------+         +--------------------------+         +----------------------+
-|                  |         |                          |         |                      |
 |  User Request /  | ------> |   StructuredLLMClient    | ------> |    OpenAI API /      |
 |  Prompt Input    |         |  (Pydantic Schema Guard) |         |  Structured Parse    |
-|                  |         |                          |         |                      |
 +------------------+         +--------------------------+         +----------------------+
 |                                  |
-| Validate Output                  | Raw Response
-v                                  v
+v Validate Output                  v Raw Response
 +--------------------------+         +----------------------+
 |   Validated Pydantic     | <------ |  Structured JSON     |
 |   Python Object (T)      |         |  Object              |
 +--------------------------+         +----------------------+
 
-### Data Flow Specification
-1. The user defines a target response schema extending `pydantic.BaseModel`.
-2. `StructuredLLMClient.generate_structured()` wraps OpenAI's `chat.completions.parse` endpoint.
-3. The response is validated against the schema. If validation passes, a strongly-typed Python object is returned.
+### Mission 2: Retrieval-Augmented Generation (`src/rag/`)
 
----
+ASCII Diagram
 
-## 3. Testing Strategy (Mocking Pipeline)
-+-------------------------+
-|  Pytest Execution       |
-+-------------------------+
++------------------+         +--------------------------+         +----------------------+
+|  User Query +    | ------> |       VectorStore        | ------> | Top-K Ranked Context |
+|  Query Embedding |         |  (Cosine Similarity)     |         | Chunks + Source IDs  |
++------------------+         +--------------------------+         +----------------------+
 |
 v
-+-------------------------+       Mocked Output       +--------------------------+
-|  test_llm_client.py     | ------------------------> |   StructuredLLMClient    |
-+-------------------------+                           +--------------------------+
-|                                                      |
-| Asserts Type & Constraints                            | Intercepts Call
-v                                                      v
-+-------------------------+                           +--------------------------+
-|  PASSED Assertion       | <------------------------ |   MagicMock Return       |
-+-------------------------+                           +--------------------------+
-* **No Network Side-Effects:** Tests mock network interactions with `unittest.mock.MagicMock`.
-* **Zero API Costs:** Mocked testing ensures suite execution takes < 1 second with 0 API consumption.
++------------------+         +--------------------------+         +----------------------+
+|   RAGResponse    | <------ |   StructuredLLMClient    | <------ | Prompt Injection     |
+| (Answer+Sources) |         |   (Context + Query)      |         | (Strict Context Rule)|
++------------------+         +--------------------------+         +----------------------+
+
+
+### Mission 3: ReAct Agent & Tool-Calling Loop (`src/agent/`)
+
+ASCII Diagram
+
+                      +-------------------------+
+                      |   User Prompt Input     |
+                      +-------------------------+
+                                   |
+                                   v
+                 +-----------------------------------+
+                 |           AgentEngine             | <---------------------+
+                 |      (Loop max_steps = N)         |                       |
+                 +-----------------------------------+                       |
+                                   |                                         |
+                                   v                                         |
+                 +-----------------------------------+                       |
+                 |       StructuredLLMClient         |                       |
+                 |      (Generates AgentAction)      |                       |
+                 +-----------------------------------+                       |
+                                   |                                         |
+               +-------------------+-------------------+                     |
+               |                                       |                     |
+               v (if final_answer)                     v (if tool_name)      |
++-----------------------------+         +-----------------------------+      |
+|    Return Final Answer      |         |     TOOL_REGISTRY Lookup    |      |
+|    (Terminates Loop)        |         |  (e.g., calculator(input))  |      |
++-----------------------------+         +-----------------------------+      |
+                                                       |                     |
+                                                       v                     |
+                                        +-----------------------------+      |
+                                        |     Append Observation to   | -----+
+                                        |     Conversation History    |
+                                        +-----------------------------+
+
+### Agent Action Schema (`AgentAction`)
+* **`thought`** (`str`): Step-by-step reasoning process before action.
+* **`tool_name`** (`Optional[str]`): Name of tool to execute (e.g., `"calculator"`) or `None`.
+* **`tool_input`** (`Optional[str]`): Raw argument string passed to the targeted tool.
+* **`final_answer`** (`Optional[str]`): Terminal response provided when task resolution is complete.                                        

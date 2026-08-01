@@ -2,7 +2,7 @@
 
 A hands-on, test-driven repository for building production-grade LLM applications, RAG pipelines, and Autonomous Agent systems.
 
-Every module in this repository is built with **strict type validation**, **Docker containerization**, and **automated Pytest suites**.
+Every module in this repository is built with **strict type validation (Pydantic)**, **Docker containerization**, and **automated Pytest suites**.
 
 ---
 
@@ -10,58 +10,60 @@ Every module in this repository is built with **strict type validation**, **Dock
 
 ```text
 llm-engineering-lab/
-├── Dockerfile                  # Containerized environment for isolated execution
+├── Dockerfile                  # Containerized runtime for isolated execution
 ├── pyproject.toml              # Dependencies & Pytest configuration
-├── requirements.txt            # Python package dependencies
-├── ARCHITECTURE.md             # High-level architecture documentation
+├── requirements.txt            # Python package requirements
+├── ARCHITECTURE.md             # System architecture & data flow design
 ├── src/
-│   ├── core/                   # LLM inference & schema validation engines
+│   ├── core/                   # Structured LLM inference engine
 │   │   ├── __init__.py
-│   │   └── llm_client.py       # Structured LLM Client (Pydantic + OpenAI)
-│   └── rag/                    # Retrieval-Augmented Generation pipeline
+│   │   └── llm_client.py       # Pydantic-enforced Structured LLM Client
+│   ├── rag/                    # Retrieval-Augmented Generation pipeline
+│   │   ├── __init__.py
+│   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
+│   │   └── rag_pipeline.py     # Context retrieval & synthesis orchestrator
+│   └── agent/                  # Autonomous Tool-Calling Agent
 │       ├── __init__.py
-│       ├── vector_store.py     # Vector Store & Cosine Similarity search
-│       └── rag_pipeline.py     # RAG Orchestrator
+│       ├── tools.py            # Tool registry & execution functions
+│       └── agent_engine.py     # ReAct-style Agent decision loop
 └── tests/                      # Automated Pytest suite
     ├── __init__.py
-    ├── test_llm_client.py
-    └── test_rag.py
-```
+    ├── test_llm_client.py      # Mission 1 validation
+    ├── test_rag.py             # Mission 2 validation
+    └── test_agent.py           # Mission 3 validation
+
 🛠️ Mission Progress
 [x] Mission 1: Project Setup & Structured Inference Engine
+  - Docker containerization for zero-dependency execution across environments.
+  - Type-safe LLM client using Pydantic schema enforcement (StructuredLLMClient).
+  - Unit tests with unittest.mock for fast, zero-cost CI/CD verification.
 
-Docker containerization for zero-dependency execution.
+[x] Mission 2: In-Memory Vector Store & RAG Pipeline
+  - Custom cosine similarity calculation & vector indexing (VectorStore).
+  - Context-augmented response synthesis with source attribution (RAGPipeline).
+  - Unit tests for similarity ranking and RAG orchestrator flow.
 
-Type-safe LLM client using Pydantic schema enforcing (StructuredLLMClient).
+[x] Mission 3: Tool-Calling & Autonomous Agent Engine
+  - ReAct-style Agent execution loop (AgentEngine).
+  - Dynamic tool registry with safe mathematical evaluation (TOOL_REGISTRY).
+  - Multi-step reasoning loop (Thought -> Action -> Observation -> Final Answer).
+  - Pytest verification for tool execution and multi-step agent mocking.
 
-Unit tests with unittest.mock for fast, cost-free CI/CD verification.
+[ ] Mission 4: LLM Evaluation (LLM-as-a-Judge) & Guardrails (Upcoming)
 
-[ ] Mission 2: In-Memory Vector Store & RAG Pipeline
-
-Cosine similarity search & vector indexing.
-
-Context synthesis with source attribution.
-
-[ ] Mission 3: Agentic Workflows & Tool Calling (Upcoming)
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
-Copy .env.example to .env and add your OpenAI API Key:
+Copy .env.example to .env and configure your API keys:
 
-``` bash
+```bash
 cp .env.example .env
 ```
 
 2. Run Test Suite via Docker
-Run unit tests inside the isolated Docker container:
+Execute the full Pytest suite inside the isolated Docker container:
 
 ```bash
-# Build the Docker image
 docker build -t llm-lab .
-
-# Run tests with volume mounting
 docker run --rm --env-file .env -v $(pwd):/app llm-lab
 ```
-
-feat: initial project setup and structured LLM client with unit tests
-('initial_project_setup.txt')
