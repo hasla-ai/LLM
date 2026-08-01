@@ -10,7 +10,7 @@ def cosine_similarity(v1: List[float], v2: List[float]) -> float:
     magnitude_v1 = math.sqrt(sum(a * a for a in v1))
     magnitude_v2 = math.sqrt(sum(b * b for b in v2))
     
-    if magnitude_v1 == 0 or magnitude_v2 == 0:
+    if magnitude_v1 == 0 or magnitude_v2 == 0: # Guard for Zero-division
         return 0.0
         
     return dot_product / (magnitude_v1 * magnitude_v2)
@@ -23,7 +23,7 @@ class VectorStore:
     def add_document(self, doc_id: str, text: str, embedding: List[float], metadata: Optional[Dict[str, Any]] = None):
         """Add a document chunk with its vector embedding."""
         self.documents.append({
-            "id": doc_id,
+            "id": doc_id,   # source attribution
             "text": text,
             "embedding": embedding,
             "metadata": metadata or {}
