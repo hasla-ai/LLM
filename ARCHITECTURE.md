@@ -280,4 +280,33 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
                     |  Synthesis Orchestrator (LLM)    |
                     | Returns AgenticRAGResponse       |
                     +----------------------------------+
-                    
+
+### Mission 9: Speculative RAG Pipeline (`v1.5.0`)
+                    +----------------------------------+
+                    |       User Query + Context       |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |  Fast Draft Model (Lightweight)  |
+                    |    Generates Candidate Draft     |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |    Verifier Model (Heavy LLM)    |
+                    |   Scores Draft & Factuality      |
+                    +----------------------------------+
+                                /          \
+        (Score >= Threshold)   /            \   (Score < Threshold)
+                              v              v
+                 +--------------------+     +---------------------+
+                 | Accept Draft Text  |     | Corrected Verifier  |
+                 |  (Fast Response)   |     | Answer (Safe Fall)  |
+                 +--------------------+     +---------------------+
+                              \              /
+                               v            v
+                    +----------------------------------+
+                    |      SpeculativeRAGResponse      |
+                    +----------------------------------+
+

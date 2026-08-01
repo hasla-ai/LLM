@@ -22,7 +22,9 @@ llm-engineering-lab/
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
 │   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
-│   │   └── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
+│   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
+│   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
+│   │   └── speculative_rag.py # Mission 9: Speculative RAG Pipeline
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -44,7 +46,9 @@ llm-engineering-lab/
     ├── test_eval.py            # Mission 4 validation
     ├── test_verification.py    # Mission 5 validation
     ├── test_hybrid_search.py   # Mission 6 validation
-    └── test_graph_orchestrator.py # Mission 7 validation
+    ├── test_graph_orchestrator.py # Mission 7 validation
+    ├── test_agentic_rag.py      # Mission 8 validation
+    └── test_speculative_rag.py  # Mission 9 validation
 ```
 
 🛠️ Mission Progress
@@ -104,6 +108,11 @@ llm-engineering-lab/
  - Query planner decomposing multi-faceted prompts into focused sub-queries (QueryPlan).
  - Independent sub-query execution across retrieval layers.
  - Multi-context aggregation and synthesized source-attributed response (AgenticRAGEngine).
+
+[x] Mission 9: Speculative RAG & Draft-Verification Pipeline (v1.5.0)
+ - Fast-path candidate answer generation via lightweight draft model (DraftAnswer).
+ - High-capability verifier model scoring for accuracy and context compliance (VerificationResult).
+ - Threshold-based acceptance or fallback correction (SpeculativeRAGPipeline).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
