@@ -171,3 +171,38 @@ v
 
 
 -------
+### Mission 6: Hybrid Search & Reciprocal Rank Fusion (`src/rag/hybrid_search.py`)
+- "The following ASCII diagram needs to be validated."
+                    +------------------------------------+
+                    |      User Query + Embedding        |
+                    +------------------------------------+
+                             |                  |
+             +---------------+                  +---------------+
+             |                                                  |
+             v                                                  v
+    +---------------------------+                      +---------------------------+
+    |   Dense Vector Search     |                      |    Sparse Lexical Search  |
+    | (Cosine Distance Ranking) |                      |     (BM25 TF-IDF Engine)  |
+    +---------------------------+                      +---------------------------+
+                |                                                  |
+                | Dense Ranks                              Sparse  | Ranks
+                +---------------+                  +---------------+
+                                |                  |
+                                v                  v
+                +------------------------------------+
+                |    Reciprocal Rank Fusion (RRF)    |
+                | RRF = 1/(k + Rank_v) + 1/(k + Rank_b)|
+                +------------------------------------+
+                                |
+                                v
+                +------------------------------------+
+                |    Unified Top-K Ranked Context    |
+                |      (High Keyword + Semantic)     |
+                +------------------------------------+
+
+### Reciprocal Rank Fusion Formula
+$$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
+* $M$: Set of retrievers (Dense Vector & BM25 Sparse Lexical).
+* $r_m(d)$: Rank position of document $d$ in retriever $m$ (1-indexed).
+* $k$: Constant smoothing parameter (default $k = 60$).
+

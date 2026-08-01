@@ -21,7 +21,8 @@ llm-engineering-lab/
 │   ├── rag/                    # Retrieval-Augmented Generation pipeline
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
-│   │   └── rag_pipeline.py     # Context retrieval & synthesis orchestrator
+│   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
+│   │   └── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
 │   ├── agent/                  # Autonomous Tool-Calling Agent
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -40,7 +41,8 @@ llm-engineering-lab/
     ├── test_rag.py             # Mission 2 validation
     ├── test_agent.py           # Mission 3 validation
     ├── test_eval.py            # Mission 4 validation
-    └── test_verification.py    # Mission 5 validation
+    ├── test_verification.py    # Mission 5 validation
+    └── test_hybrid_search.py   # Mission 6 validation
 ```
 
 🛠️ Mission Progress
@@ -84,6 +86,11 @@ llm-engineering-lab/
  - Pass/fail score summary computation (calculate_summary).
  - Quantitative benchmark logging and JSON report export (benchmark_report.json).
  - Pytest verification for metric calculations and benchmark loop execution.
+
+ [x] Mission 6: Hybrid Search Engine & Reciprocal Rank Fusion (v1.2.0)
+ - Sparse lexical search engine using BM25 TF-IDF algorithm (BM25Retriever).
+ - Reciprocal Rank Fusion (RRF) ranker blending dense vector search with lexical search (HybridSearchEngine).
+ - Pytest verification for exact keyword matching, error code retrieval, and hybrid rank merging.
 
 
 🚀 Quick Start (Docker)
