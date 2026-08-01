@@ -18,13 +18,14 @@ llm-engineering-lab/
 │   ├── core/                   # Structured LLM inference engine
 │   │   ├── __init__.py
 │   │   └── llm_client.py       # Pydantic-enforced Structured LLM Client
-│   ├── rag/                    # Retrieval-Augmented Generation pipeline
+│   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
 │   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
 │   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
 │   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
-│   │   └── speculative_rag.py # Mission 9: Speculative RAG Pipeline
+│   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
+│   │   └── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -48,7 +49,8 @@ llm-engineering-lab/
     ├── test_hybrid_search.py   # Mission 6 validation
     ├── test_graph_orchestrator.py # Mission 7 validation
     ├── test_agentic_rag.py      # Mission 8 validation
-    └── test_speculative_rag.py  # Mission 9 validation
+    ├── test_speculative_rag.py  # Mission 9 validation
+    └── test_crag_pipeline.py    # Mission 10 validation
 ```
 
 🛠️ Mission Progress
@@ -113,6 +115,10 @@ llm-engineering-lab/
  - Fast-path candidate answer generation via lightweight draft model (DraftAnswer).
  - High-capability verifier model scoring for accuracy and context compliance (VerificationResult).
  - Threshold-based acceptance or fallback correction (SpeculativeRAGPipeline).
+
+[x] Mission 10: Corrective RAG (CRAG) & Adaptive Web Search Fallback (v1.6.0)
+ - Self-correcting retrieval evaluator scoring document context quality (CRAGRetrieverEvaluator).
+ - Dynamic grading (CORRECT, AMBIGUOUS, INCORRECT) and automated external search fallback trigger (CorrectiveRAGPipeline).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

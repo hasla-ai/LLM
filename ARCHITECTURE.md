@@ -9,6 +9,13 @@ This document describes the architectural design and flow of the `llm-engineerin
 1. **Schema-First Design:** All LLM outputs must be bound to Pydantic schemas to ensure deterministic, structured outputs.
 2. **Environment Isolation:** Docker is used as the primary runtime to bypass local machine restrictions and ensure consistency across systems.
 3. **Test-Driven Verification:** Every module must include unit tests with mocked API dependencies to enable zero-cost CI/CD validation.
+M789
+1. **Schema-First Integrity:** All LLM inputs, outputs, state objects, and evaluations are bound to Pydantic schemas to ensure zero-parsing errors and machine readability.
+2. **Deterministic Evaluation:** System behavior is validated using automated Pytest suites and mock LLM fixtures to enable instant, zero-cost CI/CD checks.
+3. **Adaptive Retrieval:** The pipeline progresses from standard dense retrieval to hybrid search (RRF), sub-query decomposition (Agentic RAG), speculative drafting, and self-correcting retrieval (CRAG).
+4. **Resilient Graph Execution:** Multi-agent operations run inside a stateful graph container with explicit node dependencies, conditional edges, and iteration safety bounds.
+
+---
 
 ## 2. Module Architectures
 
@@ -308,5 +315,41 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
                                v            v
                     +----------------------------------+
                     |      SpeculativeRAGResponse      |
+                    +----------------------------------+
+
+### Mission 10: Corrective RAG (CRAG) Engine (`src/rag/crag_pipeline.py`)
+
+                    +----------------------------------+
+                    |       User Query Prompt          |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |   Local Vector Retrieval Pass    |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |   Retrieval Quality Evaluator    |
+                    |   Assigns Grade & Confidence     |
+                    +----------------------------------+
+                               /     |     \
+                  +-----------+      |      +-----------+
+                  |                  |                  |
+                  v                  v                  v
+             [CORRECT]          [AMBIGUOUS]        [INCORRECT]
+                  |                  |                  |
+                  v                  v                  v
+         +------------------+ +--------------+  +-----------------+
+         | Use Local Docs   | | Augment with |  | Discard Local   |
+         | Directly         | | Web Search   |  | Use Web Search  |
+         +------------------+ +--------------+  +-----------------+
+                  \                  |                  /
+                   +-----------------+-----------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |  Context Synthesis Orchestrator  |
+                    |     Returns CRAGResponse         |
                     +----------------------------------+
 
