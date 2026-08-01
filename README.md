@@ -22,15 +22,20 @@ llm-engineering-lab/
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
 │   │   └── rag_pipeline.py     # Context retrieval & synthesis orchestrator
-│   └── agent/                  # Autonomous Tool-Calling Agent
+│   ├── agent/                  # Autonomous Tool-Calling Agent
+│   │   ├── __init__.py
+│   │   ├── tools.py            # Tool registry & execution functions
+│   │   └── agent_engine.py     # ReAct-style Agent decision loop
+│   └── eval/                   # Evaluation & Guardrails engine
 │       ├── __init__.py
-│       ├── tools.py            # Tool registry & execution functions
-│       └── agent_engine.py     # ReAct-style Agent decision loop
+│       ├── guardrails.py       # Pre-execution policy & PII sanitizer
+│       └── evaluator.py        # LLM-as-a-Judge evaluation engine
 └── tests/                      # Automated Pytest suite
     ├── __init__.py
     ├── test_llm_client.py      # Mission 1 validation
     ├── test_rag.py             # Mission 2 validation
-    └── test_agent.py           # Mission 3 validation
+    ├── test_agent.py           # Mission 3 validation
+    └── test_eval.py            # Mission 4 validation
 
 🛠️ Mission Progress
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -49,8 +54,12 @@ llm-engineering-lab/
   - Multi-step reasoning loop (Thought -> Action -> Observation -> Final Answer).
   - Pytest verification for tool execution and multi-step agent mocking.
 
-[ ] Mission 4: LLM Evaluation (LLM-as-a-Judge) & Guardrails (Upcoming)
-
+[x] Mission 4: LLM Evaluation (LLM-as-a-Judge) & Guardrails (Upcoming)
+  - Input security screening against prompt injection attacks (GuardrailEngine).
+  - Automatic PII redaction for email addresses and telephone numbers.
+  - LLM-as-a-Judge structured grading for output Faithfulness, Relevance, and Safety (LLMJudgeEvaluator).
+  - Pytest verification for pre/post-execution policy enforcement and automated evaluation.
+  
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

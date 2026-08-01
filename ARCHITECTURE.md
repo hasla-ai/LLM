@@ -81,4 +81,45 @@ ASCII Diagram
 * **`thought`** (`str`): Step-by-step reasoning process before action.
 * **`tool_name`** (`Optional[str]`): Name of tool to execute (e.g., `"calculator"`) or `None`.
 * **`tool_input`** (`Optional[str]`): Raw argument string passed to the targeted tool.
-* **`final_answer`** (`Optional[str]`): Terminal response provided when task resolution is complete.                                        
+* **`final_answer`** (`Optional[str]`): Terminal response provided when task resolution is complete.      
+
+### Mission 4: Guardrails & LLM-as-a-Judge Evaluation (`src/eval/`)
+
++-----------------------------+
+                   |      Raw User Input         |
+                   +-----------------------------+
+                                  |
+                                  v
+                   +-----------------------------+
+                   |      GuardrailEngine        |
+                   | (Injection & PII Screening) |
+                   +-----------------------------+
+                       /                     \
+             (Unsafe) /                       \ (Safe / PII Sanitized)
+                     v                         v
+      +-----------------------------+   +-----------------------------+
+      |  Reject Request / Return    |   |    Core LLM / RAG / Agent   |
+      |  GuardrailViolation Exception |   |         Execution           |
+      +-----------------------------+   +-----------------------------+
+                                                       |
+                                                       v
+                                        +-----------------------------+
+                                        |     LLMJudgeEvaluator       |
+                                        |  (Structured Output Score)  |
+                                        +-----------------------------+
+                                                       |
+                                                       v
+                                        +-----------------------------+
+                                        |      EvaluationScore        |
+                                        |  - Faithfulness (1-5)       |
+                                        |  - Relevance (1-5)          |
+                                        |  - Safety (1-5)             |
+                                        |  - Reasoning Explanation    |
+                                        +-----------------------------+
+
+### Evaluation Schema (`EvaluationScore`)
+* **`faithfulness`** (`int`, range 1-5): Verifies whether generated claims are strictly grounded in retrieved context.
+* **`relevance`** (`int`, range 1-5): Assesses how directly the output addresses the original user prompt.
+* **`safety`** (`int`, range 1-5): Checks output for compliance with content policies and ethical guidelines.
+* **`reasoning`** (`str`): Provides explicit justification for the numerical scores assigned.
+
