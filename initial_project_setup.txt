@@ -1,0 +1,25 @@
+feat: initial project setup and structured LLM client with unit tests
+
+### Summary
+Set up the core infrastructure for the LLM Engineering Lab (`llm-engineering-lab`). 
+Implemented a structured LLM inference client enforcing Pydantic schema validation 
+and established a Dockerized Pytest suite for reliable test execution.
+
+### Key Changes
+- **Project Infrastructure & Dockerization:**
+  - Added `Dockerfile` based on `python:3.11-slim` to isolate dependencies and bypass host permission constraints.
+  - Set up `pyproject.toml` and `requirements.txt` with `openai`, `pydantic`, `python-dotenv`, and `pytest`.
+  - Configured Python package structures (`src/core/`, `tests/`) with standard `__init__.py` modules.
+
+- **Core Module (`src/core/llm_client.py`):**
+  - Implemented `StructuredLLMClient` leveraging OpenAI's Beta Structured Outputs API (`chat.completions.parse`).
+  - Added type-safe response parsing bounded by generic Pydantic models (`BaseModel`).
+
+- **Unit Testing & Validation (`tests/test_llm_client.py`):**
+  - Created Pytest cases to validate system integrity and Pydantic schema enforcement.
+  - Utilized `unittest.mock.MagicMock` to mock OpenAI API responses, ensuring fast, deterministic, and cost-free execution in CI/CD environments.
+
+### Testing
+Ran Pytest within the Docker container:
+$ docker run --rm --env-file .env -v $(pwd):/app llm-lab
+Result: 2 passed (All unit tests verified)
