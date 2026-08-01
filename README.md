@@ -1,5 +1,5 @@
 # 🚀 LLM Engineering Lab (`llm-engineering-lab`)
-
+## Mission 13 할 차례
 A hands-on, test-driven repository for building production-grade LLM applications, RAG pipelines, and Autonomous Agent systems.
 
 Every module in this repository is built with **strict type validation (Pydantic)**, **Docker containerization**, and **automated Pytest suites**.
