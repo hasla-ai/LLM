@@ -100,6 +100,11 @@ llm-engineering-lab/
  - Conditional edge evaluation allowing multi-pass revision loops and explicit END transitions.
  - Maximum iteration safety guardrails to prevent infinite loop execution.
 
+[x] Mission 8: Agentic RAG & Dynamic Query Decomposition (v1.4.0)
+ - Query planner decomposing multi-faceted prompts into focused sub-queries (QueryPlan).
+ - Independent sub-query execution across retrieval layers.
+ - Multi-context aggregation and synthesized source-attributed response (AgenticRAGEngine).
+
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
