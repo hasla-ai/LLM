@@ -123,3 +123,51 @@ ASCII Diagram
 * **`safety`** (`int`, range 1-5): Checks output for compliance with content policies and ethical guidelines.
 * **`reasoning`** (`str`): Provides explicit justification for the numerical scores assigned.
 
+
+### Mission 5: Continuous Verification Engine (`src/verification/`)
+
++-----------------------------------+
+|     Benchmark Dataset (JSON/List) |
+| [query, context, expected_answer] |
++-----------------------------------+
+|
+v
++-----------------------------------+
+|   ContinuousVerificationRunner    |
+| (Iterates entries over pipelines) |
++-----------------------------------+
+|
++--------+--------+
+|                 |
+v                 v
++-----------------+ +--------------------+
+| GuardrailEngine | | LLMJudgeEvaluator  |
+| (Safety check)  | | (Quality scoring)  |
++-----------------+ +--------------------+
+|                 |
++--------+--------+
+|
+v
++-----------------------------------+
+|      metrics.calculate_summary    |
+| - safe_pass_rate (%)              |
+| - avg_faithfulness (1.0-5.0)      |
+| - avg_relevance (1.0-5.0)         |
+| - passed_all_criteria (Bool)      |
++-----------------------------------+
+|
+v
++-----------------------------------+
+|      benchmark_report.json        |
+|  (Exported artifacts for CI/CD)   |
++-----------------------------------+
+
+### Verification Metrics Schema (`VerificationSummary`)
+* **`total_queries`** (`int`): Count of benchmark items processed.
+* **`safe_pass_rate`** (`float`): Percentage of requests that passed input/output safety policy checks.
+* **`avg_faithfulness`** (`float`): Mean faithfulness score across all items (scale 1.0 - 5.0).
+* **`avg_relevance`** (`float`): Mean relevance score across all items (scale 1.0 - 5.0).
+* **`passed_all_criteria`** (`bool`): Evaluates `True` only when `safe_pass_rate == 100.0%`, `avg_faithfulness >= 4.0`, and `avg_relevance >= 4.0`.
+
+
+-------

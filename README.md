@@ -26,16 +26,22 @@ llm-engineering-lab/
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
 │   │   └── agent_engine.py     # ReAct-style Agent decision loop
-│   └── eval/                   # Evaluation & Guardrails engine
+│   ├── eval/                   # Evaluation & Guardrails engine
+│   │   ├── __init__.py
+│   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
+│   │   └── evaluator.py        # LLM-as-a-Judge evaluation engine
+│   └── verification/           # Continuous Verification & Benchmarking
 │       ├── __init__.py
-│       ├── guardrails.py       # Pre-execution policy & PII sanitizer
-│       └── evaluator.py        # LLM-as-a-Judge evaluation engine
+│       ├── metrics.py          # Benchmark metrics calculator
+│       └── benchmark_runner.py # Regression test orchestrator & JSON reporter
 └── tests/                      # Automated Pytest suite
     ├── __init__.py
     ├── test_llm_client.py      # Mission 1 validation
     ├── test_rag.py             # Mission 2 validation
     ├── test_agent.py           # Mission 3 validation
-    └── test_eval.py            # Mission 4 validation
+    ├── test_eval.py            # Mission 4 validation
+    └── test_verification.py    # Mission 5 validation
+```
 
 🛠️ Mission Progress
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -59,7 +65,26 @@ llm-engineering-lab/
   - Automatic PII redaction for email addresses and telephone numbers.
   - LLM-as-a-Judge structured grading for output Faithfulness, Relevance, and Safety (LLMJudgeEvaluator).
   - Pytest verification for pre/post-execution policy enforcement and automated evaluation.
-  
+
+🗺️ Advanced LLM Engineering Roadmap
+                       ┌────────────────────────────────────────┐
+                       │      Solid Foundation Complete         │
+                       │ (Structured Output, RAG, ReAct, Eval) │
+                       └───────────────────┬────────────────────┘
+                                           │
+         ┌─────────────────────────────────┼─────────────────────────────────┐
+         ▼                                 ▼                                 ▼
+ 1. Complex Agent Architectures     2. Advanced RAG & Retrieval     3. Model Adaptation & Ops
+ - Multi-Agent Orchestration        - Hybrid Search (BM25 + Dense) - Parameter-Efficient Fine-Tuning
+ - Cyclic Graphs (LangGraph)        - Re-ranking (Cross-Encoders)   - Model Distillation / Alignment
+ - Stateful Memory & Persistence    - Agentic RAG / Dynamic Routing - Observability (LangSmith/Phoenix)
+
+[x] Mission 5: Continuous Verification & Regression Benchmarking Engine (v1.1.0)
+ - End-to-end benchmark dataset runner (ContinuousVerificationRunner).
+ - Pass/fail score summary computation (calculate_summary).
+ - Quantitative benchmark logging and JSON report export (benchmark_report.json).
+ - Pytest verification for metric calculations and benchmark loop execution.
+
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
