@@ -6,15 +6,22 @@ This document describes the architectural design and flow of the `llm-engineerin
 
 ## 1. Core Principles
 
-1. **Schema-First Design:** All LLM outputs must be bound to Pydantic schemas to ensure deterministic, structured outputs.
-2. **Environment Isolation:** Docker is used as the primary runtime to bypass local machine restrictions and ensure consistency across systems.
-3. **Test-Driven Verification:** Every module must include unit tests with mocked API dependencies to enable zero-cost CI/CD validation.
-M789
-1. **Schema-First Integrity:** All LLM inputs, outputs, state objects, and evaluations are bound to Pydantic schemas to ensure zero-parsing errors and machine readability.
-2. **Deterministic Evaluation:** System behavior is validated using automated Pytest suites and mock LLM fixtures to enable instant, zero-cost CI/CD checks.
-3. **Adaptive Retrieval:** The pipeline progresses from standard dense retrieval to hybrid search (RRF), sub-query decomposition (Agentic RAG), speculative drafting, and self-correcting retrieval (CRAG).
-4. **Resilient Graph Execution:** Multi-agent operations run inside a stateful graph container with explicit node dependencies, conditional edges, and iteration safety bounds.
+1. **Schema-First Integrity**
+All LLM inputs, outputs, state objects, and evaluations are strictly bound to pydantic.BaseModel schemas. This guarantees deterministic, machine-readable JSON outputs and eliminates parsing errors at runtime.
+2. **Environment Isolation & Reproducibility**
+Docker serves as the primary runtime to bypass host OS constraints, guaranteeing cross-platform reproducibility across local, testing, and production environments.
 
+3. **Test-Driven & Deterministic Evaluation**
+System integrity is validated using automated Pytest suites backed by unittest.mock and LLM fixtures. This enables instant, zero-cost, and deterministic execution within CI/CD pipelines.
+
+4. 5. **Continuous Quality Benchmarking**
+Regressions in quality, safety, and relevance are systematically measured using structured benchmark suites.
+
+5. **Adaptive Hybrid Retrieval Strategy**
+The retrieval pipeline dynamically scales from standard dense semantic embeddings to hybrid search via Reciprocal Rank Fusion (RRF), sub-query decomposition (Agentic RAG), speculative drafting, self-correcting retrieval (CRAG), and self-reflective token grading (Self-RAG). —ensuring both conceptual understanding and exact-term precision.
+
+6. **Cyclic & Resilient Multi-Agent Orchestration**
+Workflows operate as stateful graphs with explicit node dependencies, conditional edges, and iteration safety bounds. Specialized agent nodes share a central state container across review and revision loops to enable resilient execution.
 ---
 
 ## 2. Module Architectures
@@ -215,6 +222,8 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
 
 ### Mission 7: Stateful Multi-Agent Graph Orchestrator (`src/agent/graph_orchestrator.py`)
 
+The `MultiAgentGraphOrchestrator` replaces strict sequential execution with a directed graph model where node functions manipulate a unified state container (`AgentGraphState`). Edges between nodes can be unconditional or conditional, enabling dynamic decision-making and cyclic write-review loops.
+
                   +-----------------------------------+
                   |      AgentGraphState (Initial)    |
                   |   - task                          |
@@ -254,6 +263,11 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
 |                                  |        END         |                         |
 |                                  +--------------------+                         |
 +---------------------------------------------------------------------------------+
+
+#### Core Components
+1. **`AgentGraphState`**: Immutable state model passed through node transitions. Accumulates outputs (`research_notes`, `draft_content`, `review_feedback`) and tracks operational metrics (`step_count`, `history`).
+2. **`GraphNode`**: Wrapper standardizing node execution, automatically logging history and enforcing step counters.
+3. **`MultiAgentGraphOrchestrator`**: Graph runtime that registers nodes, static edges (`add_edge`), and dynamic routing functions (`add_conditional_edge`).
 
 ### Mission 8: Agentic RAG & Query Decomposition (`v1.4.0`)
 
@@ -353,3 +367,42 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
                     |     Returns CRAGResponse         |
                     +----------------------------------+
 
+### Mission 11: Self-RAG Engine (`src/rag/self_rag.py`)
+
++----------------------------------+
+                    |       User Query Prompt          |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |   Retrieval Pre-Check Evaluator  |
+                    |    [Retrieve]: YES vs NO         |
+                    +----------------------------------+
+                                /          \
+                 (Retrieve=YES)/            \(Retrieve=NO)
+                              v              v
+           +----------------------+      +----------------------+
+           | Vector Retrieval     |      | Direct Generator     |
+           | Candidate Generator  |      | Parametric Memory    |
+           +----------------------+      +----------------------+
+                      \                      /
+                       \                    /
+                        v                  v
+                    +----------------------------------+
+                    |  Interleaved Reflection Evaluator|
+                    |  - Passage Relevance ([IsREL])   |
+                    |  - Context Support   ([IsSUP])   |
+                    |  - Answer Utility    ([IsUSE])   |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |  Self-Correction Trigger Check   |
+                    | (If UNSUPPORTED -> Fallback Loop)|
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |         SelfRAGResponse          |
+                    +----------------------------------+
+                    

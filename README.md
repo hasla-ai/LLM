@@ -25,7 +25,8 @@ llm-engineering-lab/
 │   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
 │   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
 │   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
-│   │   └── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
+│   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
+│   │   └── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -50,7 +51,8 @@ llm-engineering-lab/
     ├── test_graph_orchestrator.py # Mission 7 validation
     ├── test_agentic_rag.py      # Mission 8 validation
     ├── test_speculative_rag.py  # Mission 9 validation
-    └── test_crag_pipeline.py    # Mission 10 validation
+    ├── test_crag_pipeline.py    # Mission 10 validation
+    └── test_self_rag.py         # Mission 11 validation
 ```
 
 🛠️ Mission Progress
@@ -119,6 +121,11 @@ llm-engineering-lab/
 [x] Mission 10: Corrective RAG (CRAG) & Adaptive Web Search Fallback (v1.6.0)
  - Self-correcting retrieval evaluator scoring document context quality (CRAGRetrieverEvaluator).
  - Dynamic grading (CORRECT, AMBIGUOUS, INCORRECT) and automated external search fallback trigger (CorrectiveRAGPipeline).
+
+[x] Mission 11: Self-RAG Engine & Dynamic Reflection Tokens (v1.7.0)
+ - Dynamic retrieval decision pre-check (RetrieveDecision) bypassing unnecessary search for direct/parametric questions.
+ - Interleaved reflection token evaluation ([Retrieve], [IsREL], [IsSUP], [IsUSE]) assessing relevance, factual support, and response utility (SelfRAGEngine).
+ - Fallback self-correction loop rewriting candidate answers when context support is degraded or hallucinated.
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
