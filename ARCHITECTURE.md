@@ -405,4 +405,37 @@ The `MultiAgentGraphOrchestrator` replaces strict sequential execution with a di
                     +----------------------------------+
                     |         SelfRAGResponse          |
                     +----------------------------------+
+
+### Mission 12: Adaptive RAG Engine (`src/rag/adaptive_rag.py`)                    
+                    +----------------------------------+
+                    |       Incoming User Prompt       |
+                    +----------------------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |   Query Complexity Classifier    |
+                    |    (RoutingDecision Router)      |
+                    +----------------------------------+
+                              /      |      \
+                             /       |       \
+                            v        v        v
+     +------------------------+  +-------+  +------------------------+
+     |     SIMPLE_NO_RAG      |  |SINGLE_|  | COMPLEX_MULTI_STEP_RAG |
+     | (Parametric/Direct)    |  | STEP_ |  |  (Agentic Decomposition|
+     +------------------------+  |  RAG  |  |   & Sub-Query Loop)    |
+                 |               +-------+  +------------------------+
+                 |                   |                   |
+                 v                   v                   v
+     +------------------------+  +-------+  +------------------------+
+     | Direct Structured LLM  |  |Standard| | AgenticRAGEngine Pass  |
+     | Prompt Execution       |  | RAG   |  | Multi-Pass Execution   |
+     +------------------------+  +-------+  +------------------------+
+                 \                   |                   /
+                  +------------------+------------------+
+                                     |
+                                     v
+                    +----------------------------------+
+                    |       AdaptiveRAGResponse        |
+                    +----------------------------------+
+
                     

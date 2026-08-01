@@ -26,7 +26,8 @@ llm-engineering-lab/
 │   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
 │   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
 │   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
-│   │   └── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
+│   │   ├── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
+│   │   └── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -52,7 +53,8 @@ llm-engineering-lab/
     ├── test_agentic_rag.py      # Mission 8 validation
     ├── test_speculative_rag.py  # Mission 9 validation
     ├── test_crag_pipeline.py    # Mission 10 validation
-    └── test_self_rag.py         # Mission 11 validation
+    ├── test_self_rag.py         # Mission 11 validation
+    └── test_adaptive_rag.py     # Mission 12 validation
 ```
 
 🛠️ Mission Progress
@@ -126,6 +128,10 @@ llm-engineering-lab/
  - Dynamic retrieval decision pre-check (RetrieveDecision) bypassing unnecessary search for direct/parametric questions.
  - Interleaved reflection token evaluation ([Retrieve], [IsREL], [IsSUP], [IsUSE]) assessing relevance, factual support, and response utility (SelfRAGEngine).
  - Fallback self-correction loop rewriting candidate answers when context support is degraded or hallucinated.
+
+[x] Mission 12: Adaptive RAG Router & Multi-Tier Complexity Classification (v1.8.0)
+ - Upfront prompt complexity analysis classifying queries into SIMPLE_NO_RAG, SINGLE_STEP_RAG, or COMPLEX_MULTI_STEP_RAG (ComplexityTier).
+ - Dynamic execution routing optimizing latency, cost, and response quality across direct LLM, standard single-pass RAG, and agentic multi-pass pipelines (AdaptiveRAGEngine).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
