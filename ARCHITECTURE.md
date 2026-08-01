@@ -206,3 +206,44 @@ $$RRF\_Score(d \in D) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
 * $r_m(d)$: Rank position of document $d$ in retriever $m$ (1-indexed).
 * $k$: Constant smoothing parameter (default $k = 60$).
 
+### Mission 7: Stateful Multi-Agent Graph Orchestrator (`src/agent/graph_orchestrator.py`)
+
+                  +-----------------------------------+
+                  |      AgentGraphState (Initial)    |
+                  |   - task                          |
+                  |   - step_count = 0                |
+                  +-----------------------------------+
+                                    |
+                                    v
+                  +-----------------------------------+
+                  |          ResearcherNode           |
+                  |   (Gathers background facts)      |
+                  +-----------------------------------+
+                                    |
+                                    v
++---------------------------------------------------------------------------------+
+|                                                                                 |
+|                     +-----------------------------------+                       |
+|  +----------------> |            WriterNode             |                       |
+|  |                  |   (Drafts or revises content)     |                       |
+|  |                  +-----------------------------------+                       |
+|  |                                    |                                         |
+|  |                                    v                                         |
+|  |                  +-----------------------------------+                       |
+|  |                  |           ReviewerNode            |                       |
+|  |                  |   (Evaluates draft quality)       |                       |
+|  |                  +-----------------------------------+                       |
+|  |                                    |                                         |
+|  |                                    v                                         |
+|  |                  +-----------------------------------+                       |
+|  |                  |         Conditional Edge          |                       |
+|  |                  |    review_condition(state)        |                       |
+|  |                  +-----------------------------------+                       |
+|  |                                 /     \                                      |
+|  |        (is_approved == False)  /       \  (is_approved == True OR            |
+|  +-------------------------------+         \  step_count >= max_steps)          |
+|                                             v                                   |
+|                                  +--------------------+                         |
+|                                  |        END         |                         |
+|                                  +--------------------+                         |
++---------------------------------------------------------------------------------+
