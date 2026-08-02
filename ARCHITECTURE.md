@@ -895,6 +895,35 @@ class AudioAgentResponse(BaseModel):
     audio_frames: List[AudioFrame]
     interrupted: bool = False
 
+### MISSION 20: MULTI-AGENT CONSENSUS & DEBATE ORCHESTRATOR (`src/agent/debate_orchestrator.py`)
+
+================================================================================
+          MISSION 20: MULTI-AGENT CONSENSUS & DEBATE ORCHESTRATOR
+================================================================================
+
+                         [ Debate Topic / Task ]
+                                    │
+                                    ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        MultiAgentDebateOrchestrator                          │
+│                                                                              │
+│   ┌────────────────────┐    Round N     ┌────────────────────┐              │
+│   │  Proponent Agent   │ ───────────────► │   Opponent Agent   │              │
+│   └─────────┬──────────┘                └─────────┬──────────┘              │
+│             │                                     │                          │
+│             └──────────────────┬──────────────────┘                          │
+│                                │ (Arguments)                                 │
+│                                ▼                                             │
+│                   ┌──────────────────────────┐                               │
+│                   │      Judge / Moderator   │                               │
+│                   └────────────┬─────────────┘                               │
+└────────────────────────────────┼─────────────────────────────────────────────┘
+                                 │
+                                 ▼
+                    [ Consensus Result & Decision ]
+
+                    
+
 
 
 
