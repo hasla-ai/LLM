@@ -102,6 +102,7 @@ llm-engineering-lab/
 - **Mission 22**: Autonomous Code Execution Sandbox (`CodeExecutionSandbox`, `CodeSecurityAuditor`, `SecurityPolicy`)
 - **Mission 23**: Multi-Modal Vision & Document Processing Agent (`MultiModalVisionAgent`, `DocumentVisualParser`, spatial bounding box alignment, grounded VQA)
 - **Mission 24**: Enterprise Multi-Tenant LLM Gateway & Rate Limiter (`EnterpriseLLMGateway`, `TokenBucketRateLimiter`, RPM/TPM sliding windows, budget quota metering, provider fallback routing)
+- **Mission 25:** Real-Time Telemetry, Tracing & Observability Pipeline (`v3.1.0`)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine

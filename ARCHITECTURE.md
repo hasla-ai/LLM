@@ -1162,3 +1162,27 @@ class TenantContext(BaseModel):
     api_key: str
     tier: str = Field(default="standard")
     quota: UsageQuota
+
+### MISSION 25: REAL-TIME TELEMETRY, TRACING & OBSERVABILITY PIPELINE (`src/eval/telemetry_tracer.py`)
+
+================================================================================
+   MISSION 25: REAL-TIME TELEMETRY, TRACING & OBSERVABILITY PIPELINE
+================================================================================
+
+                     [ Agent / RAG Chain Execution ]
+                                    │
+                                    ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              ObservabilityTracer                             │
+│       (Context Span Generator, Parent-Child Trace Hierarchy, Latency)        │
+└───────────────────────────────────┬──────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            LLMTelemetryCollector                             │
+│       (Token Consumption Counter, Cost Aggregator & Latency Percentiles)     │
+└───────────────────────────────────┬──────────────────────────────────────────┘
+                                    │
+                                    ▼
+                       [ Telemetry Summary & Tracing ]
+                     (Trace Spans, Latency, Token Metrics)
