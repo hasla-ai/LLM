@@ -32,12 +32,14 @@ llm-engineering-lab/
 │   │   └── graph_rag.py        # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
-│   │   ├── tools.py                # Tool registry & execution functions
-│   │   ├── agent_engine.py         # ReAct-style Agent decision loop
-│   │   ├── graph_orchestrator.py   # Mission 7: Stateful Graph Orchestrator
-│   │   └── mcp_gateway.py          # Mission 14: MCP Tool Server & Protocol Gateway
-│   │   └── audio_agent.py          # Mission 19: Real-Time Audio & Streaming Speech Agent
-│   │   └── debate_orchestrator.py  # Mission 20: Multi-Agent Consensus & Debate Orchestrator
+│   │   ├── tools.py                  # Tool registry & execution functions
+│   │   ├── agent_engine.py           # ReAct-style Agent decision loop
+│   │   ├── graph_orchestrator.py     # Mission 7: Stateful Graph Orchestrator
+│   │   └── mcp_gateway.py            # Mission 14: MCP Tool Server & Protocol Gateway
+│   │   └── audio_agent.py            # Mission 19: Real-Time Audio & Streaming Speech Agent
+│   │   └── debate_orchestrator.py    # Mission 20: Multi-Agent Consensus & Debate Orchestrator
+│   │   ├── code_sandbox.py           # Mission 22: Autonomous Code Execution Sandbox
+│   │   └── vision_document_agent.py  # Mission 23: Multi-Modal Vision Agent
 │   ├── eval/                   # Evaluation & Guardrails engine
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
@@ -69,6 +71,7 @@ llm-engineering-lab/
     └── test_graph_rag.py        # Mission 18 validation
     └── test_audio_agent.py      # Mission 19 validation
     └── test_debate_orchestrator.py # Mission 20 validation
+    └── test_vision_document_agent.py# Mission 23 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap

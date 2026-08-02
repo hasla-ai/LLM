@@ -1045,6 +1045,29 @@ class KVCacheStats(BaseModel):
 - `CodeSecurityAuditor`: Statically inspects Python code using the Abstract Syntax Tree (ast) module without executing it, flagging unapproved imports or prohibited function calls.
 - `CodeExecutionSandbox`: Safely executes pre-audited code within a restricted global/local scope, utilizing redirected `stdout` and `stderr` streams along with a structured `ExecutionResult` model.
 
+### MISSION 23: MULTI-MODAL VISION & DOCUMENT PROCESSING AGENT (`src/agent/vision_document_agent.py`)
+
+================================================================================
+    MISSION 23: MULTI-MODAL VISION & DOCUMENT PROCESSING AGENT
+================================================================================
+
+                     [ Unstructured Visual Document / Image ]
+                                       │
+                                       ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            DocumentVisualParser                              │
+│       (Layout Segmentation, RoI BoundingBox Detection & OCR Grounding)       │
+└──────────────────────────────────────┬───────────────────────────────────────┘
+                                       │
+                                       ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                             MultiModalVisionAgent                            │
+│           (Visual Prompting + Layout Synthesis + Structured Schema)          │
+└──────────────────────────────────────┬───────────────────────────────────────┘
+                                       │
+                                       ▼
+                        [ Structured Document Extraction ]
+                         (JSON / Pydantic / VQA Answer)
 
 
 
