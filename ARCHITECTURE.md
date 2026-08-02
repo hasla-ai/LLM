@@ -844,6 +844,32 @@ class GraphRAGResponse(BaseModel):
     retrieved_relations: List[str]
     subgraph_depth: int
 
+### MISSION 19: REAL-TIME AUDIO & STREAMING SPEECH AGENT (`src/rag/audio_agent.py`)
+
+[ User Speech / Audio Stream ]
+                    │
+                    ▼
+┌──────────────────────────────────────────────────────────┐
+│                   AudioFrame Ingestion                   │
+│         (PCM / Byte Chunk Processing & Sequence)         │
+└───────────────────┬──────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────────────────┐
+│                   RealTimeAudioAgent                     │
+│         (Context Tracking & Interruption State)          │
+└───────────────────┬──────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────────────────┐
+│                      StreamingTTS                        │
+│        (Text Chunk -> Audio Stream Synthesis)            │
+└───────────────────┬──────────────────────────────────────┘
+                    │
+                    ▼
+       [ Streaming Audio Output Frames ]
+
+
 
 
 
