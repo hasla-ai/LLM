@@ -30,34 +30,40 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 
 ```text
                                ┌──────────────────────────┐
-                               │    User Query / Input    │
+                               │  User Input (Text/Audio) │
                                └────────────┬─────────────┘
                                             │
-                                            ▼
-                               ┌──────────────────────────┐
-                               │   Adaptive RAG Router    │ (Mission 12)
-                               │ (Complexity Classifier)  │
-                               └────────────┬─────────────┘
-                                            │
-           ┌────────────────────────────────┼────────────────────────────────┐
-           │ (SIMPLE)                       │ (SINGLE_STEP)                  │ (COMPLEX)
-           ▼                                ▼                                ▼
-┌────────────────────┐            ┌──────────────────┐             ┌──────────────────┐
-│  Direct LLM        │            │ Single-Pass RAG  │             │ Multi-Pass Agent │
-│  Inference         │            │ (Hybrid Search)  │             │ / MCP Gateway    │ (Mission 14/15)
-└──────────┬─────────┘            └────────┬─────────┘             └────────┬─────────┘
-                                           │
-                                           ▼
-                               ┌──────────────────────────┐
-                               │     GraphRAG Engine      │ (Mission 18)
-                               │ (Multi-Hop Entity Graph) │
-                               └───────────┬──────────────┘
-                                           │
-                                           ▼
-                               ┌──────────────────────────┐
-                               │   Multi-Modal RAG        │ (Mission 16)
-                               │  (Text + Image Vectors)  │
-                               └───────────┬──────────────┘
+           ┌────────────────────────────────┴────────────────────────────────┐
+           │ (Audio Stream)                                                  │ (Text / Query)
+           ▼                                                                 ▼
+┌────────────────────┐                                            ┌──────────────────┐
+│ Real-Time Audio    │ (Mission 19)                               │   Adaptive RAG   │ (Mission 12)
+│ Agent & TTS Loop   │                                            │     Router       │
+└──────────┬─────────┘                                            └────────┬─────────┘
+           │                                                               │
+           │                               ┌───────────────────────────────┼────────────────────────────────┐
+           │                               │ (SIMPLE)                      │ (SINGLE_STEP)                  │ (COMPLEX)
+           │                               ▼                               ▼                                ▼
+           │                    ┌────────────────────┐           ┌──────────────────┐            ┌──────────────────┐
+           │                    │  Direct LLM        │           │ Single-Pass RAG  │            │ Multi-Pass Agent │
+           │                    │  Inference         │           │ (Hybrid Search)  │            │ / MCP Gateway    │ (Mission 14/15)
+           │                    └──────────┬─────────┘           └────────┬─────────┘            └────────┬─────────┘
+           │                               │                              │                               │
+           │                               └──────────────────────────────┼───────────────────────────────┘
+           │                                                              │
+           │                                                              ▼
+           │                                                  ┌──────────────────────┐
+           │                                                  │    GraphRAG Engine   │ (Mission 18)
+           │                                                  │ (Multi-Hop Graph)    │
+           │                                                  └───────────┬──────────┘
+           │                                                              │
+           │                                                              ▼
+           │                                                  ┌──────────────────────┐
+           │                                                  │   Multi-Modal RAG    │ (Mission 16)
+           │                                                  │ (Text + Image Vis)   │
+           │                                                  └───────────┬──────────┘
+           │                                                              │
+           └───────────────────────────────┬──────────────────────────────┘
                                            │
                                            ▼
                                ┌──────────────────────────┐
@@ -868,6 +874,27 @@ class GraphRAGResponse(BaseModel):
                     │
                     ▼
        [ Streaming Audio Output Frames ]
+
+## Core Subsystem Schemas ##
+
+from typing import Any, List, Optional
+from pydantic import BaseModel, Field
+
+class AudioFrame(BaseModel):
+    """Container for streaming audio chunks."""
+    frame_id: int
+    data: bytes
+    sample_rate: int = 16000
+    format: str = "pcm"
+    is_final: bool = False
+
+class AudioAgentResponse(BaseModel):
+    """Response returned by the audio agent loop."""
+    transcript: str
+    response_text: str
+    audio_frames: List[AudioFrame]
+    interrupted: bool = False
+
 
 
 

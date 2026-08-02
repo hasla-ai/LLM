@@ -36,6 +36,7 @@ llm-engineering-lab/
 │   │   ├── agent_engine.py     # ReAct-style Agent decision loop
 │   │   ├── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
 │   │   └── mcp_gateway.py      # Mission 14: MCP Tool Server & Protocol Gateway
+│   │   └── audio_agent.py      # Mission 19: Real-Time Audio & Streaming Speech Agent
 │   ├── eval/                   # Evaluation & Guardrails engine
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
@@ -65,6 +66,7 @@ llm-engineering-lab/
     ├── test_multimodal_rag.py   # Mission 16 validation
     └── test_distillation_pipeline.py # Mission 17 validation
     └── test_graph_rag.py        # Mission 18 validation
+    └── test_audio_agent.py      # Mission 19 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap
@@ -87,6 +89,7 @@ llm-engineering-lab/
 - **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
 - **Mission 17**: Fine-Tuning & Model Distillation Pipeline (`DistillationTrainer`, dataset generation, quality filtering, and LoRA training)
 - **Mission 18**: GraphRAG & Knowledge Graph Entity-Relation Engine (`GraphRAGEngine`, property graph store, multi-hop BFS neighborhood search, entity extraction)
+- **Mission 19**: Real-Time Audio & Streaming Speech Agent (RealTimeAudioAgent, chunked audio frames, streaming TTS synthesis, voice turn orchestration)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -196,7 +199,12 @@ llm-engineering-lab/
   - Entity and relationship extraction from unstructured textual content (`GraphExtractor`).
   - In-memory property graph store with dynamic entity nodes, directed relationship edges, and BFS multi-hop traversal (`KnowledgeGraphStore`).
   - Multi-hop subgraph expansion and grounded context generation engine (`GraphRAGEngine`).
-  
+
+- [x] **Mission 19: Real-Time Audio & Streaming Speech Agent (v2.5.0)**
+  - Structured binary audio frame container supporting sample rates, frame IDs, and completion flags (`AudioFrame`).
+  - Streaming Text-to-Speech (TTS) engine yielding real-time chunked audio frames from token streams (`StreamingTTS`).
+  - Low-latency real-time voice interaction loop with simulated ASR, agent reasoning, and interruption state management (`RealTimeAudioAgent`).
+
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
