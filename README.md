@@ -75,7 +75,8 @@ llm-engineering-lab/
 - **Mission 12:** Adaptive RAG Engine (`AdaptiveRAGEngine`, upfront complexity routing)
 - **Mission 13:** **Enterprise RAG Benchmarking & Automated Quality Evaluation Engine** (`RAGBenchmarker`, LLM-as-a-Judge quantitative quality profiling)
 - **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
-- **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`test_adaptive_mcp_e2e.py`, multi-tier tool discovery & sandboxed JSON-RPC execution)
+- **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`E2EintegrationEngine`, multi-tier tool discovery & sandboxed JSON-RPC execution)
+- **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -170,6 +171,12 @@ llm-engineering-lab/
   - End-to-end integration between upfront prompt complexity routing and external tool protocols.
   - Automated MCP tool capability discovery (`tools/list`) triggered by `COMPLEX_MULTI_STEP_RAG` classification.
   - Sandboxed tool execution over JSON-RPC 2.0 protocol (`tools/call`) with error handling and latency tracking.
+
+- [x] **Mission 16: Multi-Modal RAG Engine with Visual Embeddings (v2.2.0)**
+  - Dual-modal embedder projecting textual passages and visual document scans into shared latent vector spaces (`MultimodalEmbedder`).
+  - In-memory multi-modal vector store supporting modality filtering (TEXT, IMAGE, or hybrid) (`MultimodalVectorStore`).
+  - Multi-modal RAG orchestrator synthesizing grounded responses with source attribution across text chunks and visual asset URIs (`MultimodalRAGEngine`).
+
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

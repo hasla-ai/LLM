@@ -29,39 +29,46 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 ## 🗺️ High-Level System Architecture
 
 ```text
-[ Incoming User Query ]
-          │
-          ▼
-┌───────────────────────────────────┐
-│       Adaptive RAG Router         │ (Mission 12)
-│   (Upfront Query Complexity)      │
-└─────────────────┬─────────────────┘
-                  │
-     ┌────────────┼──────────────────────────┐
-     │            │                          │
-     ▼            ▼                          ▼
-[ Direct ]  [ Single-Step RAG ]     [ Complex Agentic RAG ]
- (Simple)    - Hybrid Search (M2)    - Multi-Step Search (M4)
-             - Speculative (M10)     - Corrective CRAG (M8)
-                                     - Self-Reflective Self-RAG (M9)
-     │            │                          │
-     └────────────┴────────────┬─────────────┘
-                               │
-                               ▼
-            ┌────────────────────────────────────┐
-            │     LLM Security Guardrails        │ (M3, M7)
-            │  (PII Masking, Toxicity Audit)     │
-            └──────────────────┬─────────────────┘
-                               │
-                               ▼
-            ┌────────────────────────────────────┐
-            │     RAG Benchmark Evaluator        │ (Mission 13)
-            │ (Faithfulness, Relevance, Precision│
-            │      LLM-as-a-Judge Suite)         │
-            └──────────────────┬─────────────────┘
-                               │
-                               ▼
-                     [ Final Answer Output ]
+                               ┌──────────────────────────┐
+                               │    User Query / Input    │
+                               └────────────┬─────────────┘
+                                            │
+                                            ▼
+                               ┌──────────────────────────┐
+                               │   Adaptive RAG Router    │ (Mission 12)
+                               │ (Complexity Classifier)  │
+                               └────────────┬─────────────┘
+                                            │
+           ┌────────────────────────────────┼────────────────────────────────┐
+           │ (SIMPLE)                       │ (SINGLE_STEP)                  │ (COMPLEX)
+           ▼                                ▼                                ▼
+┌────────────────────┐            ┌──────────────────┐             ┌──────────────────┐
+│  Direct LLM        │            │ Single-Pass RAG  │             │ Multi-Pass Agent │
+│  Inference         │            │ (Hybrid Search)  │             │ / MCP Gateway    │ (Mission 14/15)
+└──────────┬─────────┘            └────────┬─────────┘             └────────┬─────────┘
+           │                               │                                │
+           └───────────────────────────────┼────────────────────────────────┘
+                                           │
+                                           ▼
+                               ┌──────────────────────────┐
+                               │   Multi-Modal RAG        │ (Mission 16)
+                               │  (Text + Image Vectors)  │
+                               └───────────┬──────────────┘
+                                           │
+                                           ▼
+                               ┌──────────────────────────┐
+                               │  LLM Security Guardrails │ (Mission 4/7)
+                               │ (PII Sanitizer & Audit)  │
+                               └───────────┬──────────────┘
+                                           │
+                                           ▼
+                               ┌──────────────────────────┐
+                               │  RAG Benchmarker Engine  │ (Mission 13)
+                               │  (LLM-as-a-Judge Eval)   │
+                               └───────────┬──────────────┘
+                                           │
+                                           ▼
+                                 [ Grounded Output ]
 ```
 
 ## 🧩 Core Subsystem Modules
@@ -657,6 +664,77 @@ class MCPExecutionResult(BaseModel):
     content: Optional[Any] = None
     error_message: Optional[str] = None
     execution_latency_ms: float
-    
+
+### MISSION 15: E2E INTEGRATION: ADAPTIVE RAG + MCP PROTOCOL GATEWAY (`tests/test_e2e_adaptive_mcp.py`)
+                                [ User Query ]
+                                      │
+                                      ▼
+                         ┌──────────────────────────┐
+                         │    AdaptiveRAGEngine     │ (Mission 12)
+                         │ (Upfront Router/Planner) │
+                         └────────────┬─────────────┘
+                                      │
+           ┌──────────────────────────┼──────────────────────────┐
+           │ (SIMPLE)                 │ (SINGLE_STEP)            │ (COMPLEX)
+           ▼                          ▼                          ▼
+┌────────────────────┐      ┌──────────────────┐       ┌──────────────────┐
+│  Direct Answer     │      │ Standard Vector  │       │ MCP Tool Gateway │ (Mission 14)
+│  (No Retrieval)    │      │ Pipeline         │       │ (JSON-RPC 2.0)   │
+└────────────────────┘      └──────────────────┘       └────────┬─────────┘
+                                                                │
+                                                ┌───────────────┴───────────────┐
+                                                ▼                               ▼
+                                     ┌─────────────────────┐         ┌─────────────────────┐
+                                     │  `tools/list`       │         │  `tools/call`       │
+                                     │ Schema Discovery    │         │ Sandboxed Execution │
+                                     └─────────────────────┘         └─────────────────────┘
+
+### MISSION 16: MULTI-MODAL RAG ENGINE ARCHITECTURE (`src/rag/multimodal_rag.py`)
+
+================================================================================
+           MISSION 16: MULTI-MODAL RAG ENGINE ARCHITECTURE
+================================================================================
+
+                [ Query: Text + Optional Image Input ]
+                                │
+                                ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            MultimodalEmbedder                                │
+│                     (src/rag/multimodal_rag.py)                              │
+│  - Generates aligned embeddings for text & visual assets                     │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         MultimodalVectorStore                                │
+│  - Dense Index supporting text & visual document assets                      │
+│  - Cosine similarity ranking across modality filters ('text', 'image', 'all') │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          MultimodalRAGEngine                                 │
+│  - Aggregates text context passages & visual asset URIs                      │
+│  - Synthesizes grounded answers with source attribution & visual references │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+                                 ▼
+                       [ MultimodalRAGResponse ]
+
+**Core Subsystem Schemas**
+from enum import Enum
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field
+
+class ModalityType(str, Enum):
+    TEXT = "text"
+    IMAGE = "image"
+
+class MultimodalDocument(BaseModel):
+    """Container for multi-modal document chunks (text or visual assets)."""
+           ^^^^^^^^^
+SyntaxError: invalid syntax
+
+
 
 
