@@ -948,7 +948,36 @@ class ConsensusResult(BaseModel):
     total_rounds: int
     consensus_reached: bool
 
+### MISSION 21: LONG-CONTEXT CHUNKING & DYNAMIC KV CACHE MANAGER (`src/core/context_cache.py`)
 
+================================================================================
+       MISSION 21: LONG-CONTEXT CHUNKING & DYNAMIC KV CACHE MANAGER
+================================================================================
+
+                  [ Long Document / Extended Prompt Stream ]
+                                     │
+                                     ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            Hierarchical Chunking                             │
+│         (Token Budget Partitioning & Overlap Window Alignment)               │
+└────────────────────────────────────┬─────────────────────────────────────────┘
+                                     │
+                                     ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           DynamicKVCacheManager                              │
+│                                                                              │
+│  ┌────────────────────────┐  Prefix Hit  ┌────────────────────────────────┐  │
+│  │  Prefix Cache Lookup   ├─────────────►│ Re-use Cached KV Block Attention  │  │
+│  └───────────┬────────────┘              └────────────────────────────────┘  │
+│              │ Miss                                                          │
+│              ▼                                                               │
+│  ┌────────────────────────┐   Full Cache  ┌────────────────────────────────┐  │
+│  │ Allocate Cache Block   ├─────────────►│ Evict Block (LRU / LFU Policy)    │  │
+│  └────────────────────────┘              └────────────────────────────────┘  │
+└────────────────────────────────────┬─────────────────────────────────────────┘
+                                     │
+                                     ▼
+                       [ Optimized Context Window ]
 
 
 
