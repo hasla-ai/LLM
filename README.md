@@ -75,6 +75,7 @@ llm-engineering-lab/
 - **Mission 12:** Adaptive RAG Engine (`AdaptiveRAGEngine`, upfront complexity routing)
 - **Mission 13:** **Enterprise RAG Benchmarking & Automated Quality Evaluation Engine** (`RAGBenchmarker`, LLM-as-a-Judge quantitative quality profiling)
 - **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
+- **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`test_adaptive_mcp_e2e.py`, multi-tier tool discovery & sandboxed JSON-RPC execution)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -164,6 +165,11 @@ llm-engineering-lab/
 - Standardized JSON-RPC 2.0 protocol handler (MCPProtocolGateway) for client-server capability exchange.
 - Dynamic tool schema exposure and capability discovery (tools/list).
 - Safe sandboxed execution of exposed tools (tools/call) with latency tracking and error handling (MCPExecutionResult).
+
+- [x] **Mission 15: Adaptive RAG & MCP Protocol Integration Engine (v2.1.0)**
+  - End-to-end integration between upfront prompt complexity routing and external tool protocols.
+  - Automated MCP tool capability discovery (`tools/list`) triggered by `COMPLEX_MULTI_STEP_RAG` classification.
+  - Sandboxed tool execution over JSON-RPC 2.0 protocol (`tools/call`) with error handling and latency tracking.
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
