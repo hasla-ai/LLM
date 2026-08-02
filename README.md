@@ -1,12 +1,62 @@
 # 🚀 LLM Engineering Lab (`llm-engineering-lab`)
-## Mission 13 할 차례
+
 A hands-on, test-driven repository for building production-grade LLM applications, RAG pipelines, and Autonomous Agent systems.
 
 Every module in this repository is built with **strict type validation (Pydantic)**, **Docker containerization**, and **automated Pytest suites**.
 
----
-
 ## 📂 Project Structure
+
+```text
+llm-engineering-lab/
+├── Dockerfile                  # Containerized runtime for isolated execution
+├── pyproject.toml              # Dependencies & Pytest configuration
+├── requirements.txt            # Python package requirements
+├── ARCHITECTURE.md             # System architecture & data flow design
+├── src/
+│   ├── core/                   # Structured LLM inference engine
+│   │   ├── __init__.py
+│   │   └── llm_client.py       # Pydantic-enforced Structured LLM Client
+│   ├── rag/                    # Retrieval-Augmented Generation engines
+│   │   ├── __init__.py
+│   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
+│   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
+│   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
+│   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
+│   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
+│   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
+│   │   ├── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
+│   │   └── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
+│   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
+│   │   ├── __init__.py
+│   │   ├── tools.py            # Tool registry & execution functions
+│   │   ├── agent_engine.py     # ReAct-style Agent decision loop
+│   │   └── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
+│   ├── eval/                   # Evaluation & Guardrails engine
+│   │   ├── __init__.py
+│   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
+│   │   ├── evaluator.py        # LLM-as-a-Judge evaluation engine
+│   │   └── rag_benchmarker.py  # Mission 13: RAG Benchmark & Quality Evaluator
+│   └── verification/           # Continuous Verification & Benchmarking
+│       ├── __init__.py
+│       ├── metrics.py          # Benchmark metrics calculator
+│       └── benchmark_runner.py # Regression test orchestrator & JSON reporter
+└── tests/                      # Automated Pytest suite
+    ├── __init__.py
+    ├── test_llm_client.py      # Mission 1 validation
+    ├── test_rag.py             # Mission 2 validation
+    ├── test_agent.py           # Mission 3 validation
+    ├── test_eval.py            # Mission 4 validation
+    ├── test_verification.py    # Mission 5 validation
+    ├── test_hybrid_search.py   # Mission 6 validation
+    ├── test_graph_orchestrator.py # Mission 7 validation
+    ├── test_agentic_rag.py      # Mission 8 validation
+    ├── test_speculative_rag.py  # Mission 9 validation
+    ├── test_crag_pipeline.py    # Mission 10 validation
+    ├── test_self_rag.py         # Mission 11 validation
+    ├── test_adaptive_rag.py     # Mission 12 validation
+    └── test_rag_benchmarker.py  # Mission 13 validation
+
+---
 
 ```text
 llm-engineering-lab/
@@ -56,6 +106,21 @@ llm-engineering-lab/
     ├── test_self_rag.py         # Mission 11 validation
     └── test_adaptive_rag.py     # Mission 12 validation
 ```
+## 🎯 Mission Log & Architecture Roadmap
+
+- **Mission 01:** Structured Outputs & Schema Enforcement (`StructuredLLMClient`, Pydantic validation)
+- **Mission 02:** Hybrid RAG Pipeline (`DenseVectorStore`, BM25 sparse retrieval, Reciprocal Rank Fusion)
+- **Mission 03:** Dynamic Prompt Engineering & Guardrails (`PromptTemplate`, input/output sanitization)
+- **Mission 04:** Agentic Task Decomposition & Tool Calling (`TaskPlanner`, execution graph)
+- **Mission 05:** Multimodal Data Processing & Embedding (`MultimodalEmbedder`, document vision)
+- **Mission 06:** Memory Management & Context Compression (`ConversationMemory`, sliding window summary)
+- **Mission 07:** LLM Security & Guardrail Auditor (`GuardrailAuditor`, PII masking, jailbreak defense)
+- **Mission 08:** Corrective RAG (CRAG) with Web Fallback (`CorrectiveRAG`, dynamic web search fallback)
+- **Mission 09:** Self-Reflective RAG (Self-RAG) (`SelfRAGEngine`, critique tokens, hallucination reflection)
+- **Mission 10:** Speculative RAG Drafting (`SpeculativeRAGEngine`, dual-draft verification)
+- **Mission 11:** Production Guardrails & Evaluation Engine (`LLMEvaluator`, toxicity & safety scoring)
+- **Mission 12:** Adaptive RAG Engine (`AdaptiveRAGEngine`, upfront complexity routing)
+- **Mission 13:** **Enterprise RAG Benchmarking & Automated Quality Evaluation Engine** (`RAGBenchmarker`, LLM-as-a-Judge quantitative quality profiling)
 
 🛠️ Mission Progress
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -132,6 +197,14 @@ llm-engineering-lab/
 [x] Mission 12: Adaptive RAG Router & Multi-Tier Complexity Classification (v1.8.0)
  - Upfront prompt complexity analysis classifying queries into SIMPLE_NO_RAG, SINGLE_STEP_RAG, or COMPLEX_MULTI_STEP_RAG (ComplexityTier).
  - Dynamic execution routing optimizing latency, cost, and response quality across direct LLM, standard single-pass RAG, and agentic multi-pass pipelines (AdaptiveRAGEngine).
+
+[x] Mission 13 introduces an automated, multi-dimensional evaluation suite designed to run quantitative benchmarking across standard, agentic, corrective, self-reflective, speculative, and adaptive RAG implementations.
+- Quantitative multi-dimensional quality scoring engine using LLM-as-a-Judge (RAGBenchmarker).
+- Context Faithfulness (Hallucination Score): Evaluates if generated assertions are strictly grounded in retrieved contexts without extrapolation.
+- Answer Relevance: Measures directness and completeness in addressing the user prompt.
+- Context Precision & Recall: Assesses signal-to-noise ratio in retrieved context passages.
+- Latency Profiling: Tracks end-to-end multi-step execution timings per strategy.
+- Consolidated report aggregator summarizing performance across RAG strategies (RAGBenchmarkReport).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

@@ -26,6 +26,89 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 
 ## 2. Module Architectures
 
+## 🗺️ High-Level System Architecture
+
+```text
+[ Incoming User Query ]
+          │
+          ▼
+┌───────────────────────────────────┐
+│       Adaptive RAG Router         │ (Mission 12)
+│   (Upfront Query Complexity)      │
+└─────────────────┬─────────────────┘
+                  │
+     ┌────────────┼──────────────────────────┐
+     │            │                          │
+     ▼            ▼                          ▼
+[ Direct ]  [ Single-Step RAG ]     [ Complex Agentic RAG ]
+ (Simple)    - Hybrid Search (M2)    - Multi-Step Search (M4)
+             - Speculative (M10)     - Corrective CRAG (M8)
+                                     - Self-Reflective Self-RAG (M9)
+     │            │                          │
+     └────────────┴────────────┬─────────────┘
+                               │
+                               ▼
+            ┌────────────────────────────────────┐
+            │     LLM Security Guardrails        │ (M3, M7)
+            │  (PII Masking, Toxicity Audit)     │
+            └──────────────────┬─────────────────┘
+                               │
+                               ▼
+            ┌────────────────────────────────────┐
+            │     RAG Benchmark Evaluator        │ (Mission 13)
+            │ (Faithfulness, Relevance, Precision│
+            │      LLM-as-a-Judge Suite)         │
+            └──────────────────┬─────────────────┘
+                               │
+                               ▼
+                     [ Final Answer Output ]
+```
+
+## 🧩 Core Subsystem Modules
+
+## 1. Execution & Routing Tier
+AdaptiveRAGEngine (src/rag/adaptive_rag.py): Upfront complexity classifier routing queries into fast-path direct generation, single-step RAG, or deep multi-pass agentic workflows.
+
+SpeculativeRAGEngine (src/rag/speculative_rag.py): Parallel draft generation via lightweight models combined with speculative verification by larger primary LLMs.
+
+CorrectiveRAGEngine (src/rag/corrective_rag.py): Retrieval evaluator trigger fallback web searches when local vector context quality drops below threshold.
+
+SelfRAGEngine (src/rag/self_rag.py): Self-reflective critique loops inspecting retrieved passage utility and output hallucination rates.
+
+## 2. Security & Guardrail Tier
+GuardrailAuditor (src/eval/guardrails.py): Input sanitization, prompt injection detection, and outbound PII redactor.
+
+## 3. Quantitative Evaluation Tier (Mission 13)
+RAGBenchmarker (src/eval/rag_benchmarker.py): Enterprise evaluation engine delivering LLM-as-a-Judge multi-metric quality scores:
+- Faithfulness (evaluate_faithfulness): Hallucination checking against context passages.
+- Answer Relevance (evaluate_answer_relevance): Query addressing accuracy.
+- Context Precision (evaluate_context_precision): Document signal-to-noise ratio.
+- Report Aggregator (generate_report): Generates comparative benchmark summaries across strategies (StrategyBenchmarkSummary, RAGBenchmarkReport).
+
+## 🔄 Quality Evaluation Execution Data Flow
+
+[ Query + Answer + Contexts ]
+                    │
+                    ▼
+          ┌───────────────────┐
+          │  RAGBenchmarker   │
+          └─────────┬─────────┘
+                    │
+   ┌────────────────┼────────────────┐
+   │                │                │
+   ▼                ▼                ▼
+[Faithfulness]  [Relevance]     [Precision]
+LLM-as-a-Judge  LLM-as-a-Judge  LLM-as-a-Judge
+   │                │                │
+   └────────────────┼────────────────┘
+                    │
+                    ▼
+        [ RAGEvaluationResult ]
+                    │
+                    ▼
+       [ RAGBenchmarkReport Summary ]
+       
+
 ### Mission 1: Structured Inference Engine (`src/core/`)
 
 ASCII Diagram
@@ -369,7 +452,7 @@ The `MultiAgentGraphOrchestrator` replaces strict sequential execution with a di
 
 ### Mission 11: Self-RAG Engine (`src/rag/self_rag.py`)
 
-+----------------------------------+
+                    +----------------------------------+
                     |       User Query Prompt          |
                     +----------------------------------+
                                      |
@@ -438,4 +521,78 @@ The `MultiAgentGraphOrchestrator` replaces strict sequential execution with a di
                     |       AdaptiveRAGResponse        |
                     +----------------------------------+
 
-                    
+### MISSION 13: ENTERPRISE RAG BENCHMARKING & EVALUATION ENGINE (`src/eval/rag_benchmarker.py`)
+
+[ Evaluation Input ]
+   ├── Query: str
+   ├── Answer: str
+   ├── Contexts: List[str]
+   └── Latency: float
+          │
+          ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            RAGBenchmarker Engine                             │
+│                      (src/eval/rag_benchmarker.py)                           │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+         ┌───────────────────────┼───────────────────────┐
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐     ┌─────────────────┐     ┌──────────────────┐
+│ Faithfulness    │     │ Answer          │     │ Context          │
+│ Evaluator       │     │ Relevance       │     │ Precision        │
+│ (Hallucination) │     │ Evaluator       │     │ Evaluator        │
+└────────┬────────┘     └────────┬────────┘     └────────┬─────────┘
+         │                       │                       │
+         │ Structured Output     │ Structured Output     │ Structured Output
+         │ (Score 0.0-1.0)       │ (Score 0.0-1.0)       │ (Score 0.0-1.0)
+         ▼                       ▼                       ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            RAGEvaluationResult                               │
+│  - faithfulness_score, answer_relevance_score, context_precision_score       │
+│  - latency_seconds, reasoning_trace, timestamp                               │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            RAGBenchmarkReport                                │
+│    - Multi-Strategy Comparison Summaries                                     │
+│    - Aggregated Quality Averages & Latency Distributions                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+#### Pydantic Schemas
+
+```bash
+from pydantic import BaseModel, Field
+from typing import List, Optional
+
+class MetricEvaluation(BaseModel):
+    """Structured response for an individual quality metric evaluation."""
+    score: float = Field(..., ge=0.0, le=1.0, description="Normalized metric score between 0.0 and 1.0")
+    reasoning: str = Field(..., description="LLM-as-a-Judge chain-of-thought justification")
+
+class RAGEvaluationResult(BaseModel):
+    """Aggregated multi-metric assessment for a single RAG inference execution."""
+    query: str
+    generated_answer: str
+    retrieved_contexts: List[str]
+    faithfulness: MetricEvaluation
+    answer_relevance: MetricEvaluation
+    context_precision: MetricEvaluation
+    latency_seconds: float
+
+class StrategyBenchmarkSummary(BaseModel):
+    """Aggregated quantitative performance summary across a specific RAG strategy."""
+    strategy_name: str
+    total_samples: int
+    avg_faithfulness: float
+    avg_answer_relevance: float
+    avg_context_precision: float
+    avg_latency_seconds: float
+
+class RAGBenchmarkReport(BaseModel):
+    """Full enterprise benchmark report comparing multiple RAG architectural strategies."""
+    summaries: List[StrategyBenchmarkSummary]
+    recommended_strategy: str
+```
+                   
