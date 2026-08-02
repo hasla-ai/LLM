@@ -28,6 +28,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 
 ## 🗺️ High-Level System Architecture
 
+
 ```text
                                ┌──────────────────────────┐
                                │  User Input (Text/Audio) │
@@ -45,8 +46,8 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
            │                               │ (SIMPLE)                      │ (SINGLE_STEP)                  │ (COMPLEX)
            │                               ▼                               ▼                                ▼
            │                    ┌────────────────────┐           ┌──────────────────┐            ┌──────────────────┐
-           │                    │  Direct LLM        │           │ Single-Pass RAG  │            │ Multi-Pass Agent │
-           │                    │  Inference         │           │ (Hybrid Search)  │            │ / MCP Gateway    │ (Mission 14/15)
+           │                    │  Direct LLM        │           │ Single-Pass RAG  │            │ Multi-Agent      │ (Mission 20)
+           │                    │  Inference         │           │ (Hybrid Search)  │            │ Debate Engine    │
            │                    └──────────┬─────────┘           └────────┬─────────┘            └────────┬─────────┘
            │                               │                              │                               │
            │                               └──────────────────────────────┼───────────────────────────────┘
@@ -922,7 +923,30 @@ class AudioAgentResponse(BaseModel):
                                  ▼
                     [ Consensus Result & Decision ]
 
-                    
+**Core Subsystem Schemas**
+from enum import Enum
+from typing import List
+from pydantic import BaseModel, Field
+
+class AgentRole(str, Enum):
+    PROPONENT = "PROPONENT"
+    OPPONENT = "OPPONENT"
+    JUDGE = "JUDGE"
+
+class DebateMessage(BaseModel):
+    """Container for a single argument or rebuttal turn in a debate."""
+    speaker_role: AgentRole
+    speaker_name: str
+    content: str
+    confidence: float = Field(..., ge=0.0, le=1.0)
+
+class ConsensusResult(BaseModel):
+    """Final decision output synthesized from multi-agent debate."""
+    topic: str
+    decision: str
+    confidence_score: float
+    total_rounds: int
+    consensus_reached: bool
 
 
 

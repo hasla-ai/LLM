@@ -30,13 +30,14 @@ llm-engineering-lab/
 │   │   ├── adaptive_rag.py     # Mission 12: Adaptive RAG Router & Engine
 │   │   └── multimodal_rag.py   # Mission 16: Multi-Modal RAG Engine & Visual Embedder
 │   │   └── graph_rag.py        # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
-│   ├── agent/                 # Autonomous Tool-Calling & Multi-Agent Graph
+│   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
-│   │   ├── tools.py            # Tool registry & execution functions
-│   │   ├── agent_engine.py     # ReAct-style Agent decision loop
-│   │   ├── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
-│   │   └── mcp_gateway.py      # Mission 14: MCP Tool Server & Protocol Gateway
-│   │   └── audio_agent.py      # Mission 19: Real-Time Audio & Streaming Speech Agent
+│   │   ├── tools.py                # Tool registry & execution functions
+│   │   ├── agent_engine.py         # ReAct-style Agent decision loop
+│   │   ├── graph_orchestrator.py   # Mission 7: Stateful Graph Orchestrator
+│   │   └── mcp_gateway.py          # Mission 14: MCP Tool Server & Protocol Gateway
+│   │   └── audio_agent.py          # Mission 19: Real-Time Audio & Streaming Speech Agent
+│   │   └── debate_orchestrator.py  # Mission 20: Multi-Agent Consensus & Debate Orchestrator
 │   ├── eval/                   # Evaluation & Guardrails engine
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
@@ -67,6 +68,7 @@ llm-engineering-lab/
     └── test_distillation_pipeline.py # Mission 17 validation
     └── test_graph_rag.py        # Mission 18 validation
     └── test_audio_agent.py      # Mission 19 validation
+    └── test_debate_orchestrator.py # Mission 20 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap
@@ -89,7 +91,8 @@ llm-engineering-lab/
 - **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
 - **Mission 17**: Fine-Tuning & Model Distillation Pipeline (`DistillationTrainer`, dataset generation, quality filtering, and LoRA training)
 - **Mission 18**: GraphRAG & Knowledge Graph Entity-Relation Engine (`GraphRAGEngine`, property graph store, multi-hop BFS neighborhood search, entity extraction)
-- **Mission 19**: Real-Time Audio & Streaming Speech Agent (RealTimeAudioAgent, chunked audio frames, streaming TTS synthesis, voice turn orchestration)
+- **Mission 19**: Real-Time Audio & Streaming Speech Agent (`RealTimeAudioAgent`, chunked audio frames, streaming TTS synthesis, voice turn orchestration)
+- **Mission 20**: Multi-Agent Consensus & Debate Orchestrator (`MultiAgentDebateOrchestrator`, role-based agent debate, confidence-weighted consensus evaluation)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -204,6 +207,11 @@ llm-engineering-lab/
   - Structured binary audio frame container supporting sample rates, frame IDs, and completion flags (`AudioFrame`).
   - Streaming Text-to-Speech (TTS) engine yielding real-time chunked audio frames from token streams (`StreamingTTS`).
   - Low-latency real-time voice interaction loop with simulated ASR, agent reasoning, and interruption state management (`RealTimeAudioAgent`).
+
+- [x] **Mission 20: Multi-Agent Consensus & Debate Orchestrator (v2.6.0)**
+  - Typed agent roles (PROPONENT, OPPONENT, JUDGE) and structured debate message containers (DebateMessage).
+  - Multi-round debate orchestrator with dynamic confidence scoring and threshold-based consensus validation (MultiAgentDebateOrchestrator).
+  - Auditable debate history tracking arguments, rebuttals, and final synthesized decisions (ConsensusResult).
 
 
 🚀 Quick Start (Docker)
