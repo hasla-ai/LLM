@@ -34,6 +34,12 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                │ User Input (Text/Visual) │
                                └────────────┬─────────────┘
                                             │
+                                            ▼
+                               ┌──────────────────────────┐
+                               │ Enterprise Multi-Tenant  │ (Mission 24)
+                               │ Gateway & Rate Limiter   │
+                               └────────────┬─────────────┘
+                                            │
            ┌────────────────────────────────┴────────────────────────────────┐
            │ (Visual / Image / Doc)                                          │ (Text / Prompt Query)
            ▼                                                                 ▼
@@ -1105,7 +1111,7 @@ class DocumentImage(BaseModel):
     image_bytes: Optional[bytes] = None
     page_number: int = 1
 
-### MISSION 23: MULTI-MODAL VISION & DOCUMENT PROCESSING AGENT (`src/core/llm_gateway.py`)
+### MISSION 24: ENTERPRISE MULTI-TENANT LLM GATEWAY & RATE LIMITER (`src/core/llm_gateway.py`)
 
 ================================================================================
     MISSION 24: ENTERPRISE MULTI-TENANT LLM GATEWAY & RATE LIMITER
@@ -1139,3 +1145,20 @@ class DocumentImage(BaseModel):
 │    (Token Spend & Cost Tracking)     │
 └──────────────────────────────────────┘
 
+**Core Subsystem Schemas**
+from pydantic import BaseModel, Field
+
+class UsageQuota(BaseModel):
+    """Defines usage limits for a specific tenant."""
+    tenant_id: str
+    max_rpm: int = Field(default=60, description="Requests Per Minute limit")
+    max_tpm: int = Field(default=100_000, description="Tokens Per Minute limit")
+    monthly_budget_usd: float = Field(default=100.0, description="Monthly USD spend cap")
+    current_month_spend_usd: float = Field(default=0.0, description="Current accumulated spend")
+
+class TenantContext(BaseModel):
+    """Context holding tenant credentials and current usage state."""
+    tenant_id: str
+    api_key: str
+    tier: str = Field(default="standard")
+    quota: UsageQuota
