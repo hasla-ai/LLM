@@ -31,37 +31,37 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 
 ```text
                                ┌──────────────────────────┐
-                               │  User Input (Text/Audio) │
+                               │ User Input (Text/Visual) │
                                └────────────┬─────────────┘
                                             │
            ┌────────────────────────────────┴────────────────────────────────┐
-           │ (Audio Stream)                                                  │ (Text / Query)
+           │ (Visual / Image / Doc)                                          │ (Text / Prompt Query)
            ▼                                                                 ▼
 ┌────────────────────┐                                            ┌──────────────────┐
-│ Real-Time Audio    │ (Mission 19)                               │   Adaptive RAG   │ (Mission 12)
-│ Agent & TTS Loop   │                                            │     Router       │
+│ Multi-Modal Vision │ (Mission 23)                               │   Adaptive RAG   │ (Mission 12)
+│ & Document Agent   │                                            │     Router       │
 └──────────┬─────────┘                                            └────────┬─────────┘
            │                                                               │
            │                               ┌───────────────────────────────┼────────────────────────────────┐
-           │                               │ (SIMPLE)                      │ (SINGLE_STEP)                  │ (COMPLEX)
+           │                               │ (SIMPLE)                      │ (CODE_EXECUTION)               │ (COMPLEX)
            │                               ▼                               ▼                                ▼
            │                    ┌────────────────────┐           ┌──────────────────┐            ┌──────────────────┐
-           │                    │  Direct LLM        │           │ Single-Pass RAG  │            │ Multi-Agent      │ (Mission 20)
-           │                    │  Inference         │           │ (Hybrid Search)  │            │ Debate Engine    │
+           │                    │  Direct LLM        │           │ Code Execution   │ (Mission 22)   │ Multi-Agent      │ (Mission 20)
+           │                    │  Inference         │           │ Sandbox Engine   │            │ Debate Engine    │
            │                    └──────────┬─────────┘           └────────┬─────────┘            └────────┬─────────┘
            │                               │                              │                               │
            │                               └──────────────────────────────┼───────────────────────────────┘
            │                                                              │
            │                                                              ▼
            │                                                  ┌──────────────────────┐
-           │                                                  │    GraphRAG Engine   │ (Mission 18)
-           │                                                  │ (Multi-Hop Graph)    │
+           │                                                  │  Hierarchical        │ (Mission 21)
+           │                                                  │  Chunker & KV Cache  │
            │                                                  └───────────┬──────────┘
            │                                                              │
            │                                                              ▼
            │                                                  ┌──────────────────────┐
-           │                                                  │   Multi-Modal RAG    │ (Mission 16)
-           │                                                  │ (Text + Image Vis)   │
+           │                                                  │    GraphRAG Engine   │ (Mission 18)
+           │                                                  │ (Multi-Hop Graph)    │
            │                                                  └───────────┬──────────┘
            │                                                              │
            └───────────────────────────────┬──────────────────────────────┘
@@ -1070,7 +1070,40 @@ class KVCacheStats(BaseModel):
                          (JSON / Pydantic / VQA Answer)
 
 
+**Core Subsystem Schemas**
+from enum import Enum
+from typing import List, Optional
+from pydantic import BaseModel, Field
 
+class ElementType(str, Enum):
+    HEADER = "HEADER"
+    PARAGRAPH = "PARAGRAPH"
+    TABLE = "TABLE"
+    IMAGE = "IMAGE"
+    KEY_VALUE_PAIR = "KEY_VALUE_PAIR"
+
+class BoundingBox(BaseModel):
+    """Normalized coordinates [0.0, 1.0] for region of interest on document page."""
+    x_min: float = Field(ge=0.0, le=1.0)
+    y_min: float = Field(ge=0.0, le=1.0)
+    x_max: float = Field(ge=0.0, le=1.0)
+    y_max: float = Field(ge=0.0, le=1.0)
+
+class DocumentLayoutElement(BaseModel):
+    """A detected spatial element within a document page."""
+    element_id: str
+    element_type: ElementType
+    bounding_box: BoundingBox
+    raw_text: str
+    confidence: float = Field(ge=0.0, le=1.0, default=1.0)
+
+class DocumentImage(BaseModel):
+    """Metadata and raw payload wrapper for multi-modal document image inputs."""
+    document_id: str
+    width_px: int
+    height_px: int
+    image_bytes: Optional[bytes] = None
+    page_number: int = 1
 
 
 
