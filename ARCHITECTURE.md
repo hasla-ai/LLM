@@ -595,4 +595,68 @@ class RAGBenchmarkReport(BaseModel):
     summaries: List[StrategyBenchmarkSummary]
     recommended_strategy: str
 ```
-                   
+### MISSION 14: MODEL CONTEXT PROTOCOL (MCP) GATEWAY ARCHITECTURE(`src/agent/mcp_gateway.py`)
+
+[ Client / Agent Request ]
+            │
+            ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                             MCPProtocolGateway                               │
+│                         (src/agent/mcp_gateway.py)                           │
+│  - Handshake / Capability Exchange (JSON-RPC 2.0)                            │
+│  - Dynamic Tool Registration & Discovery                                     │
+│  - Secure Execution Sandbox & Parameter Validation                           │
+└────────────────────────────────┬─────────────────────────────────────────────┘
+                                 │
+         ┌───────────────────────┼───────────────────────┐
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│ MCP Resource     │    │ MCP Tool         │    │ MCP Prompt       │
+│ Provider         │    │ Execution        │    │ Template         │
+│ (System State)   │    │ (Sandbox Tools)  │    │ (Context Ingest) │
+└────────┬─────────┘    └────────┬─────────┘    └────────┬─────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                             MCPExecutionResult                               │
+│  - status: "success" | "error" | "denied"                                    │
+│  - result_payload / error_message                                            │
+│  - execution_latency_ms                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+**Core Subsystem Schemas**
+from enum import Enum
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field
+
+class MCPCapability(str, Enum):
+    RESOURCES = "resources"
+    TOOLS = "tools"
+    PROMPTS = "prompts"
+
+class MCPToolSchema(BaseModel):
+    """Schema defining an MCP-compliant tool exposure."""
+    name: str = Field(..., description="Unique tool identifier")
+    description: str = Field(..., description="Description of the tool function")
+    parameters: Dict[str, Any] = Field(default_factory=dict, description="JSON Schema for parameters")
+
+class MCPRequest(BaseModel):
+    """JSON-RPC 2.0 compliant MCP Protocol Request."""
+    jsonrpc: str = Field(default="2.0")
+    id: str = Field(..., description="Unique request ID")
+    method: str = Field(..., description="MCP Protocol method (e.g. tools/list, tools/call)")
+    params: Dict[str, Any] = Field(default_factory=dict)
+
+class MCPExecutionResult(BaseModel):
+    """Structured response payload for MCP executions."""
+    request_id: str
+    status: str = Field(..., description="'success', 'error', or 'denied'")
+    content: Optional[Any] = None
+    error_message: Optional[str] = None
+    execution_latency_ms: float
+    
+
+

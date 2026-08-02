@@ -30,7 +30,8 @@ llm-engineering-lab/
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
 │   │   ├── agent_engine.py     # ReAct-style Agent decision loop
-│   │   └── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
+│   │   ├── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
+│   │   └── mcp_gateway.py      # Mission 14: MCP Tool Server & Protocol Gateway
 │   ├── eval/                   # Evaluation & Guardrails engine
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
@@ -54,58 +55,10 @@ llm-engineering-lab/
     ├── test_crag_pipeline.py    # Mission 10 validation
     ├── test_self_rag.py         # Mission 11 validation
     ├── test_adaptive_rag.py     # Mission 12 validation
-    └── test_rag_benchmarker.py  # Mission 13 validation
-
----
-
-```text
-llm-engineering-lab/
-├── Dockerfile                  # Containerized runtime for isolated execution
-├── pyproject.toml              # Dependencies & Pytest configuration
-├── requirements.txt            # Python package requirements
-├── ARCHITECTURE.md             # System architecture & data flow design
-├── src/
-│   ├── core/                   # Structured LLM inference engine
-│   │   ├── __init__.py
-│   │   └── llm_client.py       # Pydantic-enforced Structured LLM Client
-│   ├── rag/                    # Retrieval-Augmented Generation engines
-│   │   ├── __init__.py
-│   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
-│   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
-│   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
-│   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
-│   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
-│   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
-│   │   ├── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
-│   │   └── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
-│   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
-│   │   ├── __init__.py
-│   │   ├── tools.py            # Tool registry & execution functions
-│   │   ├── agent_engine.py     # ReAct-style Agent decision loop
-│   │   └── graph_orchestrator.py # Mission 7: Stateful Graph Orchestrator
-│   ├── eval/                   # Evaluation & Guardrails engine
-│   │   ├── __init__.py
-│   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
-│   │   └── evaluator.py        # LLM-as-a-Judge evaluation engine
-│   └── verification/           # Continuous Verification & Benchmarking
-│       ├── __init__.py
-│       ├── metrics.py          # Benchmark metrics calculator
-│       └── benchmark_runner.py # Regression test orchestrator & JSON reporter
-└── tests/                      # Automated Pytest suite
-    ├── __init__.py
-    ├── test_llm_client.py      # Mission 1 validation
-    ├── test_rag.py             # Mission 2 validation
-    ├── test_agent.py           # Mission 3 validation
-    ├── test_eval.py            # Mission 4 validation
-    ├── test_verification.py    # Mission 5 validation
-    ├── test_hybrid_search.py   # Mission 6 validation
-    ├── test_graph_orchestrator.py # Mission 7 validation
-    ├── test_agentic_rag.py      # Mission 8 validation
-    ├── test_speculative_rag.py  # Mission 9 validation
-    ├── test_crag_pipeline.py    # Mission 10 validation
-    ├── test_self_rag.py         # Mission 11 validation
-    └── test_adaptive_rag.py     # Mission 12 validation
+    ├── test_rag_benchmarker.py  # Mission 13 validation
+    └── test_mcp_gateway.py      # Mission 14 validation
 ```
+
 ## 🎯 Mission Log & Architecture Roadmap
 
 - **Mission 01:** Structured Outputs & Schema Enforcement (`StructuredLLMClient`, Pydantic validation)
@@ -121,8 +74,9 @@ llm-engineering-lab/
 - **Mission 11:** Production Guardrails & Evaluation Engine (`LLMEvaluator`, toxicity & safety scoring)
 - **Mission 12:** Adaptive RAG Engine (`AdaptiveRAGEngine`, upfront complexity routing)
 - **Mission 13:** **Enterprise RAG Benchmarking & Automated Quality Evaluation Engine** (`RAGBenchmarker`, LLM-as-a-Judge quantitative quality profiling)
+- **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
 
-🛠️ Mission Progress
+**🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
   - Docker containerization for zero-dependency execution across environments.
   - Type-safe LLM client using Pydantic schema enforcement (StructuredLLMClient).
@@ -205,6 +159,11 @@ llm-engineering-lab/
 - Context Precision & Recall: Assesses signal-to-noise ratio in retrieved context passages.
 - Latency Profiling: Tracks end-to-end multi-step execution timings per strategy.
 - Consolidated report aggregator summarizing performance across RAG strategies (RAGBenchmarkReport).
+
+[x] Mission 14: Model Context Protocol (MCP) Server & Tool Integration Gateway (v2.0.0)
+- Standardized JSON-RPC 2.0 protocol handler (MCPProtocolGateway) for client-server capability exchange.
+- Dynamic tool schema exposure and capability discovery (tools/list).
+- Safe sandboxed execution of exposed tools (tools/call) with latency tracking and error handling (MCPExecutionResult).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
