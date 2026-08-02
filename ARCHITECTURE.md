@@ -732,8 +732,33 @@ class ModalityType(str, Enum):
 
 class MultimodalDocument(BaseModel):
     """Container for multi-modal document chunks (text or visual assets)."""
-           ^^^^^^^^^
-SyntaxError: invalid syntax
+
+### MISSION 17: MODEL DISTILLATION & FINE-TUNING PIPELINE (`src/rag/multimodal_rag.py`)
+
+[ Unstructured Corpus / Raw Context ]
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│              DistillationDatasetGenerator                │
+│       (Teacher Model Prompting & Dataset Structuring)    │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                 DatasetQualityFilter                     │
+│    (Teacher Confidence, Length, & Sanity Checking)      │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼ [ High-Quality Dataset ]
+┌──────────────────────────────────────────────────────────┐
+│                   DistillationTrainer                    │
+│   (Simulated LoRA/PEFT Training & Epoch Loss Tracking)   │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+       [ Fine-Tuned Model Checkpoint ]
+
+
 
 
 
