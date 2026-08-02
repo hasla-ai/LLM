@@ -1,4 +1,4 @@
-from enum Enum
+from enum import Enum
 from typing import List, Optional, Any
 from pydantic import BaseModel, Field
 from src.core.llm_client import StructuredLLMClient
@@ -88,7 +88,7 @@ You are an expert query router for an adaptive AI search platform. Analyze the i
                 complexity_tier=decision.complexity_tier,
                 routing_reasoning=decision.reasoning,
                 final_answer=rag_res.answer,
-                sources=rag_res.sources
+                sources=getattr(rag_res, "sources_used", getattr(rag_res, "sources", []))        
             )
 
         else:  # COMPLEX_MULTI_STEP_RAG
