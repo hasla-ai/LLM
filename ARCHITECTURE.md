@@ -979,6 +979,42 @@ class ConsensusResult(BaseModel):
                                      ▼
                        [ Optimized Context Window ]
 
+**Core Subsystem Schemas**
+from enum import Enum
+from typing import Optional
+from pydantic import BaseModel
+
+class CachePolicy(str, Enum):
+    LRU = "LRU"
+    LFU = "LFU"
+
+class ContextChunk(BaseModel):
+    """Container for a chunk of text within a long document."""
+    chunk_id: str
+    content: str
+    token_count: int
+    start_token_idx: int
+    end_token_idx: int
+    parent_id: Optional[str] = None
+
+class KVCacheBlock(BaseModel):
+    """Simulated KV Cache memory block for a prompt prefix/chunk."""
+    block_id: str
+    chunk_id: str
+    token_count: int
+    last_accessed: float
+    access_frequency: int = 1
+
+class KVCacheStats(BaseModel):
+    """Execution metrics for KV cache performance."""
+    total_requests: int
+    cache_hits: int
+    cache_misses: int
+    evictions: int
+    active_blocks: int
+    used_tokens: int
+    hit_rate: float
+
 
 
 
