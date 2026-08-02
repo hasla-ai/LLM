@@ -1015,6 +1015,31 @@ class KVCacheStats(BaseModel):
     used_tokens: int
     hit_rate: float
 
+### MISSION 22: AUTONOMOUS CODE EXECUTION SANDBOX & SECURITY POLICY ENGINE (`src/agent/code_sandbox.py`)
+
+================================================================================
+     MISSION 22: AUTONOMOUS CODE EXECUTION SANDBOX & SECURITY POLICY ENGINE
+================================================================================
+
+                         [ Agent Generated Code ]
+                                    │
+                                    ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                             CodeSecurityAuditor                              │
+│         (AST Static Tree Inspection & Dangerous Call Detection)              │
+└───────────────────────────────────┬──────────────────────────────────────────┘
+                                    │
+             ┌──────────────────────┴──────────────────────┐
+             │ Violations Found                            │ Clean Code
+             ▼                                             ▼
+┌──────────────────────────┐             ┌────────────────────────────────────┐
+│ Security Violation Audit │             │        CodeExecutionSandbox        │
+│   (Blocked Execution)    │             │  (Isolated Scope & Stdout Capture) │
+└──────────────────────────┘             └─────────────────┬──────────────────┘
+                                                           │
+                                                           ▼
+                                               [ Execution Result Output ]
+
 
 
 
