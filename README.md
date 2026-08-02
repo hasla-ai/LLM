@@ -14,10 +14,11 @@ llm-engineering-lab/
 ├── LICENSE                     # MIT License
 ├── ARCHITECTURE.md             # System architecture & data flow design
 ├── src/
-│   ├── core/                   # Structured LLM inference engine & fine-tuning
+│   ├── core/                         # Structured LLM inference engine & fine-tuning
 │   │   ├── __init__.py
-│   │   ├── llm_client.py       # Pydantic-enforced Structured LLM Client
-│   │   └── distillation_pipeline.py # Mission 17: Fine-Tuning & Model Distillation Pipeline
+│   │   ├── llm_client.py             # Pydantic-enforced Structured LLM Client
+│   │   └── distillation_pipeline.py  # Mission 17: Fine-Tuning & Model Distillation Pipeline
+│   │   ├── llm_gateway.py            # Mission 24: Enterprise LLM Gateway & Rate Limiter
 │   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine

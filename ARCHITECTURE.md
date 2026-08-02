@@ -1105,5 +1105,37 @@ class DocumentImage(BaseModel):
     image_bytes: Optional[bytes] = None
     page_number: int = 1
 
+### MISSION 23: MULTI-MODAL VISION & DOCUMENT PROCESSING AGENT (`src/core/llm_gateway.py`)
 
+================================================================================
+    MISSION 24: ENTERPRISE MULTI-TENANT LLM GATEWAY & RATE LIMITER
+================================================================================
+
+                         [ Inbound Multi-Tenant Request ]
+                                        │
+                                        ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                            EnterpriseLLMGateway                              │
+│                (Tenant Identity & Token Auth Verification)                    │
+└──────────────────────────────────────┬───────────────────────────────────────┘
+                                       │
+                                       ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           TokenBucketRateLimiter                             │
+│                  (RPM / TPM Sliding Bucket Rate Check)                       │
+└──────────────────────────────────────┬───────────────────────────────────────┘
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    │ (Quota OK)                          │ (Throttled / 429)
+                    ▼                                     ▼
+┌──────────────────────────────────────┐     ┌─────────────────────────┐
+│       Provider Router & Fallback     │     │ RateLimitExceeded Exception│
+│  (Primary Model ➔ Fallback Provider) │     └─────────────────────────┘
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│        Usage & Budget Metering       │
+│    (Token Spend & Cost Tracking)     │
+└──────────────────────────────────────┘
 
