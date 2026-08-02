@@ -11,11 +11,13 @@ llm-engineering-lab/
 ├── Dockerfile                  # Containerized runtime for isolated execution
 ├── pyproject.toml              # Dependencies & Pytest configuration
 ├── requirements.txt            # Python package requirements
+├── LICENSE                     # MIT License
 ├── ARCHITECTURE.md             # System architecture & data flow design
 ├── src/
-│   ├── core/                   # Structured LLM inference engine
+│   ├── core/                   # Structured LLM inference engine & fine-tuning
 │   │   ├── __init__.py
-│   │   └── llm_client.py       # Pydantic-enforced Structured LLM Client
+│   │   ├── llm_client.py       # Pydantic-enforced Structured LLM Client
+│   │   └── distillation_pipeline.py # Mission 17: Fine-Tuning & Model Distillation Pipeline
 │   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
 │   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
@@ -25,7 +27,8 @@ llm-engineering-lab/
 │   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
 │   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
 │   │   ├── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
-│   │   └── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
+│   │   ├── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
+│   │   └── multimodal_rag.py  # Mission 16: Multi-Modal RAG Engine & Visual Embedder
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
@@ -56,7 +59,10 @@ llm-engineering-lab/
     ├── test_self_rag.py         # Mission 11 validation
     ├── test_adaptive_rag.py     # Mission 12 validation
     ├── test_rag_benchmarker.py  # Mission 13 validation
-    └── test_mcp_gateway.py      # Mission 14 validation
+    ├── test_mcp_gateway.py      # Mission 14 validation
+    ├── test_adaptive_mcp_e2e.py  # Mission 15 validation
+    ├── test_multimodal_rag.py   # Mission 16 validation
+    └── test_distillation_pipeline.py # Mission 17 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap
@@ -77,6 +83,7 @@ llm-engineering-lab/
 - **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
 - **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`E2EintegrationEngine`, multi-tier tool discovery & sandboxed JSON-RPC execution)
 - **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
+- Mission 17: Fine-Tuning & Model Distillation Pipeline (DistillationTrainer, dataset generation, quality filtering, and LoRA training)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -176,6 +183,11 @@ llm-engineering-lab/
   - Dual-modal embedder projecting textual passages and visual document scans into shared latent vector spaces (`MultimodalEmbedder`).
   - In-memory multi-modal vector store supporting modality filtering (TEXT, IMAGE, or hybrid) (`MultimodalVectorStore`).
   - Multi-modal RAG orchestrator synthesizing grounded responses with source attribution across text chunks and visual asset URIs (`MultimodalRAGEngine`).
+
+- [x] **Mission 17: Fine-Tuning & Model Distillation Pipeline (v2.3.0)**
+  - Synthetic dataset generation pipeline transforming raw text corpus into instruction-response pairs via Teacher LLM (`DistillationDatasetGenerator`).
+  - Multi-stage quality filtering engine enforcing response confidence scores and minimum length criteria (`DatasetQualityFilter`).
+  - Simulated LoRA/PEFT distillation trainer logging epoch loss convergence and generating fine-tuned model metadata (`DistillationTrainer`).
 
 
 🚀 Quick Start (Docker)
