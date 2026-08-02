@@ -788,6 +788,30 @@ class TrainingMetrics(BaseModel):
     final_loss: float
     status: str
 
+### MISSION 18: GRAPHRAG ENTITY-RELATION ENGINE (`src/rag/graph_rag.py`)
+
+[ Unstructured Document / Text Chunk ]
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                     GraphExtractor                       │
+│     (Extracts Nodes: Entities, Edges: Relations)         │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                   KnowledgeGraphStore                    │
+│   (Adjacency Index, Multi-Hop Neighbor Traversal)        │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                     GraphRAGEngine                       │
+│  (Combines Subgraph Expansion with Grounded Synthesis)   │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+            [ GraphRAGResponse ]
 
 
 
