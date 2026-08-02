@@ -24,12 +24,13 @@ llm-engineering-lab/
 │   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
 │   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
 │   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
-│   │   ├── speculative_rag.py # Mission 9: Speculative RAG Pipeline
-│   │   ├── crag_pipeline.py   # Mission 10: Corrective RAG (CRAG) Engine
-│   │   ├── self_rag.py        # Mission 11: Self-RAG (Self-Reflective Engine)
-│   │   ├── adaptive_rag.py    # Mission 12: Adaptive RAG Router & Engine
-│   │   └── multimodal_rag.py  # Mission 16: Multi-Modal RAG Engine & Visual Embedder
-│   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
+│   │   ├── speculative_rag.py  # Mission 9: Speculative RAG Pipeline
+│   │   ├── crag_pipeline.py    # Mission 10: Corrective RAG (CRAG) Engine
+│   │   ├── self_rag.py         # Mission 11: Self-RAG (Self-Reflective Engine)
+│   │   ├── adaptive_rag.py     # Mission 12: Adaptive RAG Router & Engine
+│   │   └── multimodal_rag.py   # Mission 16: Multi-Modal RAG Engine & Visual Embedder
+│   │   └── graph_rag.py        # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
+│   ├── agent/                 # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py            # Tool registry & execution functions
 │   │   ├── agent_engine.py     # ReAct-style Agent decision loop
@@ -63,6 +64,7 @@ llm-engineering-lab/
     ├── test_adaptive_mcp_e2e.py  # Mission 15 validation
     ├── test_multimodal_rag.py   # Mission 16 validation
     └── test_distillation_pipeline.py # Mission 17 validation
+    └── test_graph_rag.py        # Mission 18 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap
@@ -83,7 +85,8 @@ llm-engineering-lab/
 - **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
 - **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`E2EintegrationEngine`, multi-tier tool discovery & sandboxed JSON-RPC execution)
 - **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
-- Mission 17: Fine-Tuning & Model Distillation Pipeline (DistillationTrainer, dataset generation, quality filtering, and LoRA training)
+- **Mission 17**: Fine-Tuning & Model Distillation Pipeline (`DistillationTrainer`, dataset generation, quality filtering, and LoRA training)
+- **Mission 18**: GraphRAG & Knowledge Graph Entity-Relation Engine (`GraphRAGEngine`, property graph store, multi-hop BFS neighborhood search, entity extraction)
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -189,6 +192,11 @@ llm-engineering-lab/
   - Multi-stage quality filtering engine enforcing response confidence scores and minimum length criteria (`DatasetQualityFilter`).
   - Simulated LoRA/PEFT distillation trainer logging epoch loss convergence and generating fine-tuned model metadata (`DistillationTrainer`).
 
+- [x] **Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine (v2.4.0)**
+  - Entity and relationship extraction from unstructured textual content (`GraphExtractor`).
+  - In-memory property graph store with dynamic entity nodes, directed relationship edges, and BFS multi-hop traversal (`KnowledgeGraphStore`).
+  - Multi-hop subgraph expansion and grounded context generation engine (`GraphRAGEngine`).
+  
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

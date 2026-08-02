@@ -46,8 +46,12 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 │  Direct LLM        │            │ Single-Pass RAG  │             │ Multi-Pass Agent │
 │  Inference         │            │ (Hybrid Search)  │             │ / MCP Gateway    │ (Mission 14/15)
 └──────────┬─────────┘            └────────┬─────────┘             └────────┬─────────┘
-           │                               │                                │
-           └───────────────────────────────┼────────────────────────────────┘
+                                           │
+                                           ▼
+                               ┌──────────────────────────┐
+                               │     GraphRAG Engine      │ (Mission 18)
+                               │ (Multi-Hop Entity Graph) │
+                               └───────────┬──────────────┘
                                            │
                                            ▼
                                ┌──────────────────────────┐
@@ -812,6 +816,34 @@ class TrainingMetrics(BaseModel):
                      │
                      ▼
             [ GraphRAGResponse ]
+
+**Core Subsystem Schemas**
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field
+
+class Entity(BaseModel):
+    """Node representing a real-world entity in the Knowledge Graph."""
+    id: str
+    type: str
+    description: str = ""
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+class Relationship(BaseModel):
+    """Directed edge representing a relationship between two entities."""
+    source_id: str
+    target_id: str
+    relation_type: str
+    description: str = ""
+    weight: float = 1.0
+
+class GraphRAGResponse(BaseModel):
+    """Response output from GraphRAG multi-hop retrieval and synthesis."""
+    query: str
+    answer: str
+    retrieved_entities: List[str]
+    retrieved_relations: List[str]
+    subgraph_depth: int
+
 
 
 
