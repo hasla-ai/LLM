@@ -1040,6 +1040,10 @@ class KVCacheStats(BaseModel):
                                                            ▼
                                                [ Execution Result Output ]
 
+**Core Architectural Components**
+- `SecurityPolicy`: Defines dynamic security configurations, including forbidden imports (e.g., os, sys, subprocess), blocked functions (e.g., eval, exec, open), maximum output character limits, and execution timeouts.
+- `CodeSecurityAuditor`: Statically inspects Python code using the Abstract Syntax Tree (ast) module without executing it, flagging unapproved imports or prohibited function calls.
+- `CodeExecutionSandbox`: Safely executes pre-audited code within a restricted global/local scope, utilizing redirected `stdout` and `stderr` streams along with a structured `ExecutionResult` model.
 
 
 

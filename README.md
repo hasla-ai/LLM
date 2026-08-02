@@ -93,6 +93,9 @@ llm-engineering-lab/
 - **Mission 18**: GraphRAG & Knowledge Graph Entity-Relation Engine (`GraphRAGEngine`, property graph store, multi-hop BFS neighborhood search, entity extraction)
 - **Mission 19**: Real-Time Audio & Streaming Speech Agent (`RealTimeAudioAgent`, chunked audio frames, streaming TTS synthesis, voice turn orchestration)
 - **Mission 20**: Multi-Agent Consensus & Debate Orchestrator (`MultiAgentDebateOrchestrator`, role-based agent debate, confidence-weighted consensus evaluation)
+- **Mission 21**: Long-Context KV Cache Management System (`KVCacheManager`, `CacheEvictionPolicy`)
+- **Mission 22**: Autonomous Code Execution Sandbox (`CodeExecutionSandbox`, `CodeSecurityAuditor`, `SecurityPolicy`)
+
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -209,10 +212,43 @@ llm-engineering-lab/
   - Low-latency real-time voice interaction loop with simulated ASR, agent reasoning, and interruption state management (`RealTimeAudioAgent`).
 
 - [x] **Mission 20: Multi-Agent Consensus & Debate Orchestrator (v2.6.0)**
-  - Typed agent roles (PROPONENT, OPPONENT, JUDGE) and structured debate message containers (DebateMessage).
-  - Multi-round debate orchestrator with dynamic confidence scoring and threshold-based consensus validation (MultiAgentDebateOrchestrator).
-  - Auditable debate history tracking arguments, rebuttals, and final synthesized decisions (ConsensusResult).
+  - Typed agent roles (PROPONENT, OPPONENT, JUDGE) and structured debate message containers (`DebateMessage`).
+  - Multi-round debate orchestrator with dynamic confidence scoring and threshold-based consensus validation (`MultiAgentDebateOrchestrator`).
+  - Auditable debate history tracking arguments, rebuttals, and final synthesized decisions (`ConsensusResult`).
 
+- [x] **Mission 21: Long-Context Chunking & Dynamic KV Cache Manager (v2.7.0)**
+  - Hierarchical document chunker with configurable token budgets and overlap alignment (`HierarchicalChunker`).
+  - Simulated key-value (KV) attention cache block allocation and hit/miss metric collection (`DynamicKVCacheManager`).
+  - Flexible memory eviction policies (`LRU` and `LFU`) to maintain strict context window caps under high query pressure.
+
+- [x] **Mission 22: Autonomous Code Execution Sandbox**
+  - Execute agent-generated Python code in a safe, controlled local environment with AST-based static analysis.
+
+```bash
+from src.agent.code_sandbox import CodeExecutionSandbox, SecurityPolicy
+
+# 1. Initialize sandbox with default security boundaries
+sandbox = CodeExecutionSandbox()
+
+# 2. Execute safe python code snippet
+safe_code = """
+x = 10
+y = 20
+result = x + y
+print(f"Computed total: {result}")
+"""
+
+res = sandbox.execute(safe_code)
+print("Success:", res.is_success)
+print("Stdout:", res.stdout)
+print("Result Value:", res.return_value)
+
+# 3. Execution of untrusted code is blocked statically
+malicious_code = "import os; os.listdir('.')"
+blocked_res = sandbox.execute(malicious_code)
+print("Success:", blocked_res.is_success)
+print("Violations:", blocked_res.violations)
+```
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
