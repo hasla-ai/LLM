@@ -1962,3 +1962,30 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
 │ Export to Fine-Tuning JSONL     │ │ Discard / Route to Self-Healing │
 │ (Feeds Distillation #17 / #29)  │ │ Refinement Loop (#27)           │
 └─────────────────────────────────┘ └─────────────────────────────────┘
+
+### MISSION 44: REAL-TIME STREAMING SPECULATIVE DECODER (`src/core/speculative_decoder.py`)
+
+===================================================================================
+ MISSION 44: REAL-TIME STREAMING SPECULATIVE DECODER & DRAFT ORCHESTRATOR
+===================================================================================
+
+                    [ Incoming Prompt Request ]
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│               Lightweight Draft Model (e.g. 1B-3B LLM)                  │
+│  └─ Generate Speculative Candidate Tokens (e.g. 5 tokens ahead)         │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │ TokenDraft Payload
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│              Target Model Validator (e.g. 70B Foundation LLM)           │
+│  ├─ Parallel Verification of Draft Candidate Tokens                     │
+│  └─ Truncate at First Rejected Candidate Token                          │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │ ValidationResult Payload
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│              Accepted Tokens Streamed to Client Output Mesh             │
+│  (Delivers ~2x-3x speedup with zero degeneration in accuracy)            │
+└─────────────────────────────────────────────────────────────────────────┘
