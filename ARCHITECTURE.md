@@ -32,7 +32,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 ```text
                                             [ User / External Client Query ]
                                                             │
-                                                            ▼
+         1. ENTERPRISE GATEWAY & SECURITY PERIMETER         ▼
                                     ┌───────────────────────────────────────────────┐
                                     │ Enterprise Multi-Tenant Gateway & Rate Limiter│ (# 24)
                                     │  -> Token Bucket Rate Limiter                 │
@@ -50,6 +50,12 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                     │  -> Prompt Injection Defense & PII Sanitizer  │
                                     └───────────────────────┬───────────────────────┘
                                                             │
+                                                            ▼                                    
+                                     ┌─────────────────────────────────────────────┐
+                                     │ Enterprise Audit Logging Mesh Genesis Event │ (# 34)
+                                     └──────────────────────┬──────────────────────┘
+                                                            │
+│  2. ADAPTIVE ROUTING & VISUAL INGESTION LAYER             ▼
                  ┌──────────────────────────────────────────┴────┐
                  │                                               │
                  ▼ (Visual / Image / Doc)                        ▼ (Text / Prompt Query)
@@ -59,33 +65,40 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 │ -> Document Agent (# 23)        |             |                                 |
     to Document Layout Analyzer (#30)           |                                 |
 └────────────────┬────────────────┘               ───────────────┬────────────────┘
-                 │                                               │
+                 │                                               │          4. AGENTIC ORCHESTRATION & REASONING CORE(*)
                  |              ┌────────────────────────────────┼────────────────────────────────┐
                  │              │ (SIMPLE)                       │ (CODE_EXECUTION)               │ (COMPLEX)
                  │              ▼                                ▼                                ▼
                  │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
                  │  │ Direct LLM Inference  │        │ Code Execution        │ (# 22) │ Multi-Agent Debate    │ (# 20)
-                 │  │                       │        │ Sandbox Engine        │        │ Engine                │
+                 │  │                       │        │ Sandbox Engine *      │        │ Engine *              │
                  │  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
                  │              │                                │                                │
                  │              │                                ▼                                │
                  │              │                    ┌───────────────────────┐                    │
-                 │              │                    │ Self-Correction Loop  │ (# 27)             │
-                 │              │                    └───────────┬───────────┘                    │                 
-                 │              └────────────────────────────────┼────────────────────────────────┘
+                 │              │                    │ Self-Correction Loop *│ (# 27)             │
+                 │              │                    └───────────┬───────────┘                    │
+                 |              |                        ┌─────────────────────────────────────────────────-─┐           
+                 |              |                        |  LLM / Agent Generated Code Snippet (# 20 / # 27) |
+                 |              |.                       └───────────┬───────────────────────────────────────┘
+                 │              └────────────────────────────────────┼────────────────────────────┘
+            ┌───────────────────────────────────────────────────────────────────┐
+            |       SELF-HEAVY AGENT CIRCUIT BREAKER & FALLBACK MESH #32        |
+            └───────────────────────────────────────────────────────────────────┘
                  │                                               │
                  │                                               ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│          Visual KV Cache (#31)                  │ Hierarchical Chunker & KV Cache (# 21)                    │
+│ Multi-Modal Visual                                │ Hierarchical Chunker & KV Cache (# 21)                  │
+│  KV-Cache Retention Engine (#31)                  │                                                         │   
 └─────────────────────────────────────────────────────────────────────────────────────────────-───────────────┘
                                                     │                │ Multi-Agent Debate
-                                                    ▼                ▼      - Consensus #33
+                                                    ▼                ▼      - Consensus* (#33)
                             ┌───────────────────────────────────────────────┐
                             │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │
                             │  (Domain/Tenant Weight Hot-Swapping Engine)   │
-                            └───────────────────────┬────────────────┬──────┘                 
+                            └───────────────────────┬────────────────┬──────┘ 5. INFERENCE&RUNTIME OPTIMIZATION LAYER
                                                     │                │
-                                                    ▼                ▼
+ 3. DUAL-TIER ISOLATED MEMORY & RETRIEVAL PIPELINE  ▼                ▼
                             ┌───────────────────────────────────────────────┐
                             │ Dual Memory & Retrieval Pipeline              │
                             │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
@@ -97,10 +110,10 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                                     ▼                ▼                 
                             ┌───────────────────────────────────────────────┐         
                             │ Model Distillation Engine (# 17)              │         
-                            │ (Synthetic LoRA Trainer) - OFFLINE FLYWHEEL   │
-                            └───────────────────────┬────────────────┬──────┘
+                            │ (Synthetic LoRA Trainer)                      │
+                            |  - Continuous learning flywheel -             |                            └───────────────────────┬────────────────┬──────┘
                                                     │                │        
-                                                    ▼                ▼
+6. STREAMING EVALUATION & GUARDRAILS PASS 2         ▼                ▼
                             ┌───────────────────────────────────────────────┐
                             │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)
                             │  -> PII Unmasking, Output Policy & Audit Log  │
@@ -108,8 +121,14 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                                     │
                                                     ▼
                             ┌───────────────────────────────────────────────┐
-                            │ 📊 AuditTelemetryMesh Core                     │ (# 34)
-                            │   -> Hallucination Score Check                |
+                            │ Real-Time Stream Evaluator                    │ (# 35)
+                            │   & Hallucination Guard (# 35)                |
+                            └───────────────────────┬───────────────────────┘                        
+7. TELEMETRY, COMPLIANCE & CONTINUOUS LEARNING FLYWHEEL
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ 📊 Cryptographic Tamper-Evident               │ (# 34)
+                            │   -> Audit Telemetry Mesh                     |
                             └───────────────────────┬───────────────────────┘
 
                             ┌───────────────────────────────────────────────┐
@@ -1548,9 +1567,55 @@ class TenantContext(BaseModel):
 2. Text Input  ──► Mission 21 (Text KV Cache): Prevention of repetitive text computations
                          └─► Instantly restores previous conversation text tokens from KV Cache
 
+===================================================================================
+ MISSION 32: SELF-HEAVY AGENT CIRCUIT BREAKER & FALLBACK MESH
+===================================================================================
 
+       [ Autonomous Agent Execution Loop (# 20 / # 22 / # 27) ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    AgentCircuitBreaker Core                             │
+│                                                                         │
+│  State Machine Check:                                                   │
+│    ├── 🟢 CLOSED    : Normal execution ──► Primary LLM/Tool Provider   │
+│    ├── 🔴 OPEN      : Tripped ──────────► Bypasses Primary ──┐          │
+│    └── 🟡 HALF-OPEN : Recovery Probe ──► Test Request Probe  │          │
+└──────────────────────────────────┬────────────────────────┴─────────────┘
+                                   │                        │
+                       [ Primary Execution Fails /          │
+                         Consecutive Failures >= 3 ]        │
+                                   │                        │
+                                   ▼                        ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          Fallback Mesh Router                           │
+│  ├─ Redirects call to secondary provider (e.g., Local LLM / Backup API) │
+│  ├─ Emits WARNING severity audit event to Telemetry Mesh (# 34)         │
+│  └─ Returns safe degraded payload without crashing caller               │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                                   ▼
+                     [ Verified Execution Result ]
 
+┌───────────────────────────────────────────────────────────┐
+       │                                                           │
+       ▼                                                           │
+┌──────────────┐   Consecutive Failures >= Threshold   ┌──────────────┐
+│  🟢 CLOSED   │ ────────────────────────────────────► │   🔴 OPEN    │
+└──────────────┘                                       └──────────────┘
+       ▲                                                       │
+       │                                                       │
+ Successful Probe                                  Timeout (10s) Elapsed
+       │                                                       │
+       │               ┌──────────────────┐                    │
+       └───────────────│  🟡 HALF-OPEN    │ ◄──────────────────┘
+                       └──────────────────┘
+                         Probe Fails ──► Trips back to OPEN
 
+State Machine: Manages operational state (CLOSED, OPEN, HALF_OPEN)(`CircuitState`).
+Config Engine: Defines thresholds(failure_threshold=3, recovery_timeout_sec=10.0)(`CircuitBreakerConfig`).
+Execution Wrapper: Intercepts agent tool/LLM calls and safely diverts to fallback_fn if primary fails or circuit is OPEN(`execute_with_fallback`).
+Recovery Probe: Automatically switches OPEN → HALF_OPEN after the timeout to test if primary services have recovered(`check_state_transition`).
 
 ### MISSION 33: MULTI-AGENT CONSENSUS GRAPH & CONFLICT RESOLUTION ENGINE (`src/agent/consensus_graph.py`)
 
@@ -1559,6 +1624,7 @@ class TenantContext(BaseModel):
 ===================================================================================
 
                 [ Divergent Multi-Agent Output Proposals (# 20) ]
+                (Security Agent, Legal Agent, Code Reviewer, etc.)
                                        │
                                        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -1570,7 +1636,24 @@ class TenantContext(BaseModel):
                                        │
                                        ▼
                          [ ConsensusResult Payload ]
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        ConsensusResult Payload                          │
+│  ├─ winning_proposal_id & winning_content                               │
+│  ├─ consensus_score (normalized agreement/confidence ratio)             │
+│  └─ participating_agents tracking list                                  │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   ▼
             (Unified Verified Response ready for Guardrail Pass 2 # 4/7)
+                                   ▼
+            [ Cryptographic Audit Telemetry Mesh (# 34) ]
+
+(`WEIGHTED_SCORE`(Default)) Critical domain tasks (e.g., Security/Legal) where expert agent votes carry more authority.$Score = \frac{Confidence \times Weight}{\sum Weight}$
+(`MAJORITY_VOTE`) Fact-checking, multi-source RAG validation, or classification tasks.	Wins by highest accumulated agent weight for matching content.
+(`HIGHEST_CONFIDENCE`) Fast-path single-agent winner selection without graph voting.$\max(Confidence\_Score)$ across all submitted proposals.
+
+Input Payload: `agent_id`, `proposal_id`, `content`, `confidence_score` (0.0–1.0), and `agent_weight`(`AgentProposalStores`).
+Engine Core: Evaluates divergent agent proposals and arbitrates conflicts using `resolve_consensus()`(`ConsensusGraphEngine`).
+Strategy Enum: Configures arbitration policy (MAJORITY_VOTE, WEIGHTED_SCORE, HIGHEST_CONFIDENCE) (`ConsensusStrategy`).Output Payload: Outputs the winning proposal, final consensus score, and participating agent list(`ConsensusResult`).
 
 ### MISSION 34: ENTERPRISE AUDIT LOGGING, COMPLIANCE & TELEMETRY MESH (`src/eval/audit_telemetry_mesh.py`)
 
@@ -1583,9 +1666,9 @@ class TenantContext(BaseModel):
                                                  ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
 │                                 AuditTelemetryMesh Core                                 │
-│  ├─ Cryptographic SHA-256 Event Hashing & Chain Linking                                  │
+│  ├─ Cryptographic SHA-256 Event Hashing & Chain Linking                                 │
 │  ├─ Tenant-Isolated Audit Trail Partitioning                                            │
-│  └─ Continuous Chain Tamper-Detection Verification Engine                                │
+│  └─ Continuous Chain Tamper-Detection Verification Engine                               │
 └────────────────────────────────────────┬────────────────────────────────────────────────┘
                                          │
                                          ▼
@@ -1598,15 +1681,61 @@ class TenantContext(BaseModel):
  MISSION 35: REAL-TIME STREAM EVALUATOR & HALLUCINATION GUARD
 ===================================================================================
 
-               [ Streaming Token Output Generator (LLM Kernel) ]
-                                       │
-                                       ▼
+                [ LLM Streaming Token Kernel Generator ]
+                                   │
+                                   ▼ (Raw Token Stream Generator)
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    RealTimeStreamEvaluator Core                         │
-│  ├─ Chunk-by-Chunk Grounding & Hallucination Score Check                 │
-│  ├─ Safe Token Stream Forwarding                                        │
-│  └─ Threshold Breach ➜ Early Stream Circuit Termination & Block       │
-└──────────────────────────────────────┬──────────────────────────────────┘
-                                       │
-                                       ▼
-                 [ Verified Streaming Chunks / Audit Trail # 34 ]
+│                   RealTimeStreamEvaluator Core                          │
+│                                                                         │
+│  Chunk-by-Chunk Evaluator & Interceptor:                               │
+│    ├── Token Accumulator      : Appends chunks to running buffer       │
+│    ├── Fast Grounding Matcher : Evaluates text against reference RAG   │
+│    └── Hallucination Check    : Compares score against threshold       │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+   Score < Threshold (SAFE)            Score >= Threshold (BREACH)
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│      Safe Stream Forwarder      │ │    Early Termination Circuit    │
+│  ├─ Emits SAFE chunk to client  │ │  ├─ Emits BLOCKED error chunk   │
+│  └─ Continues stream generation │ │  └─ Immediately terminates loop │
+└────────────────┬────────────────┘ └────────────────┬────────────────┘
+                 │                                   │
+                 └─────────────────┬─────────────────┘
+                                   │
+                                   ▼
+          [ Cryptographic Audit Telemetry Mesh (# 34) Logging ]
+
+Status Enum(`StreamSafetyStatus`): Operational status values (`SAFE`, `WARNING`, `HALLUCINATION_DETECTED`, `BLOCKED`).
+Chunk Payload(`StreamChunkEvaluation`):	Contains chunk_index, text_chunk, accumulated_text, hallucination_score, and is_terminated.
+Evaluator Engine(`RealTimeStreamEvaluator`):	Yields chunk evaluations in real-time and executes early-stopping via evaluate_stream().
+Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedding matcher checking ungrounded content against reference context.
+
+### MISSION 36: AGENTIC SELF-HEALING CODE REFACTORING & AST VALIDATION SANDBOX (`src/agent/ast_refactor_sandbox.py`)
+
+===================================================================================
+ MISSION 36: AGENTIC SELF-HEALING CODE REFACTORING & AST VALIDATION SANDBOX
+===================================================================================
+
+                [ LLM / Agent Generated Code Snippet (# 20 / # 27) ]
+                                         │
+                                         ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ASTRefactorSandboxEngine Core                        │
+│  ├─ AST Syntax Parse & Error Isolation (No execution risks)             │
+│  ├─ AST Node Transformer (Auto-refactor bare except / flag eval)         │
+│  └─ Source Unparse & ASTValidationResult Payload Generation             │
+└────────────────────────────────────────┬────────────────────────────────┘
+                                         │
+                 ┌───────────────────────┴───────────────────────┐
+                 │                                               │
+           Syntax Valid                                    Syntax Invalid
+                 │                                               │
+                 ▼                                               ▼
+┌─────────────────────────────────┐             ┌─────────────────────────────────┐
+│   Safe Code Sandbox Execution   │             │   Self-Healing Agent Retry Loop │
+│  (Docker / PyPy Sandbox # 22)   │             │   (Feeds error back to LLM # 27)│
+└─────────────────────────────────┘             └─────────────────────────────────┘

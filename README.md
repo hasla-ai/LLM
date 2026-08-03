@@ -298,6 +298,11 @@ llm-engineering-lab/
   - Token/chunk-by-chunk streaming response evaluation engine (`RealTimeStreamEvaluator`).
   - Early-stopping hallucination circuit breaker preventing ungrounded token delivery (`StreamChunkEvaluation`, `StreamSafetyStatus`).
   - Grounding validation against reference RAG context during live token streaming (`_compute_chunk_hallucination_score`).
+
+  - [x] **Mission 36: Agentic Self-Healing Code Refactoring & AST Validation Sandbox (v4.2.0)**
+  - Abstract Syntax Tree (AST) static analysis and syntax validation engine (`ASTRefactorSandboxEngine`).
+  - Automatic AST transformer refactoring bare `except:` clauses and dangerous code constructs (`ASTSecurityAndCleanlinessTransformer`).
+  - Code unparsing and structural integrity validation prior to sandbox execution (`validate_and_refactor`).
   
 🚀 Quick Start (Docker)
 1. Set Environment Variables
