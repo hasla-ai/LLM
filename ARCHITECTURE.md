@@ -65,6 +65,10 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │  │                       │        │ Sandbox Engine        │        │ Engine                │
                  │  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
                  │              │                                │                                │
+                 │              │                                ▼                                │
+                 │              │                    ┌───────────────────────┐                    │
+                 │              │                    │ Self-Correction Loop  │ (# 27)             │
+                 │              │                    └───────────┬───────────┘                    │                 
                  │              └────────────────────────────────┼────────────────────────────────┘
                  │                                               │
                  │                                               ▼
@@ -76,6 +80,11 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │                                               ▼
                  │                                               │
                  └───────────────────────────────────────────┬───┘
+                                                             ▼
+                                    ┌───────────────────────────────────────────────┐
+                                    │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │
+                                    │  (Domain/Tenant Weight Hot-Swapping Engine)   │
+                                    └───────────────────────┬───────────────────────┘                 
                                                              │
                                                              ▼
                                      ┌───────────────────────────────────────────────┐
@@ -112,6 +121,60 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                                              ▼
                                                     [ Grounded Output ]
 ```
+'시스템 구동 관점' - 호출 관계를 [어떤 레이어가 어떤 레이어를 포함/감싸고 있는가(Wrapping)]와 [데이터/요청이 들어오는 방향] 중 어디서 보느냐에 따라 로직의 시작점이 달라집니다.
+[ 상위 / 바깥 레이어 : 라우팅 & 엔진 환경 준비 ]
+┌─────────────────────────────────────────────────────────────┐
+│  #29 LoRAAdapterRouter                                      │
+│  - 요청의 성격(코드? 대화? 에이전트?)을 미리 감지                     │
+│  - Base LLM에 필요한 LoRA 어댑터를 Hot-Swap으로 적재/바인딩          │
+│                                                             │
+│   ┌─────────────────────────────────────────────────────┐   │
+│   │  [ 내부 / 실행 레이어 : 태스크 수행 ]                      │   │
+│   │  #20 Multi-Agent / #22 Code Sandbox / Direct LLM    │   │
+│   │  - 준비된 LoRA 환경(또는 라우터)을 거쳐 답변/코드 생성         │   │
+│   └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+"진입점(Entry Point) 및 환경 설정 로직"
+ - 요청 인터셉트 및 라우팅 (#29 우선 실행):
+사용자의 요청이나 라우터 레이어로 전달된 메시지를 #29 LoRAAdapterRouter가 가장 먼저 받습니다.
+ - LoRA Hot-Swap (바인딩):
+#29가 "이 요청은 Python 코드를 작성/실행해야 하는 요청이군" 혹은 "Multi-Agent 조율용 태스크군"을 판별하고, Base LLM의 실행 컨텍스트에 해당 LoRA 어댑터를 무중단으로 미리 바인딩(Hot-Swap) 해둡니다.
+ - 태스크 실행 (#20/#22 호출):
+이미 올바른 어댑터가 꽂혀 있는 LLM 환경 위에서 #22 Code Sandbox가 코드를 생성하고 실행하거나, #20 Multi-Agent가 작동하여 결과를 만들어냅니다.
+
+에이전트나 샌드박스가 "나 이제 모델 쓸게!" 하고 모델을 부르는 순간에 스위칭을 시작하면 지연 시간(Latency)이나 레이스 조건(Race Condition)이 생길 수 있습니다. 따라서 요청 진입 단계에서 #29가 에이전트/샌드박스가 일할 '무대(LoRA 어댑터)'를 먼저 셋업해 주는 흐름이 로직상 매우 자연스럽습니다.
+
+"동적 의도 파악(Dynamic Agentic) 로직"
+반대로 20/22 -> 29 흐름으로 설명되는 경우는 에이전트가 작동하는 도중에 '어떤 LoRA가 필요한지' 뒤늦게 결정되는 구조일 때입니다.
+#20 Multi-Agent가 사용자의 복잡한 요구사항을 분석하기 시작합니다. 에이전트 루프 안에서 "아, 3단계 작업에서는 SQL 전용 LoRA가 필요하고, 4단계 작업에서는 C++ 코드 생성용 LoRA가 필요하네?" 라고 실행 중간에 판단합니다. 이 시점에 에이전트가 #29 LoRAAdapterRouter에게 "SQL 어댑터로 교체해 줘"라고 역호출(Call)하여 Hot-Swap을 수행합니다.
+
+Inference Execution Subsystem 
+┌────────────────────────────────────────────────────────────────────────┐
+│               Inference Execution Subsystem                            │
+│                                                                        │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │ 1. Request Scheduler & Batcher (PagedAttention Control)        │   │
+│   └──────────────────────────────┬─────────────────────────────────┘   │
+│                                  │                                     │
+│   ┌──────────────────────────────▼─────────────────────────────────┐   │
+│   │ 2. LoRA Adapter Manager (#29)                                  │   │
+│   │    - Base Model Weights (Frozen, FP16/INT4)                    │   │
+│   │    - Dynamic LoRA Weights (A, B Matrices)                      │   │
+│   │    - Memory Pool (GPU HBM Segmented Manager)                   │   │
+│   └──────────────────────────────┬─────────────────────────────────┘   │
+│                                  │                                     │
+│   ┌──────────────────────────────▼─────────────────────────────────┐   │
+│   │ 3. Paged KV-Cache Engine (#21)                                 │   │
+│   │    - Virtual Memory Blocks for Key/Value Tensors               │   │
+│   └──────────────────────────────┬─────────────────────────────────┘   │
+│                                  │                                     │
+│   ┌──────────────────────────────▼─────────────────────────────────┐   │
+│   │ 4. Compute Kernels (Triton / CUDA)                             │   │
+│   │    - Custom BMM (Batch Matrix Multiplication) for LoRA         │   │
+│   │    - FlashAttention-2 / PagedAttention Kernels                 │   │
+│   └────────────────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────────────┘
+
 
 ## 🧩 Core Subsystem Modules
 
@@ -1371,3 +1434,29 @@ class TenantContext(BaseModel):
                                      │
                                      ▼
                        [ Verified Clean Output Response ]
+
+### MISSION 29: DYNAMIC FINE-TUNING & ADAPTIVE LORA ADAPTER ROUTER (`src/core/lora_adapter_router.py`)
+
+===================================================================================
+ MISSION 29: DYNAMIC FINE-TUNING & ADAPTIVE LORA ADAPTER ROUTER
+===================================================================================
+
+                [ Classified Domain Intent & Tenant Context ]
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       LoRAAdapterRouter Core                            │
+│  ├─ Tenant-Specific Domain Adapter Search                               │
+│  ├─ Shared Enterprise Domain Adapter Fallback                           │
+│  └─ Base Model Resolution (No Adapter)                                  │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     Dynamic Weight Hot-Swapper                          │
+│     (Swaps PEFT/LoRA matrices without reloading base model weights)      │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                      [ Active Domain Model Runtime ]
+             (Base LLM Backbone + Dynamically Injected LoRA Weights)

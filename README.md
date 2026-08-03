@@ -24,6 +24,7 @@ llm-engineering-lab/
 │   │   └── distillation_pipeline.py  # Mission 17: Fine-Tuning & Model Distillation Pipeline
 │   │   ├── llm_gateway.py            # Mission 24: Enterprise LLM Gateway & Rate Limiter
 │   │   └── tenant_security_engine.py # Mission 28: Multi-Tenant Data Isolation & Security
+│   │   └── lora_adapter_router.py    # Mission 29: Dynamic LoRA Adapter Router
 │   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
 │   │   ├── vector_store.py         # In-Memory Vector Store & Cosine Similarity engine
@@ -89,6 +90,7 @@ llm-engineering-lab/
     ├── test_persistent_memory.py      # Mission 26 validation
     └── test_self_correction_engine.py # Mission 27 validation
     └── test_tenant_security_engine.py# Mission 28 validation
+    └── tests/test_lora_adapter_router.py # Mission 30 validation
 ```
 
 ## 🎯 Mission Roadmap
@@ -261,6 +263,11 @@ llm-engineering-lab/
   - Dual-pass security execution pipeline providing Input Prompt Sanitization and Output Payload Audit (`GuardrailAuditor`).
   - Regex & Named-Entity PII masking engine with bidirectional secure token substitution (`mask_pii`, `unmask_pii`).
   - System jailbreak / prompt injection classification and automated audit logging (`audit_log`).
+
+- [x] **Mission 29: Dynamic Fine-Tuning & Adaptive LoRA Adapter Router (v3.5.0)**
+  - Fine-tuned domain adapter metadata schema and registry pool (`LoRAAdapterConfig`, `DomainTaskType`).
+  - Adaptive resolution selecting tenant-customized weights over shared enterprise domain adapters (`select_optimal_adapter`).
+  - Zero-downtime weight hot-swapping execution engine on base LLM backbone (`hot_swap_adapter`).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
