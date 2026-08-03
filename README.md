@@ -289,7 +289,16 @@ llm-engineering-lab/
   - Support for multiple resolution strategies: weighted domain scoring, majority voting, and confidence thresholds (`ConsensusStrategy`).
   - Conflict arbitration among divergent multi-agent outputs (`resolve_consensus`).
 
+- [x] **Mission 34: Enterprise Audit Logging, Compliance & Telemetry Mesh (v4.0.0)**
+  - Cryptographically hashed, tamper-evident immutable audit logging chain (`AuditTelemetryMesh`, `AuditEvent`).
+  - Strict verification of log chain integrity for SOC2/GDPR compliance auditing (`verify_chain_integrity`).
+  - Tenant-isolated audit log filtering and severity classification (`get_tenant_audit_trail`, `AuditSeverity`).
 
+- [x] **Mission 35: Real-Time Stream Evaluator & Hallucination Guard (v4.1.0)**
+  - Token/chunk-by-chunk streaming response evaluation engine (`RealTimeStreamEvaluator`).
+  - Early-stopping hallucination circuit breaker preventing ungrounded token delivery (`StreamChunkEvaluation`, `StreamSafetyStatus`).
+  - Grounding validation against reference RAG context during live token streaming (`_compute_chunk_hallucination_score`).
+  
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
@@ -306,7 +315,3 @@ docker build -t llm-lab .
 docker run --rm --env-file .env -v $(pwd):/app llm-lab
 ```
 
-Hybrid Vector & BM25 Retriever: ChromaDB/Qdrant 등 벡터 DB 검색과 Rank-BM25 키워드 검색을 동시 실행.
-Reciprocal Rank Fusion (RRF) Reranker: 두 검색 결과의 순위를 아래 산식을 통해 합산하여 단어 일치와 의미 유사도를 동시에 만족하는 최적의 문맥 도출:
-$$\text{RRF Score}(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
-Dynamic Memory Pruning & Summarizer: 오래되거나 중복된 정보는 요약(Summary) 처리하여 백터 메모리에 축적하고, 토큰 버퍼 사용량을 최적화.
