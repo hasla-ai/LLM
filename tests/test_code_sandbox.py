@@ -1,5 +1,5 @@
 import pytest
-from src.agent.code_sandbox import (
+from src.sandbox.code_sandbox import (
     CodeExecutionSandbox,
     CodeSecurityAuditor,
     SecurityPolicy,

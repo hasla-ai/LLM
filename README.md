@@ -25,16 +25,17 @@ llm-engineering-lab/
 │   │   ├── llm_gateway.py            # Mission 24: Enterprise LLM Gateway & Rate Limiter
 │   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
-│   │   ├── vector_store.py     # In-Memory Vector Store & Cosine Similarity engine
-│   │   ├── rag_pipeline.py     # Context retrieval & synthesis orchestrator
-│   │   ├── hybrid_search.py    # BM25 + Vector Search with Reciprocal Rank Fusion
-│   │   ├── agentic_rag.py      # Mission 8: Agentic RAG Engine
-│   │   ├── speculative_rag.py  # Mission 9: Speculative RAG Pipeline
-│   │   ├── crag_pipeline.py    # Mission 10: Corrective RAG (CRAG) Engine
-│   │   ├── self_rag.py         # Mission 11: Self-RAG (Self-Reflective Engine)
-│   │   ├── adaptive_rag.py     # Mission 12: Adaptive RAG Router & Engine
-│   │   └── multimodal_rag.py   # Mission 16: Multi-Modal RAG Engine & Visual Embedder
-│   │   └── graph_rag.py        # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
+│   │   ├── vector_store.py         # In-Memory Vector Store & Cosine Similarity engine
+│   │   ├── rag_pipeline.py         # Context retrieval & synthesis orchestrator
+│   │   ├── hybrid_search.py        # BM25 + Vector Search with Reciprocal Rank Fusion
+│   │   ├── agentic_rag.py          # Mission 8: Agentic RAG Engine
+│   │   ├── speculative_rag.py      # Mission 9: Speculative RAG Pipeline
+│   │   ├── crag_pipeline.py        # Mission 10: Corrective RAG (CRAG) Engine
+│   │   ├── self_rag.py             # Mission 11: Self-RAG (Self-Reflective Engine)
+│   │   ├── adaptive_rag.py         # Mission 12: Adaptive RAG Router & Engine
+│   │   └── multimodal_rag.py       # Mission 16: Multi-Modal RAG Engine & Visual Embedder
+│   │   └── graph_rag.py            # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
+│   │   └── persistent_memory.py    # Mission 26: Persistent Semantic Memory Engine
 │   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
 │   │   ├── __init__.py
 │   │   ├── tools.py                  # Tool registry & execution functions
@@ -43,8 +44,11 @@ llm-engineering-lab/
 │   │   └── mcp_gateway.py            # Mission 14: MCP Tool Server & Protocol Gateway
 │   │   └── audio_agent.py            # Mission 19: Real-Time Audio & Streaming Speech Agent
 │   │   └── debate_orchestrator.py    # Mission 20: Multi-Agent Consensus & Debate Orchestrator
-│   │   ├── code_sandbox.py           # Mission 22: Autonomous Code Execution Sandbox
 │   │   └── vision_document_agent.py  # Mission 23: Multi-Modal Vision Agent
+│   ├── sandbox/                      # Isolated Code Execution & Reflection Runtime
+│   │   ├── __init__.py
+│   │   ├── code_sandbox.py           # Mission 22: Autonomous Code Execution Sandbox
+│   │   └── self_correction_engine.py # Mission 27: Self-Correction Sandbox & Code Feedback Loop
 │   ├── eval/                   # Evaluation & Guardrails engine
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
@@ -76,8 +80,13 @@ llm-engineering-lab/
     └── test_graph_rag.py        # Mission 18 validation
     └── test_audio_agent.py      # Mission 19 validation
     └── test_debate_orchestrator.py # Mission 20 validation
+    ├── test_kv_cache_manager.py       # Mission 21 validation
+    ├── test_code_sandbox.py           # Mission 22 validation
     └── test_vision_document_agent.py# Mission 23 validation
     └── test_llm_gateway.py      # Mission 24 validation
+    ├── test_telemetry_tracer.py       # Mission 25 validation
+    ├── test_persistent_memory.py      # Mission 26 validation
+    └── test_self_correction_engine.py # Mission 27 validation
 ```
 
 ## 🎯 Mission Log & Architecture Roadmap
@@ -259,10 +268,17 @@ llm-engineering-lab/
   - Multi-retrieval engine fusing Dense Cosine Vector similarity and Sparse BM25 keyword matching via Reciprocal Rank Fusion (`PersistentMemoryEngine`).
   - Dynamic memory capacity management evicting stale contexts by timestamp retention policy (`prune_old_memories`).
 
-- [x] **Mission 27: GraphRAG & Knowledge Graph Memory Engine (v3.3.0)**
-  - Entity-Relationship schema modeling nodes, edges, and weighted properties (`EntityNode`, `RelationEdge`).
-  - Multi-hop BFS graph traversal extracting structured context subgraphs and fact triples (`KnowledgeGraphMemoryEngine`).
-  - Entity name deduplication and relational query traversal pipeline (`traverse_subgraph`).
+- [x] **Mission 18 Step2: consolidate Mission 18 GraphRAG and Mission 26 Persistent Memory into Dual Memory layer**
+  - Property graph store with node properties and directed edge relationships (`GraphRAGEngine`).
+  - Multi-hop Breadth-First Search (BFS) neighborhood graph traversal and sub-graph extraction.
+  - Automated entity-relation extraction from unstructured context streams.
+
+- [x] **Mission 27: Self-Correction Sandbox & Code Feedback Loop (v3.3.0)**
+  - Automated diagnostic feedback prompt generator capturing AST and runtime stack traces (`SelfCorrectionEngine`).
+  - Iterative reflection loop orchestrating sandbox re-execution with candidate repairs (`CorrectionIteration`).
+  - Graceful max-attempt fallback thresholds preventing infinite LLM execution loops (`execute_with_correction_loop`).
+
+
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

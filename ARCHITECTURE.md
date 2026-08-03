@@ -62,16 +62,18 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │                               └───────────────┬───────────────┘
                  │                                               │
                  │                                               ▼
-                 │                               ┌───────────────────────────────┐
-                 │                               │ GraphRAG Engine               │ (# 18)
-                 │                               │ (Multi-Hop Graph)             │
-                 │                               └───────────────┬───────────────┘
                  │                                               │
                  └───────────────────────────────────────────┬───┘
                                                              │
                                                              ▼
                                      ┌───────────────────────────────────────────────┐
-                                     │ Model Distillation Engine                     │ (# 17)
+                                     │ Dual Memory & Retrieval Pipeline              │
+                                     │  ├─ Persistent Semantic Memory (RRF) (# 26)   │
+                                     │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
+                                     └───────────────────────┬───────────────────────┘
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ Model Distillation Engine (# 17)              │ 
                                      │ (Synthetic LoRA Trainer)                      │
                                      └───────────────────────┬───────────────────────┘
                                                              │
@@ -867,6 +869,8 @@ class GraphRAGResponse(BaseModel):
     retrieved_relations: List[str]
     subgraph_depth: int
 
+Refer to Mission 26 for 'MISSION 18 & 26: DUAL-TIER KNOWLEDGE & SEMANTIC RETRIEVAL PIPELINE'.
+
 ### MISSION 19: REAL-TIME AUDIO & STREAMING SPEECH AGENT (`src/rag/audio_agent.py`)
 
 [ User Speech / Audio Stream ]
@@ -1242,34 +1246,66 @@ class TenantContext(BaseModel):
     Reciprocal Rank Fusion (hybrid_search): Fuses multi-modal search ranks into a unified score via $\text{RRF Score}(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$.
     Dynamic Memory Pruning (prune_old_memories): Automatically evicts stale documents ordered by created_at timestamp when capacity limits (max_capacity) are breached.
 
-### MISSION 27: GRAPHRAG & KNOWLEDGE GRAPH MEMORY ENGINE (`src/rag/graph_memory.py`)
-
 ===================================================================================
- MISSION 27: GRAPHRAG & KNOWLEDGE GRAPH MEMORY ENGINE
+ MISSION 18 & 26: DUAL-TIER KNOWLEDGE & SEMANTIC RETRIEVAL PIPELINE
 ===================================================================================
 
-                    [ Context Fact / Query Input ]
-                                  │
-                                  ▼
+                          [ Query / Context Payload ]
+                                     │
+                  ┌──────────────────┴──────────────────┐
+                  │                                     │
+                  ▼                                     ▼
+┌───────────────────────────────────┐ ┌───────────────────────────────────┐
+│  Persistent Memory Engine (# 26)  │ │      GraphRAG Engine (# 18)       │
+│  ├─ Dense Vector Search (Cosine)  │ │  ├─ Entity / Relation Extraction  │
+│  ├─ Sparse BM25 Search (Keywords) │ │  ├─ Property Graph Node Index     │
+│  └─ RRF Hybrid Fusion             │ │  └─ Multi-Hop BFS Neighborhood    │
+└─────────────────┬─────────────────┘ └─────────────────┬─────────────────┘
+                  │                                     │
+                  └──────────────────┬──────────────────┘
+                                     │
+                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                     Entity & Relation Extractor                         │
-│       (Source Entity) ─────[ Relation Type ]─────> (Target Entity)      │
-└─────────────────────────────────┬───────────────────────────────────────┘
-                                  │
-                                  ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    KnowledgeGraphMemoryEngine Core                      │
-│   (Entity Indexing, Relation Weights & Case-Insensitive Deduplication)  │
-└─────────────────────────────────┬───────────────────────────────────────┘
-                                  │
-                                  ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    Multi-Hop BFS Subgraph Traverser                     │
-│         (Max-Hops Traversal, Fact Triples & Subgraph Extraction)         │
-└─────────────────────────────────┬───────────────────────────────────────┘
-                                  │
-                                  ▼
-                     [ Extracted Graph Context ]
-             (Entity Nodes, Relation Edges & Fact Triples)
+│                      Context Synthesis & Reranker                       │
+│    (Fuses Unstructured Semantic Chunks + Explicit Graph Fact Triples)   │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                     [ Consolidated Augmented Context ]
 
-             
+### MISSION 27: SELF-CORRECTION SANDBOX & CODE FEEDBACK LOOP (`src/sandbox/self_correction_engine.py`)
+
+===================================================================================
+ MISSION 27: SELF-CORRECTION SANDBOX & CODE FEEDBACK LOOP
+===================================================================================
+
+                        [ Generated Code Candidate ]
+                                     │
+                                     ▼
+                      ┌─────────────────────────────┐
+                      │ Code Execution Sandbox (#22)│
+                      └──────────────┬──────────────┘
+                                     │
+                    ┌────────────────┴────────────────┐
+                    │                                 │
+              (Success: True)                  (Success: False)
+                    │                                 │
+                    ▼                                 ▼
+         [ Return Execution Result ]      ┌───────────────────────┐
+                                          │ Diagnostic Extractor  │
+                                          │ (STDERR / Traceback)  │
+                                          └───────────┬───────────┘
+                                                      │
+                                                      ▼
+                                          ┌───────────────────────┐
+                                          │ Feedback Generator    │
+                                          │ & Reflection Prompt   │
+                                          └───────────┬───────────┘
+                                                      │
+                                                      ▼
+                                          ┌───────────────────────┐
+                                          │ LLM Code Repairer     │
+                                          │ (Attempt N / Max)     │
+                                          └───────────┬───────────┘
+                                                      │
+                                                      └─► [ Loop to Sandbox (#22) ]
