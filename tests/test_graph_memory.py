@@ -1,7 +1,5 @@
 import unittest
-from src.rag.graph_memory import KnowledgeGraphMemoryEngine
-
-
+from src.graph.graph_memory import KnowledgeGraphMemoryEngine
 class TestKnowledgeGraphMemoryEngine(unittest.TestCase):
     def setUp(self):
         self.engine = KnowledgeGraphMemoryEngine()

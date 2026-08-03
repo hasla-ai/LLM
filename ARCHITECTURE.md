@@ -102,56 +102,57 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 │ Multi-Modal Visual                                │ Hierarchical Chunker & KV Cache (# 21)                  │
 │  KV-Cache Retention Engine (#31)                  │                                                         │   
 └─────────────────────────────────────────────────────────────────────────────────────────────-───────────────┘
+                                                    │                │. 5. INFERENCE&RUNTIME OPTIMIZATION LAYER
                                                     │                │ Multi-Agent Debate
-                                                    ▼                ▼      - Consensus* (#33)
-                            ┌───────────────────────────────────────────────┐
-                            │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │
-                            │  (Domain/Tenant Weight Hot-Swapping Engine)   │
-                            └───────────────────────┬────────────────┬──────┘ 5. INFERENCE&RUNTIME OPTIMIZATION LAYER
-                                                    │                │
- 3. DUAL-TIER ISOLATED MEMORY & RETRIEVAL PIPELINE  ▼                ▼
-                            ┌───────────────────────────────────────────────┐
-                            │ Dual Memory & Retrieval Pipeline              │
-                            │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
-                            │  │      ├─ Dense Vector Engine (Cosine Sim)   │
-                            │  │      ├─ Sparse BM25 Engine (TF-IDF/IDF)    │
-                            │  │      └─ Reciprocal Rank Fusion (RRF)       │   
-                            │  │                                            │
-                            │  │   peculative Context Prefetching Engine    │                        
-                            │  │    │                           (#41)       │
-                            |  |    ▼                                       │
-            GRAPH MESH LAYER│  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
-                            │    └─ Enterprise Federated Knowledge Graph    │
-                            │       & Entity Linking Mesh.            (#40) │
-                            │                                               │
-                            │ Cross-Model Semantic Response Caching Engine  │
-                            │                                         (#39) │
-                            └───────────────────────┬────────────────┬──────┘
-                                                    ▼                ▼                 
-                            ┌───────────────────────────────────────────────┐         
-                            │ Model Distillation Engine (# 17)              │         
-                            │ (Synthetic LoRA Trainer)                      │
-                            |      - Continuous learning flywheel -         |                            └───────────────────────┬────────────────┬──────┘
-                                                    │                │        
-6. STREAMING EVALUATION & GUARDRAILS PASS 2         ▼                ▼
-                            ┌───────────────────────────────────────────────┐
-                            │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)
-                            │  -> PII Unmasking, Output Policy & Audit Log  │
-                            └───────────────────────┬───────────────────────┘
-                                                    │
-                                                    ▼
-                            ┌───────────────────────────────────────────────┐
-                            │ Real-Time Stream Evaluator                    │ (# 35)
-                            │   & Hallucination Guard (# 35)                |
-                            └───────────────────────┬───────────────────────┘                        
-7. TELEMETRY, COMPLIANCE & CONTINUOUS LEARNING FLYWHEEL
-                                                    ▼
-                            ┌───────────────────────────────────────────────┐
-                            │ 📊 Cryptographic Tamper-Evident               │ (# 34)
-                            │   -> Audit Telemetry Mesh                     |
-                            └───────────────────────┬───────────────────────┘
-
-                            ┌───────────────────────────────────────────────┐
+                                                    ▼                ▼      - Consensus Graph* (#33)
+                            ┌───────────────────────────────────────────────┐           │
+                            │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │           │
+                            │  (Domain/Tenant Weight Hot-Swapping Engine)   │           │
+                            └───────────────────────┬────────────────┬──────┘       Autonomous RAG Evaluation 
+                                                    │                │               & Hallu Benchmark Harness.
+ 3. DUAL-TIER ISOLATED MEMORY & RETRIEVAL PIPELINE  ▼                ▼                  │       (#42)
+                            ┌───────────────────────────────────────────────┐           │
+                            │ Dual Memory & Retrieval Pipeline              │           │
+                            │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│           │ to #25,#34
+                            │  │      ├─ Dense Vector Engine (Cosine Sim)   │           │
+                            │  │      ├─ Sparse BM25 Engine (TF-IDF/IDF)    │           │
+                            │  │      └─ Reciprocal Rank Fusion (RRF)       │           │
+                            │  │                                            │           │
+                            │  │   peculative Context Prefetching Engine    │           │            
+                            │  │    │                           (#41)       │           │
+                            |  |    ▼                                       │           │
+            GRAPH MESH LAYER│  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │           │
+                            │    └─ Enterprise Federated Knowledge Graph    │           │
+                            │       & Entity Linking Mesh.            (#40) │           │
+                            │                                               │           │
+                            │ Cross-Model Semantic Response Caching Engine  │           │
+                            │                                         (#39) │           │
+                            └───────────────────────┬────────────────┬──────┘           │
+                                                    ▼                ▼                  │
+                            ┌───────────────────────────────────────────────┐           │
+                            │ Model Distillation Engine (# 17)              │           │
+                            │ (Synthetic LoRA Trainer)                      │           │
+                            |      - Continuous learning flywheel -         |           │                └───────────────────────┬────────────────┬──────┘           │
+                                                    │                │                  │
+6. STREAMING EVALUATION & GUARDRAILS PASS 2         ▼                ▼                  │
+                            ┌───────────────────────────────────────────────┐           │
+                            │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)  │
+                            │  -> PII Unmasking, Output Policy & Audit Log  │           │
+                            └───────────────────────┬───────────────────────┘           │
+                                                    │                                   │
+                                                    ▼                                   │
+                            ┌───────────────────────────────────────────────┐           │
+                            │ Real-Time Stream Evaluator                    │ (# 35)    │
+                            │   & Hallucination Guard (# 35)                |           │
+                            └───────────────────────┬───────────────────────┘           │            
+7. TELEMETRY, COMPLIANCE & CONTINUOUS LEARNING FLYWHEEL                                 │
+                                                    ▼                                   │
+                            ┌───────────────────────────────────────────────┐           │
+                            │ 📊 Cryptographic Tamper-Evident               │ (# 34)    │
+                            │   -> Audit Telemetry Mesh                     |           │
+                            └───────────────────────┬───────────────────────┘           │
+                                                    │                                   │
+                            ┌───────────────────────────────────────────────┐───────────┘
                             │ 📊 RAG Benchmarker Engine                     │ (# 13)
                             │ (Faithfulness, Relevancy & Evaluation)        │
                             └───────────────────────┬───────────────────────┘
@@ -1902,6 +1903,32 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
                               ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   Pre-Warmed Context Cache                              │
-│  ├─ Immediate zero-latency lookup on subsequent agent turn               │
+│  ├─ Immediate zero-latency lookup on subsequent agent turn              │
 │  └─ Bypasses redundant vector store search / GraphRAG walk (# 18 / # 40)│
 └─────────────────────────────────────────────────────────────────────────┘
+
+### MISSION 42: CONTINUOUS AUTOMATED RAG EVALUATION HARNESS (`src/eval/continuous_rag_evaluator.py`)
+
+===================================================================================
+ MISSION 42: CONTINUOUS AUTOMATED RAG EVALUATION HARNESS
+===================================================================================
+
+       [ Query + Retrieved Context + Generated LLM Answer Triplet ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 ContinuousRAGEvaluatorEngine Core                       │
+│  ├─ Faithfulness Score Calculation (Context Token Overlap)              │
+│  ├─ Answer Relevance Calculation (Query Alignment)                      │
+│  └─ Context Recall Calculation (Retrieved Concept Coverage)            │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+      Faithfulness >= Threshold              Faithfulness < Threshold
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│ Quality Score Metrics Recorded   │ │ Hallucination Flagged in        │
+│ to Telemetry Mesh (# 25 / # 34) │ │ Audit Mesh for Auto-Refactoring │
+└─────────────────────────────────┘ └─────────────────────────────────┘
