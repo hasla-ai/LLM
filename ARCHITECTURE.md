@@ -108,6 +108,8 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                             │        ├─ Sparse BM25 Engine (TF-IDF/IDF)     │
                             │        └─ Reciprocal Rank Fusion (RRF)        │
                             │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
+                            │    └─ Enterprise Federated Knowledge Graph    │
+                            │       & Entity Linking Mesh.            (#40) │
                             │                                               │
                             │ Cross-Model Semantic Response Caching Engine  │
                             │                                         (#39) │
@@ -1847,3 +1849,23 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
 │ Instant Return Cached Response    │   │ Dispatch to Adaptive RAG Router   │
 │ (0ms inference cost / 0 tokens)   │   │ & Agent Pipeline (# 12 / # 20)    │
 └───────────────────────────────────┘   └───────────────────────────────────┘
+
+### MISSION 40: ENTERPRISE FEDERATED KNOWLEDGE GRAPH & GRAPHRAG MESH (`src/graph/federated_graph_mesh.py`)
+
+===================================================================================
+ MISSION 40: ENTERPRISE FEDERATED KNOWLEDGE GRAPH & GRAPHRAG MESH
+===================================================================================
+
+                [ Seed Entity Identifier List (# 18) ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 FederatedKnowledgeGraphMesh Core                        │
+│  ├─ Federated Namespace Node Lookup (IAM / Eng / Legal / Finance)        │
+│  ├─ BFS Multi-Hop Edge Graph Traversal (max_hops)                       │
+│  └─ Subgraph Extraction & Entity Linking Context Payload                │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                                   ▼
+          [ Subgraph Result Context Payload ──► Augmented Prompt ]
+          (Passed to Multi-Agent Debate Engine # 20 / Consensus # 33)
