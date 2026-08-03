@@ -76,8 +76,12 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
                  │  │ Direct LLM Inference  │        │ Code Execution        │ (# 22) │ Multi-Agent Debate    │ (# 20)
                  │  │                       │        │ Sandbox Engine *      │        │ Engine *              │
-                 |  |                       |        |                       |        | - AUTONOMOUS Multi    │
-                 |  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
+                 │  │                       │        │                       │        │ - AUTONOMOUS Multi .  │
+                 │  │                       │        |─────────────────────────────────────────────────────────
+                 |  |                       |        |                - AUTONOMOUS                            |
+                 │  │                       │        │                  Synthetic Data Generation Engine      |
+                 │  │                       │        │                                              (#42)     |  
+                 |  └───────────┬───────────┘        └───────────┬───────────-────────────────────┬───────────┘
                  │              │                                │                                │
                  │              │                                │                                ▼
                  │              │                                │          ┌─────────────────────────────────┐ 
@@ -1929,6 +1933,32 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
                  │                                   │
                  ▼                                   ▼
 ┌─────────────────────────────────┐ ┌─────────────────────────────────┐
-│ Quality Score Metrics Recorded   │ │ Hallucination Flagged in        │
+│ Quality Score Metrics Recorded   │ │ Hallucination Flagged in       │
 │ to Telemetry Mesh (# 25 / # 34) │ │ Audit Mesh for Auto-Refactoring │
+└─────────────────────────────────┘ └─────────────────────────────────┘
+
+### MISSION 43: AUTONOMOUS SYNTHETIC DATA GENERATOR (`src/core/synthetic_data_generator.py`)
+
+===================================================================================
+ MISSION 43: AUTONOMOUS SYNTHETIC DATA GENERATOR & FINE-TUNING PIPELINE
+===================================================================================
+
+                 [ Instruction Seed & Domain Context ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│               SyntheticDataGeneratorEngine Core                         │
+│  ├─ Synthetic Response Generation & Domain Formatting                   │
+│  ├─ Automated Quality Assessment Scoring (Length & Term Overlap)        │
+│  └─ Quality Threshold Filtering (>= 0.75 approval check)                │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+            Approved Sample                    Rejected Sample
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│ Export to Fine-Tuning JSONL     │ │ Discard / Route to Self-Healing │
+│ (Feeds Distillation #17 / #29)  │ │ Refinement Loop (#27)           │
 └─────────────────────────────────┘ └─────────────────────────────────┘
