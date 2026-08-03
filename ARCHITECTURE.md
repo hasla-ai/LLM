@@ -1241,4 +1241,35 @@ class TenantContext(BaseModel):
     Sparse BM25 Search (_sparse_bm25_search): Computes term frequency-inverse document frequency keyword matching across stored document corpora.
     Reciprocal Rank Fusion (hybrid_search): Fuses multi-modal search ranks into a unified score via $\text{RRF Score}(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$.
     Dynamic Memory Pruning (prune_old_memories): Automatically evicts stale documents ordered by created_at timestamp when capacity limits (max_capacity) are breached.
-    
+
+### MISSION 27: GRAPHRAG & KNOWLEDGE GRAPH MEMORY ENGINE (`src/rag/graph_memory.py`)
+
+===================================================================================
+ MISSION 27: GRAPHRAG & KNOWLEDGE GRAPH MEMORY ENGINE
+===================================================================================
+
+                    [ Context Fact / Query Input ]
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     Entity & Relation Extractor                         │
+│       (Source Entity) ─────[ Relation Type ]─────> (Target Entity)      │
+└─────────────────────────────────┬───────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    KnowledgeGraphMemoryEngine Core                      │
+│   (Entity Indexing, Relation Weights & Case-Insensitive Deduplication)  │
+└─────────────────────────────────┬───────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    Multi-Hop BFS Subgraph Traverser                     │
+│         (Max-Hops Traversal, Fact Triples & Subgraph Extraction)         │
+└─────────────────────────────────┬───────────────────────────────────────┘
+                                  │
+                                  ▼
+                     [ Extracted Graph Context ]
+             (Entity Nodes, Relation Edges & Fact Triples)
+
+             

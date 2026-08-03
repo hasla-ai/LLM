@@ -107,7 +107,8 @@ llm-engineering-lab/
 - **Mission 23**: Multi-Modal Vision & Document Processing Agent (`MultiModalVisionAgent`, `DocumentVisualParser`, spatial bounding box alignment, grounded VQA)
 - **Mission 24**: Enterprise Multi-Tenant LLM Gateway & Rate Limiter (`EnterpriseLLMGateway`, `TokenBucketRateLimiter`, RPM/TPM sliding windows, budget quota metering, provider fallback routing)
 - **Mission 25**: Real-Time Telemetry, Tracing & Observability Pipeline (`v3.1.0`)
-- * **Mission 26**: Persistent Semantic Memory Engine, RRF (Reciprocal Rank Fusion) hybrid retriever combining Dense Cosine Vector Similarity and Sparse BM25 Keyword Search with dynamic memory pruning.
+- **Mission 26**: Persistent Semantic Memory Engine, RRF (Reciprocal Rank Fusion) hybrid retriever combining Dense Cosine Vector Similarity and Sparse BM25 Keyword Search with dynamic memory pruning.
+- **Mission 27**: GraphRAG & Knowledge Graph Memory Engine (v3.3.0)**
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -248,11 +249,21 @@ llm-engineering-lab/
   - Sliding token bucket rate limiter enforcing Requests-Per-Minute (RPM) and Tokens-Per-Minute (TPM) caps (`TokenBucketRateLimiter`).
   - Enterprise proxy gateway with automated provider fallback and real-time monetary spend tracking (`EnterpriseLLMGateway`).
 
+- [x] **Mission 25: Real-Time Telemetry, Tracing & Observability Pipeline (v3.1.0)**
+  - Hierarchical execution span context propagation with parent-child trace tree generation (`ObservabilityTracer`).
+  - Real-time LLM telemetry collection tracking token consumption, latency percentiles, and cost metrics (`LLMTelemetryCollector`).
+  - Enterprise observability exporter generating trace span summaries and latency analytics (`TelemetrySummary`).
+
 - [x] **Mission 26: Persistent Semantic Memory & Hybrid Retrieval Engine (v3.2.0)**
   - Vector space memory document schema with temporal metadata tracking (`MemoryDocument`, `SearchResult`).
   - Multi-retrieval engine fusing Dense Cosine Vector similarity and Sparse BM25 keyword matching via Reciprocal Rank Fusion (`PersistentMemoryEngine`).
   - Dynamic memory capacity management evicting stale contexts by timestamp retention policy (`prune_old_memories`).
-  
+
+- [x] **Mission 27: GraphRAG & Knowledge Graph Memory Engine (v3.3.0)**
+  - Entity-Relationship schema modeling nodes, edges, and weighted properties (`EntityNode`, `RelationEdge`).
+  - Multi-hop BFS graph traversal extracting structured context subgraphs and fact triples (`KnowledgeGraphMemoryEngine`).
+  - Entity name deduplication and relational query traversal pipeline (`traverse_subgraph`).
+
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
