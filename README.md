@@ -303,6 +303,11 @@ llm-engineering-lab/
   - Abstract Syntax Tree (AST) static analysis and syntax validation engine (`ASTRefactorSandboxEngine`).
   - Automatic AST transformer refactoring bare `except:` clauses and dangerous code constructs (`ASTSecurityAndCleanlinessTransformer`).
   - Code unparsing and structural integrity validation prior to sandbox execution (`validate_and_refactor`).
+
+- [x] **Mission 37: Multi-Tenant Token Rate Limiter, Priority Scheduler & Cost Allocation Mesh (v4.3.0)**
+  - Tiered SLA token bucket rate limiter supporting Enterprise, Pro, and Free tiers (`TenantPriorityScheduler`).
+  - Priority-based queue arbitration level calculation (`get_tenant_priority`).
+  - Micro-USD multi-tenant token consumption and cost allocation tracking (`record_cost_attribution`, `TenantCostMetrics`).
   
 🚀 Quick Start (Docker)
 1. Set Environment Variables

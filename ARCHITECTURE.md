@@ -42,6 +42,8 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                     ┌───────────────────────────────────────────────┐
                                     │ 🛡️ Multi-Tenant Data Isolation & Security     │ (# 28)
                                     │  -> RBAC, Clearance Levels & Namespace Filter │
+                                    | MULTI-TENANT TOKEN RATE LIMITER               |
+                                    | & COST ALLOCATION MESH                        |
                                     └───────────────────────┬───────────────────────┘
                                                             │
                                                             ▼
@@ -1739,3 +1741,54 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
 │   Safe Code Sandbox Execution   │             │   Self-Healing Agent Retry Loop │
 │  (Docker / PyPy Sandbox # 22)   │             │   (Feeds error back to LLM # 27)│
 └─────────────────────────────────┘             └─────────────────────────────────┘
+
+### MISSION 37: MULTI-TENANT TOKEN RATE LIMITER, PRIORITY SCHEDULER & COST ALLOCATION MESH (`src/core/tenant_priority_scheduler.py`)
+
+===================================================================================
+ MISSION 37: MULTI-TENANT TOKEN RATE LIMITER & COST ALLOCATION MESH
+===================================================================================
+
+               [ Multi-Tenant API Request Ingress (# 28) ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   TenantPriorityScheduler Core                          │
+│  ├─ Token Bucket SLA Check (Free: 5K, Pro: 25K, Enterprise: 100K TPM)   │
+│  ├─ Priority Queue Routing (Enterprise: 100 > Pro: 50 > Free: 10)       │
+│  └─ Micro-USD Token Cost Attribution & Billing Metrics                  │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+          Rate Limit OK                      Rate Limit Exceeded
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│ Execute LLM Pipeline & Record   │ │ 429 Too Many Requests Exception │
+│ Cost Attribution Payload        │ │ (Logged to Audit Mesh # 34)     │
+└─────────────────────────────────┘ └─────────────────────────────────┘
+### MISSION 37: MULTI-TENANT TOKEN RATE LIMITER, PRIORITY SCHEDULER & COST ALLOCATION MESH (`src/core/tenant_priority_scheduler.py`)
+
+===================================================================================
+ MISSION 37: MULTI-TENANT TOKEN RATE LIMITER & COST ALLOCATION MESH
+===================================================================================
+
+               [ Multi-Tenant API Request Ingress (# 28) ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   TenantPriorityScheduler Core                          │
+│  ├─ Token Bucket SLA Check (Free: 5K, Pro: 25K, Enterprise: 100K TPM)   │
+│  ├─ Priority Queue Routing (Enterprise: 100 > Pro: 50 > Free: 10)       │
+│  └─ Micro-USD Token Cost Attribution & Billing Metrics                  │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+          Rate Limit OK                      Rate Limit Exceeded
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│ Execute LLM Pipeline & Record   │ │ 429 Too Many Requests Exception │
+│ Cost Attribution Payload        │ │ (Logged to Audit Mesh # 34)     │
+└─────────────────────────────────┘ └─────────────────────────────────┘
