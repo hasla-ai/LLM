@@ -23,6 +23,7 @@ llm-engineering-lab/
 │   │   ├── llm_client.py             # Pydantic-enforced Structured LLM Client
 │   │   └── distillation_pipeline.py  # Mission 17: Fine-Tuning & Model Distillation Pipeline
 │   │   ├── llm_gateway.py            # Mission 24: Enterprise LLM Gateway & Rate Limiter
+│   │   └── tenant_security_engine.py # Mission 28: Multi-Tenant Data Isolation & Security
 │   ├── rag/                    # Retrieval-Augmented Generation engines
 │   │   ├── __init__.py
 │   │   ├── vector_store.py         # In-Memory Vector Store & Cosine Similarity engine
@@ -87,37 +88,10 @@ llm-engineering-lab/
     ├── test_telemetry_tracer.py       # Mission 25 validation
     ├── test_persistent_memory.py      # Mission 26 validation
     └── test_self_correction_engine.py # Mission 27 validation
+    └── test_tenant_security_engine.py# Mission 28 validation
 ```
 
-## 🎯 Mission Log & Architecture Roadmap
-
-- **Mission 01:** Structured Outputs & Schema Enforcement (`StructuredLLMClient`, Pydantic validation)
-- **Mission 02:** Hybrid RAG Pipeline (`DenseVectorStore`, BM25 sparse retrieval, Reciprocal Rank Fusion)
-- **Mission 03:** Dynamic Prompt Engineering & Guardrails (`PromptTemplate`, input/output sanitization)
-- **Mission 04:** Agentic Task Decomposition & Tool Calling (`TaskPlanner`, execution graph)
-- **Mission 05:** Multimodal Data Processing & Embedding (`MultimodalEmbedder`, document vision)
-- **Mission 06:** Memory Management & Context Compression (`ConversationMemory`, sliding window summary)
-- **Mission 07:** LLM Security & Guardrail Auditor (`GuardrailAuditor`, PII masking, jailbreak defense)
-- **Mission 08:** Corrective RAG (CRAG) with Web Fallback (`CorrectiveRAG`, dynamic web search fallback)
-- **Mission 09:** Self-Reflective RAG (Self-RAG) (`SelfRAGEngine`, critique tokens, hallucination reflection)
-- **Mission 10:** Speculative RAG Drafting (`SpeculativeRAGEngine`, dual-draft verification)
-- **Mission 11:** Production Guardrails & Evaluation Engine (`LLMEvaluator`, toxicity & safety scoring)
-- **Mission 12:** Adaptive RAG Engine (`AdaptiveRAGEngine`, upfront complexity routing)
-- **Mission 13:** **Enterprise RAG Benchmarking & Automated Quality Evaluation Engine** (`RAGBenchmarker`, LLM-as-a-Judge quantitative quality profiling)
-- **Mission 14:** Model Context Protocol (MCP) Gateway (MCPProtocolGateway, standard JSON-RPC tool server & capability management)
-- **Mission 15:** **Adaptive RAG & MCP Integration Engine** (`E2EintegrationEngine`, multi-tier tool discovery & sandboxed JSON-RPC execution)
-- **Mission 16**: Multi-Modal RAG Engine with Visual Embeddings (`MultimodalRAGEngine`, dual-modal vector index & visual document retrieval)
-- **Mission 17**: Fine-Tuning & Model Distillation Pipeline (`DistillationTrainer`, dataset generation, quality filtering, and LoRA training)
-- **Mission 18**: GraphRAG & Knowledge Graph Entity-Relation Engine (`GraphRAGEngine`, property graph store, multi-hop BFS neighborhood search, entity extraction)
-- **Mission 19**: Real-Time Audio & Streaming Speech Agent (`RealTimeAudioAgent`, chunked audio frames, streaming TTS synthesis, voice turn orchestration)
-- **Mission 20**: Multi-Agent Consensus & Debate Orchestrator (`MultiAgentDebateOrchestrator`, role-based agent debate, confidence-weighted consensus evaluation)
-- **Mission 21**: Long-Context KV Cache Management System (`KVCacheManager`, `CacheEvictionPolicy`)
-- **Mission 22**: Autonomous Code Execution Sandbox (`CodeExecutionSandbox`, `CodeSecurityAuditor`, `SecurityPolicy`)
-- **Mission 23**: Multi-Modal Vision & Document Processing Agent (`MultiModalVisionAgent`, `DocumentVisualParser`, spatial bounding box alignment, grounded VQA)
-- **Mission 24**: Enterprise Multi-Tenant LLM Gateway & Rate Limiter (`EnterpriseLLMGateway`, `TokenBucketRateLimiter`, RPM/TPM sliding windows, budget quota metering, provider fallback routing)
-- **Mission 25**: Real-Time Telemetry, Tracing & Observability Pipeline (`v3.1.0`)
-- **Mission 26**: Persistent Semantic Memory Engine, RRF (Reciprocal Rank Fusion) hybrid retriever combining Dense Cosine Vector Similarity and Sparse BM25 Keyword Search with dynamic memory pruning.
-- **Mission 27**: GraphRAG & Knowledge Graph Memory Engine (v3.3.0)**
+## 🎯 Mission Roadmap
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -268,8 +242,8 @@ llm-engineering-lab/
   - Multi-retrieval engine fusing Dense Cosine Vector similarity and Sparse BM25 keyword matching via Reciprocal Rank Fusion (`PersistentMemoryEngine`).
   - Dynamic memory capacity management evicting stale contexts by timestamp retention policy (`prune_old_memories`).
 
-- [x] **Mission 18 Step2: consolidate Mission 18 GraphRAG and Mission 26 Persistent Memory into Dual Memory layer**
-  - Property graph store with node properties and directed edge relationships (`GraphRAGEngine`).
+- [x] **Mission 26 step2: consolidate Mission 18 GraphRAG and Mission 26 Persistent Memory into Dual Memory layer**
+  - Property graph store with node properties and directed edgerelationships (`GraphRAGEngine`).
   - Multi-hop Breadth-First Search (BFS) neighborhood graph traversal and sub-graph extraction.
   - Automated entity-relation extraction from unstructured context streams.
 
@@ -278,7 +252,15 @@ llm-engineering-lab/
   - Iterative reflection loop orchestrating sandbox re-execution with candidate repairs (`CorrectionIteration`).
   - Graceful max-attempt fallback thresholds preventing infinite LLM execution loops (`execute_with_correction_loop`).
 
+- [x] **Mission 28: Multi-Tenant Data Isolation & Security Policy Engine (v3.4.0)**
+  - Tenant security policy schema and Role-Based Access Control (RBAC) validator (`TenantPolicy`, `SecurityContext`).
+  - Row-Level Security (RLS) metadata filter generator for multi-tenant RAG retrieval isolation (`build_rls_filter`).
+  - Tenant-scoped payload sanitization and tenant boundary enforcement engine (`MultiTenantIsolationEngine`).
 
+- [x] **Mission 04/07: LLM Security & Guardrail Auditor (v1.2.0 / v1.5.0)**
+  - Dual-pass security execution pipeline providing Input Prompt Sanitization and Output Payload Audit (`GuardrailAuditor`).
+  - Regex & Named-Entity PII masking engine with bidirectional secure token substitution (`mask_pii`, `unmask_pii`).
+  - System jailbreak / prompt injection classification and automated audit logging (`audit_log`).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables

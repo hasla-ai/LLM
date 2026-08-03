@@ -38,6 +38,18 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                     │  -> Token Bucket Rate Limiter                 │
                                     └───────────────────────┬───────────────────────┘
                                                             │
+                                                            ▼
+                                    ┌───────────────────────────────────────────────┐
+                                    │ 🛡️ Multi-Tenant Data Isolation & Security     │ (# 28)
+                                    │  -> RBAC, Clearance Levels & Namespace Filter │
+                                    └───────────────────────┬───────────────────────┘
+                                                            │
+                                                            ▼
+                                    ┌───────────────────────────────────────────────┐
+                                    │ 🔒 LLM Security Guardrails - PASS 1 (INPUT)   │ (# 4/7)
+                                    │  -> Prompt Injection Defense & PII Sanitizer  │
+                                    └───────────────────────┬───────────────────────┘
+                                                            │
                  ┌──────────────────────────────────────────┴────┐
                  │                                               │
                  ▼ (Visual / Image / Doc)                        ▼ (Text / Prompt Query)
@@ -68,7 +80,10 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                                              ▼
                                      ┌───────────────────────────────────────────────┐
                                      │ Dual Memory & Retrieval Pipeline              │
-                                     │  ├─ Persistent Semantic Memory (RRF) (# 26)   │
+                                     │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
+                                     │        ├─ Dense Vector Engine (Cosine Sim)    │
+                                     │        ├─ Sparse BM25 Engine (TF-IDF/IDF)     │
+                                     │        └─ Reciprocal Rank Fusion (RRF)        │
                                      │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
                                      └───────────────────────┬───────────────────────┘
                                                              ▼
@@ -79,16 +94,8 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                                              │
                                                              ▼
                                      ┌───────────────────────────────────────────────┐
-                                     │ LLM Security Guardrails                       │ (# 4/7)
-                                     │ (PII Sanitizer & Audit)                       │
-                                     └───────────────────────┬───────────────────────┘
-                                                             │
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ 🧠 Persistent Memory RAG                      │ (# 26)
-                                     │  ├─ Dense Vector Engine (Cosine Sim)          │
-                                     │  ├─ Sparse BM25 Engine (TF-IDF/IDF)           │
-                                     │  └─ Reciprocal Rank Fusion (RRF)              │
+                                     │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)
+                                     │  -> PII Unmasking, Output Policy & Audit Log  │
                                      └───────────────────────┬───────────────────────┘
                                                              │
                                                              ▼
@@ -224,7 +231,7 @@ ASCII Diagram
 
 ### Mission 4: Guardrails & LLM-as-a-Judge Evaluation (`src/eval/`)
 
-+-----------------------------+
+                   +-----------------------------+
                    |      Raw User Input         |
                    +-----------------------------+
                                   |
@@ -1309,3 +1316,58 @@ class TenantContext(BaseModel):
                                           └───────────┬───────────┘
                                                       │
                                                       └─► [ Loop to Sandbox (#22) ]
+
+### MISSION 28: MULTI-TENANT DATA ISOLATION & SECURITY POLICY ENGINE (`src/core/tenant_security_engine.py`)
+
+===================================================================================
+ MISSION 28: MULTI-TENANT DATA ISOLATION & SECURITY POLICY ENGINE
+===================================================================================
+
+                    [ Inbound Request + SecurityContext ]
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    MultiTenantIsolationEngine Core                     │
+│    (Tenant Registry, RBAC Policy Matcher & Session Validation)          │
+└─────────────────────────────────────┬───────────────────────────────────┘
+                                      │
+                    ┌─────────────────┴─────────────────┐
+                    │                                   │
+         (Access Validated)                    (Access Denied)
+                    │                                   │
+                    ▼                                   ▼
+┌──────────────────────────────────────┐     ┌─────────────────────┐
+│ Row-Level Security (RLS) Generator   │     │ Raise Permission    │
+│ (Inject Tenant Metadata Filters)     │     │ Exception / Audit   │
+└───────────────────┬──────────────────┘     └─────────────────────┘
+                    │
+                    ▼
+       [ Isolated Vector & Graph RAG ]
+
+===================================================================================
+ MISSION 04/07: DUAL-PASS SECURITY GUARDRAILS PIPELINE
+===================================================================================
+
+                    [ Raw User Request / System Context ]
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       Guardrails Pass 1 (Input)                         │
+│  ├─ Prompt Injection Detector & Jailbreak Classifier                    │
+│  ├─ PII Masking (SSN, Emails, Tokens replaced with anonymized hashes)   │
+│  └─ Toxicity & System Safety Threshold Validator                        │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                   [ Executed Core Kernel / LLM Pipeline ]
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       Guardrails Pass 2 (Output)                        │
+│  ├─ Generated Output Toxicity & Safety Verification                     │
+│  ├─ PII Leakage Check & Secure Unmasking Mapping                        │
+│  └─ Audit Logger (Structured Trace Logs for Compliance)                 │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                       [ Verified Clean Output Response ]
