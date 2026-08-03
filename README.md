@@ -308,6 +308,11 @@ llm-engineering-lab/
   - Tiered SLA token bucket rate limiter supporting Enterprise, Pro, and Free tiers (`TenantPriorityScheduler`).
   - Priority-based queue arbitration level calculation (`get_tenant_priority`).
   - Micro-USD multi-tenant token consumption and cost allocation tracking (`record_cost_attribution`, `TenantCostMetrics`).
+
+- [x] **Mission 38: Autonomous Agentic Tool-Use Registry & Schema Validator (v4.4.0)**
+  - Dynamic agent tool registration and OpenAPI/JSON Schema metadata export (`AgentToolRegistry`).
+  - Pre-execution argument schema validation for missing fields and type safety (`_validate_arguments`).
+  - Safe function calling invocation and execution exception handling (`execute_tool`, `ToolExecutionResult`).
   
 🚀 Quick Start (Docker)
 1. Set Environment Variables

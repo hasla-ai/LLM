@@ -81,7 +81,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │              │                    │ Self-Correction Loop *│ (# 27)             │
                  │              │                    └───────────┬───────────┘                    │
                  |              |                        ┌─────────────────────────────────────────────────-─┐           
-                 |              |                        |  LLM / Agent Generated Code Snippet (# 20 / # 27) |
+                 |              |                        |            AST Refactor Sandbox (# 36)            |
                  |              |.                       └───────────┬───────────────────────────────────────┘
                  │              └────────────────────────────────────┼────────────────────────────┘
             ┌───────────────────────────────────────────────────────────────────┐
@@ -1791,4 +1791,30 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
 ┌─────────────────────────────────┐ ┌─────────────────────────────────┐
 │ Execute LLM Pipeline & Record   │ │ 429 Too Many Requests Exception │
 │ Cost Attribution Payload        │ │ (Logged to Audit Mesh # 34)     │
+└─────────────────────────────────┘ └─────────────────────────────────┘
+
+### MISSION 38: AUTONOMOUS AGENTIC TOOL-USE REGISTRY & SCHEMA VALIDATOR (`src/agent/agent_tool_registry.py`)
+
+===================================================================================
+ MISSION 38: AUTONOMOUS AGENTIC TOOL-USE REGISTRY & SCHEMA VALIDATOR
+===================================================================================
+
+               [ Agent Function Call Intent Payload (# 20) ]
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    AgentToolRegistry Core                               │
+│  ├─ Registry Lookup (Tool metadata & function lookup)                   │
+│  ├─ JSON Parameter Schema & Type Safety Validation                      │
+│  └─ Safe Dynamic Invocation & Error Encapsulation                       │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   │
+                 ┌─────────────────┴─────────────────┐
+                 │                                   │
+          Schema Valid                        Schema Invalid
+                 │                                   │
+                 ▼                                   ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│ Execute Tool & Return Result    │ │ Return Error Result to Agent    │
+│ to Multi-Agent Orchestrator     │ │ Self-Healing Loop (# 27 / # 36) │
 └─────────────────────────────────┘ └─────────────────────────────────┘
