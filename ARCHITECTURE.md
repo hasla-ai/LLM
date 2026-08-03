@@ -60,7 +60,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
     to Document Layout Analyzer (#30)           |                                 |
 └────────────────┬────────────────┘               ───────────────┬────────────────┘
                  │                                               │
-                 │              ┌────────────────────────────────┼────────────────────────────────┐
+| Visual KV Cache (#31) │       ┌────────────────────────────────┼────────────────────────────────┐
                  │              │ (SIMPLE)                       │ (CODE_EXECUTION)               │ (COMPLEX)
                  │              ▼                                ▼                                ▼
                  │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
@@ -1511,3 +1511,8 @@ class TenantContext(BaseModel):
                                      │
                                      ▼
                 [ Direct LLM / Multi-Agent Multi-Turn Inference ]
+
+1. Image Input ──► Mission 31 (Visual KV Cache): Heavy GPU Compute problem
+                         └─► Instantly restores pre-encoded image patch tokens from GPU memory (bypasses ViT)
+2. Text Input  ──► Mission 21 (Text KV Cache): Prevention of repetitive text computations
+                         └─► Instantly restores previous conversation text tokens from KV Cache

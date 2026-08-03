@@ -279,6 +279,13 @@ llm-engineering-lab/
   - Memory-aware LRU eviction policy enforcing hardware token capacity budgets (`store_visual_tokens`, `_evict_lru_entry`).
   - Low-latency visual prefix cache retrieval with access metadata tracking (`get_visual_tokens`).
 
+- [x] **Mission 32: Self-Healing Agent Circuit Breaker & Fallback Mesh (v3.8.0)**
+  - State-machine driven circuit breaker protecting multi-agent loops from failure cascades (`AgentCircuitBreaker`, `CircuitState`).
+  - Automated fallback routing for API timeouts and execution failures (`execute_with_fallback`).
+  - Half-open recovery probes and consecutive failure threshold enforcement (`CircuitBreakerConfig`).
+
+
+
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
