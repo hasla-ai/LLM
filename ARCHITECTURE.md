@@ -33,10 +33,11 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                             [ User / External Client Query ]
                                                             │
 1. ENTERPRISE GATEWAY & SECURITY PERIMETER                  ▼
-                                    ┌───────────────────────────────────────────────┐
-                                    │ Enterprise Multi-Tenant Gateway & Rate Limiter│ (# 24)
-                                    │  -> Token Bucket Rate Limiter                 │
-                                    └───────────────────────┬───────────────────────┘
+                               ┌───────────────────────────────────────────────────────┐
+                               │ Enterprise Multi-Tenant Gateway & Rate Limiter (# 24) │
+                               │  -> Token Bucket Rate Limiter                         │
+                               | Real-Time Streaming Speculative Decoding Engine (#44) │
+                               └────────────────────────────┬──────────────────────────┘
                                                             │
                                                             ▼
                                     ┌───────────────────────────────────────────────┐
