@@ -54,9 +54,12 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │                                               │
                  ▼ (Visual / Image / Doc)                        ▼ (Text / Prompt Query)
 ┌─────────────────────────────────┐             ┌─────────────────────────────────┐
-│ Multi-Modal Vision              │ (# 23)      │ Adaptive RAG Router             │ (# 12)
-│ & Document Agent                │             └────────────────┬────────────────┘
-└────────────────┬────────────────┘                              │
+│ Multi-Modal Vision              │             │                                 │ 
+| -> 👁️ Vision RAG Engine (#16)   |             |    Adaptive RAG Router (# 12)   │       
+│ -> Document Agent (# 23)        |             |                                 |
+    to Document Layout Analyzer (#30)           |                                 |
+└────────────────┬────────────────┘               ───────────────┬────────────────┘
+                 │                                               │
                  │              ┌────────────────────────────────┼────────────────────────────────┐
                  │              │ (SIMPLE)                       │ (CODE_EXECUTION)               │ (COMPLEX)
                  │              ▼                                ▼                                ▼
@@ -76,8 +79,6 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │                               │ Hierarchical Chunker          │ (# 21)
                  │                               │ & KV Cache                    │
                  │                               └───────────────┬───────────────┘
-                 │                                               │
-                 │                                               ▼.  Vision RAG (# 16) 어디
                  │                                               │
                  └───────────────────────────────────────────┬───┘
                                                              ▼
@@ -1485,3 +1486,28 @@ class TenantContext(BaseModel):
                                          ▼
                  [ Structured Multimodal Document AST Payload ]
             (Ready for Dual-Tier Isolated Memory Retrieval #18 / #26)
+
+### MISSION 31: KV-CACHE MULTI-MODAL VISUAL CONTEXT RETENTION ENGINE (`src/core/visual_kv_cache.py`)
+
+===================================================================================
+ MISSION 31: KV-CACHE MULTI-MODAL VISUAL CONTEXT RETENTION ENGINE
+===================================================================================
+
+                 [ Multi-Modal Document Page / Image Input ]
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       VisualKVCacheEngine Core                          │
+│  ├─ Visual Prefix Hash Lookup (doc_id + page_number)                    │
+│  ├─ Cache Hit  ➜ Fast-Path GPU KV-Tensor Reuse (Zero Re-encoding)        │
+│  └─ Cache Miss ➜ ViT Encoding + LRU Eviction Capacity Budget Check      │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    Active Visual Token Memory Pool                      │
+│        (LRU Tracked Cache Entries with GPU Memory Buffer Pointers)      │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                [ Direct LLM / Multi-Agent Multi-Turn Inference ]

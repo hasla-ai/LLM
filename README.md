@@ -269,11 +269,16 @@ llm-engineering-lab/
   - Adaptive resolution selecting tenant-customized weights over shared enterprise domain adapters (`select_optimal_adapter`).
   - Zero-downtime weight hot-swapping execution engine on base LLM backbone (`hot_swap_adapter`).
 
-- - [x] **Mission 30: Multi-Modal RAG Document Parsing & Layout Analysis Engine (v3.6.0)**
+- [x] **Mission 30: Multi-Modal RAG Document Parsing & Layout Analysis Engine (v3.6.0)**
   - Hierarchical Document AST parsing layout blocks with normalized 2D spatial bounding box coordinates (`BoundingBox`, `LayoutElement`).
   - Multi-Modal structural classification categorizing headers, paragraphs, tables, figures, and key-value grids (`ElementType`).
   - Specialized visual extraction pipeline isolating non-textual layout structures for visual vector indexing (`extract_tables_and_figures`).
-  
+
+- [x] **Mission 31: KV-Cache Multi-Modal Visual Context Retention Engine (v3.7.0)**
+  - Visual token KV cache management engine preventing redundant image re-encoding across multi-turn sessions (`VisualKVCacheEngine`).
+  - Memory-aware LRU eviction policy enforcing hardware token capacity budgets (`store_visual_tokens`, `_evict_lru_entry`).
+  - Low-latency visual prefix cache retrieval with access metadata tracking (`get_visual_tokens`).
+
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
