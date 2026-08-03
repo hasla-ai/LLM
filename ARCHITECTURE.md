@@ -30,68 +30,78 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 
 
 ```text
-                               ┌──────────────────────────┐
-                               │ User Input (Text/Visual) │
-                               └────────────┬─────────────┘
-                                            │
-                                            ▼
-                               ┌──────────────────────────┐
-                               │ Enterprise Multi-Tenant  │ (Mission 24)
-                               │ Gateway & Rate Limiter   │
-                               └────────────┬─────────────┘
-                                            │
-           ┌────────────────────────────────┴────────────────────────────────┐
-           │ (Visual / Image / Doc)                                          │ (Text / Prompt Query)
-           ▼                                                                 ▼
-┌────────────────────┐                                            ┌──────────────────┐
-│ Multi-Modal Vision │ (Mission 23)                               │   Adaptive RAG   │ (Mission 12)
-│ & Document Agent   │                                            │     Router       │
-└──────────┬─────────┘                                            └────────┬─────────┘
-           │                                                               │
-           │                               ┌───────────────────────────────┼────────────────────────────────┐
-           │                               │ (SIMPLE)                      │ (CODE_EXECUTION)               │ (COMPLEX)
-           │                               ▼                               ▼                                ▼
-           │                    ┌────────────────────┐           ┌──────────────────┐            ┌──────────────────┐
-           │                    │  Direct LLM        │           │ Code Execution   │ (Mission 22)   │ Multi-Agent      │ (Mission 20)
-           │                    │  Inference         │           │ Sandbox Engine   │            │ Debate Engine    │
-           │                    └──────────┬─────────┘           └────────┬─────────┘            └────────┬─────────┘
-           │                               │                              │                               │
-           │                               └──────────────────────────────┼───────────────────────────────┘
-           │                                                              │
-           │                                                              ▼
-           │                                                  ┌──────────────────────┐
-           │                                                  │  Hierarchical        │ (Mission 21)
-           │                                                  │  Chunker & KV Cache  │
-           │                                                  └───────────┬──────────┘
-           │                                                              │
-           │                                                              ▼
-           │                                                  ┌──────────────────────┐
-           │                                                  │    GraphRAG Engine   │ (Mission 18)
-           │                                                  │ (Multi-Hop Graph)    │
-           │                                                  └───────────┬──────────┘
-           │                                                              │
-           └───────────────────────────────┬──────────────────────────────┘
-                                           │
-                                           ▼
-                               ┌──────────────────────────┐
-                               │ Model Distillation Engine│ (Mission 17)
-                               │ (Synthetic LoRA Trainer) │
-                               └───────────┬──────────────┘
-                                           │
-                                           ▼
-                               ┌──────────────────────────┐
-                               │  LLM Security Guardrails │ (Mission 4/7)
-                               │ (PII Sanitizer & Audit)  │
-                               └───────────┬──────────────┘
-                                           │
-                                           ▼
-                               ┌──────────────────────────┐
-                               │  RAG Benchmarker Engine  │ (Mission 13)
-                               │  (LLM-as-a-Judge Eval)   │
-                               └───────────┬──────────────┘
-                                           │
-                                           ▼
-                                 [ Grounded Output ]
+                                            [ User / External Client Query ]
+                                                            │
+                                                            ▼
+                                    ┌───────────────────────────────────────────────┐
+                                    │ Enterprise Multi-Tenant Gateway & Rate Limiter│ (# 24)
+                                    │  -> Token Bucket Rate Limiter                 │
+                                    └───────────────────────┬───────────────────────┘
+                                                            │
+                 ┌──────────────────────────────────────────┴────┐
+                 │                                               │
+                 ▼ (Visual / Image / Doc)                        ▼ (Text / Prompt Query)
+┌─────────────────────────────────┐             ┌─────────────────────────────────┐
+│ Multi-Modal Vision              │ (# 23)      │ Adaptive RAG Router             │ (# 12)
+│ & Document Agent                │             └────────────────┬────────────────┘
+└────────────────┬────────────────┘                              │
+                 │              ┌────────────────────────────────┼────────────────────────────────┐
+                 │              │ (SIMPLE)                       │ (CODE_EXECUTION)               │ (COMPLEX)
+                 │              ▼                                ▼                                ▼
+                 │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
+                 │  │ Direct LLM Inference  │        │ Code Execution        │ (# 22) │ Multi-Agent Debate    │ (# 20)
+                 │  │                       │        │ Sandbox Engine        │        │ Engine                │
+                 │  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
+                 │              │                                │                                │
+                 │              └────────────────────────────────┼────────────────────────────────┘
+                 │                                               │
+                 │                                               ▼
+                 │                               ┌───────────────────────────────┐
+                 │                               │ Hierarchical Chunker          │ (# 21)
+                 │                               │ & KV Cache                    │
+                 │                               └───────────────┬───────────────┘
+                 │                                               │
+                 │                                               ▼
+                 │                               ┌───────────────────────────────┐
+                 │                               │ GraphRAG Engine               │ (# 18)
+                 │                               │ (Multi-Hop Graph)             │
+                 │                               └───────────────┬───────────────┘
+                 │                                               │
+                 └───────────────────────────────────────────┬───┘
+                                                             │
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ Model Distillation Engine                     │ (# 17)
+                                     │ (Synthetic LoRA Trainer)                      │
+                                     └───────────────────────┬───────────────────────┘
+                                                             │
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ LLM Security Guardrails                       │ (# 4/7)
+                                     │ (PII Sanitizer & Audit)                       │
+                                     └───────────────────────┬───────────────────────┘
+                                                             │
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ 🧠 Persistent Memory RAG                      │ (# 26)
+                                     │  ├─ Dense Vector Engine (Cosine Sim)          │
+                                     │  ├─ Sparse BM25 Engine (TF-IDF/IDF)           │
+                                     │  └─ Reciprocal Rank Fusion (RRF)              │
+                                     └───────────────────────┬───────────────────────┘
+                                                             │
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ 📊 RAG Benchmarker Engine                     │ (# 13)
+                                     │ (Faithfulness, Relevancy & Evaluation)        │
+                                     └───────────────────────┬───────────────────────┘
+                                                             │
+                                                             ▼
+                                     ┌───────────────────────────────────────────────┐
+                                     │ 📡 OpenTelemetry Tracer & Distributed Spans   │ (# 25)
+                                     └───────────────────────────────────────────────┘
+                                                             │
+                                                             ▼
+                                                    [ Grounded Output ]
 ```
 
 ## 🧩 Core Subsystem Modules
@@ -1186,3 +1196,49 @@ class TenantContext(BaseModel):
                                     ▼
                        [ Telemetry Summary & Tracing ]
                      (Trace Spans, Latency, Token Metrics)
+
+### MISSION 26: PERSISTENT SEMANTIC MEMORY & HYBRID RETRIEVAL PIPELINE (`src/rag/persistent_memory.py`)
+
+===================================================================================
+        MISSION 26: PERSISTENT SEMANTIC MEMORY & HYBRID RETRIEVAL PIPELINE
+===================================================================================
+                      [ Query / Agent Context ]
+                                 │
+              ┌──────────────────┴──────────────────┐
+              │                                     │
+              ▼                                     ▼
+┌───────────────────────────────────┐ ┌───────────────────────────────────┐
+│        Dense Vector Search        │ │        Sparse BM25 Search         │
+│   (Cosine Similarity Matching)    │ │   (TF-IDF / IDF Token Matching)   │
+└─────────────────┬─────────────────┘ └─────────────────┬─────────────────┘
+                  │                                     │
+                  └──────────────────┬──────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        ReciprocalRankFusion (RRF)                       │
+│    (Consolidated Reranking: RRF_Score = Sum(1 / (k + Rank_Model)))      │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      Dynamic Memory Pruner Engine                       │
+│       (Timestamp Capacity Eviction & Context Window Optimization)       │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+                    [ Final Ranked Context Memory ]
+                (Document Payloads, Relevance Scores & Metadata)
+
+🧩 Core Architectural Components
+1. MemoryDocument Model
+    Role: Primary data wrapper representing an atomic unit of long-term memory.
+    Fields: id (UUID/Hash), content (Raw Text Context), embedding (Dense Vector Float List), metadata (Dict KV Store), created_at (Datetime ISO Stamp).
+2. SearchResult Schema
+    Role: Unified output container encapsulating search hits, relevance scores, and rank orders.Fields: document (MemoryDocument instance), score (Cosine Sim / BM25 Score / Combined RRF Score), rank (Sequential 1-based Index).
+3. PersistentMemoryEngine Core
+    Dense Vector Search (_dense_search): Computes cosine similarity between incoming query vectors and stored embeddings.
+    Sparse BM25 Search (_sparse_bm25_search): Computes term frequency-inverse document frequency keyword matching across stored document corpora.
+    Reciprocal Rank Fusion (hybrid_search): Fuses multi-modal search ranks into a unified score via $\text{RRF Score}(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$.
+    Dynamic Memory Pruning (prune_old_memories): Automatically evicts stale documents ordered by created_at timestamp when capacity limits (max_capacity) are breached.
+    

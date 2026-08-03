@@ -1,8 +1,12 @@
-# 🚀 LLM Engineering Lab (`llm-engineering-lab`)
+# 🚀 Enterprise LLMOps & Autonomous Agent Kernel OS
 
 A hands-on, test-driven repository for building production-grade LLM applications, RAG pipelines, and Autonomous Agent systems.
 
+A production-grade, high-density Autonomous Agent Kernel & LLMOps Engine built from scratch using Python, Pydantic, and OpenTelemetry.
+
 Every module in this repository is built with **strict type validation (Pydantic)**, **Docker containerization**, and **automated Pytest suites**.
+
+  The unit test suite for PersistentMemoryEngine has been generated and validated. It uses Python's standard unittest framework to verify document management, cosine similarity, dense vector search, sparse BM25 search, RRF hybrid fusion, and dynamic memory pruning.
 
 ## 📂 Project Structure
 
@@ -102,7 +106,8 @@ llm-engineering-lab/
 - **Mission 22**: Autonomous Code Execution Sandbox (`CodeExecutionSandbox`, `CodeSecurityAuditor`, `SecurityPolicy`)
 - **Mission 23**: Multi-Modal Vision & Document Processing Agent (`MultiModalVisionAgent`, `DocumentVisualParser`, spatial bounding box alignment, grounded VQA)
 - **Mission 24**: Enterprise Multi-Tenant LLM Gateway & Rate Limiter (`EnterpriseLLMGateway`, `TokenBucketRateLimiter`, RPM/TPM sliding windows, budget quota metering, provider fallback routing)
-- **Mission 25:** Real-Time Telemetry, Tracing & Observability Pipeline (`v3.1.0`)
+- **Mission 25**: Real-Time Telemetry, Tracing & Observability Pipeline (`v3.1.0`)
+- * **Mission 26**: Persistent Semantic Memory Engine, RRF (Reciprocal Rank Fusion) hybrid retriever combining Dense Cosine Vector Similarity and Sparse BM25 Keyword Search with dynamic memory pruning.
 
 **🛠️ Mission Progress**
 [x] Mission 1: Project Setup & Structured Inference Engine
@@ -243,7 +248,11 @@ llm-engineering-lab/
   - Sliding token bucket rate limiter enforcing Requests-Per-Minute (RPM) and Tokens-Per-Minute (TPM) caps (`TokenBucketRateLimiter`).
   - Enterprise proxy gateway with automated provider fallback and real-time monetary spend tracking (`EnterpriseLLMGateway`).
 
-
+- [x] **Mission 26: Persistent Semantic Memory & Hybrid Retrieval Engine (v3.2.0)**
+  - Vector space memory document schema with temporal metadata tracking (`MemoryDocument`, `SearchResult`).
+  - Multi-retrieval engine fusing Dense Cosine Vector similarity and Sparse BM25 keyword matching via Reciprocal Rank Fusion (`PersistentMemoryEngine`).
+  - Dynamic memory capacity management evicting stale contexts by timestamp retention policy (`prune_old_memories`).
+  
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
@@ -259,3 +268,8 @@ Execute the full Pytest suite inside the isolated Docker container:
 docker build -t llm-lab .
 docker run --rm --env-file .env -v $(pwd):/app llm-lab
 ```
+
+Hybrid Vector & BM25 Retriever: ChromaDB/Qdrant 등 벡터 DB 검색과 Rank-BM25 키워드 검색을 동시 실행.
+Reciprocal Rank Fusion (RRF) Reranker: 두 검색 결과의 순위를 아래 산식을 통해 합산하여 단어 일치와 의미 유사도를 동시에 만족하는 최적의 문맥 도출:
+$$\text{RRF Score}(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
+Dynamic Memory Pruning & Summarizer: 오래되거나 중복된 정보는 요약(Summary) 처리하여 백터 메모리에 축적하고, 토큰 버퍼 사용량을 최적화.
