@@ -60,7 +60,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
     to Document Layout Analyzer (#30)           |                                 |
 └────────────────┬────────────────┘               ───────────────┬────────────────┘
                  │                                               │
-| Visual KV Cache (#31) │       ┌────────────────────────────────┼────────────────────────────────┐
+                 |              ┌────────────────────────────────┼────────────────────────────────┐
                  │              │ (SIMPLE)                       │ (CODE_EXECUTION)               │ (COMPLEX)
                  │              ▼                                ▼                                ▼
                  │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
@@ -75,53 +75,51 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │              └────────────────────────────────┼────────────────────────────────┘
                  │                                               │
                  │                                               ▼
-                 │                               ┌───────────────────────────────┐
-                 │                               │ Hierarchical Chunker          │ (# 21)
-                 │                               │ & KV Cache                    │
-                 │                               └───────────────┬───────────────┘
-                 │                                               │
-                 └───────────────────────────────────────────┬───┘
-                                                             ▼
-                                    ┌───────────────────────────────────────────────┐
-                                    │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │
-                                    │  (Domain/Tenant Weight Hot-Swapping Engine)   │
-                                    └───────────────────────┬───────────────────────┘                 
-                                                             │
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ Dual Memory & Retrieval Pipeline              │
-                                     │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
-                                     │        ├─ Dense Vector Engine (Cosine Sim)    │
-                                     │        ├─ Sparse BM25 Engine (TF-IDF/IDF)     │
-                                     │        └─ Reciprocal Rank Fusion (RRF)        │
-                                     │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
-                                     └───────────────────────┬───────────────────────┘
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ Model Distillation Engine (# 17)              │ 
-                                     │ (Synthetic LoRA Trainer)                      │
-                                     └───────────────────────┬───────────────────────┘
-                                                             │
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)
-                                     │  -> PII Unmasking, Output Policy & Audit Log  │
-                                     └───────────────────────┬───────────────────────┘
-                                                             │
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ 📊 RAG Benchmarker Engine                     │ (# 13)
-                                     │ (Faithfulness, Relevancy & Evaluation)        │
-                                     └───────────────────────┬───────────────────────┘
-                                                             │
-                                                             ▼
-                                     ┌───────────────────────────────────────────────┐
-                                     │ 📡 OpenTelemetry Tracer & Distributed Spans   │ (# 25)
-                                     └───────────────────────────────────────────────┘
-                                                             │
-                                                             ▼
-                                                    [ Grounded Output ]
-```
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│          Visual KV Cache (#31)                  │ Hierarchical Chunker & KV Cache (# 21)                    │
+└─────────────────────────────────────────────────────────────────────────────────────────────-───────────────┘
+                                                    │
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ ⚡ Dynamic LoRA Adapter Router        (# 29)   │
+                            │  (Domain/Tenant Weight Hot-Swapping Engine)   │
+                            └───────────────────────┬───────────────────────┘                 
+                                                    │
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ Dual Memory & Retrieval Pipeline              │
+                            │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
+                            │        ├─ Dense Vector Engine (Cosine Sim)    │
+                            │        ├─ Sparse BM25 Engine (TF-IDF/IDF)     │
+                            │        └─ Reciprocal Rank Fusion (RRF)        │
+                            │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
+                            └───────────────────────┬───────────────────────┘
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ Model Distillation Engine (# 17)              │ 
+                            │ (Synthetic LoRA Trainer)                      │
+                            └───────────────────────┬───────────────────────┘
+                                                    │        OFFLINE CONTINUOUS LEARNING FLYWHEEL
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ 🔒 LLM Security Guardrails - PASS 2 (OUTPUT)   │ (# 4/7)
+                            │  -> PII Unmasking, Output Policy & Audit Log  │
+                            └───────────────────────┬───────────────────────┘
+                                                    │
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ 📊 RAG Benchmarker Engine                     │ (# 13)
+                            │ (Faithfulness, Relevancy & Evaluation)        │
+                            └───────────────────────┬───────────────────────┘
+                                                    │
+                                                    ▼
+                            ┌───────────────────────────────────────────────┐
+                            │ 📡 OpenTelemetry Tracer & Distributed Spans   │ (# 25)
+                            └───────────────────────────────────────────────┘
+                                                    │
+                                                    ▼
+                                        [ Grounded Output ]
+    ```
 '시스템 구동 관점' - 호출 관계를 [어떤 레이어가 어떤 레이어를 포함/감싸고 있는가(Wrapping)]와 [데이터/요청이 들어오는 방향] 중 어디서 보느냐에 따라 로직의 시작점이 달라집니다.
 [ 상위 / 바깥 레이어 : 라우팅 & 엔진 환경 준비 ]
 ┌─────────────────────────────────────────────────────────────┐
@@ -864,6 +862,34 @@ class MultimodalDocument(BaseModel):
                      ▼
        [ Fine-Tuned Model Checkpoint ]
 
+┌────────────────────────────────────────────────────────────────────────┐
+ │                      REAL-TIME REQUEST PIPELINE                        │
+ │                                                                        │
+ │  User Request ──► Pass 1 ──► Memory (#18/#26) ──► Multi-Agent (#20)    │
+ │                                                         │              │
+ │                                                         ▼              │
+ │  Final Output ◄── Pass 2 ◄── ConsensusGraph (#33) ◄── [ High-Quality   │
+ │                                                         Proposals ]    │
+ └────────────────────────────────────┬───────────────────────────────────┘
+                                      │
+                                      ▼ (Asynchronous Data Logging)
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │                   OFFLINE CONTINUOUS LEARNING FLYWHEEL                 │
+ │                                                                        │
+ │                     [ High-Quality Telemetry Logs ]                    │
+ │                                    │                                   │
+ │                                    ▼                                   │
+ │                    Model Distillation Engine (#17)                     │
+ │               (Extracts synthetic training pairs & distill)            │
+ │                                    │                                   │
+ │                                    ▼                                   │
+ │                   [ New Fine-Tuned LoRA Adapter ]                      │
+ │                                    │                                   │
+ │                                    ▼                                   │
+ │                  Dynamic LoRA Adapter Router (#29)                     │
+ │                  (Hot-swaps new weights into live LLM)                 │
+ └────────────────────────────────────────────────────────────────────────┘
+
 **Core Subsystem Schemas**
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -1516,3 +1542,27 @@ class TenantContext(BaseModel):
                          └─► Instantly restores pre-encoded image patch tokens from GPU memory (bypasses ViT)
 2. Text Input  ──► Mission 21 (Text KV Cache): Prevention of repetitive text computations
                          └─► Instantly restores previous conversation text tokens from KV Cache
+
+
+
+
+
+### MISSION 33: MULTI-AGENT CONSENSUS GRAPH & CONFLICT RESOLUTION ENGINE (`src/agent/consensus_graph.py`)
+
+===================================================================================
+ MISSION 33: MULTI-AGENT CONSENSUS GRAPH & CONFLICT RESOLUTION ENGINE
+===================================================================================
+
+                [ Divergent Multi-Agent Output Proposals (# 20) ]
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      ConsensusGraphEngine Core                          │
+│  ├─ Domain Weight & Confidence Evaluation                               │
+│  ├─ Weighted Score / Majority Vote / Highest Confidence Routing         │
+│  └─ Conflict Arbitration & Proposal Convergence                         │
+└──────────────────────────────────────┬──────────────────────────────────┘
+                                       │
+                                       ▼
+                         [ ConsensusResult Payload ]
+            (Unified Verified Response ready for Guardrail Pass 2 # 4/7)
