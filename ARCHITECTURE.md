@@ -32,7 +32,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
 ```text
                                             [ User / External Client Query ]
                                                             │
-         1. ENTERPRISE GATEWAY & SECURITY PERIMETER         ▼
+1. ENTERPRISE GATEWAY & SECURITY PERIMETER                  ▼
                                     ┌───────────────────────────────────────────────┐
                                     │ Enterprise Multi-Tenant Gateway & Rate Limiter│ (# 24)
                                     │  -> Token Bucket Rate Limiter                 │
@@ -42,8 +42,10 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                                     ┌───────────────────────────────────────────────┐
                                     │ 🛡️ Multi-Tenant Data Isolation & Security     │ (# 28)
                                     │  -> RBAC, Clearance Levels & Namespace Filter │
-                                    | MULTI-TENANT TOKEN RATE LIMITER               |
-                                    | & COST ALLOCATION MESH                        |
+  1-1. CORE SCHEDULER & CACHE LAYER | 🛡️ MULTI-TENANT TOKEN RATE LIMITER            | (#37)
+                                    |  & COST ALLOCATION MESH : Prior Scheduler     |
+                                    |   └─ Cross-Model Semantic Cache (#39)         |
+                                    |     - Vector Cosine Match (0ms Hit Filter)    |
                                     └───────────────────────┬───────────────────────┘
                                                             │
                                                             ▼
@@ -74,15 +76,22 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │  ┌───────────────────────┐        ┌───────────────────────┐        ┌───────────────────────┐
                  │  │ Direct LLM Inference  │        │ Code Execution        │ (# 22) │ Multi-Agent Debate    │ (# 20)
                  │  │                       │        │ Sandbox Engine *      │        │ Engine *              │
-                 │  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
+                 |  |                       |        |                       |        | - AUTONOMOUS Multi    │
+                 |  └───────────┬───────────┘        └───────────┬───────────┘        └───────────┬───────────┘
                  │              │                                │                                │
+                 │              │                                │                                ▼
+                 │              │                                │          ┌─────────────────────────────────┐ 
+                 │              │                                │          │ Autonomous Tool-Use Registry    │
+                 │              │                                │          │ & JSON Schema Validation Engine.│ (# 38)
+                 │              │                                │          └─────────────────────┬───────────┘
                  │              │                                ▼                                │
                  │              │                    ┌───────────────────────┐                    │
                  │              │                    │ Self-Correction Loop *│ (# 27)             │
                  │              │                    └───────────┬───────────┘                    │
+                 │              │                                |                                ▼
                  |              |                        ┌─────────────────────────────────────────────────-─┐           
                  |              |                        |            AST Refactor Sandbox (# 36)            |
-                 |              |.                       └───────────┬───────────────────────────────────────┘
+                 |              |                        └───────────┬───────────────────────────────────────┘
                  │              └────────────────────────────────────┼────────────────────────────┘
             ┌───────────────────────────────────────────────────────────────────┐
             |       SELF-HEAVY AGENT CIRCUIT BREAKER & FALLBACK MESH #32        |
@@ -104,10 +113,14 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                             ┌───────────────────────────────────────────────┐
                             │ Dual Memory & Retrieval Pipeline              │
                             │  ├─ 🧠 Persistent Semantic Memory (RRF) (# 26)│
-                            │        ├─ Dense Vector Engine (Cosine Sim)    │
-                            │        ├─ Sparse BM25 Engine (TF-IDF/IDF)     │
-                            │        └─ Reciprocal Rank Fusion (RRF)        │
-                            │  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
+                            │  │      ├─ Dense Vector Engine (Cosine Sim)   │
+                            │  │      ├─ Sparse BM25 Engine (TF-IDF/IDF)    │
+                            │  │      └─ Reciprocal Rank Fusion (RRF)       │   
+                            │  │                                            │
+                            │  │   peculative Context Prefetching Engine    │                        
+                            │  │    │                           (#41)       │
+                            |  |    ▼                                       │
+            GRAPH MESH LAYER│  └─ GraphRAG Multi-Hop Graph Search  (# 18)   │
                             │    └─ Enterprise Federated Knowledge Graph    │
                             │       & Entity Linking Mesh.            (#40) │
                             │                                               │
@@ -118,7 +131,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                             ┌───────────────────────────────────────────────┐         
                             │ Model Distillation Engine (# 17)              │         
                             │ (Synthetic LoRA Trainer)                      │
-                            |  - Continuous learning flywheel -             |                            └───────────────────────┬────────────────┬──────┘
+                            |      - Continuous learning flywheel -         |                            └───────────────────────┬────────────────┬──────┘
                                                     │                │        
 6. STREAMING EVALUATION & GUARDRAILS PASS 2         ▼                ▼
                             ┌───────────────────────────────────────────────┐
@@ -1869,3 +1882,26 @@ Grounding Validator(_compute_chunk_hallucination_score()): Fast heuristic/embedd
                                    ▼
           [ Subgraph Result Context Payload ──► Augmented Prompt ]
           (Passed to Multi-Agent Debate Engine # 20 / Consensus # 33)
+
+### MISSION 41: DYNAMIC SPECULATIVE PROMPT PREFETCHING ENGINE (`src/core/speculative_prefetcher.py`)
+
+===================================================================================
+ MISSION 41: DYNAMIC SPECULATIVE PROMPT PREFETCHING ENGINE
+===================================================================================
+
+               [ Incoming Turn Prompt Payload ]
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│               SpeculativePromptPrefetcher Core                          │
+│  ├─ Intent Association Matching & Trigger Identification                │
+│  ├─ Confidence Threshold Check (>= 0.60)                                │
+│  └─ Background Pre-Warming of Context Cache for Next Turn               │
+└─────────────────────────────┬───────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   Pre-Warmed Context Cache                              │
+│  ├─ Immediate zero-latency lookup on subsequent agent turn               │
+│  └─ Bypasses redundant vector store search / GraphRAG walk (# 18 / # 40)│
+└─────────────────────────────────────────────────────────────────────────┘

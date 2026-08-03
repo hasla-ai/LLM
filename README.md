@@ -18,14 +18,16 @@ llm-engineering-lab/
 ├── LICENSE                     # MIT License
 ├── ARCHITECTURE.md             # System architecture & data flow design
 ├── src/
-│   ├── core/                         # Structured LLM inference engine & fine-tuning
+│   ├── core/                         # Foundation LLM engine, security & optimization
 │   │   ├── __init__.py
 │   │   ├── llm_client.py             # Pydantic-enforced Structured LLM Client
 │   │   └── distillation_pipeline.py  # Mission 17: Fine-Tuning & Model Distillation Pipeline
+│   │   ├── kv_cache_manager.py       # Mission 21: High-Performance KV-Cache Manager
 │   │   ├── llm_gateway.py            # Mission 24: Enterprise LLM Gateway & Rate Limiter
 │   │   └── tenant_security_engine.py # Mission 28: Multi-Tenant Data Isolation & Security
 │   │   └── lora_adapter_router.py    # Mission 29: Dynamic LoRA Adapter Router
-│   ├── rag/                    # Retrieval-Augmented Generation engines
+│   │   └── speculative_prefetcher.py # Mission 41: Speculative Prompt Prefetching Engine
+│   ├── rag/                    # Dense/Sparse Retrieval & RAG Orchestration
 │   │   ├── __init__.py
 │   │   ├── vector_store.py         # In-Memory Vector Store & Cosine Similarity engine
 │   │   ├── rag_pipeline.py         # Context retrieval & synthesis orchestrator
@@ -38,7 +40,13 @@ llm-engineering-lab/
 │   │   └── multimodal_rag.py       # Mission 16: Multi-Modal RAG Engine & Visual Embedder
 │   │   └── graph_rag.py            # Mission 18: GraphRAG & Knowledge Graph Entity-Relation Engine
 │   │   └── persistent_memory.py    # Mission 26: Persistent Semantic Memory Engine
-│   ├── agent/                  # Autonomous Tool-Calling & Multi-Agent Graph
+│   ├── graph/                    # Knowledge Graph Domain & GraphRAG Engines
+│   │   ├── __init__.py
+│   │   ├── graph_orchestrator.py     # Stateful Multi-Agent Graph Orchestrator (from agent/)
+│   │   ├── graph_rag.py            # Mission 18: GraphRAG & Entity-Relation Engine (from rag/)
+│   │   ├── graph_memory.py         # Persistent Knowledge Graph Memory Engine (from rag/)
+│   │   └── federated_graph_mesh.py # Mission 40: Federated Knowledge Graph Mesh Engine
+│   ├── agent/                  # Autonomous Tool-Calling & Speech/Vision Agents
 │   │   ├── __init__.py
 │   │   ├── tools.py                  # Tool registry & execution functions
 │   │   ├── agent_engine.py           # ReAct-style Agent decision loop
@@ -47,20 +55,24 @@ llm-engineering-lab/
 │   │   └── audio_agent.py            # Mission 19: Real-Time Audio & Streaming Speech Agent
 │   │   └── debate_orchestrator.py    # Mission 20: Multi-Agent Consensus & Debate Orchestrator
 │   │   └── vision_document_agent.py  # Mission 23: Multi-Modal Vision Agent
-│   ├── sandbox/                      # Isolated Code Execution & Reflection Runtime
+│   ├── sandbox/                      # Code Execution Sandbox & Reflection Runtime
 │   │   ├── __init__.py
 │   │   ├── code_sandbox.py           # Mission 22: Autonomous Code Execution Sandbox
 │   │   └── self_correction_engine.py # Mission 27: Self-Correction Sandbox & Code Feedback Loop
-│   ├── eval/                   # Evaluation & Guardrails engine
+│   ├── eval/                   # Continuous Quality Evaluation & Guardrails
 │   │   ├── __init__.py
 │   │   ├── guardrails.py       # Pre-execution policy & PII sanitizer
 │   │   ├── evaluator.py        # LLM-as-a-Judge evaluation engine
 │   │   └── rag_benchmarker.py  # Mission 13: RAG Benchmark & Quality Evaluator
+│   │   └── continuous_rag_evaluator.py # Mission 42: Continuous RAG Evaluation & Hallu Harness
+│   ├── telemetry/              # Observability & Tracing
+│   │   ├── __init__.py
+│   │   └── telemetry_tracer.py     # Mission 25: OpenTelemetry Distributed Tracer
 │   └── verification/           # Continuous Verification & Benchmarking
 │       ├── __init__.py
 │       ├── metrics.py          # Benchmark metrics calculator
 │       └── benchmark_runner.py # Regression test orchestrator & JSON reporter
-└── tests/                      # Automated Pytest suite
+└── tests/                      # Automated Test Suite (1:1 paired with src)
     ├── __init__.py
     ├── test_llm_client.py      # Mission 1 validation
     ├── test_rag.py             # Mission 2 validation
@@ -80,6 +92,7 @@ llm-engineering-lab/
     ├── test_multimodal_rag.py   # Mission 16 validation
     └── test_distillation_pipeline.py # Mission 17 validation
     └── test_graph_rag.py        # Mission 18 validation
+    ├── test_graph_memory.py
     └── test_audio_agent.py      # Mission 19 validation
     └── test_debate_orchestrator.py # Mission 20 validation
     ├── test_kv_cache_manager.py       # Mission 21 validation
@@ -91,6 +104,11 @@ llm-engineering-lab/
     └── test_self_correction_engine.py # Mission 27 validation
     └── test_tenant_security_engine.py# Mission 28 validation
     └── tests/test_lora_adapter_router.py # Mission 30 validation
+    ├── test_federated_graph_mesh.py
+
+
+    ├── test_speculative_prefetcher.py    # Mission 41 validation
+    └── test_continuous_rag_evaluator.py # Mission 42 validation
 ```
 
 ## 🎯 Mission Roadmap
@@ -318,6 +336,16 @@ llm-engineering-lab/
   - Fast vector similarity lookup engine for zero-cost pre-computed LLM responses (`SemanticCacheEngine`).
   - Cosine similarity thresholding for semantically equivalent query deduplication (`_cosine_similarity`).
   - Multi-tenant isolated cache partition filtering (`CacheEntry`, `CacheHitResult`).
+
+- [x] **Mission 40: Enterprise Federated Knowledge Graph & GraphRAG Entity Linking Mesh (v5.0.0)**
+  - Multi-namespace federated graph node and edge representation (`FederatedKnowledgeGraphMesh`).
+  - Breadth-First Search (BFS) multi-hop entity subgraph traversal (`extract_entity_subgraph`).
+  - Namespace exploration tracking and context aggregation for GraphRAG (`SubgraphQueryResult`).
+
+- [x] **Mission 41: Dynamic Speculative Prompt Prefetching & Context Cache Engine (v5.1.0)**
+  - Dynamic intent association rules for multi-turn speculative context pre-warming (`SpeculativePromptPrefetcher`).
+  - Pre-warmed context retrieval engine for turn-to-turn latency reduction (`predict_and_prefetch`, `get_prewarmed_context`).
+  - Confidence-thresholded predictive pre-fetching (`PrefetchPrediction`).
 
 🚀 Quick Start (Docker)
 1. Set Environment Variables
