@@ -77,7 +77,7 @@ Workflows operate as stateful graphs with explicit node dependencies, conditiona
                  │                               │ & KV Cache                    │
                  │                               └───────────────┬───────────────┘
                  │                                               │
-                 │                                               ▼
+                 │                                               ▼.  Vision RAG (# 16) 어디
                  │                                               │
                  └───────────────────────────────────────────┬───┘
                                                              ▼
@@ -1460,3 +1460,28 @@ class TenantContext(BaseModel):
                                      ▼
                       [ Active Domain Model Runtime ]
              (Base LLM Backbone + Dynamically Injected LoRA Weights)
+
+### MISSION 30: MULTI-MODAL RAG DOCUMENT PARSING & LAYOUT ANALYSIS ENGINE (`src/rag/multimodal_doc_parser.py`)
+
+===================================================================================
+ MISSION 30: MULTI-MODAL RAG DOCUMENT PARSING & LAYOUT ANALYSIS ENGINE
+===================================================================================
+
+                   [ Raw Unstructured PDF / Image Document Page ]
+                                         │
+                                         ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           MultiModalDocParser Core                              │
+│   (Spatial Bounding Box Resolution, Element Classification & Layout Analysis)   │
+└────────────────────────────────────────┬────────────────────────────────────────┘
+                                         │
+                                         ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                             Parsed Document AST                                 │
+│   ├─ Headers & Text Paragraphs (Direct Sparse/Dense Vector Embedding)          │
+│   └─ Tables & Figures (Visual Embedding + Vision Agent Grounding #23)            │
+└────────────────────────────────────────┬────────────────────────────────────────┘
+                                         │
+                                         ▼
+                 [ Structured Multimodal Document AST Payload ]
+            (Ready for Dual-Tier Isolated Memory Retrieval #18 / #26)

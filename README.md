@@ -269,6 +269,11 @@ llm-engineering-lab/
   - Adaptive resolution selecting tenant-customized weights over shared enterprise domain adapters (`select_optimal_adapter`).
   - Zero-downtime weight hot-swapping execution engine on base LLM backbone (`hot_swap_adapter`).
 
+- - [x] **Mission 30: Multi-Modal RAG Document Parsing & Layout Analysis Engine (v3.6.0)**
+  - Hierarchical Document AST parsing layout blocks with normalized 2D spatial bounding box coordinates (`BoundingBox`, `LayoutElement`).
+  - Multi-Modal structural classification categorizing headers, paragraphs, tables, figures, and key-value grids (`ElementType`).
+  - Specialized visual extraction pipeline isolating non-textual layout structures for visual vector indexing (`extract_tables_and_figures`).
+  
 🚀 Quick Start (Docker)
 1. Set Environment Variables
 Copy .env.example to .env and configure your API keys:
