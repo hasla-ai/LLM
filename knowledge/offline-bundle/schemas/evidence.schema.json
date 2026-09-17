@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/evidence.schema.json",
+  "title": "Forge H2 Evidence",
+  "description": "A source or verified artifact that supports a claim, calculation, decision or requirement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_id", "project_id", "schema_version", "evidence_type", "title", "source", "content_hash", "reliability_tier", "verification_status", "scope", "used_by_missions", "created_at", "extensions"],
+  "properties": {
+    "evidence_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^EVD-[A-Za-z0-9._-]+$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "evidence_type": {"type": "string", "enum": ["law", "regulation", "standard", "permit", "drawing", "calculation", "vendor", "contract", "survey", "test", "inspection", "measurement", "decision", "meeting", "dataset", "ai_inference"]},
+    "title": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "owner", "document_number", "revision", "locator"],
+      "properties": {
+        "uri": {"type": ["string", "null"], "format": "uri", "description": "URL, file path or controlled repository reference."},
+        "owner": {"type": ["string", "null"]},
+        "document_number": {"type": ["string", "null"]},
+        "revision": {"type": ["string", "null"]},
+        "locator": {"type": ["string", "null"], "description": "Page, clause, sheet, row, table or JSON path."},
+        "retrieved_at": {"anyOf": [{"$ref": "common.schema.json#/$defs/timestamp"}, {"type": "null"}]}
+      }
+    },
+    "issued_at": {"$ref": "common.schema.json#/$defs/date_or_null"},
+    "effective_from": {"$ref": "common.schema.json#/$defs/date_or_null"},
+    "effective_to": {"$ref": "common.schema.json#/$defs/date_or_null"},
+    "content_hash": {"type": "string", "minLength": 8, "description": "Hash of the exact source content, e.g. sha256:..."},
+    "reliability_tier": {"type": "string", "enum": ["T0", "T1", "T2", "T3", "T4", "T5"], "description": "T0 official legal/permit; T1 official technical; T2 accredited test; T3 vendor/EPC; T4 user/field; T5 AI inference."},
+    "verification_status": {"type": "string", "enum": ["unverified", "verified", "conditionally_verified", "superseded", "rejected", "expired"]},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applies_to", "limitations"],
+      "properties": {
+        "applies_to": {"type": "array", "items": {"type": "string"}},
+        "limitations": {"type": "array", "items": {"type": "string"}},
+        "jurisdiction": {"type": ["string", "null"]},
+        "capacity_range": {"type": ["string", "null"]}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "statement", "locator", "confidence"],
+        "properties": {
+          "claim_id": {"$ref": "common.schema.json#/$defs/id"},
+          "statement": {"type": "string", "minLength": 1},
+          "locator": {"type": ["string", "null"]},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "verified_by": {"anyOf": [{"$ref": "common.schema.json#/$defs/person_or_role"}, {"type": "null"}]},
+    "verified_at": {"anyOf": [{"$ref": "common.schema.json#/$defs/timestamp"}, {"type": "null"}]},
+    "used_by_missions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "supersedes": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "superseded_by": {"type": ["string", "null"]},
+    "created_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

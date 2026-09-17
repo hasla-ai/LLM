@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/change-request.schema.json",
+  "title": "Forge H2 Change Request",
+  "description": "Controlled request to change a project requirement, design, permit basis, contract, schedule or AI/data rule.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["change_id", "project_id", "schema_version", "status", "category", "requested_by", "reason", "request", "affected_mission_ids", "affected_evidence_ids", "impact_assessment", "decision", "created_at", "updated_at", "extensions"],
+  "properties": {
+    "change_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^CHG-[A-Za-z0-9._-]+$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "status": {"type": "string", "enum": ["proposed", "impact_analysis", "under_review", "approved", "rejected", "implemented", "verified", "superseded"]},
+    "category": {"type": "string", "enum": ["scope", "requirement", "site", "hydrogen", "power_grid", "design", "safety", "permit", "environment", "contract", "schedule", "cost", "data", "ai_model", "operations"]},
+    "requested_by": {"$ref": "common.schema.json#/$defs/person_or_role"},
+    "reason": {"type": "string", "minLength": 1},
+    "request": {"type": "string", "minLength": 1},
+    "affected_mission_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "affected_evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "affected_document_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "impact_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["safety", "legal", "scope", "cost", "schedule", "quality", "data", "summary", "review_required"],
+      "properties": {
+        "safety": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "legal": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "scope": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "cost": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "schedule": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "quality": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "data": {"type": "string", "enum": ["none", "low", "medium", "high", "critical", "unknown"]},
+        "summary": {"type": "string", "minLength": 1},
+        "review_required": {"type": "boolean"}
+      }
+    },
+    "decision": {
+      "anyOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["status", "reason", "decided_by", "decided_at"], "properties": {"status": {"type": "string", "enum": ["approved", "rejected", "hold"]}, "reason": {"type": "string"}, "conditions": {"type": "array", "items": {"type": "string"}}, "decided_by": {"$ref": "common.schema.json#/$defs/person_or_role"}, "decided_at": {"$ref": "common.schema.json#/$defs/timestamp"}}}
+      ]
+    },
+    "created_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

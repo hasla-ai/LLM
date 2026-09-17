@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/knowledge-catalog.schema.json",
+  "title": "Forge H2 Knowledge Catalog",
+  "description": "Canonical JSON source catalog. Every entry is versioned and provenance-linked.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "catalog_version", "source_of_truth", "generated_at", "entries"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "catalog_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "source_of_truth": {"type": "string", "const": "knowledge/catalog.json"},
+    "generated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "entries": {"type": "array", "items": {"$ref": "knowledge-entry.schema.json"}}
+  }
+}

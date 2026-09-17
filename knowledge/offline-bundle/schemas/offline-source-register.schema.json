@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/offline-source-register.schema.json",
+  "title": "Forge H2 Offline Source Register",
+  "description": "Local availability, revision and provenance status for every knowledge source required by offline work.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "mode", "network_policy", "sources"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "mode": {"type": "string", "const": "offline"},
+    "network_policy": {"type": "string", "const": "deny_all_remote_fetch"},
+    "sources": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["knowledge_id", "source_kind", "status", "required_for_baseline", "url", "local_artifact", "revision", "sha256"], "properties": {"knowledge_id": {"$ref": "common.schema.json#/$defs/id"}, "source_kind": {"type": "string"}, "status": {"type": "string", "enum": ["available_local", "metadata_only", "missing_local", "not_applicable"]}, "required_for_baseline": {"type": "boolean"}, "url": {"type": ["string", "null"], "format": "uri"}, "local_artifact": {"type": ["string", "null"]}, "revision": {"type": ["string", "null"]}, "sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"}, "notes": {"type": "string"}}}}
+  }
+}

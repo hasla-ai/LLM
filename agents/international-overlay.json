@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/agents/international-overlay.json",
+  "title": "Forge H2 International Project Agent Overlay",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "version": "1.0.0",
+  "activation_rule": "host_country != Korea OR cross_border_contract == true OR international_financing == true OR foreign_epc_or_vendor == true",
+  "principle": "국내 기본 조직을 유지하고, 국가·금융·계약·표준·현지 책임 차이를 국제 오버레이로 추가한다.",
+  "standards_hierarchy": ["host_country_law_and_permits", "financing_and_contract_obligations", "adopted_international_standards", "owner_and_company_standards"],
+  "international_agents": [
+    {"agent_id":"AG-INT-001","name":"International Program Director Agent","purpose":"국가·조직·계약·금융·일정의 국제 통합","professional_profile":"국제 EPC/인프라 프로그램 디렉터","approval_scope":["international_baseline_recommendation","escalation"],"must_consult":["AG-INT-002","AG-INT-003","AG-INT-005","AG-INT-009"]},
+    {"agent_id":"AG-INT-002","name":"Owner's Engineer·Technical Authority Agent","purpose":"발주자 측 설계·성능·인터페이스 독립 기술권한","professional_profile":"다국가 발전·플랜트 Owner's Engineer 또는 수석기술자","approval_scope":["owner_technical_recommendation"],"must_consult":["AG-ENG-001","AG-INT-004","AG-INT-005","AG-INT-015"]},
+    {"agent_id":"AG-INT-003","name":"Lender's Technical Advisor·Independent Engineer Agent","purpose":"대주단 기술실사·금융종결·건설진도·성능검증","professional_profile":"대주단 지정 독립기술자 또는 프로젝트 파이낸스 기술자문사","approval_scope":["lender_technical_opinion"],"must_consult":["AG-FIN-001","AG-INT-007","AG-INT-015","AG-INT-016"]},
+    {"agent_id":"AG-INT-004","name":"International Standards·Code Manager Agent","purpose":"ISO·IEC·NFPA·ASME·API와 현지 코드의 적용 매트릭스 관리","professional_profile":"국제표준·플랜트 코드 엔지니어","approval_scope":["standards_matrix_recommendation"],"must_consult":["AG-ENG-001","AG-HSE-001","AG-INT-005","AG-INT-015"]},
+    {"agent_id":"AG-INT-005","name":"Local Licensed Engineer·Country Authority Agent","purpose":"현지 법정 설계·감리·허가·서명 책임 연결","professional_profile":"수원국 등록 기술사·PE·법정 설계자·현지 엔지니어","approval_scope":["local_legal_signoff_recommendation"],"must_consult":["AG-INT-006","AG-INT-015","AG-TEC-009","AG-TEC-005"]},
+    {"agent_id":"AG-INT-006","name":"Local Permitting·Regulatory Counsel Agent","purpose":"수원국 인허가·행정절차·규제기관 협의","professional_profile":"수원국 에너지·가스·환경·건설 인허가 변호사 또는 규제전문가","approval_scope":["local_permit_recommendation"],"must_consult":["AG-HSE-001","AG-INT-005","AG-INT-008"]},
+    {"agent_id":"AG-INT-007","name":"ESG·E&S Performance Standards Agent","purpose":"IFC Performance Standards·Equator Principles·ESMS·행동계획 관리","professional_profile":"국제금융 E&S 자문사·환경사회영향평가 전문가","approval_scope":["esg_action_plan_recommendation"],"must_consult":["AG-TEC-017","AG-ADV-007","AG-INT-008","AG-INT-003"]},
+    {"agent_id":"AG-INT-008","name":"Human Rights·Community·Indigenous Peoples Agent","purpose":"지역사회·인권·원주민·고충처리·사회적 수용성 관리","professional_profile":"국제 E&S·인권·지역사회 참여 전문가","approval_scope":["stakeholder_recommendation"],"must_consult":["AG-ADV-011","AG-INT-006","AG-INT-007"]},
+    {"agent_id":"AG-INT-009","name":"FIDIC·International EPC Counsel Agent","purpose":"국제 EPC·턴키·보증·책임·준거법·분쟁조항 관리","professional_profile":"FIDIC 국제건설계약 변호사·계약관리자","approval_scope":["contract_recommendation_only"],"must_consult":["AG-COM-001","AG-EPC-001","AG-ADV-004","AG-INT-010"]},
+    {"agent_id":"AG-INT-010","name":"Claims·Dispute Board Agent","purpose":"클레임·지체·변경·분쟁회피·분쟁위원회 자료 관리","professional_profile":"국제건설 클레임 전문가·공정 전문가·중재인","approval_scope":["claims_recommendation_only"],"must_consult":["AG-ADV-009","AG-INT-009","AG-PMO-002"]},
+    {"agent_id":"AG-INT-011","name":"Export Control·Sanctions·Customs Agent","purpose":"이중용도·제재·수출입·통관·원산지·기술이전 검토","professional_profile":"국제무역·수출통제·제재·통관 변호사 또는 전문관세사","approval_scope":["trade_compliance_recommendation"],"must_consult":["AG-PROC-001","AG-INT-014","AG-ADV-004"]},
+    {"agent_id":"AG-INT-012","name":"Cross-border Tax·Transfer Pricing·FX Agent","purpose":"원천세·이중과세·이전가격·환율·송금·헤지 관리","professional_profile":"국제세무·이전가격·외환·프로젝트금융 전문가","approval_scope":["tax_fx_recommendation"],"must_consult":["AG-FIN-001","AG-ADV-001","AG-ADV-002","AG-INT-013"]},
+    {"agent_id":"AG-INT-013","name":"Political Risk·ECA·Insurance Agent","purpose":"국가위험·정치위험·수출신용·보험·보증 구조 관리","professional_profile":"정치위험·ECA·프로젝트보험 전문가","approval_scope":["risk_finance_recommendation"],"must_consult":["AG-FIN-001","AG-ADV-008","AG-INT-003"]},
+    {"agent_id":"AG-INT-014","name":"Cross-border Supply Chain·Dangerous Goods Agent","purpose":"수소·압력용기·장비의 국제운송·위험물·현지조달·보관 관리","professional_profile":"플랜트 국제물류·위험물 운송·조달 전문가","approval_scope":["logistics_recommendation"],"must_consult":["AG-PROC-001","AG-TEC-020","AG-INT-011"]},
+    {"agent_id":"AG-INT-015","name":"Certification·Conformity Assessment Agent","purpose":"인증·검사·시험·제3자 적합성 평가와 현지 수용성 확인","professional_profile":"공인 검사기관·인증기관·적합성평가 전문가","approval_scope":["conformity_opinion"],"must_consult":["AG-QA-001","AG-INT-004","AG-INT-005","AG-INT-016"]},
+    {"agent_id":"AG-INT-016","name":"Independent Safety Assessor·HAZOP Chair Agent","purpose":"독립 HAZOP·LOPA·SIL·화재폭발·안전사례 검토","professional_profile":"독립 공정안전·기능안전 평가자·HAZOP 의장","approval_scope":["independent_safety_opinion"],"must_consult":["AG-TEC-013","AG-TEC-014","AG-TEC-008","AG-HSE-001"]},
+    {"agent_id":"AG-INT-017","name":"International Grid Code·Power Market Agent","purpose":"수원국 계통코드·시장규칙·PPA·접속협정 조정","professional_profile":"수원국 전력시장·계통코드·발전사업 전문가","approval_scope":["grid_market_recommendation"],"must_consult":["AG-TEC-006","AG-TEC-007","AG-ADV-003","AG-INT-005"]},
+    {"agent_id":"AG-INT-018","name":"International Data·Privacy·Cyber Transfer Agent","purpose":"국경간 데이터·개인정보·OT 보안·클라우드·사이버 사고 대응","professional_profile":"국제 개인정보·사이버보안·OT 보안 전문가","approval_scope":["data_cyber_recommendation"],"must_consult":["AG-CYB-001","AG-TEC-019","AG-AIS-001"]},
+    {"agent_id":"AG-INT-019","name":"Technical Translation·Document Control Agent","purpose":"다국어 도면·계약·허가·회의 기록의 의미와 버전 일치 관리","professional_profile":"플랜트 기술번역·문서관리·용어집 전문가","approval_scope":["document_consistency_recommendation"],"must_consult":["AG-PMO-002","AG-INT-004","AG-INT-006"]}
+  ],
+  "expert_councils": [
+    {"council_id":"INT-C01","name":"Sponsor·Investment·Lender Council","chair_agent_id":"AG-GOV-001","agent_ids":["AG-INT-001","AG-INT-003","AG-INT-007","AG-INT-012","AG-INT-013"],"gates":["G0","G1","G4","G7"],"outputs":["investment_decision","finance_conditions","lender_action_plan"]},
+    {"council_id":"INT-C02","name":"Owner's Engineering·Technical Authority Council","chair_agent_id":"AG-INT-002","agent_ids":["AG-INT-001","AG-INT-002","AG-INT-004","AG-INT-005","AG-INT-017"],"gates":["G1","G2","G4","G5"],"outputs":["design_authority_position","standards_matrix","local_design_interface"]},
+    {"council_id":"INT-C03","name":"Safety·Certification·Conformity Council","chair_agent_id":"AG-HSE-001","agent_ids":["AG-INT-004","AG-INT-015","AG-INT-016","AG-INT-005"],"gates":["G2","G3","G5","G6","G7"],"outputs":["independent_safety_opinion","certification_plan","permit_readiness"]},
+    {"council_id":"INT-C04","name":"Local Regulatory·E&S·Stakeholder Council","chair_agent_id":"AG-INT-006","agent_ids":["AG-INT-005","AG-INT-006","AG-INT-007","AG-INT-008","AG-INT-017"],"gates":["G0","G1","G3","G7"],"outputs":["country_permit_matrix","esms_action_plan","stakeholder_grievance_plan"]},
+    {"council_id":"INT-C05","name":"International EPC·Contract·Claims Council","chair_agent_id":"AG-COM-001","agent_ids":["AG-INT-001","AG-INT-009","AG-INT-010","AG-INT-019"],"gates":["G2","G4","G5","G6"],"outputs":["contract_strategy","risk_allocation","claims_avoidance_plan"]},
+    {"council_id":"INT-C06","name":"Trade·Tax·Supply Chain Council","chair_agent_id":"AG-PROC-001","agent_ids":["AG-INT-011","AG-INT-012","AG-INT-013","AG-INT-014"],"gates":["G1","G2","G4","G5","G6"],"outputs":["trade_compliance_plan","customs_logistics_plan","tax_fx_plan"]},
+    {"council_id":"INT-C07","name":"Digital·Data·OT Cyber Council","chair_agent_id":"AG-CYB-001","agent_ids":["AG-INT-018","AG-INT-019","AG-TEC-008","AG-TEC-019"],"gates":["G0","G4","G5","G7"],"outputs":["cross_border_data_plan","ot_cyber_baseline","language_controlled_record"]},
+    {"council_id":"INT-C08","name":"Independent Assurance Council","chair_agent_id":"AG-IR-001","agent_ids":["AG-INT-003","AG-INT-015","AG-INT-016","AG-INT-004"],"gates":["G3","G4","G6","G7"],"outputs":["independent_review_report","open_actions","no_objection_or_hold"]}
+  ],
+  "gate_requirements": [
+    {"gate_id":"G0","required_councils":["INT-C01","INT-C02","INT-C04","INT-C07"],"minimum_human_roles":["Sponsor","Country Regulatory Counsel","Owner's Engineer"]},
+    {"gate_id":"G1","required_councils":["INT-C01","INT-C02","INT-C04","INT-C06"],"minimum_human_roles":["Sponsor","Finance Lead","Local Licensed Engineer"]},
+    {"gate_id":"G2","required_councils":["INT-C02","INT-C03","INT-C05","INT-C06"],"minimum_human_roles":["Chief Engineer","Standards Manager","Local Engineer"]},
+    {"gate_id":"G3","required_councils":["INT-C03","INT-C04","INT-C08"],"minimum_human_roles":["HSE Authority","Independent Safety Assessor","Local Permit Counsel"]},
+    {"gate_id":"G4","required_councils":["INT-C01","INT-C05","INT-C06","INT-C08"],"minimum_human_roles":["Sponsor","Lender Technical Advisor","Contract Counsel"]},
+    {"gate_id":"G5","required_councils":["INT-C02","INT-C03","INT-C05","INT-C06","INT-C07"],"minimum_human_roles":["Chief Engineer","EPC Manager","QA/QC Lead"]},
+    {"gate_id":"G6","required_councils":["INT-C03","INT-C05","INT-C07","INT-C08"],"minimum_human_roles":["Commissioning Manager","Independent Reviewer","Operations Manager"]},
+    {"gate_id":"G7","required_councils":["INT-C01","INT-C03","INT-C04","INT-C07","INT-C08"],"minimum_human_roles":["Sponsor","Operations Manager","Local Regulatory Authority"]}
+  ]
+}

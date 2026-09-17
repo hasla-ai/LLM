@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/knowledge/registry.json",
+  "title": "Forge H2 Knowledge Registry",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "version": "1.0.0",
+  "entry_schema": "schemas/knowledge-entry.schema.json",
+  "retrieval_request_schema": "schemas/retrieval-request.schema.json",
+  "retrieval_result_schema": "schemas/retrieval-result.schema.json",
+  "source_manifest": "knowledge/catalog.json",
+  "database": "knowledge/catalog.json",
+  "derived_search_index": "knowledge/knowledge.sqlite3",
+  "formula_library": "knowledge/formula-library.json",
+  "professional_foundations": "knowledge/professional-foundations.json",
+  "offline_source_register": "knowledge/offline-source-register.json",
+  "offline_requirements": "knowledge/offline-requirements.json",
+  "offline_bundle": "knowledge/offline-bundle/manifest.json",
+  "agent_database_directory": "knowledge/agent-databases/",
+  "agent_database_manifest": "knowledge/agent-databases/manifest.json",
+  "access_policy": "knowledge/access-policy.json",
+  "pipeline": "knowledge/pipeline.py",
+  "knowledge_layers": [
+    {"layer":"normative","description":"법령·허가·국제표준·공식기준","authority_floor":"T1_official_standard_or_authority"},
+    {"layer":"technical","description":"설계기준·계산방법·시험·벤더 자료","authority_floor":"T2_certified_test_or_engineer"},
+    {"layer":"commercial","description":"계약·금융·보험·조달 조건","authority_floor":"T3_vendor_or_contract"},
+    {"layer":"operational","description":"운영절차·정비·사고·교훈","authority_floor":"T2_certified_test_or_engineer"},
+    {"layer":"project","description":"현재 프로젝트의 승인된 기준선·결정·미션","authority_floor":"T3_vendor_or_contract"}
+  ],
+  "retrieval_policy": {
+    "offline_mode": {"network_policy": "deny_all_remote_fetch", "missing_local_source": "block_baseline_promotion"},
+    "database_order": ["requesting_agent_database", "explicit_source_agent_databases", "central_source_catalog"],
+    "all_agents_can_read_other_agent_databases": true,
+    "must_filter_by": ["requesting_agent_id", "phase", "jurisdiction", "status"],
+    "must_return": ["knowledge_id", "title", "summary", "source.url_or_locator", "source.evidence_ids", "revision", "verification_status", "relevance_reasons"],
+    "must_cite_in_agent_output": true,
+    "no_match_behavior": "blocked_or_request_more_data",
+    "conflict_behavior": "create_meeting_and_record_both_versions",
+    "authority_preference": ["T0_official_law_or_permit", "T1_official_standard_or_authority", "T2_certified_test_or_engineer", "T3_vendor_or_contract", "T4_internal_lesson_or_ai_draft"]
+  }
+}

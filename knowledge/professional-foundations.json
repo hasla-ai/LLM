@@ -1,0 +1,44 @@
+{
+  "$schema": "https://forge-h2.local/schema/professional-foundations.schema.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "catalog_version": "1.0.0",
+  "source": {
+    "source_kind": "user_provided",
+    "publisher": "Forge H2 project user input",
+    "locator": "user-provided technical-professional and textbook outline, 2026-09-17",
+    "evidence_ids": ["EVD-USER-FOUNDATIONS-001"]
+  },
+  "verification_status": "unverified",
+  "certifications": [
+    {"rank": 1, "name": "가스기술사", "focus": "수소 누출·고압가스 안전·수소 저장·송선", "candidate_agent_ids": ["AG-TEC-001", "AG-TEC-002", "AG-TEC-014"]},
+    {"rank": 2, "name": "화공기술사", "focus": "수소 개질·화학공정·반응공학", "candidate_agent_ids": ["AG-TEC-001", "AG-TEC-004"]},
+    {"rank": 3, "name": "발송배전기술사", "focus": "발전소 계통연계·송배전·변전", "candidate_agent_ids": ["AG-TEC-005", "AG-TEC-006", "AG-TEC-007"]},
+    {"rank": 4, "name": "건축전기설비기술사", "focus": "발전소 전력설비·수전설비·접지", "candidate_agent_ids": ["AG-TEC-005", "AG-TEC-016"]},
+    {"rank": 5, "name": "기계기술사", "focus": "플랜트 배관·유체기계·기계설계", "candidate_agent_ids": ["AG-TEC-003", "AG-TEC-004"]},
+    {"rank": 6, "name": "발송배전기술사 / 건축기계설비기술사", "focus": "열배관·공조·발전 배관 시스템", "candidate_agent_ids": ["AG-TEC-003", "AG-TEC-005", "AG-TEC-018"], "notes": "자격명과 법정 업무범위는 관할별로 확인한다."},
+    {"rank": 7, "name": "소방기술사", "focus": "수소 폭발·화재 방재설비", "candidate_agent_ids": ["AG-TEC-013"]},
+    {"rank": 8, "name": "산업안전기술사 (기계/화공/전기)", "focus": "수소 플랜트 위험성평가·PSM", "candidate_agent_ids": ["AG-TEC-014", "AG-TEC-015", "AG-TEC-016"]},
+    {"rank": 9, "name": "소음진동기술사", "focus": "터빈·압축기 진동·소음제어", "candidate_agent_ids": ["AG-TEC-017", "AG-TEC-018"]},
+    {"rank": 10, "name": "공조냉동기계기술사", "focus": "수소 액화·극저온 냉동시스템", "candidate_agent_ids": ["AG-TEC-003", "AG-TEC-018"]},
+    {"rank": 11, "name": "토질및기초기술사", "focus": "부지 지반조사·기초공사", "candidate_agent_ids": ["AG-TEC-009", "AG-TEC-010"]},
+    {"rank": 12, "name": "토목구조기술사", "focus": "플랜트 하부 토목구조물 설계", "candidate_agent_ids": ["AG-TEC-009", "AG-TEC-011"]},
+    {"rank": 13, "name": "건축구조기술사", "focus": "발전소 건축물·방호벽 구조설계", "candidate_agent_ids": ["AG-TEC-011"]},
+    {"rank": 14, "name": "건축시공기술사", "focus": "발전소 건물 시공·관리", "candidate_agent_ids": ["AG-TEC-011", "AG-CON-001"]},
+    {"rank": 15, "name": "토목시공기술사", "focus": "부지조성·기반시설 시공", "candidate_agent_ids": ["AG-TEC-009", "AG-TEC-020", "AG-CON-001"]},
+    {"rank": 16, "name": "측량및지형공간정보기술사", "focus": "부지측량·GIS 기반 배치", "candidate_agent_ids": ["AG-TEC-012"]},
+    {"rank": 17, "name": "수질관리기술사", "focus": "수전해용 순수·초순수 처리·배수", "candidate_agent_ids": ["AG-TEC-022", "AG-TEC-017"]},
+    {"rank": 18, "name": "대기관리기술사", "focus": "배가스·질소산화물 제어", "candidate_agent_ids": ["AG-TEC-017"]},
+    {"rank": 19, "name": "품질관리기술사", "focus": "발전기기·용접 품질검사", "candidate_agent_ids": ["AG-TEC-021", "AG-QA-001"]},
+    {"rank": 20, "name": "프로젝트관리기술사 (PMP 연계)", "focus": "플랜트 EPC 공정·공기관리", "candidate_agent_ids": ["AG-PMO-001", "AG-EPC-001"], "notes": "자격·인증의 공식 명칭과 효력은 별도 검증한다."}
+  ],
+  "textbooks": [
+    {"book_id": "BOOK-CHEM-REACTION", "title": "화학반응공학 (Chemical Reaction Engineering)", "domains": ["chemical_reaction", "hydrogen_process"], "chapters": [{"chapter": 1, "title": "균일계 반응속도론", "formula_ids": ["FML-CHEM-001"]}, {"chapter": 2, "title": "온도의 영향·Arrhenius Equation", "formula_ids": ["FML-CHEM-002"]}]},
+    {"book_id": "BOOK-CHEM-THERMO", "title": "화공열역학 (Chemical Engineering Thermodynamics)", "domains": ["thermodynamics", "gas"], "chapters": [{"chapter": 1, "title": "상태방정식·이상기체", "formula_ids": ["FML-THERMO-001"]}, {"chapter": 2, "title": "열역학 제1법칙", "formula_ids": ["FML-THERMO-002"]}]},
+    {"book_id": "BOOK-POWER-SYSTEM", "title": "전력공학 (Power System Engineering)", "domains": ["power_system", "grid"], "chapters": [{"chapter": 1, "title": "송전 특성·전력 수송", "formula_ids": ["FML-POWER-001"]}, {"chapter": 2, "title": "단락전류·고장계산", "formula_ids": ["FML-POWER-002"]}]},
+    {"book_id": "BOOK-ELECTROMAGNETICS", "title": "전자기학 (Electromagnetics)", "domains": ["electrical", "circuits"], "chapters": [{"chapter": 1, "title": "정전계·회로이론", "formula_ids": ["FML-ELEC-001", "FML-ELEC-002"]}]},
+    {"book_id": "BOOK-FLUID-MECHANICS", "title": "유체역학 (Fluid Mechanics)", "domains": ["fluid", "piping"], "chapters": [{"chapter": 1, "title": "유체운동학·연속방정식", "formula_ids": ["FML-FLUID-001"]}, {"chapter": 2, "title": "베르누이 방정식", "formula_ids": ["FML-FLUID-002"]}]},
+    {"book_id": "BOOK-HEAT-TRANSFER", "title": "열전달 (Heat Transfer)", "domains": ["heat", "thermal"], "chapters": [{"chapter": 1, "title": "열전도·Fourier 법칙", "formula_ids": ["FML-HEAT-001"]}, {"chapter": 2, "title": "대류·Newton 냉각법칙", "formula_ids": ["FML-HEAT-002"]}]},
+    {"book_id": "BOOK-COMBUSTION", "title": "연소공학 (Combustion Engineering)", "domains": ["combustion", "fire_explosion"], "chapters": [{"chapter": 1, "title": "폭발·연소파·가스 누출", "formula_ids": ["FML-COMB-001"]}]},
+    {"book_id": "BOOK-MATERIALS", "title": "재료역학 (Mechanics of Materials)", "domains": ["structures", "materials"], "chapters": [{"chapter": 1, "title": "응력·변형률", "formula_ids": ["FML-STRUCT-001"]}, {"chapter": 2, "title": "보의 휨 응력", "formula_ids": ["FML-STRUCT-002"]}]}
+  ]
+}

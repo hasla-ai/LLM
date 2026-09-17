@@ -1,0 +1,15 @@
+{
+  "professional_id": "PRO-HSE-0001",
+  "schema_version": "1.0.0",
+  "status": "verified",
+  "role": "Process Safety Lead",
+  "person_ref": {"user_id": "USR-REDACTED-0001", "display_name": null, "organization": null},
+  "jurisdictions": ["KR", "international"],
+  "qualifications": [{"name": "화공안전기술사", "issuer": "한국산업인력공단", "registration_ref_hash": null, "valid_from": null, "valid_to": null, "status": "verified", "evidence_ids": ["EVD-PRO-QUAL-0001"]}],
+  "experience_years": 15,
+  "scopes": ["HAZID", "HAZOP", "LOPA", "PSM", "hydrogen_process_safety"],
+  "authority": ["technical_review", "safety_recommendation"],
+  "independence": {"conflict_status": "none_declared", "disclosure_ref": "COI-0001", "can_independently_review": true},
+  "verification": {"verified_by_role": "HSE/Regulatory Authority", "verified_at": "2026-09-17", "evidence_ids": ["EVD-PRO-QUAL-0001"], "next_review_date": "2027-09-17"},
+  "extensions": {}
+}

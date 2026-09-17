@@ -1,0 +1,18 @@
+{
+  "$schema": "https://forge-h2.local/schema/offline-requirements.schema.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "mode": "offline",
+  "network_policy": "deny_all_remote_fetch",
+  "requirements": [
+    {"requirement_id": "OFF-DOC-001", "category": "normative_source_pack", "description": "현행 법령·허가·ISO·IEC·NFPA·KGS·계약·금융기관 원문과 적용성 기록", "required_artifacts": ["licensed source files", "revision register", "applicability matrix", "sha256 manifest"], "status": "partial_metadata_only", "blocks_gates": ["G1", "G2", "G3", "G5", "G6", "G7"], "owner": "Legal + HSE + Data Lead"},
+    {"requirement_id": "OFF-GIS-001", "category": "geospatial", "description": "부지 경계·지적·DEM·토지이용·보호구역·재해·도로·수계의 좌표계가 통일된 로컬 GIS 레이어", "required_artifacts": ["WGS84/EPSG:4326 project layer", "local projected CRS layer", "DEM", "cadastre", "land_use", "hazard", "protected_area", "road", "water"], "status": "missing", "blocks_gates": ["G1", "G2"], "owner": "Survey/GIS Lead"},
+    {"requirement_id": "OFF-GRID-001", "category": "grid", "description": "계통연계 지점·변전소 용량·고장용량·접속규칙·송전선로·보호협조 자료", "required_artifacts": ["grid model", "short-circuit data", "interconnection requirements", "route survey"], "status": "missing", "blocks_gates": ["G1", "G2", "G3"], "owner": "Electrical/Grid Lead"},
+    {"requirement_id": "OFF-H2-001", "category": "hydrogen_supply", "description": "수소 공급원·순도·압력·유량·저장·운송경로·계약조건·비상공급 자료", "required_artifacts": ["supplier specification", "mass-flow profile", "pressure envelope", "purity specification", "delivery contract", "emergency supply plan"], "status": "missing", "blocks_gates": ["G1", "G2", "G3"], "owner": "Hydrogen Process Lead + Commercial"},
+    {"requirement_id": "OFF-MET-001", "category": "meteorology", "description": "현장 기상·온도·풍향·풍속·강우·낙뢰·대기확산 설계자료", "required_artifacts": ["time series", "design extremes", "wind rose", "dispersion inputs", "data provenance"], "status": "missing", "blocks_gates": ["G2", "G3"], "owner": "Environmental Lead + HSE"},
+    {"requirement_id": "OFF-ENG-001", "category": "calculation_runtime", "description": "수식·단위검사·결정론적 계산·모델 입력검증을 수행하는 로컬 실행환경", "required_artifacts": ["formula-library.json", "unit-checker", "Python runtime", "locked dependency manifest", "test cases"], "status": "available_local", "blocks_gates": [], "owner": "AI Platform + Data Lead"},
+    {"requirement_id": "OFF-CAD-001", "category": "engineering_models", "description": "부지배치·배관·전기·구조·소방·BIM/CAD·CFD 모델의 로컬 원본과 버전관리", "required_artifacts": ["IFC/DWG/RVT or approved formats", "model revision register", "design basis", "calculation files"], "status": "missing", "blocks_gates": ["G2", "G3", "G4", "G5"], "owner": "Chief Engineer + Discipline Leads"},
+    {"requirement_id": "OFF-EPC-001", "category": "vendor_epc_quality", "description": "공급사 데이터시트·시험성적서·용접/WPS/PQR·검사계획·EPC 계약·보증조건", "required_artifacts": ["vendor data", "ITP", "QA dossier", "WPS/PQR", "contract baseline", "warranty matrix"], "status": "missing", "blocks_gates": ["G3", "G4", "G5", "G6"], "owner": "EPC Manager + QA/QC"},
+    {"requirement_id": "OFF-OPS-001", "category": "operations_emergency", "description": "시운전·운전·정비·비상대응·교육·예비품·사고보고 절차의 로컬 기준선", "required_artifacts": ["commissioning procedures", "SOP", "maintenance plan", "emergency response", "training records", "spares list"], "status": "missing", "blocks_gates": ["G6", "G7"], "owner": "Operations Manager + HSE"},
+    {"requirement_id": "OFF-RUN-001", "category": "local_runtime", "description": "인터넷 없이 실행 가능한 Python 패키지·LLM/embedding 모델·문서 렌더러·백업매체", "required_artifacts": ["offline wheelhouse", "package lock", "local model artifact", "model license", "backup/restore test"], "status": "partial", "blocks_gates": ["G0", "G6"], "owner": "AI Platform Lead"}
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/retrieval-result.schema.json",
+  "title": "Forge H2 Knowledge Retrieval Result",
+  "description": "Retrieval results with source, revision, verification and ranking trace. Agents must cite these results in their output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "generated_at", "hits", "warnings", "extensions"],
+  "properties": {
+    "request_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^RET-[A-Za-z0-9._-]+$"},
+    "generated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "hits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rank", "knowledge_id", "title", "score", "summary", "source", "revision", "verification_status", "relevance_reasons"],
+        "properties": {
+          "rank": {"type": "integer", "minimum": 1},
+          "knowledge_id": {"$ref": "common.schema.json#/$defs/id"},
+          "title": {"type": "string"},
+          "score": {"type": "number"},
+          "summary": {"type": "string"},
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_kind", "publisher", "url", "locator", "evidence_ids"],
+            "properties": {
+              "source_kind": {"type": "string"},
+              "publisher": {"type": "string"},
+              "url": {"type": ["string", "null"], "format": "uri"},
+              "locator": {"type": ["string", "null"]},
+              "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+              "local_artifact": {"type": ["string", "null"]},
+              "offline_status": {"type": "string"}
+            }
+          },
+          "revision": {"type": "string"},
+          "verification_status": {"type": "string"},
+          "relevance_reasons": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

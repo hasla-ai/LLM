@@ -1,0 +1,369 @@
+{
+  "$schema": "https://forge-h2.local/schema/agent-knowledge-database.schema.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-INT-010",
+  "database_kind": "professional_knowledge",
+  "source_of_truth": "knowledge/catalog.json",
+  "generated_at": "2026-09-17T08:31:37Z",
+  "entries": [
+    {
+      "knowledge_id": "KNW-INT-FIDIC-SILVER",
+      "schema_version": "1.0.0",
+      "title": "FIDIC Silver Book EPC·Turnkey 계약 적용성",
+      "knowledge_type": "contract_standard",
+      "domains": [
+        "epc",
+        "contract",
+        "claims",
+        "commercial"
+      ],
+      "jurisdictions": [
+        "international"
+      ],
+      "languages": [
+        "en"
+      ],
+      "authority_level": "T3_vendor_or_contract",
+      "source": {
+        "source_kind": "official_guidance",
+        "publisher": "FIDIC",
+        "url": "https://fidic.org/books/epcturnkey-contract-2nd-ed-2017-silver-book-reprinted-2022-amendments",
+        "locator": "EPC/Turnkey Contract 2nd Ed",
+        "captured_at": "2026-09-17"
+      },
+      "revision": "2017-reprinted-2022",
+      "status": "active",
+      "applies_to": {
+        "agent_ids": [
+          "AG-INT-009",
+          "AG-INT-010",
+          "AG-COM-001",
+          "AG-EPC-001"
+        ],
+        "roles": [
+          "Commercial Lead",
+          "EPC Manager"
+        ],
+        "phases": [
+          "business",
+          "feed_epc",
+          "construction",
+          "commissioning"
+        ],
+        "gates": [
+          "G1",
+          "G4",
+          "G5",
+          "G6"
+        ]
+      },
+      "content": {
+        "summary": "EPC·Turnkey에서 설계와 실행의 총괄책임, Employer's Requirements, Particular Conditions, 보증·시험·인수·분쟁조건을 계약전략으로 검토한다.",
+        "claims": [
+          {
+            "claim_id": "CLM-FIDIC-001",
+            "statement": "턴키 계약은 프로젝트별 Particular Conditions와 법률·공학 검토를 함께 설계해야 한다.",
+            "locator": "FIDIC product description"
+          }
+        ],
+        "keywords": [
+          "FIDIC",
+          "Silver Book",
+          "EPC",
+          "turnkey",
+          "Employer's Requirements",
+          "claims"
+        ]
+      },
+      "verification": {
+        "status": "machine_checked",
+        "verified_by_role": "Contract Counsel",
+        "verified_at": "2026-09-17",
+        "evidence_ids": [
+          "EVD-FIDIC-001"
+        ]
+      },
+      "access_policy": {
+        "classification": "confidential",
+        "allowed_agent_categories": [
+          "advisory",
+          "governance",
+          "assurance"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "knowledge_id": "KNW-PROJECT-AGENT-RULES",
+      "schema_version": "1.0.0",
+      "title": "Agent 호출·회의·인간승인 운영규칙",
+      "knowledge_type": "project_document",
+      "domains": [
+        "agent",
+        "governance",
+        "meeting",
+        "human_review"
+      ],
+      "jurisdictions": [
+        "project"
+      ],
+      "languages": [
+        "ko"
+      ],
+      "authority_level": "T3_vendor_or_contract",
+      "source": {
+        "source_kind": "project_document",
+        "publisher": "Forge H2 Enterprise",
+        "url": null,
+        "locator": "docs/04-agent-system/meeting-protocol.md",
+        "captured_at": "2026-09-17"
+      },
+      "revision": "1.0.0",
+      "status": "active",
+      "applies_to": {
+        "agent_ids": [
+          "*"
+        ],
+        "roles": [
+          "all"
+        ],
+        "phases": [
+          "all"
+        ],
+        "gates": [
+          "G0",
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7"
+        ]
+      },
+      "content": {
+        "summary": "Agent는 근거·범위·이견·차단조건을 기록하고, 고위험·게이트·충돌 상황에서는 결정회의와 인간서명을 거쳐야 한다.",
+        "claims": [
+          {
+            "claim_id": "CLM-AGENT-001",
+            "statement": "AI Agent의 출력은 인간 승인 없이 기술·법무·허가·시공·운영 기준선이 될 수 없다.",
+            "locator": "agent-operating-model.md"
+          }
+        ],
+        "keywords": [
+          "Agent",
+          "human signoff",
+          "meeting",
+          "dissent",
+          "blocked",
+          "baseline"
+        ]
+      },
+      "verification": {
+        "status": "expert_verified",
+        "verified_by_role": "PMO Lead",
+        "verified_at": "2026-09-17",
+        "evidence_ids": [
+          "EVD-PM-AGENT-001"
+        ]
+      },
+      "access_policy": {
+        "classification": "project_internal",
+        "allowed_agent_categories": [
+          "governance",
+          "technical",
+          "advisory",
+          "assurance",
+          "platform"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "knowledge_id": "KNW-FOUNDATION-PROFESSIONAL-CATALOG",
+      "schema_version": "1.0.0",
+      "title": "수소발전소 관련 기술사·전공서적 기초 카탈로그",
+      "knowledge_type": "project_document",
+      "domains": [
+        "professional",
+        "qualification",
+        "textbook",
+        "hydrogen_power_plant"
+      ],
+      "jurisdictions": [
+        "KR",
+        "project"
+      ],
+      "languages": [
+        "ko",
+        "en"
+      ],
+      "authority_level": "T4_internal_lesson_or_ai_draft",
+      "source": {
+        "source_kind": "user_provided",
+        "publisher": "Forge H2 project user input",
+        "url": null,
+        "locator": "knowledge/professional-foundations.json",
+        "captured_at": "2026-09-17"
+      },
+      "revision": "1.0.0",
+      "status": "active",
+      "applies_to": {
+        "agent_ids": [
+          "*"
+        ],
+        "roles": [
+          "all"
+        ],
+        "phases": [
+          "all"
+        ],
+        "gates": [
+          "G0",
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7"
+        ]
+      },
+      "content": {
+        "summary": "수소발전소 건설에 관여하는 국내 기술사 후보 20개 분야와 기초 전공서적 8종을 Agent 역할·전공·수식 라이브러리와 연결한 사용자 제공 카탈로그다.",
+        "claims": [
+          {
+            "claim_id": "CLM-FOUNDATION-CATALOG-001",
+            "statement": "이 카탈로그는 자격·법정 업무범위·서적 판본의 공식 확정 목록이 아니며, 실제 적용 전 관할기관과 전문인의 검증이 필요하다.",
+            "locator": "knowledge/professional-foundations.json"
+          }
+        ],
+        "keywords": [
+          "기술사",
+          "수소발전소",
+          "전공서적",
+          "기초공식",
+          "전문가 카탈로그",
+          "Korean professional"
+        ]
+      },
+      "verification": {
+        "status": "unverified",
+        "verified_by_role": "Data Lead",
+        "verified_at": "2026-09-17",
+        "evidence_ids": [
+          "EVD-USER-FOUNDATIONS-001"
+        ]
+      },
+      "access_policy": {
+        "classification": "project_internal",
+        "allowed_agent_categories": [
+          "technical",
+          "governance",
+          "assurance",
+          "platform"
+        ]
+      },
+      "extensions": {
+        "json_path": "knowledge/professional-foundations.json",
+        "certification_count": 20,
+        "textbook_count": 8
+      }
+    },
+    {
+      "knowledge_id": "KNW-FOUNDATION-FORMULA-LIBRARY",
+      "schema_version": "1.0.0",
+      "title": "수소발전소 기초공식 실행식 라이브러리",
+      "knowledge_type": "technical_basis",
+      "domains": [
+        "formula",
+        "engineering_calculation",
+        "hydrogen_power_plant"
+      ],
+      "jurisdictions": [
+        "project",
+        "international",
+        "KR"
+      ],
+      "languages": [
+        "ko",
+        "en"
+      ],
+      "authority_level": "T4_internal_lesson_or_ai_draft",
+      "source": {
+        "source_kind": "user_provided",
+        "publisher": "Forge H2 project user input",
+        "url": null,
+        "locator": "knowledge/formula-library.json",
+        "captured_at": "2026-09-17"
+      },
+      "revision": "1.0.0",
+      "status": "active",
+      "applies_to": {
+        "agent_ids": [
+          "*"
+        ],
+        "roles": [
+          "all"
+        ],
+        "phases": [
+          "all"
+        ],
+        "gates": [
+          "G0",
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7"
+        ]
+      },
+      "content": {
+        "summary": "반응공학·열역학·전력·전자기학·유체·열전달·연소·구조 분야의 기초공식을 LaTeX·ASCII·Python expression·SymPy 표현으로 저장한 라이브러리다.",
+        "claims": [
+          {
+            "claim_id": "CLM-FOUNDATION-FORMULA-001",
+            "statement": "수식은 단위검사와 전문인 검증을 거치기 전 설계·안전·허가 기준선으로 사용할 수 없다.",
+            "locator": "knowledge/formula-library.json#execution_policy"
+          }
+        ],
+        "keywords": [
+          "formula",
+          "Python",
+          "SymPy",
+          "unit check",
+          "reaction engineering",
+          "power system",
+          "fluid mechanics",
+          "heat transfer",
+          "structures"
+        ]
+      },
+      "verification": {
+        "status": "unverified",
+        "verified_by_role": "Data Lead",
+        "verified_at": "2026-09-17",
+        "evidence_ids": [
+          "EVD-USER-FORMULAS-001"
+        ]
+      },
+      "access_policy": {
+        "classification": "project_internal",
+        "allowed_agent_categories": [
+          "technical",
+          "governance",
+          "assurance",
+          "platform"
+        ]
+      },
+      "extensions": {
+        "json_path": "knowledge/formula-library.json",
+        "formula_count": 15,
+        "execution_language": "python_expression",
+        "dynamic_code": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "gate_id": "G0",
+  "project_id": "FHZ-DEMO-001",
+  "schema_version": "1.0.0",
+  "name": "Project Charter",
+  "objective": "프로젝트의 목적·범위·책임·초기 위험을 기준선화한다.",
+  "status": "ready_for_review",
+  "entry_conditions": [{"condition_id": "G0-C01", "statement": "Sponsor가 지정되어 있다.", "satisfied": true, "evidence_ids": []}, {"condition_id": "G0-C02", "statement": "사업 목적이 기록되어 있다.", "satisfied": true, "evidence_ids": []}],
+  "required_mission_ids": ["M-001", "M-002", "M-006", "M-009", "M-010"],
+  "required_evidence_ids": [],
+  "blockers": [],
+  "decision_options": ["pass", "conditional", "hold", "stop", "reopen"],
+  "approvers": [{"role": "Sponsor", "user_id": null, "display_name": null, "organization": null}, {"role": "PMO", "user_id": null, "display_name": null, "organization": null}],
+  "decision": null,
+  "next_gate_id": "G1",
+  "created_at": "2026-09-17T09:00:00Z",
+  "updated_at": "2026-09-17T09:00:00Z",
+  "extensions": {}
+}

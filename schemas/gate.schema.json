@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/gate.schema.json",
+  "title": "Forge H2 Stage Gate",
+  "description": "A controlled decision point that promotes or blocks a project baseline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["gate_id", "project_id", "schema_version", "name", "objective", "status", "entry_conditions", "required_mission_ids", "required_evidence_ids", "blockers", "decision_options", "approvers", "decision", "created_at", "updated_at", "extensions"],
+  "properties": {
+    "gate_id": {"type": "string", "pattern": "^G[0-7]$", "examples": ["G0", "G3", "G7"]},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "name": {"type": "string", "minLength": 1},
+    "objective": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["not_ready", "ready_for_review", "under_review", "pass", "conditional", "hold", "stop", "reopen"]},
+    "entry_conditions": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": false, "required": ["condition_id", "statement", "satisfied", "evidence_ids"], "properties": {"condition_id": {"$ref": "common.schema.json#/$defs/id"}, "statement": {"type": "string"}, "satisfied": {"type": "boolean"}, "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}}}
+    },
+    "required_mission_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "required_evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "blockers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/blocker"}},
+    "decision_options": {"type": "array", "items": {"type": "string", "enum": ["pass", "conditional", "hold", "stop", "reopen"]}},
+    "approvers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/person_or_role"}},
+    "decision": {
+      "anyOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["option", "reason", "decided_at", "decided_by", "decision_log_id"], "properties": {"option": {"type": "string", "enum": ["pass", "conditional", "hold", "stop", "reopen"]}, "reason": {"type": "string", "minLength": 1}, "conditions": {"type": "array", "items": {"type": "string"}}, "decided_at": {"$ref": "common.schema.json#/$defs/timestamp"}, "decided_by": {"$ref": "common.schema.json#/$defs/person_or_role"}, "decision_log_id": {"$ref": "common.schema.json#/$defs/id"}}}
+      ]
+    },
+    "next_gate_id": {"type": ["string", "null"], "pattern": "^G[0-7]$"},
+    "created_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

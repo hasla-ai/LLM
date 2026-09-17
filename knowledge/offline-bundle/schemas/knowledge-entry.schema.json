@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/knowledge-entry.schema.json",
+  "title": "Forge H2 Knowledge Entry",
+  "description": "A versioned, verified knowledge unit that Agents may retrieve with provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["knowledge_id", "schema_version", "title", "knowledge_type", "domains", "jurisdictions", "languages", "authority_level", "source", "revision", "status", "applies_to", "content", "verification", "access_policy", "extensions"],
+  "properties": {
+    "knowledge_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^KNW-[A-Za-z0-9._-]+$"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "title": {"type": "string", "minLength": 1},
+    "knowledge_type": {"type": "string", "enum": ["regulation", "international_standard", "contract_standard", "technical_basis", "project_document", "vendor_data", "financial_requirement", "esg_requirement", "operating_lesson"]},
+    "domains": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "jurisdictions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "languages": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "authority_level": {"type": "string", "enum": ["T0_official_law_or_permit", "T1_official_standard_or_authority", "T2_certified_test_or_engineer", "T3_vendor_or_contract", "T4_internal_lesson_or_ai_draft"]},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_kind", "publisher", "url", "locator", "captured_at"],
+      "properties": {"source_kind": {"type": "string", "enum": ["official_regulation", "official_standard", "official_guidance", "project_document", "vendor_document", "contract", "technical_paper", "lesson", "user_provided"]}, "publisher": {"type": "string"}, "url": {"type": ["string", "null"], "format": "uri"}, "locator": {"type": ["string", "null"]}, "captured_at": {"$ref": "common.schema.json#/$defs/date_or_null"}}
+    },
+    "revision": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["draft", "active", "superseded", "withdrawn", "pending_verification"]},
+    "applies_to": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_ids", "roles", "phases", "gates"],
+      "properties": {"agent_ids": {"type": "array", "items": {"type": "string"}}, "roles": {"type": "array", "items": {"type": "string"}}, "phases": {"type": "array", "items": {"type": "string"}}, "gates": {"type": "array", "items": {"type": "string", "pattern": "^G[0-7]$"}}}
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "claims", "keywords"],
+      "properties": {"summary": {"type": "string", "minLength": 1}, "claims": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["claim_id", "statement"], "properties": {"claim_id": {"$ref": "common.schema.json#/$defs/id"}, "statement": {"type": "string"}, "locator": {"type": ["string", "null"]}}}}, "keywords": {"type": "array", "items": {"type": "string"}}}
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "verified_by_role", "verified_at", "evidence_ids"],
+      "properties": {"status": {"type": "string", "enum": ["unverified", "machine_checked", "expert_verified", "authority_confirmed"]}, "verified_by_role": {"$ref": "common.schema.json#/$defs/role"}, "verified_at": {"$ref": "common.schema.json#/$defs/date_or_null"}, "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}}
+    },
+    "access_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "allowed_agent_categories"],
+      "properties": {"classification": {"type": "string", "enum": ["public", "project_internal", "confidential", "restricted"]}, "allowed_agent_categories": {"type": "array", "items": {"type": "string"}}}
+    },
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

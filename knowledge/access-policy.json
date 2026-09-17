@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/knowledge/access-policy.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "policy_version": "1.0.0",
+  "central_source_catalog": "knowledge/catalog.json",
+  "derived_search_index": "knowledge/knowledge.sqlite3",
+  "offline_mode": {
+    "network_policy": "deny_all_remote_fetch",
+    "remote_fetch": false,
+    "missing_local_source": "block_baseline_promotion",
+    "metadata_only_source": "advisory_only"
+  },
+  "agent_database_directory": "knowledge/agent-databases/",
+  "access": {
+    "all_registered_agents": "read",
+    "human_professionals": "read_and_verify_with_role_authorization",
+    "pmo_and_data_lead": "register_and_revise",
+    "source_owner": "propose_revision",
+    "unverified_agent_output": "no_write_to_active_knowledge"
+  },
+  "write_rules": [
+    "모든 지식은 source URL 또는 내부 Evidence ID를 가져야 한다.",
+    "Agent DB에 직접 쓰지 않고 중앙 Source Catalog에 새 revision으로 등록한다.",
+    "전문가 검증 전에는 status를 active로 만들지 않는다.",
+    "기존 revision을 삭제하지 않고 superseded 또는 withdrawn으로 전환한다.",
+    "Agent DB는 중앙 원장에서 재생성할 수 있어야 한다."
+  ],
+  "read_rules": [
+    "Agent는 자기 DB를 먼저 검색한다.",
+    "필요하면 source_agent_ids로 다른 Agent DB를 읽는다.",
+    "모든 검색 결과는 중앙 source metadata와 연결된 상태로 반환한다.",
+    "관할·단계·전문분야가 맞지 않으면 검색 결과를 기준선으로 사용하지 않는다.",
+    "offline=true이면 원격 fetch를 하지 않고 local_artifact가 없는 기준자료는 baseline 승격을 차단한다."
+  ]
+}

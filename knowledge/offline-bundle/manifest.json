@@ -1,0 +1,524 @@
+{
+  "$schema": "https://forge-h2.local/schema/offline-bundle-manifest.schema.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "bundle_version": "1.0.0",
+  "network_policy": "deny_all_remote_fetch",
+  "created_at": "2026-09-17T08:50:21Z",
+  "files": [
+    {
+      "path": "access-policy.json",
+      "sha256": "e38887d82ba96799f1659603e17834f156faf391d168baf4b685e0482182e8e1",
+      "bytes": 1763
+    },
+    {
+      "path": "agent-databases/manifest.json",
+      "sha256": "a47710e60e670fef1afce34b62d8f5fda887b9c572bae647c789592afa11fb39",
+      "bytes": 20843
+    },
+    {
+      "path": "catalog.json",
+      "sha256": "21cf1d2088cbe3f88da88fc7672850976f11c97ac6d1a0f6333891985d1c8d37",
+      "bytes": 32365
+    },
+    {
+      "path": "formula-library.json",
+      "sha256": "6f818ed835729ac0601229accd503167fef54fa0f5293925e615b27ed7ddc33e",
+      "bytes": 11421
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-001.json",
+      "sha256": "217a55e7a8347a5486bbd2eebd4b41f2b746aaf167517ca03eb213ae29c08fdf",
+      "bytes": 10457
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-002.json",
+      "sha256": "da4d8fdfc5b55a2b4c3a4ffb9b1c8ac41c53d603993138ac84b95078ad38bde2",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-003.json",
+      "sha256": "05e616a1788b1287a976c1c5c065abcd79782009234bc4aa0b3ec78aeb65c6a2",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-004.json",
+      "sha256": "8a9fdc5e79badf05c3a6c93fa3b0803763b747920cef7ac4b01f34e3b1ba2021",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-005.json",
+      "sha256": "8c61ac60fa156981348b15719aa274d6063e9b7855c01cf667d2408985a900f8",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-006.json",
+      "sha256": "a43c1b08d0f645a7705eb4c407d10960647a137098eec970300607c2c812be25",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-007.json",
+      "sha256": "1d17ba967310ed95daadca9daf4c429fb3a7a18cb8d60c7e1912afac35908a4f",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-008.json",
+      "sha256": "f072798f8c8ffafdcd981b6871236aba0ca1bbbe5b35b924f732b62ad230603c",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-009.json",
+      "sha256": "ca59be8e7063d782f988be317a852da47f1dae340888595019d95e3da55970e6",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-010.json",
+      "sha256": "2e72bc4a9e3f5d28289907dc36d06d6f70cfc18e64fec6fc05d6ef8a803bc8af",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ADV-011.json",
+      "sha256": "ad15a6483d03a62cf0a9a24efaed03bc8cce1f77a9e62fa295f637491a549977",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-AI-001.json",
+      "sha256": "436f99b8c1c5f20f9f3d1aa284f45613fe08bd122e67cc6a8be2a19cb13f32f5",
+      "bytes": 7975
+    },
+    {
+      "path": "knowledge/agent-databases/AG-AIS-001.json",
+      "sha256": "a1321f739d21345b5d72fcbbc530320e7f35f0b1c8d81cc1eded39b91ce213b0",
+      "bytes": 10651
+    },
+    {
+      "path": "knowledge/agent-databases/AG-COM-001.json",
+      "sha256": "e87e089afa065b268844e748c071419b06ba6ce709c020e5a4923578ebb06edb",
+      "bytes": 10459
+    },
+    {
+      "path": "knowledge/agent-databases/AG-COMM-001.json",
+      "sha256": "2abb13c34f081015c7e37a3040ad848618b65bd8c4a60802c5b22a2e700b358d",
+      "bytes": 7977
+    },
+    {
+      "path": "knowledge/agent-databases/AG-CON-001.json",
+      "sha256": "fbf2c3d0e7048ae3bb4e4b1594d3517e653b4a0f1e184bd975f23922f2b29269",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-CYB-001.json",
+      "sha256": "3cd6be4593475d8cef912062711693c8571f4b45ea12b29e241870c09e1d2f9b",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-DATA-001.json",
+      "sha256": "9e0f145ab5b69e4daa9c31acbe1436e25ba601b5a12e371390aeaf8e2ebffeb6",
+      "bytes": 7977
+    },
+    {
+      "path": "knowledge/agent-databases/AG-ENG-001.json",
+      "sha256": "162270fefe63e208683c8df70a749da4d43fbe0117baad3e256e1c4d3d852fa3",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-EPC-001.json",
+      "sha256": "3ac57326d17ca2fcd3638ab0f9d844a45dcf3ad17d27c84579af94e769843e25",
+      "bytes": 10459
+    },
+    {
+      "path": "knowledge/agent-databases/AG-FIN-001.json",
+      "sha256": "a1f2ec0b853a7e8f3786f0194f859e68b251dd5f43ca87d44ecf8d84769e51b8",
+      "bytes": 10457
+    },
+    {
+      "path": "knowledge/agent-databases/AG-GOV-001.json",
+      "sha256": "dccdbfb9ac897628ae32d760c619d89e6b78306ec63f7dc3d4fb2e7368dc73c9",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-GOV-002.json",
+      "sha256": "bf2d12aae10bea0c70107ec80c6469c789b8373339dc564564d3297ad6a47683",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-HSE-001.json",
+      "sha256": "b2e5e4b19da31e60f65b80d6f36ac8bd05adfd96095d46c99381dfc97e526031",
+      "bytes": 17923
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-001.json",
+      "sha256": "cf24f56820db44dc3a6a990f2c58393d37a37c895c1b81d272a5624bdadc88de",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-002.json",
+      "sha256": "0368499cd23c0c5fc8f0fa32b59c7d2633aba996a98ad600df1d2bc9fb33255d",
+      "bytes": 10384
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-003.json",
+      "sha256": "03f5798c611fbce07a5c8c062e6cd8a3649af1a282b2802b46818a8dffd59b2f",
+      "bytes": 15622
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-004.json",
+      "sha256": "33773b8f7a74e7fa2c498015dea85fd93c3ae9bca7d412b857f2d2798bd14232",
+      "bytes": 15058
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-005.json",
+      "sha256": "da122f4a6b5691c8ee19ec54aa2c901ca0c89e9f1cb4c6276957a26bea9dd1b8",
+      "bytes": 13247
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-006.json",
+      "sha256": "fbf3ece891a92fe3b46bff2f1a7a3520585fa487b0f993a7af926f4689214ec7",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-007.json",
+      "sha256": "a85953728b78074071dddd34f0e9eef0f3e078dd0f1186d7de8c7f0874cad559",
+      "bytes": 12947
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-008.json",
+      "sha256": "8e231cfbd0a9e8161e624a35c4ebf0dff3ae88396aee4eca510c63221d05a831",
+      "bytes": 10466
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-009.json",
+      "sha256": "c23d18817d366517ee45c0543753f35ff9b26e2d9fe781df24b8db004e11e3aa",
+      "bytes": 10459
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-010.json",
+      "sha256": "1f7a7c988c423111912e0d2763f4fae5a35127e00dd26890d727ef8598883e84",
+      "bytes": 10459
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-011.json",
+      "sha256": "d48b4a1b928c8badeca612f200c59c79801ad495c1632a458ad11e683fc3573d",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-012.json",
+      "sha256": "a160940b27b87c36d8c6cb5454a41e474e1236f1df9e67b6875dfef430e7f22a",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-013.json",
+      "sha256": "28519462d01c626410420e4e5cabbfcfc47714c944e0b8ef5672baba123c96ab",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-014.json",
+      "sha256": "396c9eb2aed8366ce01ad32f3fe3d542f5341fae6351d0a0d8cb0ad6e08a5508",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-015.json",
+      "sha256": "ff53a413501b0bc13b7e607b074ab4c692b1b02817d8c82cf7ad2ac27c5f1e85",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-016.json",
+      "sha256": "544c94f8256c8f06a1ad7d28de0a3188b87a4c33693283c91807091fb72c58b0",
+      "bytes": 17681
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-017.json",
+      "sha256": "6cc73dfaa03bd386b4c20409e2e37f76e3b8e24b7150b335a13d5aa4de0f561d",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-018.json",
+      "sha256": "de5623a4f49d47b8e4657a5d9f11f0a5a5bd6e91baed022edcc894f2b647904b",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-INT-019.json",
+      "sha256": "4b3d58996a8655c4cec56bed0854f0c3182a59e57173f0e301cd166c639e45a1",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-IR-001.json",
+      "sha256": "edff98d464e754a2e1812e9b72732fa95ea0be2566b9085f0343ea0ade1f92c8",
+      "bytes": 10650
+    },
+    {
+      "path": "knowledge/agent-databases/AG-OPS-001.json",
+      "sha256": "45bd9932a53f6112415bcf406316d898b5fe86480ccac181dd7e2d38ce0a54fc",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-PMO-001.json",
+      "sha256": "4f4445d8d445395d5b43070d8aea21ba64fa6601b4ca0243ee6e6a86277e4e0d",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-PMO-002.json",
+      "sha256": "f97ca2fed146f73731073de22278ed5288fe34131f46c92623391bb58f27dd9f",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-PRD-001.json",
+      "sha256": "e90baabd27b8ce8cae8e03c6cb0f7f809cbc1653a1d2bed4deead1abac1f9300",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-PROC-001.json",
+      "sha256": "fb1776f86fa5d3451808eaa7740687e1e9eeb1215d0c62ac2bfefc40fc4a5e88",
+      "bytes": 7977
+    },
+    {
+      "path": "knowledge/agent-databases/AG-QA-001.json",
+      "sha256": "6f6f8680613dba2702bef93cb66ada9bd65bd6624cfc3e9ae4ab58fc7de964ab",
+      "bytes": 7975
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-001.json",
+      "sha256": "d8e6dc3600486db0ae0f86f1473a902f75b6dd62217994a92b7675c8be919823",
+      "bytes": 15257
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-002.json",
+      "sha256": "385721d9e39eae51d5b6d518e303a1fe0e3142110ebb373a60f602cfc361bce7",
+      "bytes": 15257
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-003.json",
+      "sha256": "9577ecf6b6b71e840033e3de882f2e6a2ab43e2aff586a2eed3e5bdce0c9090e",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-004.json",
+      "sha256": "5f67f603ba93d7ea868b18f1ad0badc536f9407798887aaf7e6a17d2a69d9c34",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-005.json",
+      "sha256": "aa18f6078fd62344c6b2311fb6a74ea3a6e73872926e3801ad9d6c6c5c4d36ac",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-006.json",
+      "sha256": "e68d7326951615bfa8ab7f04f46e18cc3c27eb445e490b8ad4eb019f430e3674",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-007.json",
+      "sha256": "6d449bfbbf0837e1eaf07d66304c9dfd992c3e0e7feb97b0426e304a67dd6ac1",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-008.json",
+      "sha256": "6c220b01bbab6d306a571de37a2007c27cd945d06c162f7efce620050f60e148",
+      "bytes": 10330
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-009.json",
+      "sha256": "916731704e469cb10756a5cd1d1e085260c76f21a0d79d14c58938c7ef32a993",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-010.json",
+      "sha256": "83cbd431856e50b37e8b4223dafa33d3ed3eda5911cb1990e392f0befb87b362",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-011.json",
+      "sha256": "d412bd1821fc2794d885e916a0f8aa8136406cb935c38b072b67aaef4bef52a4",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-012.json",
+      "sha256": "313dfa65f5a4e340050c8f630615d887545f3d81d23d755e18fc168ee053324c",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-013.json",
+      "sha256": "ab1496884ee7ca1c4dcf6224e71d0440e74d67a20db4e37fc5cc3d7b74097f5a",
+      "bytes": 12652
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-014.json",
+      "sha256": "030a83f25722cbf487649eceab65be5eeb0a0c6fa5631ad7bafa586aeead441f",
+      "bytes": 19879
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-015.json",
+      "sha256": "887cb1c18180c520e7f9b438e6debd2debda57fbb76ba5cced7b9795dd8d9225",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-016.json",
+      "sha256": "e2a50cc14dd166e5de03c57ea8052045362faa42500e9241ea948360c9f996e5",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-017.json",
+      "sha256": "d1378c5cb4b6c8161306e32363a16dc390ab97787e02c56308feb26390df6192",
+      "bytes": 10466
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-018.json",
+      "sha256": "2fbf0797eb5815dc731a23e6d32090148b0517639cffcdb9e45e4606de543008",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-019.json",
+      "sha256": "fc2baf199e7d249ece8b77da3c75341ec424ec9009bbf78402663a9a1ffccd34",
+      "bytes": 10330
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-020.json",
+      "sha256": "7c85dda374bae3815a5a90a4ec8cc57bf1b927b381ec45278789593db3d1c304",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-021.json",
+      "sha256": "68111a9b8ca62a5316ddc679dd980cd0042a9b697b84efc9b353df8d0935b1ad",
+      "bytes": 7976
+    },
+    {
+      "path": "knowledge/agent-databases/AG-TEC-022.json",
+      "sha256": "1ccc566793804ac06d8364636d47415ec4a26448ed3877f7b95d41fcd5d35ee9",
+      "bytes": 7976
+    },
+    {
+      "path": "offline-requirements.json",
+      "sha256": "b72b96e7efbf5d44020c35a1cdfecf64f221f6aaa8878d0f602d09a06f56b540",
+      "bytes": 4310
+    },
+    {
+      "path": "offline-source-register.json",
+      "sha256": "e6f44b50bca05afce59f6d7455bfd69de355dd8a32c2f65e8788b77b800f57a8",
+      "bytes": 6016
+    },
+    {
+      "path": "professional-foundations.json",
+      "sha256": "00825afa94346ac16967128ca19494ec6e5c902e691a21f3a8428e0e6bef1c2a",
+      "bytes": 6225
+    },
+    {
+      "path": "registry.json",
+      "sha256": "e65ade5459a9684ae5e866c694ea31188ce91aadc28019818fb0c2c5d5342662",
+      "bytes": 2732
+    },
+    {
+      "path": "schemas/agent-definition.schema.json",
+      "sha256": "596eab30b5188d3fa01515d6390c91c4934cd318fbf160851d35da0b91366605",
+      "bytes": 3712
+    },
+    {
+      "path": "schemas/agent-invocation.schema.json",
+      "sha256": "023fd218ad7e1bfa36a6de9671abd5ab5dbe66f0ec67c7c2d1497dd13d62685c",
+      "bytes": 3565
+    },
+    {
+      "path": "schemas/agent-knowledge-database.schema.json",
+      "sha256": "f067f6d134dcff050fd419f1516881c5fea0b9009aa7139456589f7bf39dac48",
+      "bytes": 967
+    },
+    {
+      "path": "schemas/change-request.schema.json",
+      "sha256": "e8467ca677fc2cfc21b7f00babac3d3aa97adb3733f91e68b289d0e6d7ae53ef",
+      "bytes": 3471
+    },
+    {
+      "path": "schemas/common.schema.json",
+      "sha256": "30d7108325616aef2603520cdc4b1c5628dea6edc69af9d3e21347964746a80c",
+      "bytes": 5559
+    },
+    {
+      "path": "schemas/decision.schema.json",
+      "sha256": "25446b36569d6a74fa68bdd2ba0f10ea031e90ca2d131f91c235e0b3a742f208",
+      "bytes": 2108
+    },
+    {
+      "path": "schemas/evidence.schema.json",
+      "sha256": "e79b6a97f052e1024a1b39a54898747130fcb958f05cb3addac95456ef702df7",
+      "bytes": 3953
+    },
+    {
+      "path": "schemas/formula-library.schema.json",
+      "sha256": "59ca0b1e5f92914d05ae2f9a1955ce34cf1264f613cdf75ec4691b7d6f8ab17c",
+      "bytes": 2649
+    },
+    {
+      "path": "schemas/gate.schema.json",
+      "sha256": "0c0d420492da7c7e9e90d98d641ae36ab95f37059756878341ce7297444ff2b8",
+      "bytes": 2884
+    },
+    {
+      "path": "schemas/knowledge-catalog.schema.json",
+      "sha256": "9d217c235b0d75927a1d0f0a67b59a61bc5bf02c36f647edaa198b81b795ab40",
+      "bytes": 876
+    },
+    {
+      "path": "schemas/knowledge-entry.schema.json",
+      "sha256": "bb8975d4923c2c393a9a7affcaffba8ef13172721e866997d54b2ac8c2a3ae5e",
+      "bytes": 4182
+    },
+    {
+      "path": "schemas/meeting.schema.json",
+      "sha256": "208582908f4bd489316baf7e4528ef24adf411d98da3622eb0715df13a05c5ed",
+      "bytes": 3585
+    },
+    {
+      "path": "schemas/mission-definition.schema.json",
+      "sha256": "a2a781d686d4019c4ba8d97db479958908b9420c145dc89584f5075adbae67ca",
+      "bytes": 4237
+    },
+    {
+      "path": "schemas/mission-run.schema.json",
+      "sha256": "9d085617fe2f760cb2b13e9790cc7f6f6146c2eafd85dd6a108431b59f704d93",
+      "bytes": 3261
+    },
+    {
+      "path": "schemas/offline-bundle-manifest.schema.json",
+      "sha256": "840eae1b28b57b01c074f2819d02c32d5a5b566255e6b3c94faf0825a8556eea",
+      "bytes": 1065
+    },
+    {
+      "path": "schemas/offline-requirements.schema.json",
+      "sha256": "d86b925a9c60b937c15fab2369a71a32eefe55f7f95073045a7bf439c40be959",
+      "bytes": 1228
+    },
+    {
+      "path": "schemas/offline-source-register.schema.json",
+      "sha256": "efb904c1bdcaadc2ade96a66fec25d83457cf0fa70653e88acd647f68ccaa19f",
+      "bytes": 1437
+    },
+    {
+      "path": "schemas/professional-foundations.schema.json",
+      "sha256": "47a12186e216ca46a024a6dfe1dc5287374029a6e35278e2182fe65639c1d34c",
+      "bytes": 2643
+    },
+    {
+      "path": "schemas/professional-profile.schema.json",
+      "sha256": "395d7363486ab114a452f0c036f164fce408d7ee795e369ad4d9446f04c8121e",
+      "bytes": 3143
+    },
+    {
+      "path": "schemas/project-intent.schema.json",
+      "sha256": "b935c14962b61b455ada2e38e69e709c628c5493b3174835ea79a2226611c866",
+      "bytes": 6969
+    },
+    {
+      "path": "schemas/retrieval-request.schema.json",
+      "sha256": "94ec259212aed14cb08f7ebe726c1dbf1f185c4c60326e2374ace1cd8b007dea",
+      "bytes": 1944
+    },
+    {
+      "path": "schemas/retrieval-result.schema.json",
+      "sha256": "58f733d4a4768ae1b17572831d799135c678bfff8499723367eb7ca4a62a2f4c",
+      "bytes": 2170
+    },
+    {
+      "path": "source-cache/README.md",
+      "sha256": "9abc3554196f6b94c142598e9cd4e0903ed6eb9a3cebd4b82c5065a7f19ee270",
+      "bytes": 1141
+    }
+  ]
+}

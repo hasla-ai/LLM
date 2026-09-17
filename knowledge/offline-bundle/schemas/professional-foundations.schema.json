@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/professional-foundations.schema.json",
+  "title": "Forge H2 Professional Foundations",
+  "description": "User-provided catalog of Korean technical professional domains and foundational textbooks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "catalog_version", "source", "verification_status", "certifications", "textbooks"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "catalog_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_kind", "publisher", "locator", "evidence_ids"],
+      "properties": {
+        "source_kind": {"type": "string"},
+        "publisher": {"type": "string"},
+        "locator": {"type": "string"},
+        "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}
+      }
+    },
+    "verification_status": {"type": "string", "enum": ["unverified", "machine_checked", "expert_verified", "authority_confirmed"]},
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rank", "name", "focus", "candidate_agent_ids"],
+        "properties": {
+          "rank": {"type": "integer", "minimum": 1},
+          "name": {"type": "string"},
+          "focus": {"type": "string"},
+          "candidate_agent_ids": {"type": "array", "items": {"type": "string", "pattern": "^AG-"}},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "textbooks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["book_id", "title", "domains", "chapters"],
+        "properties": {
+          "book_id": {"type": "string", "pattern": "^BOOK-"},
+          "title": {"type": "string"},
+          "domains": {"type": "array", "items": {"type": "string"}},
+          "chapters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["chapter", "title", "formula_ids"],
+              "properties": {
+                "chapter": {"type": "integer", "minimum": 1},
+                "title": {"type": "string"},
+                "formula_ids": {"type": "array", "items": {"type": "string", "pattern": "^FML-"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

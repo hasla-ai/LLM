@@ -1,0 +1,22 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Regenerable SQLite indexes and legacy local application data
+*.sqlite3
+*.sqlite3-*
+knowledge/agent-databases/*.sqlite3
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

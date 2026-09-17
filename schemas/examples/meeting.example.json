@@ -1,0 +1,21 @@
+{
+  "meeting_id": "MTG-G2-HYDROGEN-0001",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "meeting_type": "hse_regulatory",
+  "trigger": "수소 공급 기준선과 저장 자립일수에 대한 기술·안전 검토",
+  "gate_id": "G2",
+  "mission_ids": ["M-041", "M-042", "M-045"],
+  "chair_agent_id": "AG-HSE-001",
+  "participant_agent_ids": ["AG-TEC-001", "AG-TEC-002", "AG-TEC-014", "AG-ADV-004", "AG-DATA-001"],
+  "human_participants": [{"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null}],
+  "agenda": ["공급조건 근거 확인", "저장·압력 시나리오 확인", "추가 자료와 승인조건 결정"],
+  "pre_read_refs": ["EVD-H2-SUPPLY-001", "RUN-M-041-0001"],
+  "invocation_ids": ["CALL-M-041-AG-TEC-001-0001"],
+  "issues": [{"issue_id": "ISS-H2-001", "statement": "공급중단 시 저장 자립일수 근거가 부족하다.", "owner_role": "Hydrogen Process Lead", "status": "open"}],
+  "decisions": [{"decision_id": "DEC-G2-H2-0001", "subject": "수소 공급 기준선", "option": "조건부 진행", "reason": "계약·저장 근거 등록 전에는 기준선 승격을 제한한다.", "approvers": [{"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null}], "human_signoff_required": true}],
+  "actions": [{"action_id": "ACT-H2-001", "action": "공급사 보증자료와 저장량 재계산을 등록한다.", "owner_role": "Hydrogen Process Lead", "due_date": "2026-09-24", "status": "open"}],
+  "status": "concluded",
+  "started_at": "2026-09-17T09:10:00Z",
+  "ended_at": "2026-09-17T09:35:00Z",
+  "extensions": {}
+}

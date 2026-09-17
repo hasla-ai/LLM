@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/agent-knowledge-database.schema.json",
+  "title": "Forge H2 Agent Professional Knowledge Database",
+  "description": "A JSON materialized view of the central catalog for one Agent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "agent_id", "database_kind", "source_of_truth", "generated_at", "entries"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "agent_id": {"type": "string", "pattern": "^AG-[A-Z]+-[0-9]{3}$"},
+    "database_kind": {"type": "string", "const": "professional_knowledge"},
+    "source_of_truth": {"type": "string", "const": "knowledge/catalog.json"},
+    "generated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "entries": {"type": "array", "items": {"$ref": "knowledge-entry.schema.json"}}
+  }
+}

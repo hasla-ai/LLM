@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/retrieval-request.schema.json",
+  "title": "Forge H2 Knowledge Retrieval Request",
+  "description": "The explicit context an Agent must provide before retrieving project knowledge.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "project_id", "query", "requesting_agent_id", "phase", "jurisdiction", "top_k", "purpose", "requested_at", "extensions"],
+  "properties": {
+    "request_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^RET-[A-Za-z0-9._-]+$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "query": {"type": "string", "minLength": 3},
+    "requesting_agent_id": {"type": "string", "pattern": "^AG-[A-Z]+-[0-9]{3}$"},
+    "source_agent_ids": {"type": "array", "items": {"type": "string", "pattern": "^AG-[A-Z]+-[0-9]{3}$"}, "description": "Optional read-only cross-agent knowledge databases."},
+    "database_scope": {"type": "string", "enum": ["own_then_shared", "own_and_explicit_cross_agent", "shared_only"], "default": "own_then_shared"},
+    "offline": {"type": "boolean", "default": false, "description": "When true, remote fetch is forbidden and missing local source artifacts block baseline use."},
+    "phase": {"type": "string"},
+    "jurisdiction": {"type": "string", "minLength": 1},
+    "filters": {"type": "object", "additionalProperties": false, "properties": {"domains": {"type": "array", "items": {"type": "string"}}, "knowledge_types": {"type": "array", "items": {"type": "string"}}, "minimum_authority_level": {"type": "string"}, "statuses": {"type": "array", "items": {"type": "string"}}}},
+    "top_k": {"type": "integer", "minimum": 1, "maximum": 50},
+    "purpose": {"type": "string", "minLength": 1},
+    "requested_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

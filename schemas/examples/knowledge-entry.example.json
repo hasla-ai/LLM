@@ -1,0 +1,18 @@
+{
+  "knowledge_id": "KNW-EXAMPLE-0001",
+  "schema_version": "1.0.0",
+  "title": "예시 지식 항목",
+  "knowledge_type": "technical_basis",
+  "domains": ["hydrogen", "safety"],
+  "jurisdictions": ["KR"],
+  "languages": ["ko"],
+  "authority_level": "T2_certified_test_or_engineer",
+  "source": {"source_kind": "project_document", "publisher": "Forge H2 Enterprise", "url": null, "locator": "DOC-EXAMPLE-001#section-1", "captured_at": "2026-09-17"},
+  "revision": "1.0.0",
+  "status": "active",
+  "applies_to": {"agent_ids": ["AG-TEC-001"], "roles": ["Hydrogen Process Lead"], "phases": ["hydrogen"], "gates": ["G2"]},
+  "content": {"summary": "전문가 검토가 완료된 예시 지식 항목이다.", "claims": [{"claim_id": "CLM-EXAMPLE-001", "statement": "모든 지식은 출처와 검증상태를 가진다.", "locator": "section-1"}], "keywords": ["knowledge", "evidence", "verification"]},
+  "verification": {"status": "expert_verified", "verified_by_role": "Data/Evidence Lead", "verified_at": "2026-09-17", "evidence_ids": ["EVD-EXAMPLE-001"]},
+  "access_policy": {"classification": "project_internal", "allowed_agent_categories": ["technical", "assurance"]},
+  "extensions": {}
+}

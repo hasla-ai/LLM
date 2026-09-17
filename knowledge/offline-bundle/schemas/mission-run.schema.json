@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/mission-run.schema.json",
+  "title": "Forge H2 Mission Run",
+  "description": "Immutable record of one attempt to execute one mission for one project.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "mission_id", "project_id", "schema_version", "attempt", "status", "executor", "input_snapshot", "output", "evidence_ids", "assumptions", "blockers", "reviewer", "decision", "next_mission_ids", "started_at", "completed_at", "trace", "extensions"],
+  "properties": {
+    "run_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^RUN-[A-Za-z0-9._-]+$"},
+    "mission_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^M-[0-9]{3}$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "attempt": {"type": "integer", "minimum": 1},
+    "status": {"$ref": "common.schema.json#/$defs/mission_status"},
+    "executor": {"type": "string", "enum": ["deterministic", "llm", "human", "hybrid"]},
+    "input_snapshot": {"type": "object", "description": "Exact validated input used by this run. Do not mutate after creation.", "additionalProperties": true},
+    "output": {"type": ["object", "null"], "description": "Validated output. Null when BLOCKED or FAIL before output exists.", "additionalProperties": true},
+    "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "assumptions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/assumption"}},
+    "blockers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/blocker"}},
+    "reviewer": {"anyOf": [{"$ref": "common.schema.json#/$defs/person_or_role"}, {"type": "null"}]},
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_status", "decision_at", "decision_reason"],
+      "properties": {
+        "decision_status": {"$ref": "common.schema.json#/$defs/decision_status"},
+        "decision_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+        "decision_reason": {"type": "string", "minLength": 1},
+        "decision_log_id": {"type": ["string", "null"]}
+      }
+    },
+    "next_mission_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "started_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "completed_at": {"anyOf": [{"$ref": "common.schema.json#/$defs/timestamp"}, {"type": "null"}]},
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "model_id", "prompt_version", "calculator_version"],
+      "properties": {
+        "agent_id": {"type": "string", "description": "Agent or service that executed the mission."},
+        "model_id": {"type": ["string", "null"], "description": "LLM model ID; null for deterministic or human execution."},
+        "prompt_version": {"type": ["string", "null"]},
+        "calculator_version": {"type": ["string", "null"]},
+        "source_commit": {"type": ["string", "null"]},
+        "request_id": {"type": ["string", "null"]}
+      }
+    },
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

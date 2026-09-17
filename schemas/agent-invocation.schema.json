@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/agent-invocation.schema.json",
+  "title": "Forge H2 Agent Invocation",
+  "description": "An append-only record of one Agent being called for a mission, meeting or decision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["invocation_id", "project_id", "agent_id", "purpose", "context_refs", "status", "position", "output_refs", "blockers", "escalation", "human_review", "started_at", "completed_at", "trace", "extensions"],
+  "properties": {
+    "invocation_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^CALL-[A-Za-z0-9._-]+$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "agent_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^AG-[A-Z]+-[0-9]{3}$"},
+    "mission_id": {"type": ["string", "null"], "pattern": "^M-[0-9]{3}$"},
+    "meeting_id": {"type": ["string", "null"], "pattern": "^MTG-[A-Za-z0-9._-]+$"},
+    "decision_id": {"type": ["string", "null"], "pattern": "^DEC-[A-Za-z0-9._-]+$"},
+    "purpose": {"type": "string", "minLength": 1},
+    "context_refs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "status": {"type": "string", "enum": ["queued", "running", "completed", "blocked", "human_review", "failed"]},
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "recommendation", "confidence", "conditions"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 1},
+        "recommendation": {"type": "string", "enum": ["proceed", "proceed_with_conditions", "hold", "stop", "request_more_data", "no_objection"]},
+        "confidence": {"type": "string", "enum": ["low", "medium", "high", "not_assessed"]},
+        "conditions": {"type": "array", "items": {"type": "string"}},
+        "dissent_refs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}
+      }
+    },
+    "output_refs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "blockers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/blocker"}},
+    "escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "reason", "target_roles"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "reason": {"type": ["string", "null"]},
+        "target_roles": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "status", "reviewers"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "status": {"type": "string", "enum": ["not_required", "pending", "accepted", "rejected", "conditional"]},
+        "reviewers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/person_or_role"}}
+      }
+    },
+    "started_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "completed_at": {"anyOf": [{"$ref": "common.schema.json#/$defs/timestamp"}, {"type": "null"}]},
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "prompt_version", "source_refs"],
+      "properties": {
+        "model_id": {"type": ["string", "null"]},
+        "prompt_version": {"type": ["string", "null"]},
+        "source_refs": {"type": "array", "items": {"type": "string"}},
+        "request_id": {"type": ["string", "null"]}
+      }
+    },
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "run_id": "RUN-M-006-0001",
+  "mission_id": "M-006",
+  "project_id": "FHZ-DEMO-001",
+  "schema_version": "1.0.0",
+  "attempt": 1,
+  "status": "blocked",
+  "executor": "hybrid",
+  "input_snapshot": {"project_id": "FHZ-DEMO-001", "intent_version": "1.0.0"},
+  "output": {"missing_fields": ["site.coordinate", "hydrogen.pressure", "offtake.buyer"]},
+  "evidence_ids": [],
+  "assumptions": [],
+  "blockers": [{"blocker_id": "BLK-M006-001", "severity": "high", "message": "필수 입력 3개가 없다.", "owner_role": "PMO", "resolution_required": "누락값을 입력하거나 검증 가능한 근거를 등록한다.", "due_at": null}],
+  "reviewer": null,
+  "decision": {"decision_status": "hold", "decision_at": "2026-09-17T09:05:00Z", "decision_reason": "미션은 추측으로 완료할 수 없다.", "decision_log_id": null},
+  "next_mission_ids": ["M-021", "M-031", "M-012"],
+  "started_at": "2026-09-17T09:04:00Z",
+  "completed_at": "2026-09-17T09:05:00Z",
+  "trace": {"agent_id": "forge-orchestrator", "model_id": "none", "prompt_version": "0.1.0", "calculator_version": null, "source_commit": null, "request_id": "REQ-DEMO-001"},
+  "extensions": {}
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/project-intent.schema.json",
+  "title": "Forge H2 Project Intent",
+  "description": "Normalized project request. Unknown values are explicit nulls; an intent can be incomplete and still be stored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_id", "schema_version", "status", "raw_brief", "jurisdiction", "site", "power", "hydrogen", "offtake", "commercial", "schedule", "assumptions", "blockers", "evidence_ids", "created_at", "updated_at", "extensions"
+  ],
+  "properties": {
+    "project_id": {"$ref": "common.schema.json#/$defs/id", "title": "Project ID", "examples": ["FHZ-001"]},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version", "examples": ["1.0.0"]},
+    "status": {"type": "string", "enum": ["draft", "ready", "blocked", "approved", "superseded"], "description": "Project-intake state."},
+    "raw_brief": {"type": "string", "minLength": 1, "description": "Original user request. Never overwrite this field."},
+    "jurisdiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["country_code", "region", "local_authority", "regulatory_profile_id"],
+      "properties": {
+        "country_code": {"type": ["string", "null"], "minLength": 2, "maxLength": 3, "examples": ["KR"]},
+        "region": {"type": ["string", "null"], "description": "Province/state/municipality."},
+        "local_authority": {"type": ["string", "null"]},
+        "regulatory_profile_id": {"type": ["string", "null"], "description": "Versioned jurisdiction and rule profile."}
+      }
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "coordinate", "parcel_ids", "site_control_status", "candidate_status"],
+      "properties": {
+        "address": {"type": ["string", "null"]},
+        "coordinate": {"anyOf": [{"$ref": "common.schema.json#/$defs/coordinate"}, {"type": "null"}]},
+        "parcel_ids": {"type": "array", "items": {"type": "string"}, "description": "Cadastral parcel identifiers."},
+        "site_control_status": {"type": "string", "enum": ["unknown", "candidate", "optioned", "leased", "owned", "rejected"]},
+        "candidate_status": {"type": "string", "enum": ["not_screened", "screening", "shortlisted", "selected", "rejected"]}
+      }
+    },
+    "power": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_capacity", "plant_type", "annual_operating_hours", "dispatch_mode", "net_or_gross", "technology_vendor"],
+      "properties": {
+        "target_capacity": {"anyOf": [{"$ref": "common.schema.json#/$defs/quantity"}, {"type": "null"}], "description": "Target electrical output, normally MW."},
+        "plant_type": {"type": ["string", "null"], "enum": ["fuel_cell", "hydrogen_turbine", "hybrid", "other", null]},
+        "annual_operating_hours": {"type": ["integer", "null"], "minimum": 0, "maximum": 8760},
+        "dispatch_mode": {"type": ["string", "null"], "enum": ["baseload", "peak", "flexible", "backup", "unknown", null]},
+        "net_or_gross": {"type": ["string", "null"], "enum": ["net", "gross", "unknown", null]},
+        "technology_vendor": {"type": ["string", "null"]}
+      }
+    },
+    "hydrogen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type", "origin", "quality", "supply_rate", "pressure", "storage_autonomy_days", "delivery_contract_status"],
+      "properties": {
+        "source_type": {"type": ["string", "null"], "enum": ["pipeline", "tube_trailer", "liquid", "onsite_electrolysis", "onsite_reforming", "other", null]},
+        "origin": {"type": ["string", "null"], "description": "Hydrogen origin and certification class."},
+        "quality": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["purity", "basis", "evidence_ids"],
+          "properties": {
+            "purity": {"anyOf": [{"$ref": "common.schema.json#/$defs/quantity"}, {"type": "null"}]},
+            "basis": {"type": ["string", "null"]},
+            "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}
+          }
+        },
+        "supply_rate": {"anyOf": [{"$ref": "common.schema.json#/$defs/quantity"}, {"type": "null"}]},
+        "pressure": {"anyOf": [{"$ref": "common.schema.json#/$defs/quantity"}, {"type": "null"}]},
+        "storage_autonomy_days": {"type": ["number", "null"], "minimum": 0},
+        "delivery_contract_status": {"type": "string", "enum": ["unknown", "market_scan", "rfq", "loi", "contracted", "rejected"]}
+      }
+    },
+    "offtake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["buyer", "contract_type", "target_date", "status"],
+      "properties": {
+        "buyer": {"type": ["string", "null"]},
+        "contract_type": {"type": ["string", "null"], "enum": ["ppa", "direct_supply", "market", "internal_use", "unknown", null]},
+        "target_date": {"$ref": "common.schema.json#/$defs/date_or_null"},
+        "status": {"type": "string", "enum": ["unknown", "target", "discussion", "loi", "contracted", "rejected"]}
+      }
+    },
+    "commercial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["budget", "currency", "funding_status", "revenue_assumptions"],
+      "properties": {
+        "budget": {"anyOf": [{"$ref": "common.schema.json#/$defs/quantity"}, {"type": "null"}], "description": "Total project budget; unit should normally be KRW."},
+        "currency": {"type": ["string", "null"], "examples": ["KRW"]},
+        "funding_status": {"type": "string", "enum": ["unknown", "concept", "funding_search", "term_sheet", "committed", "rejected"]},
+        "revenue_assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_cod", "development_start", "constraints"],
+      "properties": {
+        "target_cod": {"$ref": "common.schema.json#/$defs/date_or_null"},
+        "development_start": {"$ref": "common.schema.json#/$defs/date_or_null"},
+        "constraints": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "stakeholders": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/person_or_role"}},
+    "assumptions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/assumption"}},
+    "blockers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/blocker"}},
+    "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "created_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "extensions": {"type": "object", "description": "Forward-compatible fields. Do not place core data here.", "additionalProperties": true}
+  }
+}

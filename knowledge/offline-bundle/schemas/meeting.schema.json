@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/meeting.schema.json",
+  "title": "Forge H2 Decision Meeting",
+  "description": "A structured meeting record that collects Agent positions, human questions and an auditable decision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meeting_id", "project_id", "meeting_type", "trigger", "chair_agent_id", "participant_agent_ids", "agenda", "pre_read_refs", "invocation_ids", "issues", "decisions", "actions", "status", "started_at", "ended_at", "extensions"],
+  "properties": {
+    "meeting_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^MTG-[A-Za-z0-9._-]+$"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "meeting_type": {"type": "string", "enum": ["standup", "pmo_integration", "design_interface", "hse_regulatory", "ai_product_review", "steering_committee", "independent_review", "gate_review", "change_review", "emergency"]},
+    "trigger": {"type": "string", "minLength": 1},
+    "gate_id": {"type": ["string", "null"], "pattern": "^G[0-7]$"},
+    "mission_ids": {"type": "array", "items": {"type": "string", "pattern": "^M-[0-9]{3}$"}},
+    "chair_agent_id": {"type": "string", "pattern": "^AG-[A-Z]+-[0-9]{3}$"},
+    "participant_agent_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^AG-[A-Z]+-[0-9]{3}$"}},
+    "human_participants": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/person_or_role"}},
+    "agenda": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "pre_read_refs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "invocation_ids": {"type": "array", "items": {"type": "string", "pattern": "^CALL-[A-Za-z0-9._-]+$"}},
+    "issues": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": false, "required": ["issue_id", "statement", "owner_role", "status"], "properties": {"issue_id": {"$ref": "common.schema.json#/$defs/id"}, "statement": {"type": "string"}, "owner_role": {"$ref": "common.schema.json#/$defs/role"}, "status": {"type": "string", "enum": ["open", "resolved", "escalated", "blocked"]}}}
+    },
+    "decisions": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": false, "required": ["decision_id", "subject", "option", "reason", "approvers", "human_signoff_required"], "properties": {"decision_id": {"type": "string", "pattern": "^DEC-[A-Za-z0-9._-]+$"}, "subject": {"type": "string"}, "option": {"type": "string"}, "reason": {"type": "string"}, "approvers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/person_or_role"}}, "human_signoff_required": {"type": "boolean", "const": true}}}
+    },
+    "actions": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": false, "required": ["action_id", "action", "owner_role", "due_date", "status"], "properties": {"action_id": {"$ref": "common.schema.json#/$defs/id"}, "action": {"type": "string"}, "owner_role": {"$ref": "common.schema.json#/$defs/role"}, "due_date": {"$ref": "common.schema.json#/$defs/date_or_null"}, "status": {"type": "string", "enum": ["open", "done", "blocked", "cancelled"]}}}
+    },
+    "status": {"type": "string", "enum": ["scheduled", "in_progress", "concluded", "blocked", "cancelled"]},
+    "started_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "ended_at": {"anyOf": [{"$ref": "common.schema.json#/$defs/timestamp"}, {"type": "null"}]},
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

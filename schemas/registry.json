@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/registry.json",
+  "title": "Forge H2 Schema Registry",
+  "description": "AI agents must read this registry before using a Forge H2 contract.",
+  "schema_version": "1.0.0",
+  "conventions": {
+    "unknown_value": "null",
+    "identifier_format": "uppercase prefix plus stable number or slug",
+    "time_format": "ISO-8601 UTC",
+    "coordinates": "WGS84 / EPSG:4326",
+    "human_approval": "required for safety, legal, permit, construction and operational control decisions"
+  },
+  "schemas": [
+    {"name": "common", "path": "common.schema.json", "purpose": "Shared types and enums"},
+    {"name": "project_intent", "path": "project-intent.schema.json", "purpose": "Initial project request and normalized requirements"},
+    {"name": "mission_definition", "path": "mission-definition.schema.json", "purpose": "Function-like mission contract"},
+    {"name": "mission_run", "path": "mission-run.schema.json", "purpose": "Immutable execution result"},
+    {"name": "evidence", "path": "evidence.schema.json", "purpose": "Source, revision, verification and provenance"},
+    {"name": "gate", "path": "gate.schema.json", "purpose": "Stage-gate decision and approvals"},
+    {"name": "change_request", "path": "change-request.schema.json", "purpose": "Impact-controlled project change"},
+    {"name": "agent_definition", "path": "agent-definition.schema.json", "purpose": "Role, qualification expectation, authority and consultation contract"},
+    {"name": "agent_invocation", "path": "agent-invocation.schema.json", "purpose": "Append-only record of one Agent call and position"},
+    {"name": "meeting", "path": "meeting.schema.json", "purpose": "Structured decision meeting with Agent positions, dissent and actions"},
+    {"name": "decision", "path": "decision.schema.json", "purpose": "Auditable decision with human signoff and evidence"},
+    {"name": "professional_profile", "path": "professional-profile.schema.json", "purpose": "Verified human expert qualification, scope, authority and independence"},
+    {"name": "knowledge_entry", "path": "knowledge-entry.schema.json", "purpose": "Versioned and provenance-linked knowledge unit"},
+    {"name": "knowledge_catalog", "path": "knowledge-catalog.schema.json", "purpose": "Canonical JSON knowledge source catalog"},
+    {"name": "agent_knowledge_database", "path": "agent-knowledge-database.schema.json", "purpose": "Per-Agent JSON professional knowledge materialized view"},
+    {"name": "formula_library", "path": "formula-library.schema.json", "purpose": "Executable engineering formula records with unit and provenance metadata"},
+    {"name": "professional_foundations", "path": "professional-foundations.schema.json", "purpose": "Professional certification and textbook foundation catalog"},
+    {"name": "offline_source_register", "path": "offline-source-register.schema.json", "purpose": "Local source availability and baseline readiness contract"},
+    {"name": "offline_bundle_manifest", "path": "offline-bundle-manifest.schema.json", "purpose": "Hash manifest for portable local-only knowledge bundle"},
+    {"name": "offline_requirements", "path": "offline-requirements.schema.json", "purpose": "Local data and runtime prerequisites for offline project execution"},
+    {"name": "retrieval_request", "path": "retrieval-request.schema.json", "purpose": "Agent-scoped, phase-scoped and jurisdiction-scoped knowledge query"},
+    {"name": "retrieval_result", "path": "retrieval-result.schema.json", "purpose": "Ranked knowledge hits with source and verification trace"}
+  ],
+  "execution_order": [
+    "agent_definition",
+    "project_intent",
+    "evidence",
+    "mission_definition",
+    "agent_invocation",
+    "mission_run",
+    "meeting",
+    "gate",
+    "decision",
+    "change_request",
+    "professional_profile",
+    "knowledge_entry",
+    "knowledge_catalog",
+    "agent_knowledge_database",
+    "retrieval_request",
+    "retrieval_result"
+  ],
+  "high_risk_output_policy": {
+    "risk_classes": ["C", "D"],
+    "required_status": "human_review",
+    "required_fields": ["evidence_ids", "reviewer", "blockers"],
+    "prohibited": ["autonomous_permit_approval", "autonomous_construction_instruction", "unreviewed_safety_distance", "unreviewed_protection_setting"]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "invocation_id": "CALL-M-041-AG-TEC-001-0001",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-TEC-001",
+  "mission_id": "M-041",
+  "meeting_id": "MTG-G2-HYDROGEN-0001",
+  "decision_id": null,
+  "purpose": "수소 공급 기준선의 압력·순도·물량 가정을 독립 검토한다.",
+  "context_refs": ["M-041", "EVD-H2-SUPPLY-001"],
+  "status": "human_review",
+  "position": {
+    "summary": "공급 압력과 연간 물량 자료는 있으나 공급 중단 시나리오와 저장 자립일수가 추가로 필요하다.",
+    "recommendation": "proceed_with_conditions",
+    "confidence": "medium",
+    "conditions": ["공급계약서 또는 공급사 보증자료 등록", "저장 자립일수 재계산"],
+    "dissent_refs": []
+  },
+  "output_refs": ["RUN-M-041-0001"],
+  "blockers": [],
+  "escalation": {"required": false, "reason": null, "target_roles": []},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "Hydrogen Process Lead", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-17T09:00:00Z",
+  "completed_at": "2026-09-17T09:04:00Z",
+  "trace": {"model_id": "configured-agent-model", "prompt_version": "agent.hydrogen_process.1.0.0", "source_refs": ["schemas/agent-invocation.schema.json"], "request_id": "REQ-M-041-0001"},
+  "extensions": {}
+}

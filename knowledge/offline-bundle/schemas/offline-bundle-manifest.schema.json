@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/offline-bundle-manifest.schema.json",
+  "title": "Forge H2 Offline Bundle Manifest",
+  "description": "Hash manifest for a portable, local-only Forge H2 knowledge bundle.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "bundle_version", "network_policy", "created_at", "files"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "bundle_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "network_policy": {"type": "string", "const": "deny_all_remote_fetch"},
+    "created_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+    "files": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "bytes"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"}, "bytes": {"type": "integer", "minimum": 0}}}}
+  }
+}

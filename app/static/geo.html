@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forge H2 — Geo Design</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{font-family:system-ui,sans-serif;color:#302a26;background:#f6f4f1}
+*{box-sizing:border-box}body{margin:0}.top{min-height:64px;padding:16px 22px;background:#fff;border-bottom:1px solid #e3ddd7;display:flex;justify-content:space-between;align-items:center;gap:16px}.brand{font-size:19px;font-weight:700}.brand span{color:#cf6749}.top nav{display:flex;gap:12px}.top a{color:#a6533d;text-decoration:none}.layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 64px)}.side{background:#fff;padding:18px;border-right:1px solid #e3ddd7;overflow:auto}.side h2{font-size:15px;margin:0 0 8px}.hint{font-size:12px;color:#817970;line-height:1.5}.block{display:flex;gap:8px;align-items:center;width:100%;padding:11px;margin:8px 0;border:1px solid #ded5cd;background:#fffaf7;border-radius:10px;cursor:pointer;text-align:left;font:inherit}.block.active{border-color:#cf6749;background:#fdf0ea}.field{margin-top:12px}.field label{display:block;font-size:12px;font-weight:700;margin:8px 0 4px}.field input,.field select{width:100%;padding:9px;border:1px solid #d8d0c8;border-radius:7px;font:inherit}.action{width:100%;padding:11px;border:0;border-radius:9px;background:#cf6749;color:#fff;font-weight:700;cursor:pointer;margin-top:13px}.secondary{background:#68746d}.nodes{font-size:12px;margin-top:18px}.node{padding:8px 0;border-bottom:1px solid #eee8e2}.map-wrap{position:relative;min-height:700px}.map{height:100%;min-height:700px}.map-hint{position:absolute;z-index:500;top:16px;left:16px;background:#fff;padding:9px 12px;border-radius:9px;box-shadow:0 2px 12px #33261b1a;font-size:12px}.result{background:#fff;margin-top:14px;padding:12px;border-radius:9px;font-size:12px;white-space:pre-wrap;max-height:220px;overflow:auto}@media(max-width:750px){.top{align-items:flex-start;flex-direction:column}.layout{grid-template-columns:1fr}.side{border-right:0;border-bottom:1px solid #e3ddd7}.map-wrap{min-height:560px}.map{min-height:560px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span>✦</span> Forge H2 · Geo Design</div>
+  <nav><a href="/tasks">작업 보드</a><a href="/mvp">수치 입력 화면</a></nav>
+</header>
+<div class="layout">
+  <aside class="side">
+    <h2>공간 설계 요소</h2>
+    <p class="hint">요소를 선택한 뒤 지도 위를 클릭하세요. 좌표와 연결관계는 자동 저장됩니다.</p>
+    <div class="field"><label>프로젝트 ID</label><input id="project-id" value="default" maxlength="100" placeholder="예: h2-jeonnam-01"><button id="load-project" class="action">프로젝트 불러오기</button></div>
+    <div class="field"><label>연간 운전시간</label><input id="annual-hours" type="number" min="1" max="8760" value="4000"></div>
+    <div class="field"><label>수소 공급 방식</label><select id="hydrogen-source"><option>배관 공급</option><option>튜브트레일러</option><option>액화수소</option><option>현장 전해</option></select></div>
+    <button class="block" data-type="site">📍 발전소 부지</button>
+    <button class="block" data-type="hydrogen-source">🧪 수소 공급원</button>
+    <button class="block" data-type="storage">🛢 저장·감압 설비</button>
+    <button class="block" data-type="power-block">⚡ 발전 블록</button>
+    <button class="block" data-type="grid">🔌 계통연계 지점</button>
+    <div class="field"><label>요소 이름</label><input id="node-name" placeholder="예: 주 발전소 부지"></div>
+    <div class="field"><label>용량 (MW)</label><input id="capacity" type="number" value="10"></div>
+    <button id="analyze" class="action">공간 그래프 분석</button>
+    <button id="assess" class="action">통합 예비검토 실행</button>
+    <button id="download" class="action">현재 프로젝트 JSON 다운로드</button>
+    <button id="report" class="action">예비 설계문서 다운로드</button>
+    <button id="clear" class="action secondary">화면 비우기 (DB 보존)</button>
+    <p class="hint">화면을 비워도 기존 좌표와 이벤트는 SQLite에 누적 보존됩니다.</p>
+    <div id="nodes" class="nodes"></div>
+    <div id="result" class="result" hidden></div>
+  </aside>
+  <main class="map-wrap">
+    <div class="map-hint">요소 선택 → 지도 클릭 → 좌표 배치 · 데이터는 SQLite에 저장</div>
+    <div id="map" class="map" aria-label="수소발전소 공간 설계 지도"></div>
+  </main>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map').setView([36.35,127.8],7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
+const icons={site:'📍','hydrogen-source':'🧪',storage:'🛢','power-block':'⚡',grid:'🔌'};
+let selected='site',nodes=[],edges=[],markers=[],lines=[];
+let projectId=localStorage.getItem('forge-h2-project-id')||'default';
+const projectInput=document.querySelector('#project-id');
+projectInput.value=projectId;
+document.querySelectorAll('.block').forEach(b=>b.onclick=()=>{document.querySelectorAll('.block').forEach(x=>x.classList.remove('active'));b.classList.add('active');selected=b.dataset.type});
+document.querySelector('[data-type="site"]').classList.add('active');
+function renderNodes(){document.querySelector('#nodes').innerHTML=nodes.map((n,i)=>'<div class="node">'+icons[n.type]+' <b>'+n.properties.name+'</b><br>'+n.lat.toFixed(6)+', '+n.lon.toFixed(6)+(i?' · ← '+nodes[i-1].properties.name:'')+'</div>').join('')}
+function drawNode(n){const marker=L.marker([n.lat,n.lon]).addTo(map).bindPopup(icons[n.type]+' '+n.properties.name+'<br>'+n.lat.toFixed(6)+', '+n.lon.toFixed(6));markers.push(marker)}
+function redrawLines(){lines.forEach(x=>map.removeLayer(x));lines=[];edges.forEach(e=>{const a=nodes.find(n=>n.id===e.from),b=nodes.find(n=>n.id===e.to);if(a&&b)lines.push(L.polyline([[a.lat,a.lon],[b.lat,b.lon]],{color:'#cf6749',weight:3,dashArray:'6 6'}).addTo(map).bindTooltip('공정 흐름'))})}
+async function persist(){await fetch('/api/geo/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project_id:projectId,nodes,edges})})}
+function clearView(){nodes=[];edges=[];markers.forEach(m=>map.removeLayer(m));markers=[];redrawLines();renderNodes();document.querySelector('#result').hidden=true}
+async function restoreProfile(){const response=await fetch('/api/geo/profile?project_id='+encodeURIComponent(projectId));const data=await response.json();if(data.profile){document.querySelector('#annual-hours').value=data.profile.annual_hours;document.querySelector('#hydrogen-source').value=data.profile.hydrogen_source}}
+async function restore(){clearView();const g=await fetch('/api/geo/graph?project_id='+encodeURIComponent(projectId)).then(r=>r.json());nodes=g.nodes||[];edges=g.edges||[];nodes.forEach(drawNode);redrawLines();renderNodes();if(nodes.length)map.fitBounds(nodes.map(n=>[n.lat,n.lon]),{padding:[40,40]});await restoreProfile()}
+function mapPowerMw(){const total=nodes.filter(n=>n.type==='power-block').reduce((sum,n)=>sum+Number((n.properties||{}).capacity_mw||0),0);return total>0?total:10}
+map.on('click',async e=>{const node={id:crypto.randomUUID(),type:selected,lat:e.latlng.lat,lon:e.latlng.lng,properties:{name:document.querySelector('#node-name').value||selected,capacity_mw:Number(document.querySelector('#capacity').value)}};if(nodes.length)edges.push({from:nodes[nodes.length-1].id,to:node.id,type:'process-flow'});nodes.push(node);drawNode(node);redrawLines();renderNodes();await persist()});
+document.querySelector('#load-project').onclick=async()=>{const value=projectInput.value.trim();if(!value)return;projectId=value;localStorage.setItem('forge-h2-project-id',projectId);await restore()};
+document.querySelector('#assess').onclick=async()=>{const profile={project_id:projectId,location:'지도 좌표 기반',power_mw:mapPowerMw(),annual_hours:Number(document.querySelector('#annual-hours').value),hydrogen_source:document.querySelector('#hydrogen-source').value,plant_type:'fuel-cell',electrical_efficiency:0.50,storage_days:1.0,storage_density_kg_m3:30.0,power_block_area_m2_per_mw:900.0,fixed_area_m2:3000.0,site_utilization:0.35};await fetch('/api/geo/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(profile)});const d=await fetch('/api/geo/assessment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project_id:projectId})}).then(r=>r.json());const m=d.feasibility.derived;const s=d.spatial;const box=document.querySelector('#result');box.hidden=false;box.textContent=['프로젝트: '+projectId,'지도 발전용량: '+s.capacity_summary.power_block_mw+' MW','연간 발전량: '+m.annual_generation_mwh.toLocaleString()+' MWh','시간당 수소 사용량: '+m.hydrogen_kg_per_hour.toLocaleString()+' kg/h','예비 총부지면적: '+m.screening_gross_area_m2.toLocaleString()+' m² ('+m.screening_gross_area_ha+' ha)','공정 연결 총 직선거리: '+s.total_edge_route_m+' m','','자동 검토 신호:',...(s.warnings.length?s.warnings.map(x=>'• '+x):['• 현재 경고 없음'])].join('\n')};};
+document.querySelector('#download').onclick=()=>{window.location.href='/api/geo/snapshot/download?project_id='+encodeURIComponent(projectId)};
+document.querySelector('#report').onclick=()=>{window.location.href='/api/geo/report/download?project_id='+encodeURIComponent(projectId)};
+document.querySelector('#clear').onclick=clearView;
+document.querySelector('#analyze').onclick=async()=>{if(!nodes.length)return;const d=await fetch('/api/geo/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nodes,edges})}).then(r=>r.json());const box=document.querySelector('#result');box.hidden=false;box.textContent=JSON.stringify(d,null,2)};
+restore();
+</script>
+</body>
+</html>

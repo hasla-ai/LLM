@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/formula-library.schema.json",
+  "title": "Forge H2 Formula Library",
+  "description": "Machine-readable engineering formulas with executable expression metadata.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_id", "library_version", "source", "execution_policy", "formulas"],
+  "properties": {
+    "$schema": {"type": "string", "format": "uri-reference"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "library_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "source": {"type": "object", "additionalProperties": false, "required": ["source_kind", "publisher", "locator", "evidence_ids"], "properties": {"source_kind": {"type": "string"}, "publisher": {"type": "string"}, "locator": {"type": "string"}, "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}}},
+    "execution_policy": {"type": "object", "additionalProperties": false, "required": ["allowed_language", "allow_dynamic_code", "requires_unit_check"], "properties": {"allowed_language": {"type": "string", "const": "python_expression"}, "allow_dynamic_code": {"type": "boolean", "const": false}, "requires_unit_check": {"type": "boolean", "const": true}}},
+    "formulas": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["formula_id", "domain", "name", "equation_latex", "equation_ascii", "solved_for", "python", "variables", "assumptions", "source_knowledge_id", "verification_status"], "properties": {"formula_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^FML-"}, "domain": {"type": "string"}, "name": {"type": "string"}, "equation_latex": {"type": "string"}, "equation_ascii": {"type": "string"}, "solved_for": {"type": "string"}, "python": {"type": "object", "additionalProperties": false, "required": ["call_signature", "expression"], "properties": {"call_signature": {"type": "string"}, "expression": {"type": "string"}}}, "sympy": {"type": "string"}, "variables": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["symbol", "meaning", "unit"], "properties": {"symbol": {"type": "string"}, "meaning": {"type": "string"}, "unit": {"type": "string"}}}}, "assumptions": {"type": "array", "items": {"type": "string"}}, "source_knowledge_id": {"$ref": "common.schema.json#/$defs/id"}, "verification_status": {"type": "string", "enum": ["unverified", "machine_checked", "expert_verified", "authority_confirmed"]}, "validation_cases": {"type": "array", "items": {"type": "object"}}}}}
+  }
+}

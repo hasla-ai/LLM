@@ -1,0 +1,585 @@
+{
+  "project_id": "FHZ-ENTERPRISE-001",
+  "generated_at": "2026-09-17T08:31:37Z",
+  "central_source_catalog": "knowledge/catalog.json",
+  "derived_search_index": "knowledge/knowledge.sqlite3",
+  "cross_agent_access": "read",
+  "agents": [
+    {
+      "agent_id": "AG-GOV-001",
+      "database": "knowledge/agent-databases/AG-GOV-001.json",
+      "index_database": "knowledge/agent-databases/AG-GOV-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-GOV-002",
+      "database": "knowledge/agent-databases/AG-GOV-002.json",
+      "index_database": "knowledge/agent-databases/AG-GOV-002.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-PMO-001",
+      "database": "knowledge/agent-databases/AG-PMO-001.json",
+      "index_database": "knowledge/agent-databases/AG-PMO-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-PMO-002",
+      "database": "knowledge/agent-databases/AG-PMO-002.json",
+      "index_database": "knowledge/agent-databases/AG-PMO-002.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ENG-001",
+      "database": "knowledge/agent-databases/AG-ENG-001.json",
+      "index_database": "knowledge/agent-databases/AG-ENG-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-HSE-001",
+      "database": "knowledge/agent-databases/AG-HSE-001.json",
+      "index_database": "knowledge/agent-databases/AG-HSE-001.sqlite3",
+      "entry_count": 7,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-COM-001",
+      "database": "knowledge/agent-databases/AG-COM-001.json",
+      "index_database": "knowledge/agent-databases/AG-COM-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-FIN-001",
+      "database": "knowledge/agent-databases/AG-FIN-001.json",
+      "index_database": "knowledge/agent-databases/AG-FIN-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-PROC-001",
+      "database": "knowledge/agent-databases/AG-PROC-001.json",
+      "index_database": "knowledge/agent-databases/AG-PROC-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-EPC-001",
+      "database": "knowledge/agent-databases/AG-EPC-001.json",
+      "index_database": "knowledge/agent-databases/AG-EPC-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-CON-001",
+      "database": "knowledge/agent-databases/AG-CON-001.json",
+      "index_database": "knowledge/agent-databases/AG-CON-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-COMM-001",
+      "database": "knowledge/agent-databases/AG-COMM-001.json",
+      "index_database": "knowledge/agent-databases/AG-COMM-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-OPS-001",
+      "database": "knowledge/agent-databases/AG-OPS-001.json",
+      "index_database": "knowledge/agent-databases/AG-OPS-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-PRD-001",
+      "database": "knowledge/agent-databases/AG-PRD-001.json",
+      "index_database": "knowledge/agent-databases/AG-PRD-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-AI-001",
+      "database": "knowledge/agent-databases/AG-AI-001.json",
+      "index_database": "knowledge/agent-databases/AG-AI-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-DATA-001",
+      "database": "knowledge/agent-databases/AG-DATA-001.json",
+      "index_database": "knowledge/agent-databases/AG-DATA-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-AIS-001",
+      "database": "knowledge/agent-databases/AG-AIS-001.json",
+      "index_database": "knowledge/agent-databases/AG-AIS-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-CYB-001",
+      "database": "knowledge/agent-databases/AG-CYB-001.json",
+      "index_database": "knowledge/agent-databases/AG-CYB-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-QA-001",
+      "database": "knowledge/agent-databases/AG-QA-001.json",
+      "index_database": "knowledge/agent-databases/AG-QA-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-IR-001",
+      "database": "knowledge/agent-databases/AG-IR-001.json",
+      "index_database": "knowledge/agent-databases/AG-IR-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-001",
+      "database": "knowledge/agent-databases/AG-TEC-001.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-001.sqlite3",
+      "entry_count": 6,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-002",
+      "database": "knowledge/agent-databases/AG-TEC-002.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-002.sqlite3",
+      "entry_count": 6,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-003",
+      "database": "knowledge/agent-databases/AG-TEC-003.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-003.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-004",
+      "database": "knowledge/agent-databases/AG-TEC-004.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-004.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-005",
+      "database": "knowledge/agent-databases/AG-TEC-005.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-005.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-006",
+      "database": "knowledge/agent-databases/AG-TEC-006.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-006.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-007",
+      "database": "knowledge/agent-databases/AG-TEC-007.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-007.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-008",
+      "database": "knowledge/agent-databases/AG-TEC-008.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-008.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-009",
+      "database": "knowledge/agent-databases/AG-TEC-009.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-009.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-010",
+      "database": "knowledge/agent-databases/AG-TEC-010.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-010.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-011",
+      "database": "knowledge/agent-databases/AG-TEC-011.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-011.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-012",
+      "database": "knowledge/agent-databases/AG-TEC-012.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-012.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-013",
+      "database": "knowledge/agent-databases/AG-TEC-013.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-013.sqlite3",
+      "entry_count": 5,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-014",
+      "database": "knowledge/agent-databases/AG-TEC-014.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-014.sqlite3",
+      "entry_count": 8,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-015",
+      "database": "knowledge/agent-databases/AG-TEC-015.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-015.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-016",
+      "database": "knowledge/agent-databases/AG-TEC-016.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-016.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-017",
+      "database": "knowledge/agent-databases/AG-TEC-017.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-017.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-018",
+      "database": "knowledge/agent-databases/AG-TEC-018.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-018.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-019",
+      "database": "knowledge/agent-databases/AG-TEC-019.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-019.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-020",
+      "database": "knowledge/agent-databases/AG-TEC-020.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-020.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-021",
+      "database": "knowledge/agent-databases/AG-TEC-021.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-021.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-TEC-022",
+      "database": "knowledge/agent-databases/AG-TEC-022.json",
+      "index_database": "knowledge/agent-databases/AG-TEC-022.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-001",
+      "database": "knowledge/agent-databases/AG-ADV-001.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-001.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-002",
+      "database": "knowledge/agent-databases/AG-ADV-002.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-002.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-003",
+      "database": "knowledge/agent-databases/AG-ADV-003.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-003.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-004",
+      "database": "knowledge/agent-databases/AG-ADV-004.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-004.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-005",
+      "database": "knowledge/agent-databases/AG-ADV-005.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-005.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-006",
+      "database": "knowledge/agent-databases/AG-ADV-006.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-006.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-007",
+      "database": "knowledge/agent-databases/AG-ADV-007.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-007.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-008",
+      "database": "knowledge/agent-databases/AG-ADV-008.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-008.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-009",
+      "database": "knowledge/agent-databases/AG-ADV-009.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-009.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-010",
+      "database": "knowledge/agent-databases/AG-ADV-010.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-010.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-ADV-011",
+      "database": "knowledge/agent-databases/AG-ADV-011.json",
+      "index_database": "knowledge/agent-databases/AG-ADV-011.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-001",
+      "database": "knowledge/agent-databases/AG-INT-001.json",
+      "index_database": "knowledge/agent-databases/AG-INT-001.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-002",
+      "database": "knowledge/agent-databases/AG-INT-002.json",
+      "index_database": "knowledge/agent-databases/AG-INT-002.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-003",
+      "database": "knowledge/agent-databases/AG-INT-003.json",
+      "index_database": "knowledge/agent-databases/AG-INT-003.sqlite3",
+      "entry_count": 6,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-004",
+      "database": "knowledge/agent-databases/AG-INT-004.json",
+      "index_database": "knowledge/agent-databases/AG-INT-004.sqlite3",
+      "entry_count": 6,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-005",
+      "database": "knowledge/agent-databases/AG-INT-005.json",
+      "index_database": "knowledge/agent-databases/AG-INT-005.sqlite3",
+      "entry_count": 5,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-006",
+      "database": "knowledge/agent-databases/AG-INT-006.json",
+      "index_database": "knowledge/agent-databases/AG-INT-006.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-007",
+      "database": "knowledge/agent-databases/AG-INT-007.json",
+      "index_database": "knowledge/agent-databases/AG-INT-007.sqlite3",
+      "entry_count": 5,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-008",
+      "database": "knowledge/agent-databases/AG-INT-008.json",
+      "index_database": "knowledge/agent-databases/AG-INT-008.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-009",
+      "database": "knowledge/agent-databases/AG-INT-009.json",
+      "index_database": "knowledge/agent-databases/AG-INT-009.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-010",
+      "database": "knowledge/agent-databases/AG-INT-010.json",
+      "index_database": "knowledge/agent-databases/AG-INT-010.sqlite3",
+      "entry_count": 4,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-011",
+      "database": "knowledge/agent-databases/AG-INT-011.json",
+      "index_database": "knowledge/agent-databases/AG-INT-011.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-012",
+      "database": "knowledge/agent-databases/AG-INT-012.json",
+      "index_database": "knowledge/agent-databases/AG-INT-012.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-013",
+      "database": "knowledge/agent-databases/AG-INT-013.json",
+      "index_database": "knowledge/agent-databases/AG-INT-013.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-014",
+      "database": "knowledge/agent-databases/AG-INT-014.json",
+      "index_database": "knowledge/agent-databases/AG-INT-014.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-015",
+      "database": "knowledge/agent-databases/AG-INT-015.json",
+      "index_database": "knowledge/agent-databases/AG-INT-015.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-016",
+      "database": "knowledge/agent-databases/AG-INT-016.json",
+      "index_database": "knowledge/agent-databases/AG-INT-016.sqlite3",
+      "entry_count": 7,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-017",
+      "database": "knowledge/agent-databases/AG-INT-017.json",
+      "index_database": "knowledge/agent-databases/AG-INT-017.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-018",
+      "database": "knowledge/agent-databases/AG-INT-018.json",
+      "index_database": "knowledge/agent-databases/AG-INT-018.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    },
+    {
+      "agent_id": "AG-INT-019",
+      "database": "knowledge/agent-databases/AG-INT-019.json",
+      "index_database": "knowledge/agent-databases/AG-INT-019.sqlite3",
+      "entry_count": 3,
+      "access": "read",
+      "source_of_truth": "knowledge/catalog.json"
+    }
+  ]
+}

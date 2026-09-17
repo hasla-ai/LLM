@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/agent-definition.schema.json",
+  "title": "Forge H2 Agent Definition",
+  "description": "A role-bound Agent contract. It describes what an Agent may prepare, recommend or approve; it never grants a human legal qualification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["agent_id", "schema_version", "slug", "name", "category", "mode", "purpose", "domains", "qualification_expectation", "authority", "input_contract", "output_contract", "consultation_rules", "prohibited_actions", "review_policy", "extensions"],
+  "properties": {
+    "agent_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^AG-[A-Z]+-[0-9]{3}$"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "slug": {"type": "string", "pattern": "^[a-z][a-z0-9_]{2,80}$"},
+    "name": {"type": "string", "minLength": 1},
+    "category": {"type": "string", "enum": ["governance", "technical", "advisory", "assurance", "platform"]},
+    "mode": {"type": "string", "enum": ["decision_owner_proxy", "expert_advisor", "workflow_controller", "reviewer", "deterministic_service"]},
+    "pm_role": {"type": ["string", "null"]},
+    "purpose": {"type": "string", "minLength": 1},
+    "domains": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "qualification_expectation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_level", "candidate_qualifications", "legal_signoff_status", "verification_required"],
+      "properties": {
+        "minimum_level": {"type": "string", "enum": ["sponsor_designated", "professional_engineer_or_equivalent", "licensed_professional_or_designated", "senior_specialist", "system_operator"]},
+        "candidate_qualifications": {"type": "array", "items": {"type": "string"}},
+        "legal_signoff_status": {"type": "string", "enum": ["not_a_legal_signoff", "may_be_required", "depends_on_facility_and_permit", "human_authority_required"]},
+        "verification_required": {"type": "boolean", "const": true}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["can_prepare", "can_recommend", "can_approve", "human_approval_required"],
+      "properties": {
+        "can_prepare": {"type": "array", "items": {"type": "string"}},
+        "can_recommend": {"type": "array", "items": {"type": "string"}},
+        "can_approve": {"type": "array", "items": {"type": "string"}},
+        "human_approval_required": {"type": "boolean", "const": true}
+      }
+    },
+    "input_contract": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "output_contract": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "consultation_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["must_consult", "may_consult", "escalate_to"],
+      "properties": {
+        "must_consult": {"type": "array", "items": {"type": "string"}},
+        "may_consult": {"type": "array", "items": {"type": "string"}},
+        "escalate_to": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "prohibited_actions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent_review_for", "minimum_human_reviewers"],
+      "properties": {
+        "independent_review_for": {"type": "array", "items": {"type": "string"}},
+        "minimum_human_reviewers": {"type": "integer", "minimum": 1}
+      }
+    },
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

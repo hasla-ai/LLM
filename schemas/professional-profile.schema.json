@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/professional-profile.schema.json",
+  "title": "Forge H2 Professional Profile",
+  "description": "A verified human expert profile used for review, approval and accountability. It does not represent an AI qualification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["professional_id", "schema_version", "status", "role", "person_ref", "jurisdictions", "qualifications", "experience_years", "scopes", "authority", "independence", "verification", "extensions"],
+  "properties": {
+    "professional_id": {"$ref": "common.schema.json#/$defs/id", "pattern": "^PRO-[A-Za-z0-9._-]+$"},
+    "schema_version": {"$ref": "common.schema.json#/$defs/schema_version"},
+    "status": {"type": "string", "enum": ["draft", "pending_verification", "verified", "suspended", "expired"]},
+    "role": {"$ref": "common.schema.json#/$defs/role"},
+    "person_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "display_name", "organization"],
+      "properties": {"user_id": {"type": "string", "minLength": 1}, "display_name": {"type": ["string", "null"]}, "organization": {"type": ["string", "null"]}}
+    },
+    "jurisdictions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "qualifications": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["name", "issuer", "status", "evidence_ids"], "properties": {"name": {"type": "string"}, "issuer": {"type": "string"}, "registration_ref_hash": {"type": ["string", "null"]}, "valid_from": {"$ref": "common.schema.json#/$defs/date_or_null"}, "valid_to": {"$ref": "common.schema.json#/$defs/date_or_null"}, "status": {"type": "string", "enum": ["claimed", "verified", "expired", "not_applicable"]}, "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}}}
+    },
+    "experience_years": {"type": "number", "minimum": 0},
+    "scopes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "authority": {"type": "array", "items": {"type": "string"}},
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_status", "disclosure_ref", "can_independently_review"],
+      "properties": {"conflict_status": {"type": "string", "enum": ["not_declared", "none_declared", "managed", "unresolved"]}, "disclosure_ref": {"type": ["string", "null"]}, "can_independently_review": {"type": "boolean"}}
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verified_by_role", "verified_at", "evidence_ids", "next_review_date"],
+      "properties": {"verified_by_role": {"$ref": "common.schema.json#/$defs/role"}, "verified_at": {"$ref": "common.schema.json#/$defs/date_or_null"}, "evidence_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}, "next_review_date": {"$ref": "common.schema.json#/$defs/date_or_null"}}
+    },
+    "extensions": {"type": "object", "additionalProperties": true}
+  }
+}

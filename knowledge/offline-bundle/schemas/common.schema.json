@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/common.schema.json",
+  "title": "Forge H2 Common Types",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "Stable identifier. Do not change after creation.",
+      "examples": ["FHZ-001", "M-001", "EVD-0001"]
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the data contract, not the project revision.",
+      "examples": ["1.0.0"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp. Store UTC when possible.",
+      "examples": ["2026-09-17T09:00:00Z"]
+    },
+    "date_or_null": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "ISO-8601 calendar date or null when unknown."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "ready", "running", "pass", "blocked", "human_review", "fail", "approved", "baselined", "superseded", "rejected"],
+      "description": "Controlled lifecycle state. Do not invent a new status."
+    },
+    "mission_status": {
+      "type": "string",
+      "enum": ["defined", "ready", "running", "pass", "blocked", "human_review", "fail", "approved", "baselined", "superseded", "change_impact_required"],
+      "description": "Mission execution state."
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D"],
+      "description": "A=administrative, B=technical draft, C=professional review, D=high-risk decision."
+    },
+    "decision_status": {
+      "type": "string",
+      "enum": ["proposed", "under_review", "approved", "conditional", "hold", "stop", "rejected", "superseded"],
+      "description": "Decision state for a gate, change or review."
+    },
+    "role": {
+      "type": "string",
+      "description": "Named responsibility role, not an individual name.",
+      "examples": ["PMO", "Chief Engineer", "HSE Authority", "Electrical/Grid Lead"]
+    },
+    "coordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crs", "latitude", "longitude"],
+      "properties": {
+        "crs": {"type": "string", "const": "EPSG:4326", "description": "WGS84 coordinate reference system."},
+        "latitude": {"type": "number", "minimum": -90, "maximum": 90, "description": "Latitude in decimal degrees."},
+        "longitude": {"type": "number", "minimum": -180, "maximum": 180, "description": "Longitude in decimal degrees."},
+        "accuracy_m": {"type": ["number", "null"], "minimum": 0, "description": "Estimated horizontal accuracy in metres."}
+      }
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "description": "Numeric value in the declared unit."},
+        "unit": {"type": "string", "minLength": 1, "description": "Explicit unit, e.g. MW, kg/h, bar, m2."},
+        "basis": {"type": ["string", "null"], "description": "Basis such as HHV, LHV, gauge, absolute, gross or net."},
+        "source": {"type": ["string", "null"], "description": "Evidence ID or calculation reference."}
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id"],
+      "properties": {
+        "evidence_id": {"$ref": "common.schema.json#/$defs/id"},
+        "locator": {"type": ["string", "null"], "description": "Page, clause, sheet, row or JSON path."},
+        "claim": {"type": ["string", "null"], "description": "Claim supported by this reference."}
+      }
+    },
+    "person_or_role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role"],
+      "properties": {
+        "role": {"$ref": "common.schema.json#/$defs/role"},
+        "user_id": {"type": ["string", "null"], "description": "Internal user ID; do not store a secret."},
+        "display_name": {"type": ["string", "null"], "description": "Human-readable name."},
+        "organization": {"type": ["string", "null"]}
+      }
+    },
+    "assumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assumption_id", "statement", "source", "impact", "status"],
+      "properties": {
+        "assumption_id": {"$ref": "common.schema.json#/$defs/id"},
+        "statement": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "enum": ["user", "evidence", "default", "ai_inference", "expert"]},
+        "impact": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+        "status": {"type": "string", "enum": ["open", "verified", "rejected", "superseded"]},
+        "verification_needed": {"type": "boolean", "default": true}
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocker_id", "severity", "message", "owner_role", "resolution_required"],
+      "properties": {
+        "blocker_id": {"$ref": "common.schema.json#/$defs/id"},
+        "severity": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+        "message": {"type": "string", "minLength": 1},
+        "owner_role": {"$ref": "common.schema.json#/$defs/role"},
+        "resolution_required": {"type": "string", "minLength": 1},
+        "due_at": {"$ref": "common.schema.json#/$defs/date_or_null"}
+      }
+    }
+  }
+}

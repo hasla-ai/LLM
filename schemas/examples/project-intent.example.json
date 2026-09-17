@@ -1,0 +1,20 @@
+{
+  "project_id": "FHZ-DEMO-001",
+  "schema_version": "1.0.0",
+  "status": "draft",
+  "raw_brief": "전남 지역에 10 MW 고정식 수소연료전지 발전소를 검토한다. 연간 4,000시간 운전하고 수소는 배관으로 공급한다.",
+  "jurisdiction": {"country_code": "KR", "region": "전라남도", "local_authority": null, "regulatory_profile_id": "KR-2026-BASELINE"},
+  "site": {"address": null, "coordinate": null, "parcel_ids": [], "site_control_status": "unknown", "candidate_status": "not_screened"},
+  "power": {"target_capacity": {"value": 10, "unit": "MW", "basis": "net", "source": null}, "plant_type": "fuel_cell", "annual_operating_hours": 4000, "dispatch_mode": "flexible", "net_or_gross": "net", "technology_vendor": null},
+  "hydrogen": {"source_type": "pipeline", "origin": null, "quality": {"purity": null, "basis": null, "evidence_ids": []}, "supply_rate": null, "pressure": null, "storage_autonomy_days": 1, "delivery_contract_status": "market_scan"},
+  "offtake": {"buyer": null, "contract_type": "unknown", "target_date": null, "status": "target"},
+  "commercial": {"budget": null, "currency": "KRW", "funding_status": "concept", "revenue_assumptions": []},
+  "schedule": {"target_cod": null, "development_start": null, "constraints": []},
+  "stakeholders": [{"role": "Sponsor", "user_id": null, "display_name": null, "organization": null}],
+  "assumptions": [{"assumption_id": "ASM-001", "statement": "초기 검토의 발전용량은 순발전량 10 MW로 가정한다.", "source": "user", "impact": "high", "status": "open", "verification_needed": true}],
+  "blockers": [{"blocker_id": "BLK-001", "severity": "high", "message": "부지 좌표와 수소 공급압력이 아직 없다.", "owner_role": "PMO", "resolution_required": "부지 후보와 공급사 기술자료를 등록한다.", "due_at": null}],
+  "evidence_ids": [],
+  "created_at": "2026-09-17T09:00:00Z",
+  "updated_at": "2026-09-17T09:00:00Z",
+  "extensions": {}
+}
