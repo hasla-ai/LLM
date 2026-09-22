@@ -1,0 +1,19 @@
+{
+  "invocation_id": "CALL-G0-IR-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-IR-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "G0 독립검토의 충분성·차단조건·승인 독립성 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-010", "D-021"],
+  "status": "human_review",
+  "position": {"summary": "현재 자료만으로는 독립검토를 종결할 수 없으며 G0 HOLD가 적절하다.", "recommendation": "hold", "confidence": "medium", "conditions": ["필수 원문 확보", "실제 입력 등록", "승인자와 작성자의 독립성 확인"], "dissent_refs": []},
+  "output_refs": ["EVD-PRO-001"],
+  "blockers": [{"blocker_id": "BLK-CALL-IR-001", "severity": "high", "message": "독립검토에 필요한 원문과 승인자 기록이 부족하다.", "owner_role": "Independent Reviewer", "resolution_required": "source pack과 G0 승인 패킷을 완성한 후 재검토한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "독립검토자는 미충족 조건을 승인으로 대체할 수 없다.", "target_roles": ["Independent Reviewer", "PMO", "Chief Engineer", "HSE/Regulatory Authority"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "Independent Reviewer", "user_id": null, "display_name": null, "organization": null}, {"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["knowledge/README.md", "docs/04-agent-system/meeting-protocol.md", "python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": ["KNW-PROFESSIONAL-DEFINITION"], "retrieval_warnings": []}
+}

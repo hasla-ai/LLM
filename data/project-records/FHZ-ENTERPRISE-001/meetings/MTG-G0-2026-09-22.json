@@ -1,0 +1,59 @@
+{
+  "meeting_id": "MTG-G0-2026-09-22",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "meeting_type": "gate_review",
+  "trigger": "사용자 지시에 따라 G0 출처 반입과 승인 검토를 ProjectIntent 입력보다 먼저 수행한다.",
+  "gate_id": "G0",
+  "mission_ids": ["M-001", "M-002", "M-006", "M-009", "M-010"],
+  "chair_agent_id": "AG-PMO-001",
+  "participant_agent_ids": ["AG-GOV-001", "AG-PMO-001", "AG-ENG-001", "AG-HSE-001", "AG-PRD-001", "AG-AI-001", "AG-DATA-001", "AG-AIS-001", "AG-IR-001"],
+  "human_participants": [
+    {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null},
+    {"role": "PMO", "user_id": null, "display_name": null, "organization": null},
+    {"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null},
+    {"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null},
+    {"role": "Product Owner", "user_id": null, "display_name": null, "organization": null},
+    {"role": "AI/Data Lead", "user_id": null, "display_name": null, "organization": null}
+  ],
+  "agenda": [
+    "오프라인 source pack의 공식 공개 자료와 라이선스 원문을 구분한다.",
+    "G0 기준선 문서와 offline-check 결과를 검토한다.",
+    "각 승인자의 반대 의견·조건부 승인·추가 증거 요구를 기록한다.",
+    "G0 HOLD를 해제할 조건과 다음 담당자를 확정한다."
+  ],
+  "pre_read_refs": ["FHZ-CHARTER-001", "FHZ-REQ-001", "FHZ-RISK-001", "D-021"],
+  "invocation_ids": ["CALL-G0-GOV-20260922", "CALL-G0-PMO-20260922", "CALL-G0-ENG-20260922", "CALL-G0-HSE-20260922", "CALL-G0-PRD-20260922", "CALL-G0-AI-20260922", "CALL-G0-DATA-20260922", "CALL-G0-AIS-20260922", "CALL-G0-IR-20260922"],
+  "issues": [
+    {"issue_id": "ISS-G0-001", "statement": "필수 표준·규정의 전체 라이선스 원문이 오프라인 source pack에 없다.", "owner_role": "Data/Evidence Lead", "status": "blocked"},
+    {"issue_id": "ISS-G0-002", "statement": "실제 프로젝트 입력값과 승인자의 사람 서명이 없다.", "owner_role": "PMO", "status": "blocked"}
+  ],
+  "decisions": [
+    {
+      "decision_id": "DEC-G0-HOLD-2026-09-22",
+      "subject": "G0 Gate 승인 여부",
+      "option": "HOLD",
+      "reason": "baseline_ready=false이며 필수 출처 원문과 인간 승인 기록이 누락되었다.",
+      "approvers": [
+        {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null},
+        {"role": "PMO", "user_id": null, "display_name": null, "organization": null},
+        {"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null},
+        {"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null}
+      ],
+      "human_signoff_required": true
+    }
+  ],
+  "actions": [
+    {"action_id": "ACT-G0-SOURCE-001", "action": "공개 자료 캐시와 전체 라이선스 원문을 구분하여 source register를 갱신한다.", "owner_role": "Data/Evidence Lead", "due_date": null, "status": "open"},
+    {"action_id": "ACT-G0-REVIEW-001", "action": "G0 승인자별 검토·반대 의견·조건을 수집하고 사람 서명을 기록한다.", "owner_role": "PMO", "due_date": null, "status": "open"},
+    {"action_id": "ACT-G0-RELEASE-001", "action": "모든 차단조건이 해소된 뒤 G0 Gate Decision을 승인하고 G1을 착수한다.", "owner_role": "Chief Engineer", "due_date": null, "status": "blocked"}
+  ],
+  "status": "in_progress",
+  "started_at": "2026-09-22T08:56:33Z",
+  "ended_at": null,
+  "extensions": {
+    "jira_issue_key": "SCRUM-19",
+    "required_agent_ids": ["AG-GOV-001", "AG-PRD-001", "AG-ENG-001", "AG-HSE-001", "AG-DATA-001", "AG-AI-001", "AG-AIS-001"],
+    "offline_check": {"baseline_ready": false, "available_local": 4, "metadata_only": 9},
+    "human_approval_note": "Agent 의견은 검토자료일 뿐이며 실제 승인·서명은 지정된 사람만 수행한다."
+  }
+}

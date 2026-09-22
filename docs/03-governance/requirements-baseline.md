@@ -117,3 +117,13 @@ Forge H2는 사용자의 사업 요구를 수소발전소 건설 프로젝트의
 ## 7. 기준선 변경 규칙
 
 이 문서의 P0 요구사항 변경은 PMO, Product Owner, Chief Engineer, HSE/Regulatory Authority의 공동 검토가 필요하다. 안전·법규·권한 요구사항은 Sponsor 단독으로 완화할 수 없다.
+
+## 8. SCRUM-29·SCRUM-39 교차 절단 기준선
+
+기존 SCRUM-18과 G0–G7의 순서·의미·Evidence 구조는 보존한다. 다음은 기존 흐름을 대체하지 않는 추가 통제다.
+
+- SCRUM-29 계산 커널은 G1 사업성, G2 수소·전력·계통, G3 안전·인허가 입력, G4 FEED/EPC, G6 성능시험, G7 운영 KPI의 결정론적 계산을 담당한다.
+- 계산 결과는 `Quantity` 객체로 저장한다. SI 값·8차원 차원벡터·표시단위·불확실도·신뢰도·Evidence·가정을 함께 보존한다.
+- SCRUM-39 보호루틴은 코드·스키마·Agent 정의·지식DB·계산 라이브러리·거버넌스 기록을 보호한다. 보호루틴은 Gate 승인을 대신하지 않는다.
+- 커널 변경은 Change Request·회귀검증·Human Review·영향 Gate 재개방을 요구한다.
+- `python -m security.audit`는 읽기 전용으로 불변조건과 보호대상 존재를 점검하며, 결과가 기준선 승인을 자동으로 만들지는 않는다.

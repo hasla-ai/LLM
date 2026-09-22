@@ -53,3 +53,6 @@ Restart the server. Set `AI_PROVIDER=mock` to return to demo mode.
 - [Report 1 — 쉬운 설명](reports/report1-easy.md)
 - [Report 2 — 전문기술 보고서](reports/report2-technical.md)
 - [지식 DB·검색 파이프라인](knowledge/README.md)
+- [SCRUM-29 수소 계산 커널](docs/02-engineering/h2-calc-kernel.md): 결정론적 Quantity·불확실도·계산 Evidence
+- [SCRUM-39 보호 정책](security/protection-policy.json): 기존 프로그램 불변·코드 보호·읽기 전용 감사
+- [SCRUM-29·SCRUM-39 전체 흐름 통합 기준선](docs/03-governance/scrum-cross-cutting-integration.md): Epic·하위 작업·Gate·보호 통제 연결

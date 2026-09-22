@@ -1,0 +1,19 @@
+{
+  "invocation_id": "CALL-G0-DATA-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-DATA-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "오프라인 출처·Evidence·판본·해시·데이터 계보 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-021"],
+  "status": "blocked",
+  "position": {"summary": "공개 자료 캐시와 전체 라이선스 원문을 구분해야 하며, 현재 baseline_ready=false를 유지해야 한다.", "recommendation": "request_more_data", "confidence": "medium", "conditions": ["전체 원문 반입", "판본·해시 검증", "source register 갱신"], "dissent_refs": []},
+  "output_refs": [],
+  "blockers": [{"blocker_id": "BLK-CALL-DATA-001", "severity": "high", "message": "9개 필수 출처가 metadata_only다.", "owner_role": "Data/Evidence Lead", "resolution_required": "라이선스 원문을 반입한 후 available_local로 승격할 수 있는지 검증한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "출처 상태는 Data Lead와 Legal의 라이선스 확인이 함께 필요하다.", "target_roles": ["Data/Evidence Lead", "Legal Advisory", "PMO"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "Data/Evidence Lead", "user_id": null, "display_name": null, "organization": null}, {"role": "Legal Advisory", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["knowledge/offline-source-register.json", "python -m knowledge.pipeline offline-check"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": [], "retrieval_warnings": ["no active verified knowledge matched; do not infer a decision"]}
+}

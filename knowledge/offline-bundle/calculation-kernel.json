@@ -1,0 +1,26 @@
+{
+  "$schema": "https://forge-h2.local/schema/calculation-kernel.schema.json",
+  "kernel_id": "FHZ-CALC-KERNEL-001",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "version": "1.0.0",
+  "status": "controlled_overlay",
+  "jira_epic": "SCRUM-29",
+  "protection_issue": "SCRUM-39",
+  "preserves": ["SCRUM-18", "G0-G7", "Evidence semantics", "Human signoff", "Offline deny-all-remote-fetch"],
+  "source_libraries": ["knowledge/formula-library.json", "knowledge/formula-library-h2.json"],
+  "execution_policy": {"executor": "deterministic", "allowed_language": "python_expression", "allow_dynamic_code": false, "requires_unit_check": true, "requires_input_snapshot": true, "requires_calculator_version": true},
+  "quantity_contract": "schemas/quantity.schema.json",
+  "mission_run_contract": "schemas/mission-run.schema.json",
+  "required_output_fields": ["quantity_id", "value_si", "si_unit", "dimension", "uncertainty", "reliability_tier", "evidence_ids", "assumption_ids", "calculator_version", "input_snapshot_hash"],
+  "non_decisions": ["safety_distance", "SIL_adequacy", "permit_compliance", "construction_release", "commercial_operation_approval"],
+  "mission_bindings": {
+    "G1": ["M-013", "M-014", "M-018", "M-019"],
+    "G2": ["M-031", "M-034", "M-035", "M-036", "M-042", "M-043", "M-044", "M-047", "M-048"],
+    "G3": ["M-061", "M-062", "M-063", "M-064", "M-065"],
+    "G4": ["M-071", "M-072", "M-073", "M-074", "M-075", "M-076"],
+    "G6": ["M-089", "M-090", "M-091", "M-092"],
+    "G7": ["M-095", "M-096", "M-097", "M-098"]
+  },
+  "change_policy": {"change_request_required": true, "regression_required": true, "human_review_required": true, "reopen_affected_gate": true, "append_only_runs": true},
+  "extensions": {"subtasks": ["SCRUM-30", "SCRUM-31", "SCRUM-32", "SCRUM-33", "SCRUM-34", "SCRUM-35", "SCRUM-36", "SCRUM-37", "SCRUM-38"]}
+}

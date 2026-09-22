@@ -1,0 +1,114 @@
+{
+  "gate_id": "G0",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "schema_version": "1.0.0",
+  "name": "Project Charter",
+  "objective": "프로젝트 목적·범위·조직·요구사항·초기 위험을 기준선화하고 G1 착수 여부를 결정한다.",
+  "status": "not_ready",
+  "entry_conditions": [
+    {
+      "condition_id": "G0-C01",
+      "statement": "Project Charter, PM Plan, RACI, Gate 기준, Risk Register, Decision Log가 정본 경로에 존재한다.",
+      "satisfied": true,
+      "evidence_ids": ["EVD-G0-CHARTER-001", "EVD-G0-PMPLAN-001", "EVD-G0-REQ-001", "EVD-G0-GATE-001", "EVD-G0-RISK-001", "EVD-G0-DECISION-001"]
+    },
+    {
+      "condition_id": "G0-C02",
+      "statement": "실제 프로젝트의 전력수요·부지·수소공급·운전조건이 ProjectIntent로 등록되어 있다.",
+      "satisfied": false,
+      "evidence_ids": ["EVD-G0-REQ-001"]
+    },
+    {
+      "condition_id": "G0-C03",
+      "statement": "필수 출처 원문이 오프라인 source pack에 반입되고 판본·해시가 검증되어 있다.",
+      "satisfied": false,
+      "evidence_ids": ["EVD-G0-OFFLINE-001"]
+    },
+    {
+      "condition_id": "G0-C04",
+      "statement": "Sponsor, PMO, Chief Engineer, HSE/Regulatory, Product, AI/Data의 G0 검토·승인이 기록되어 있다.",
+      "satisfied": false,
+      "evidence_ids": ["EVD-G0-DECISION-001"]
+    }
+  ],
+  "required_mission_ids": ["M-001", "M-002", "M-006", "M-009", "M-010"],
+  "required_evidence_ids": ["EVD-G0-CHARTER-001", "EVD-G0-PMPLAN-001", "EVD-G0-REQ-001", "EVD-G0-GATE-001", "EVD-G0-RISK-001", "EVD-G0-DECISION-001", "EVD-G0-OFFLINE-001"],
+  "blockers": [
+    {
+      "blocker_id": "BLK-G0-001",
+      "severity": "high",
+      "message": "ProjectIntent의 실제 전력수요·부지·수소공급 조건이 미등록이다.",
+      "owner_role": "PMO",
+      "resolution_required": "실제 사업 입력값을 ProjectIntent에 등록하고 누락값과 가정을 Sponsor가 확인한다.",
+      "due_at": null
+    },
+    {
+      "blocker_id": "BLK-G0-002",
+      "severity": "high",
+      "message": "오프라인 필수 출처 9건이 metadata-only 상태다.",
+      "owner_role": "Data/Evidence Lead",
+      "resolution_required": "승인 가능한 라이선스 범위의 원문·판본·해시를 source pack으로 반입한다.",
+      "due_at": null
+    },
+    {
+      "blocker_id": "BLK-G0-003",
+      "severity": "high",
+      "message": "G0 승인자의 검토·서명 기록이 아직 없다.",
+      "owner_role": "PMO",
+      "resolution_required": "G0 검토회의를 개최하고 역할별 승인 또는 반대 의견을 Decision Log에 기록한다.",
+      "due_at": null
+    }
+  ],
+  "decision_options": ["pass", "conditional", "hold", "stop", "reopen"],
+  "approvers": [
+    {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null},
+    {"role": "PMO", "user_id": null, "display_name": null, "organization": null},
+    {"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null},
+    {"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null},
+    {"role": "Product Owner", "user_id": null, "display_name": null, "organization": null},
+    {"role": "AI/Data Lead", "user_id": null, "display_name": null, "organization": null}
+  ],
+  "decision": null,
+  "next_gate_id": "G1",
+  "created_at": "2026-09-22T08:56:33Z",
+  "updated_at": "2026-09-22T08:56:33Z",
+  "extensions": {
+    "jira_issue_key": "SCRUM-19",
+    "jira_status": "검토 중",
+    "validation_command": "python -m knowledge.pipeline offline-check && python -m knowledge.pipeline verify-offline-bundle && python -m knowledge.pipeline audit-gate data/project-records/FHZ-ENTERPRISE-001/gates/G0-2026-09-22.json --meeting data/project-records/FHZ-ENTERPRISE-001/meetings/MTG-G0-2026-09-22.json --decision data/project-records/FHZ-ENTERPRISE-001/decisions/DEC-G0-HOLD-2026-09-22.json",
+    "validation_result": {
+      "catalog_entries": 13,
+      "source_register_entries": 13,
+      "available_local": 4,
+      "metadata_only": 9,
+      "missing_local": 0,
+      "baseline_ready": false
+    },
+    "offline_bundle_verification": {
+      "command": "python -m knowledge.pipeline verify-offline-bundle",
+      "valid": true,
+      "checked_files": 114,
+      "missing_files": 0,
+      "mismatched_files": 0,
+      "extra_files": 0
+    },
+    "gate_audit": {
+      "command": "python -m knowledge.pipeline audit-gate",
+      "valid": false,
+      "required_evidence_count": 7,
+      "unverified_evidence_count": 7,
+      "missing_required_agents": 0,
+      "missing_invocation_agents": 0,
+      "human_review_pending": true,
+      "recommendation": "hold_until_audit_errors_resolved"
+    },
+    "source_documents": [
+      "docs/00-project/project-charter.md",
+      "docs/03-governance/pm-plan.md",
+      "docs/03-governance/requirements-baseline.md",
+      "docs/03-governance/gate-criteria.md",
+      "docs/03-governance/risk-register.md",
+      "docs/03-governance/decision-log.md"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "invocation_id": "CALL-G0-AI-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-AI-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "미션 실행기·Gate audit·AI 앙상블 기록의 실행 가능성과 릴리스 통제 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-021", "REV-SOLA-G0-2026-09-22"],
+  "status": "human_review",
+  "position": {
+    "summary": "실행기·오프라인 번들 검증·Gate audit을 플랫폼 명령으로 제공하되, audit 통과와 인간 승인을 분리해야 한다.",
+    "recommendation": "proceed_with_conditions",
+    "confidence": "high",
+    "conditions": ["audit-gate 결과를 Gate 상태 변경의 필수 입력으로 연결", "AI 모델 합의를 승인으로 취급하지 않음", "번들 검증 실패 시 기준선 승격 차단"],
+    "dissent_refs": []
+  },
+  "output_refs": [],
+  "blockers": [{"blocker_id":"BLK-CALL-AI-001","severity":"high","message":"현재 G0는 실제 ProjectIntent·필수 원문·인간 서명이 없어 자동 승격할 수 없다.","owner_role":"AI/Platform Lead","resolution_required":"G0 입력과 사람 승인 완료 후 audit-gate를 재실행한다.","due_at":null}],
+  "escalation": {"required":true,"reason":"플랫폼 자동화가 인간 Gate 권한을 침범하지 않도록 확인이 필요하다.","target_roles":["AI/Platform Lead","AI Safety/Evaluation Lead","PMO"]},
+  "human_review": {"required":true,"status":"pending","reviewers":[{"role":"AI/Platform Lead","user_id":null,"display_name":null,"organization":null},{"role":"AI Safety/Evaluation Lead","user_id":null,"display_name":null,"organization":null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id":null,"prompt_version":"gate-audit-v1","source_refs":["knowledge/pipeline.py","docs/03-governance/evidence-standard.md","docs/04-agent-system/ai-ensemble-gate-policy.md"],"request_id":"AUDIT-G0-20260922T090520Z"},
+  "extensions": {"audit_scope":["evidence_provenance","human_in_the_loop","offline_bundle","ai_ensemble"]}
+}

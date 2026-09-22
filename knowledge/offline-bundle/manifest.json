@@ -3,7 +3,7 @@
   "project_id": "FHZ-ENTERPRISE-001",
   "bundle_version": "1.0.0",
   "network_policy": "deny_all_remote_fetch",
-  "created_at": "2026-09-17T08:50:21Z",
+  "created_at": "2026-09-22T09:58:03Z",
   "files": [
     {
       "path": "access-policy.json",
@@ -16,9 +16,19 @@
       "bytes": 20843
     },
     {
+      "path": "calculation-kernel.json",
+      "sha256": "200b865f99f704f5eeac402669b77d186831bf71164b37f85995ada92a104d4b",
+      "bytes": 1843
+    },
+    {
       "path": "catalog.json",
       "sha256": "21cf1d2088cbe3f88da88fc7672850976f11c97ac6d1a0f6333891985d1c8d37",
       "bytes": 32365
+    },
+    {
+      "path": "formula-library-h2.json",
+      "sha256": "dca95a0539ef9cf1b6a980639fcbe5583671968509de4e3e3064b175ced42db6",
+      "bytes": 27637
     },
     {
       "path": "formula-library.json",
@@ -392,8 +402,8 @@
     },
     {
       "path": "offline-source-register.json",
-      "sha256": "e6f44b50bca05afce59f6d7455bfd69de355dd8a32c2f65e8788b77b800f57a8",
-      "bytes": 6016
+      "sha256": "d8b1681bb07b91f5474c65a240874c0487b01db07afdde1ef2c38264469cb1a4",
+      "bytes": 7271
     },
     {
       "path": "professional-foundations.json",
@@ -421,6 +431,11 @@
       "bytes": 967
     },
     {
+      "path": "schemas/calculation-kernel.schema.json",
+      "sha256": "311863d204271a9c7cc209f380130c4d35f77c84d7cdc66cf3007d05550d9a5d",
+      "bytes": 2580
+    },
+    {
       "path": "schemas/change-request.schema.json",
       "sha256": "e8467ca677fc2cfc21b7f00babac3d3aa97adb3733f91e68b289d0e6d7ae53ef",
       "bytes": 3471
@@ -432,23 +447,23 @@
     },
     {
       "path": "schemas/decision.schema.json",
-      "sha256": "25446b36569d6a74fa68bdd2ba0f10ea031e90ca2d131f91c235e0b3a742f208",
-      "bytes": 2108
+      "sha256": "087f99fd1d6ad3a6b2b038fd78761cbed60de66915a9ce295ec3a9de38b01036",
+      "bytes": 2123
     },
     {
       "path": "schemas/evidence.schema.json",
-      "sha256": "e79b6a97f052e1024a1b39a54898747130fcb958f05cb3addac95456ef702df7",
-      "bytes": 3953
+      "sha256": "e76b6a3ae42e3076ddd870f6282c089e2f56dbc2676cdfe41b35a11be9af7028",
+      "bytes": 4153
     },
     {
       "path": "schemas/formula-library.schema.json",
-      "sha256": "59ca0b1e5f92914d05ae2f9a1955ce34cf1264f613cdf75ec4691b7d6f8ab17c",
-      "bytes": 2649
+      "sha256": "ddba13cc00802f33d7703839a210143b568f6c2bc30491f37f8d4a88cf9c543f",
+      "bytes": 3243
     },
     {
       "path": "schemas/gate.schema.json",
-      "sha256": "0c0d420492da7c7e9e90d98d641ae36ab95f37059756878341ce7297444ff2b8",
-      "bytes": 2884
+      "sha256": "e4a133253b21ee679075dbe22b193c1a0e3690febeee3580eaacae89bb8ec689",
+      "bytes": 2899
     },
     {
       "path": "schemas/knowledge-catalog.schema.json",
@@ -506,6 +521,11 @@
       "bytes": 6969
     },
     {
+      "path": "schemas/quantity.schema.json",
+      "sha256": "a9dc3168e827d39dcf83b3ac7b8e90d1a6952b6c14703f039e6950f31dfa3e15",
+      "bytes": 1853
+    },
+    {
       "path": "schemas/retrieval-request.schema.json",
       "sha256": "94ec259212aed14cb08f7ebe726c1dbf1f185c4c60326e2374ace1cd8b007dea",
       "bytes": 1944
@@ -516,9 +536,69 @@
       "bytes": 2170
     },
     {
+      "path": "security/protection-policy.json",
+      "sha256": "8dce222ede7f1ab85c34e5d4396e54dfe4d45c8be732893b05610e3178ec4f75",
+      "bytes": 2156
+    },
+    {
+      "path": "source-cache/KNW-FOUNDATION-FORMULA-LIBRARY.json",
+      "sha256": "6f818ed835729ac0601229accd503167fef54fa0f5293925e615b27ed7ddc33e",
+      "bytes": 11421
+    },
+    {
+      "path": "source-cache/KNW-FOUNDATION-PROFESSIONAL-CATALOG.json",
+      "sha256": "00825afa94346ac16967128ca19494ec6e5c902e691a21f3a8428e0e6bef1c2a",
+      "bytes": 6225
+    },
+    {
+      "path": "source-cache/KNW-INT-EQUATOR-EP4.html",
+      "sha256": "23e4ec79a64244b5cec83938c2516c2518c739db19421120ea33a624bafffefc",
+      "bytes": 102546
+    },
+    {
+      "path": "source-cache/KNW-INT-FIDIC-SILVER.html",
+      "sha256": "b8dad800a9bf83b88b509a64a93d4c4411c72135864d0827dd2d26844b4e1f2a",
+      "bytes": 63011
+    },
+    {
+      "path": "source-cache/KNW-INT-IEC-61511.html",
+      "sha256": "3d08ccf75efdd6ec6111912fab9631e9a97093ad6af209b5800961164f94b036",
+      "bytes": 424597
+    },
+    {
+      "path": "source-cache/KNW-INT-IEC-61882.html",
+      "sha256": "950ad246f327bfaf273315c6e4ef73e1bf0b2d98452eadc942b85f9e09ae335d",
+      "bytes": 440196
+    },
+    {
+      "path": "source-cache/KNW-INT-IFC-PS.pdf",
+      "sha256": "4a5c5305b9134e5abb01d2e6d137d440d5487ed91cf3c0e0c942fab0c470e678",
+      "bytes": 503688
+    },
+    {
+      "path": "source-cache/KNW-INT-NFPA-2.html",
+      "sha256": "1ed29445e89cda350c0ed56400b2b6d89fec7404c81879ccbeadbd94ac97df9d",
+      "bytes": 1965
+    },
+    {
+      "path": "source-cache/KNW-KR-KGS-CODE.html",
+      "sha256": "8812f862fa57bcc612a4b76609a524b8940b1c58b1bab915c214260759d08b63",
+      "bytes": 92127
+    },
+    {
+      "path": "source-cache/KNW-PROFESSIONAL-DEFINITION.md",
+      "sha256": "9d8d2d0b3fbd5384c09e8e191b20e0bfd6673b44c92d82a8519f8eba73fba595",
+      "bytes": 7156
+    },
+    {
+      "path": "source-cache/KNW-PROJECT-AGENT-RULES.md",
+      "sha256": "1923c8c16789edc99fb8b350f65d478f5ecb7209e33884ad067e72367996f575",
+      "bytes": 3400
+    },
+    {
       "path": "source-cache/README.md",
-      "sha256": "9abc3554196f6b94c142598e9cd4e0903ed6eb9a3cebd4b82c5065a7f19ee270",
-      "bytes": 1141
+      "sha256": "1054d83243186538145579a02af3637b637384ceb4fbf276e7235bfc4a7b13fa",
+      "bytes": 1280
     }
   ]
 }

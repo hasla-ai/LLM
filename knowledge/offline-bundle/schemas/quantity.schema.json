@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schema/quantity.schema.json",
+  "title": "Forge H2 Engineering Quantity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["quantity_id", "value_si", "si_unit", "dimension", "display", "uncertainty", "reliability_tier", "evidence_ids", "assumption_ids", "status"],
+  "properties": {
+    "quantity_id": {"type":"string","pattern":"^Q-[A-Z0-9-]+$"},
+    "value_si": {"type":["number","null"]},
+    "si_unit": {"type":"string","minLength":1},
+    "dimension": {"type":"object","additionalProperties":false,"required":["M","L","T","I","Th","N","J","A"],"properties":{"M":{"type":"integer"},"L":{"type":"integer"},"T":{"type":"integer"},"I":{"type":"integer"},"Th":{"type":"integer"},"N":{"type":"integer"},"J":{"type":"integer"},"A":{"type":"integer"}}},
+    "display": {"type":"object","additionalProperties":false,"required":["value","unit"],"properties":{"value":{"type":["number","null"]},"unit":{"type":"string"}}},
+    "uncertainty": {"type":"object","additionalProperties":false,"required":["distribution","stddev_si","p10_si","p50_si","p90_si"],"properties":{"distribution":{"type":"string"},"stddev_si":{"type":["number","null"]},"p10_si":{"type":["number","null"]},"p50_si":{"type":["number","null"]},"p90_si":{"type":["number","null"]}}},
+    "reliability_tier": {"type":"string","enum":["T0","T1","T2","T3","T4","T5"]},
+    "evidence_ids": {"type":"array","items":{"type":"string"}},
+    "assumption_ids": {"type":"array","items":{"type":"string"}},
+    "status": {"type":"string","enum":["input","calculated","blocked","human_review","superseded"]},
+    "calculator_version": {"type":["string","null"]},
+    "input_snapshot_hash": {"type":["string","null"]},
+    "extensions": {"type":"object","additionalProperties":true}
+  }
+}

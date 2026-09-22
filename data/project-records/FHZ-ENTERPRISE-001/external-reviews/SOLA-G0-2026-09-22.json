@@ -1,0 +1,22 @@
+{
+  "review_id": "REV-SOLA-G0-2026-09-22",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "reviewer": "Sola",
+  "review_source": "user_provided_report",
+  "status": "triaged",
+  "scope": "G0 gate evidence, agent accountability, offline bundle, international overlay, parallelism, AI ensemble",
+  "items": [
+    {"item_id":"SOL-001","finding":"Gate Evidence가 문서 존재만으로 충족될 위험","action":"audit_gate와 Evidence provenance 검사를 도입하고 required_evidence_ids를 강제","status":"implemented"},
+    {"item_id":"SOL-002","finding":"전문 Agent 문서 책임과 실제 실행 로그의 불일치 가능성","action":"회의 참여자·필수 Agent·Invocation·Human-in-the-loop를 registry/workflow와 대조","status":"implemented"},
+    {"item_id":"SOL-003","finding":"오프라인 번들의 재현성·범위·외부 출처 혼입 검증 필요","action":"manifest hash/size/missing/extra/source-register 일관성 검증루틴 도입","status":"implemented"},
+    {"item_id":"SOL-004","finding":"국제 오버레이가 G2/G3/G4에 필수로 연결되는지 불명확","action":"phase별 international overlay agent/output과 Gate별 필수 검증항목을 workflow에 연결","status":"implemented"},
+    {"item_id":"SOL-005","finding":"순차 Gate 구조에서 병렬·예외·재기준선 통제가 약함","action":"parallel_tracks와 rebaseline_policy 및 재개방 규칙을 기준선에 추가","status":"implemented"},
+    {"item_id":"SOL-006","finding":"AI 3개 독립 판정과 사람 중심 Gate의 신뢰 모델 긴장","action":"AI ensemble은 advisory로 제한하고 출처·이견·Human signoff를 Gate audit에 연결","status":"implemented"}
+  ],
+  "limitations": [
+    "현재 G0는 실제 ProjectIntent, 일부 라이선스 원문, 인간 서명이 없어 통과 대상이 아니다.",
+    "Claude·SolarPro 원문 호출 로그가 저장소에 없으면 외부 검토는 독립 Invocation으로 소급할 수 없다."
+  ],
+  "created_at": "2026-09-22T00:00:00Z",
+  "extensions": {"jira_issue_key":"SCRUM-19","gate_id":"G0"}
+}

@@ -24,6 +24,8 @@
 | `project-intent.schema.json` | 사업주가 제공하는 최초 요구사항 | Intake Agent |
 | `mission-definition.schema.json` | 함수형 미션의 계약 | Orchestrator Agent |
 | `mission-run.schema.json` | 미션 1회 실행 결과 | Executor/Review Agent |
+| `quantity.schema.json` | SI 값·차원·불확실도·근거를 가진 계산값 | Calculation Kernel/Engineering Agent |
+| `calculation-kernel.schema.json` | 결정론적 계산 커널 정책과 미션 연결 | Chief Engineer/Data Lead |
 | `evidence.schema.json` | 근거·출처·버전·검증 상태 | Evidence Agent |
 | `gate.schema.json` | G0–G7 승인 게이트 | PMO/Review Agent |
 | `change-request.schema.json` | 설계·요구·법규·계약 변경 | PMO/Change Agent |

@@ -22,6 +22,8 @@
 - `catalog.json`: 모든 지식의 canonical JSON 원장
 - `professional-foundations.json`: 기술사 후보 20개 분야·전공서적 8종·Agent 매핑
 - `formula-library.json`: 15개 기초공식의 LaTeX·ASCII·Python expression·SymPy 표현
+- `formula-library-h2.json`: 수소플랜트 고유 18식과 22개 검증 케이스. 현재 `machine_checked`이며 전문가 검증 전 기준선 사용 금지
+- `calculation-kernel.json`: SCRUM-29 결정론적 계산 커널과 G1/G2/G3/G4/G6/G7 미션 연결
 - `offline-source-register.json`: 로컬 출처 보관·판본·해시·baseline 준비상태
 - `offline-requirements.json`: GIS·계통·수소공급·기상·CAD/BIM·EPC·운영·로컬 실행환경 누락 목록
 - `offline-bundle/`: 네트워크 없이 이동·검증할 수 있는 JSON 번들
@@ -48,6 +50,9 @@ python -m knowledge.pipeline search "수소 공정안전 HAZOP 기능안전" --a
 python -m knowledge.pipeline search-formulas "power system" --top-k 5
 python -m knowledge.pipeline offline-check
 python -m knowledge.pipeline build-offline-bundle
+python -m knowledge.pipeline verify-offline-bundle
+python -m knowledge.pipeline audit-gate data/project-records/FHZ-ENTERPRISE-001/gates/G0-2026-09-22.json --meeting data/project-records/FHZ-ENTERPRISE-001/meetings/MTG-G0-2026-09-22.json --decision data/project-records/FHZ-ENTERPRISE-001/decisions/DEC-G0-HOLD-2026-09-22.json
+python -m security.audit
 ```
 
 `export-json`는 legacy JSONL을 최초 이전할 때만 사용한다. 이후 새 지식은 `catalog.json`에 새 revision으로 등록하고, 수식은 `formula-library.json`에 추가한 뒤 전문인 검증과 단위검사를 거친다.
@@ -55,6 +60,8 @@ python -m knowledge.pipeline build-offline-bundle
 현재 검색기는 재현 가능한 키워드·관할·단계·Agent 범위·권위등급 검색을 제공한다. 향후 임베딩 검색을 추가하더라도 최종 결과에는 동일한 `knowledge_id`, 출처 URL 또는 내부 locator, `evidence_ids`, revision, verification 상태를 반환해야 한다.
 
 오프라인 조회는 `--offline`을 붙인다. 원문이 로컬에 없고 URL 메타데이터만 있는 자료는 검색할 수 있지만 `metadata_only`로 표시되며 기준선 승격이 차단된다. ISO·IEC·NFPA·KGS·계약·금융기관 자료는 라이선스와 관할에 맞는 원문을 `offline-source-register.json`에 등록한 뒤 다시 번들을 생성해야 한다.
+
+`verify-offline-bundle`은 manifest의 파일 목록·바이트 수·SHA-256, 누락·초과 파일, source register 일관성, `deny_all_remote_fetch` 정책을 검사한다. `audit-gate`는 문서 존재 여부가 아니라 Evidence의 출처·판본·locator·해시·신뢰도·검증상태와 Agent 회의·Invocation·Human-in-the-loop를 함께 검사한다. 두 명령은 상태를 바꾸지 않으며, 실패하면 PMO가 HOLD/REOPEN을 유지하고 사람이 조치 후 재실행한다.
 
 ## Agent별 전문지식 데이터베이스
 

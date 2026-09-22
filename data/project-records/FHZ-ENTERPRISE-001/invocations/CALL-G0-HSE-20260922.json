@@ -1,0 +1,25 @@
+{
+  "invocation_id": "CALL-G0-HSE-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-HSE-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "KGS Code·수소 안전·인허가 근거의 G0 적용성 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-021"],
+  "status": "blocked",
+  "position": {
+    "summary": "KGS Code 항목은 검색되었지만 오프라인 상태가 metadata_only이므로 안전·인허가 기준선으로 승격할 수 없다.",
+    "recommendation": "request_more_data",
+    "confidence": "medium",
+    "conditions": ["현행 적용 KGS Code 원문 반입", "관할 법령과 시설유형 매핑", "자격 있는 HSE 검토자 서명"],
+    "dissent_refs": []
+  },
+  "output_refs": ["EVD-KGS-001"],
+  "blockers": [{"blocker_id": "BLK-CALL-HSE-001", "severity": "critical", "message": "KGS Code의 로컬 원문과 적용 조항이 없다.", "owner_role": "HSE/Regulatory Authority", "resolution_required": "현행 KGS Code와 법적 근거를 라이선스 범위에 맞게 반입하고 적용성 매트릭스를 작성한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "안전·인허가 자료는 원문과 자격자 검토 없이는 기준선화할 수 없다.", "target_roles": ["HSE/Regulatory Authority", "Chief Engineer", "Independent Reviewer"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null}, {"role": "Independent Reviewer", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["knowledge/source-cache/KNW-KR-KGS-CODE-official-public.html", "python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": ["KNW-KR-KGS-CODE"], "offline_blocked_knowledge_ids": ["KNW-KR-KGS-CODE"]}
+}

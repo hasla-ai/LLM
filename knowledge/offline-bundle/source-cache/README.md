@@ -13,4 +13,4 @@
 5. `baseline_ready: true`가 된 뒤에만 해당 근거를 Gate·Decision 기준선으로 사용한다.
 6. `python -m knowledge.pipeline build-offline-bundle`로 해시 번들을 다시 만든다.
 
-현재 metadata-only 상태인 핵심 출처는 ISO·IEC·NFPA·KGS·FIDIC·IFC·Equator 항목이다. 이 항목들은 로컬 원문 반입 전까지 참고용이며, 오프라인 기준선으로 승격할 수 없다.
+현재 일부 항목에는 공식 공개 범위·초록·가이드 페이지가 캐시되어 있다. 그러나 ISO·IEC·NFPA·KGS 표준, FIDIC 계약조건 등 전체 라이선스 원문이 없는 항목은 계속 `metadata-only`로 유지한다. 공개 페이지 캐시는 참고·추적용이며, 오프라인 기준선 승격을 허용하지 않는다.

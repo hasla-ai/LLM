@@ -1,0 +1,19 @@
+{
+  "invocation_id": "CALL-G0-PRD-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-PRD-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "ProjectIntent·미션 그래프·수용조건의 G0 준비 검토",
+  "context_refs": ["FHZ-CHARTER-001", "FHZ-REQ-001", "D-021"],
+  "status": "blocked",
+  "position": {"summary": "ProjectIntent 실제 입력이 없어 제품 요구사항의 프로젝트별 수용조건을 확정할 수 없다.", "recommendation": "request_more_data", "confidence": "not_assessed", "conditions": ["전력수요·부지·수소공급·운전조건 입력", "누락값·가정 승인"], "dissent_refs": []},
+  "output_refs": [],
+  "blockers": [{"blocker_id": "BLK-CALL-PRD-001", "severity": "high", "message": "실제 사용자 요구와 프로젝트 입력이 없다.", "owner_role": "Product Owner", "resolution_required": "ProjectIntent 초안을 사용자와 Sponsor가 확인한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "제품 요구사항을 AI가 임의로 채울 수 없다.", "target_roles": ["Product Owner", "Sponsor", "PMO"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "Product Owner", "user_id": null, "display_name": null, "organization": null}, {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": [], "retrieval_warnings": ["no active verified knowledge matched; do not infer a decision"]}
+}

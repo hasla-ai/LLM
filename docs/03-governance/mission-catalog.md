@@ -103,6 +103,14 @@ run_mission(mission_definition, input, context) -> MissionResult
 9. 기준선이 바뀌면 영향받는 미션을 자동으로 `REVIEW_REQUIRED`로 표시한다.
 10. 미션 완료는 출력물·근거·검토자·다음 단계가 모두 존재할 때만 인정한다.
 
+### 3.1 병렬 실행과 재기준선
+
+- `parallel_group`이 같은 미션은 선행조건이 통과했고 공통 입력을 서로 변경하지 않을 때 병렬 실행할 수 있다.
+- 병렬 미션도 각각 독립 실행번호·입력 해시·Evidence·검토자를 가진다. 일부 트랙이 실패하면 Gate 통합은 멈추며 성공한 트랙만으로 추정 통과하지 않는다.
+- 인허가 준비·조달 준비·현장조사처럼 병렬 가능한 작업은 `orchestration_rules.parallel_tracks`에 등록한다.
+- 변경·예외·외부 조건 변경은 `REVIEW_REQUIRED` 전파 규칙을 작동시킨다. 영향을 받는 결과를 무효화하거나 재검토한 뒤 새 기준선으로 승격한다.
+- `HOLD`, `REOPEN`, `CHANGE_IMPACT_REQUIRED`는 실패가 아니라 통제된 프로젝트 상태이며, 변경 로그·재실행·인간 승인이 없으면 자동으로 다음 Gate로 이동하지 않는다.
+
 ## 4. 100개 미션 인덱스
 
 ### Phase 0 — 사업 입력과 실행 통제

@@ -109,6 +109,16 @@ Independent Reviewer, Lender's Technical Advisor, 인증기관, 독립 안전평
 
 - 국내형 `workflow/process-agent-map.json`을 기본으로 사용한다.
 - 국제 조건이 활성화되면 `agents/international-overlay.json`을 추가로 로드한다.
+
+### 실행 강제 규칙
+
+국제 오버레이는 참고 목록이 아니라 Gate 입력 계약이다. `workflow/process-agent-map.json`의 `international_overlay_phase_controls`를 읽어 해당 Phase의 Agent와 출력물을 필수 호출·검증 대상으로 추가한다.
+
+- G2: 국제표준·현지 코드 적용표, 인증·적합성 계획, 국제 계통·위험물 공급망 검토
+- G3: 현지 인허가·E&S·다국어 통제와 독립 안전검토
+- G4: 준거법·FIDIC·대주단 기술실사·통관·세무·다국어 계약 일치성
+
+국제 조건이 활성화됐는데 해당 Phase의 오버레이 Agent Invocation 또는 출력 Evidence가 없으면 Gate audit은 `HOLD`로 판정한다. 오버레이 Agent의 권고는 현지 면허자·발주자 기술권한자·대주단·규제기관의 인간 승인을 대신하지 않는다.
 - 각 게이트는 `gate_requirements`의 Council을 반드시 호출한다.
 - 대주단·인증기관·현지 법정기술자의 의견은 Sponsor·EPC Agent의 의견과 독립적으로 기록한다.
 - 다국어 문서는 번역본이 아니라 용어집·버전·우선언어·서명본을 함께 관리한다.

@@ -1,0 +1,19 @@
+{
+  "invocation_id": "CALL-G0-AIS-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-AIS-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "AI 출력의 Evidence·Human Review·기준선 승격 통제 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-002", "D-005", "D-021"],
+  "status": "human_review",
+  "position": {"summary": "Professional 정의는 AI가 실제 사람의 자격·서명·법적 책임을 대체하지 않음을 지지한다.", "recommendation": "proceed_with_conditions", "confidence": "medium", "conditions": ["모든 고위험 출력에 Evidence ID 연결", "사람 승인 전 baseline 승격 금지", "Agent와 Professional을 UI에서 구분"], "dissent_refs": []},
+  "output_refs": ["EVD-PRO-001"],
+  "blockers": [{"blocker_id": "BLK-CALL-AIS-001", "severity": "high", "message": "AI 의견만으로 G0 Gate를 승인할 수 없다.", "owner_role": "AI Safety/Evaluation Lead", "resolution_required": "지정된 인간 승인자의 검토·서명을 기록한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "AI 거버넌스의 최종 승인은 인간 검토가 필요하다.", "target_roles": ["AI Safety/Evaluation Lead", "PMO", "HSE/Regulatory Authority"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "AI Safety/Evaluation Lead", "user_id": null, "display_name": null, "organization": null}, {"role": "PMO", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["knowledge/README.md", "python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": ["KNW-PROFESSIONAL-DEFINITION"], "retrieval_warnings": []}
+}

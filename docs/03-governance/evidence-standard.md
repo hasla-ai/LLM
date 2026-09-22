@@ -111,3 +111,19 @@ Evidence는 다음을 모두 만족해야 `verified`가 된다.
 - 내용 해시가 저장됨
 - 담당 검토자가 기록됨
 - 사용 미션과 제한사항이 연결됨
+
+## 9. 게이트 검증루틴과 AI 앙상블의 지위
+
+문서 파일의 존재는 Evidence가 아니다. 게이트 승격 전에 `python -m knowledge.pipeline audit-gate`가 다음을 기계적으로 검사한다.
+
+1. 게이트의 `required_evidence_ids`가 비어 있지 않다.
+2. 각 Evidence ID에 대응하는 JSON 레코드가 존재한다.
+3. `content_hash`가 `sha256:<64자리 hex>` 형식이고 원문 파일의 실제 해시와 일치한다.
+4. 출처 소유자·문서번호·판본·페이지/조항/경로가 채워져 있다.
+5. 신뢰도 등급과 검증상태가 허용 범위이며, `verified`이면 검토자와 검증시각이 있다.
+6. 사용 미션, 제한사항, 관할·적용범위가 연결되어 있다.
+7. 조건을 만족한다고 표시한 Entry Condition에도 Evidence ID가 연결되어 있다.
+
+검증루틴이 실패하면 Gate는 `HOLD` 또는 `REOPEN` 상태로 남고, 단순히 문서가 저장소에 있다는 이유로 통과할 수 없다.
+
+OpenAI·Claude·SolarPro 등 여러 AI의 독립 판정은 `AgentInvocation`의 보조 검토자료다. 각 판정은 모델 ID·프롬프트 버전·참조 출처·실행 시각·dissent를 남겨야 하며, 다수결이나 일치 자체는 Evidence 또는 인간 승인을 대체하지 않는다. 최종 Gate Evidence는 출처 검증을 통과한 원문·계산·시험·회의 기록이어야 하고, 최종 결정은 지정된 인간 승인자가 서명한다.

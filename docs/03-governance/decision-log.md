@@ -34,6 +34,9 @@
 | D-018 | 2026-09-17 | 기술사·전공서적 카탈로그와 공식은 JSON 구조로 저장하고, 사용자가 제공했으나 출처·판본이 확정되지 않은 항목은 `user_provided`·`unverified`로 표시한다. | 사서 Agent가 참조할 수 있으면서 공식 기준으로 오인되지 않게 함 | 전문인 검증·단위검사·판본확인 전에는 기준선 승격 금지 | Data Lead + Chief Engineer + AI Safety | Proposed |
 | D-019 | 2026-09-17 | 인터넷 단절 시 원격 출처를 조회하지 않고, 해시가 확인된 로컬 source artifact만 기준선 근거로 허용한다. metadata-only 자료는 참고로 반환하되 baseline 승격을 차단한다. | 오프라인에서도 추적성과 안전 통제를 유지 | 라이선스 문서·현행 법규·표준·계약 원문을 source pack으로 반입해야 함 | PMO + HSE + Data Lead + Legal | Proposed |
 | D-020 | 2026-09-17 | 오프라인 수소발전소 건설 준비도는 출처뿐 아니라 GIS·계통·수소공급·기상·공학모델·EPC·운영·로컬 실행환경의 자료완전성을 함께 평가한다. | 지식 DB만 있고 실제 설계 입력이 없는 상태 방지 | `offline-requirements.json`의 누락 요구사항은 해당 Gate를 차단 | PMO + Chief Engineer + Data Lead | Proposed |
+| D-021 | 2026-09-22 | G0는 필수 출처 원문·ProjectIntent 실제 입력·승인 기록이 확보될 때까지 `HOLD`로 유지한다. | 현재 offline-check 결과 `baseline_ready=false`이고 승인자가 아직 서명하지 않음 | G1 착수 보류, source pack·ProjectIntent·G0 검토회의 필요 | PMO + Chief Engineer + HSE + Data | Under Review |
+| D-022 | 2026-09-22 | SCRUM-29 계산 커널과 SCRUM-39 코드 보호는 기존 SCRUM-18·G0–G7의 순서·의미·Evidence 구조를 변경하지 않는 교차 절단 통제로 편입한다. | 계산 재현성과 기존 프로그램 보호를 동시에 확보해야 함 | G1/G2/G3/G4/G6/G7 계산 미션과 모든 릴리스·변경 검토에 영향 | PMO + Chief Engineer + AI/Platform + Cybersecurity | Under Review |
+| D-023 | 2026-09-22 | 다른 Agent가 작성한 SCRUM-29 후보 산출물은 canonical 경로로 추가하되 `app/main.py`와 기존 SCRUM-18 실행흐름은 교체하지 않는다. | 계산 결함·공식 검증을 반영하면서 기존 프로그램 불변 원칙을 지켜야 함 | H2 공식 라이브러리·독립 계산 모듈·검증 러너·F-01/F-02 결함 해결 순서 | Chief Engineer + PMO + AI/Platform | Under Review |
 
 ## 의사결정 기록 양식
 
@@ -63,3 +66,5 @@
 | A-003 | 독립 안전·인허가 검토기관 선정 | 후보·계약범위·예산 | HSE Authority | TBD | Proposed |
 | A-004 | Mission 1–10의 JSON Schema 승인 | 스키마 초안·예시 입력 | Product + PMO | TBD | Proposed |
 | A-005 | Shadow Mode에 사용할 과거 설계 프로젝트 선정 | 비식별 문서·검토자 | AI Safety Lead | TBD | Proposed |
+| A-006 | SCRUM-29 커널 9개 하위 작업의 실제 구현 브랜치·검증사례·담당자 확정 | SCRUM-30–38 구현 산출물·브랜치·테스트 | Chief Engineer + AI/Platform | TBD | Proposed |
+| A-007 | SCRUM-39 보호정책의 저장소 권한·비밀관리·감사로그 운영수단 확정 | 조직 저장소·실행환경·권한 매트릭스 | Cybersecurity + PMO | TBD | Proposed |

@@ -7,6 +7,32 @@
   "orchestration_rules": {
     "execution_order": ["lead_agent", "required_technical_agents", "assurance_agents", "advisory_agents", "decision_meeting", "human_signoff", "baseline_promotion"],
     "parallelism": "같은 phase 안에서 선행조건이 충족된 독립 미션은 병렬 실행한다.",
+    "parallel_tracks": [
+      {"track_id":"TRK-SITE-BUSINESS","phases":["P02","P03"],"start_condition":"G0 pass or approved conditional with ProjectIntent and jurisdiction","shared_inputs":["ProjectIntent","Jurisdiction"],"conflict_rule":"공통 입력 변경 시 두 트랙 모두 REVIEW_REQUIRED"},
+      {"track_id":"TRK-HYDROGEN-GRID","phases":["P04","P05"],"start_condition":"G1 pass or approved conditional with site candidate and demand basis","shared_inputs":["site_candidate","power_target","dispatch_case"],"conflict_rule":"용량·운전모드 변경 시 양 트랙 재실행"},
+      {"track_id":"TRK-PERMIT-FEED-PREP","phases":["P06","P07"],"start_condition":"G2 technical basis available; no unresolved safety blocker","shared_inputs":["design_basis","permit_matrix","risk_register"],"conflict_rule":"허가조건·설계기준 변경 시 P06/P07 재기준선"}
+    ],
+    "rebaseline_policy": {
+      "trigger_events":["new_law_or_permit_condition","site_or_coordinate_change","hydrogen_supply_change","grid_condition_change","design_change","incident","contract_change"],
+      "sequence":["create_change_request","impact_analysis","mark_dependent_missions_review_required","invalidate_or_supersede_outputs","rerun_affected_missions","human_approve_new_baseline","reopen_affected_gate"],
+      "no_silent_progression": true
+    },
+    "international_overlay_policy": {
+      "activation_rule":"host_country != Korea OR cross_border_contract == true OR international_financing == true OR foreign_epc_or_vendor == true",
+      "required_gate_checks":{"G2":["standards_applicability_matrix","certification_and_conformity_plan","international_grid_or_supply_chain_check"],"G3":["local_permit_and_language_matrix","E&S_or_lender_requirements"],"G4":["contract_law_and_FIDIC_review","lender_technical_advisor_review","trade_tax_customs_and_multilingual_consistency"]},
+      "source":"agents/international-overlay.json"
+    },
+    "calculation_kernel_policy": {
+      "status":"controlled_overlay",
+      "kernel_ref":"knowledge/calculation-kernel.json",
+      "kernel_spec":"docs/02-engineering/h2-calc-kernel.md",
+      "jira_epic":"SCRUM-29",
+      "protection_issue":"SCRUM-39",
+      "protected_program":"SCRUM-18",
+      "required_for_missions":["M-013","M-014","M-018","M-019","M-031","M-034","M-035","M-036","M-042","M-043","M-044","M-047","M-048","M-061","M-062","M-063","M-064","M-065","M-071","M-072","M-073","M-074","M-075","M-076","M-089","M-090","M-091","M-092","M-095","M-096","M-097","M-098"],
+      "invariants":["LLM does not invent numeric outputs","dimension mismatch blocks","T5 input cannot yield higher reliability","calculation is not safety or permit approval","all runs are append-only"],
+      "promotion_rule":"A kernel result becomes Gate Evidence only after input snapshot, calculator version, evidence IDs, unit checks and required human review are recorded."
+    },
     "meeting_required_when": ["risk_class_C_or_D", "cross_domain_conflict", "gate_review", "change_class_C3_or_higher", "missing_or_conflicting_evidence"],
     "default_blockers": ["필수 입력 누락", "근거 없는 확정값", "미해결 기술 이견", "필수 인간 검토 미완료", "법정 책임자 미지정"],
     "no_silent_progression": true
@@ -22,5 +48,16 @@
     {"phase_id":"P08","name":"construction","mission_ids":["M-081","M-082","M-083","M-084","M-085","M-086","M-087","M-088"],"gate_id":"G5","lead_agent_id":"AG-CON-001","required_agent_ids":["AG-EPC-001","AG-TEC-015","AG-TEC-021","AG-QA-001","AG-HSE-001"],"advisory_agent_ids":["AG-ADV-009","AG-ADV-010"],"meeting_type":"pmo_integration","decision_owner_role":"EPC Manager","outputs":["ifc_set","procurement_status","inspection_test_plan","quality_dossier","construction_readiness"],"blockers":["IFC·허가조건 불일치","작업허가·안전계획 미승인","검사·시험 기록 누락","중대 부적합 미종결"]},
     {"phase_id":"P09","name":"commissioning","mission_ids":["M-089","M-090","M-091","M-092","M-093","M-094"],"gate_id":"G6","lead_agent_id":"AG-COMM-001","required_agent_ids":["AG-ENG-001","AG-TEC-001","AG-TEC-005","AG-TEC-008","AG-TEC-014","AG-QA-001","AG-OPS-001","AG-IR-001"],"advisory_agent_ids":["AG-ADV-004","AG-ADV-008"],"meeting_type":"independent_review","decision_owner_role":"Commissioning Manager","outputs":["precommissioning_records","hydrogen_introduction_release","performance_test","punch_list","handover_readiness"],"blockers":["압력·누설·전기시험 미완료","수소 투입 전 안전검토 미완료","성능시험 기준·측정불확도 미승인","운영자 교육·비상훈련 미실시"]},
     {"phase_id":"P10","name":"operations","mission_ids":["M-095","M-096","M-097","M-098","M-099","M-100"],"gate_id":"G7","lead_agent_id":"AG-OPS-001","required_agent_ids":["AG-COMM-001","AG-TEC-018","AG-TEC-001","AG-TEC-014","AG-TEC-019","AG-CYB-001","AG-QA-001"],"advisory_agent_ids":["AG-ADV-003","AG-ADV-008","AG-ADV-010"],"meeting_type":"gate_review","decision_owner_role":"Sponsor + Operations Manager","outputs":["cod_package","operating_procedures","maintenance_plan","digital_twin_baseline","lessons_learned"],"blockers":["COD 조건 미충족","운영·정비·비상절차 미승인","규제·검사 기록 인수 누락","OT 보안·권한·백업 검증 미완료"]}
-  ]
+  ],
+  "international_overlay_phase_controls": {
+    "P02": {"required": true, "agent_ids": ["AG-INT-001", "AG-INT-003", "AG-INT-012", "AG-INT-013"], "outputs": ["international_finance_and_country_risk_matrix", "offtake_and_contract_jurisdiction_matrix"]},
+    "P03": {"required": true, "agent_ids": ["AG-INT-005", "AG-INT-006", "AG-INT-007", "AG-INT-008"], "outputs": ["local_land_permit_and_esg_matrix", "community_and_language_plan"]},
+    "P04": {"required": true, "agent_ids": ["AG-INT-004", "AG-INT-005", "AG-INT-014", "AG-INT-015"], "outputs": ["hydrogen_code_and_conformity_matrix", "cross_border_dangerous_goods_plan"]},
+    "P05": {"required": true, "agent_ids": ["AG-INT-017", "AG-INT-005"], "outputs": ["host_country_grid_code_and_market_matrix"]},
+    "P06": {"required": true, "agent_ids": ["AG-INT-006", "AG-INT-007", "AG-INT-008", "AG-INT-016", "AG-INT-019"], "outputs": ["local_permit_language_and_esms_readiness"]},
+    "P07": {"required": true, "agent_ids": ["AG-INT-003", "AG-INT-009", "AG-INT-010", "AG-INT-011", "AG-INT-012", "AG-INT-014", "AG-INT-019"], "outputs": ["international_contract_law_fidic_review", "lender_technical_opinion", "trade_tax_customs_plan", "multilingual_document_consistency"]},
+    "P08": {"required": true, "agent_ids": ["AG-INT-005", "AG-INT-015", "AG-INT-019"], "outputs": ["local_construction_compliance_and_language_control"]},
+    "P09": {"required": true, "agent_ids": ["AG-INT-015", "AG-INT-016", "AG-INT-019"], "outputs": ["international_conformity_and_handover_opinion"]},
+    "P10": {"required": true, "agent_ids": ["AG-INT-007", "AG-INT-018", "AG-INT-019"], "outputs": ["international_esms_ot_data_and_operating_record"]}
+  }
 }

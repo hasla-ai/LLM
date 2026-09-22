@@ -33,6 +33,8 @@
 | R-026 | 전문 검토자 부족 | 수소·계통·방재·인허가 전문가 부재 | 검토 지연·품질 저하 | M/H | Sponsor | 외부 자문 풀 확보 | 범위 축소·일정 조정 |
 | R-027 | 보험·책임 범위 불명확 | AI 오류·설계 오류·EPC 책임 혼재 | 분쟁·금융 실패 | M/H | Legal/Commercial | 계약·보험·책임 매트릭스 | 법률 검토·계약 보완 |
 | R-028 | 프로젝트 확장 실패 | MVP 데이터모델이 실제 FEED를 못 담음 | 재개발 | M/M | Product/Platform | Mission·Evidence 스키마 선행 | 마이그레이션·아키텍처 재설계 |
+| R-029 | 계산 커널과 프로젝트 기준선 불일치 | 계산기 버전·입력 스냅샷·Evidence가 G1/G2/G3/G4 결과와 분리됨 | 재현 불가·잘못된 설계·금융 판단 | M/H | Chief Engineer + Data Lead | Quantity·MissionRun·Gate Evidence 연결 | 영향 Gate 재개방·재계산·독립검토 |
+| R-030 | 기존 프로그램 보호 실패 | 보안 개선 중 게이트·Evidence·오프라인 규칙이 우회되거나 코드·지식DB가 무단 변경됨 | 통제 상실·정보유출·감사 실패 | M/H | PMO + Cybersecurity + AI/Platform | SCRUM-39 read-only audit·권한분리·변경요청 | 접근 격리·감사로그 보존·롤백·인간 승인 |
 
 ## 위험 처리 규칙
 

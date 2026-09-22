@@ -1,0 +1,29 @@
+{
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "schema_version": "1.0.0",
+  "decision_type": "gate",
+  "subject": "G0 Project Charter Gate 승인 여부",
+  "status": "hold",
+  "options": ["pass", "conditional", "hold", "stop"],
+  "recommendation": "G0를 HOLD로 유지하고 필수 출처 원문·ProjectIntent 실제 입력·인간 승인 기록을 먼저 확보한다.",
+  "decision_owner_role": "PMO",
+  "approvers": [
+    {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null},
+    {"role": "PMO", "user_id": null, "display_name": null, "organization": null},
+    {"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null},
+    {"role": "HSE/Regulatory Authority", "user_id": null, "display_name": null, "organization": null}
+  ],
+  "evidence_ids": ["EVD-G0-CHARTER-001", "EVD-G0-PMPLAN-001", "EVD-G0-REQ-001", "EVD-G0-GATE-001", "EVD-G0-RISK-001", "EVD-G0-DECISION-001"],
+  "invocation_ids": ["CALL-G0-GOV-20260922", "CALL-G0-PMO-20260922", "CALL-G0-ENG-20260922", "CALL-G0-HSE-20260922", "CALL-G0-PRD-20260922", "CALL-G0-AI-20260922", "CALL-G0-DATA-20260922", "CALL-G0-AIS-20260922", "CALL-G0-IR-20260922"],
+  "conditions": [
+    "필수 표준·규정의 라이선스 원문을 오프라인 source pack에 반입하고 해시를 검증한다.",
+    "실제 전력수요·부지·수소공급·운전조건을 ProjectIntent로 등록한다.",
+    "Sponsor·PMO·Chief Engineer·HSE/Regulatory의 사람 승인과 반대 의견을 기록한다."
+  ],
+  "human_signoff": true,
+  "created_at": "2026-09-22T08:56:33Z",
+  "decided_at": null,
+  "supersedes_decision_id": null,
+  "extensions": {"jira_issue_key": "SCRUM-19", "basis": "offline-check baseline_ready=false"}
+}

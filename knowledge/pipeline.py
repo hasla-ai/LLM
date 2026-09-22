@@ -26,7 +26,9 @@ OFFLINE_REGISTER = ROOT / "offline-source-register.json"
 OFFLINE_BUNDLE_DIR = ROOT / "offline-bundle"
 AGENT_REGISTRY = ROOT.parent / "agents" / "registry.json"
 INTERNATIONAL_OVERLAY = ROOT.parent / "agents" / "international-overlay.json"
+WORKFLOW_MAP = ROOT.parent / "workflow" / "process-agent-map.json"
 TOKEN_RE = re.compile(r"[A-Za-z0-9_]+|[가-힣]+")
+SHA256_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 AUTHORITY_SCORE = {
     "T0_official_law_or_permit": 5.0,
     "T1_official_standard_or_authority": 4.0,
@@ -103,13 +105,23 @@ def build_offline_bundle(output_dir: str | Path = OFFLINE_BUNDLE_DIR) -> dict[st
 
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
+    # The bundle is a reproducible generated artifact. Remove only its prior
+    # generated contents so stale files cannot silently escape the manifest.
+    for child in output.iterdir():
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
     register = _load_source_register()
     copy_map = {
         "catalog.json": DEFAULT_CATALOG,
         "formula-library.json": ROOT / "formula-library.json",
+        "formula-library-h2.json": ROOT / "formula-library-h2.json",
         "professional-foundations.json": ROOT / "professional-foundations.json",
+        "calculation-kernel.json": ROOT / "calculation-kernel.json",
         "access-policy.json": ROOT / "access-policy.json",
         "registry.json": ROOT / "registry.json",
+        "security/protection-policy.json": ROOT.parent / "security" / "protection-policy.json",
         "agent-databases/manifest.json": AGENT_DB_DIR / "manifest.json",
         "source-cache/README.md": ROOT / "source-cache" / "README.md",
     }
@@ -124,7 +136,9 @@ def build_offline_bundle(output_dir: str | Path = OFFLINE_BUNDLE_DIR) -> dict[st
     bundled_sources = []
     for item in register.get("sources", []):
         copied = dict(item)
-        if item.get("status") == "available_local" and item.get("local_artifact"):
+        # Public scope/abstract captures may be bundled while remaining
+        # metadata_only; only available_local sources can satisfy baseline.
+        if item.get("local_artifact"):
             source_path = ROOT.parent / item["local_artifact"]
             if source_path.exists():
                 target_name = item["knowledge_id"] + source_path.suffix
@@ -132,6 +146,7 @@ def build_offline_bundle(output_dir: str | Path = OFFLINE_BUNDLE_DIR) -> dict[st
                 shutil.copy2(source_path, target)
                 copied["local_artifact"] = f"source-cache/{target_name}"
                 copied["sha256"] = _sha256_path(target)
+                copy_map[f"source-cache/{target_name}"] = target
         bundled_sources.append(copied)
     bundled_register = dict(register)
     bundled_register["sources"] = bundled_sources
@@ -158,6 +173,279 @@ def build_offline_bundle(output_dir: str | Path = OFFLINE_BUNDLE_DIR) -> dict[st
     }
     (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return {"bundle": str(output), "files": len(files), "network_policy": manifest["network_policy"]}
+
+
+def _safe_bundle_path(root: Path, relative: str) -> Path | None:
+    """Resolve a manifest path without allowing traversal outside the bundle."""
+
+    candidate = (root / relative).resolve()
+    try:
+        candidate.relative_to(root.resolve())
+    except ValueError:
+        return None
+    return candidate
+
+
+def verify_offline_bundle(bundle_dir: str | Path = OFFLINE_BUNDLE_DIR) -> dict[str, Any]:
+    """Verify the bundle manifest, hashes, file set and local source register.
+
+    This is intentionally deterministic and network-free. A bundle is valid
+    only when every listed file exists with the recorded size/hash and there
+    are no unlisted payload files. Metadata-only sources remain visible but do
+    not become baseline-ready merely because a public abstract was bundled.
+    """
+
+    root = Path(bundle_dir)
+    manifest_path = root / "manifest.json"
+    errors: list[str] = []
+    missing_files: list[str] = []
+    mismatched_files: list[str] = []
+    extra_files: list[str] = []
+    listed: dict[str, dict[str, Any]] = {}
+    if not manifest_path.exists():
+        return {
+            "bundle": str(root),
+            "valid": False,
+            "errors": ["manifest_missing"],
+            "missing_files": [],
+            "mismatched_files": [],
+            "extra_files": [],
+            "checked_files": 0,
+        }
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {
+            "bundle": str(root),
+            "valid": False,
+            "errors": [f"manifest_unreadable:{exc}"],
+            "missing_files": [],
+            "mismatched_files": [],
+            "extra_files": [],
+            "checked_files": 0,
+        }
+    if manifest.get("network_policy") != "deny_all_remote_fetch":
+        errors.append("network_policy_not_deny_all_remote_fetch")
+    for item in manifest.get("files", []):
+        relative = str(item.get("path", "")).replace("\\", "/")
+        if not relative or relative in listed:
+            errors.append(f"manifest_duplicate_or_empty_path:{relative}")
+            continue
+        listed[relative] = item
+        target = _safe_bundle_path(root, relative)
+        if target is None:
+            errors.append(f"manifest_path_traversal:{relative}")
+            continue
+        if not target.exists() or not target.is_file():
+            missing_files.append(relative)
+            continue
+        actual_hash = _sha256_path(target)
+        actual_bytes = target.stat().st_size
+        expected_hash = str(item.get("sha256", "")).removeprefix("sha256:")
+        if expected_hash != actual_hash or item.get("bytes") != actual_bytes:
+            mismatched_files.append(relative)
+    actual_files = {
+        path.relative_to(root).as_posix()
+        for path in root.rglob("*")
+        if path.is_file() and path.name != "manifest.json"
+    }
+    extra_files = sorted(actual_files - set(listed))
+    if missing_files:
+        errors.append("manifest_files_missing")
+    if mismatched_files:
+        errors.append("manifest_hash_or_size_mismatch")
+    if extra_files:
+        errors.append("unlisted_bundle_files_present")
+
+    register_result = {"checked": False, "errors": []}
+    register_path = root / "offline-source-register.json"
+    if not register_path.exists():
+        errors.append("offline_source_register_missing")
+    else:
+        try:
+            register = json.loads(register_path.read_text(encoding="utf-8"))
+            register_result["checked"] = True
+            for source in register.get("sources", []):
+                artifact = source.get("local_artifact")
+                if not artifact:
+                    continue
+                target = _safe_bundle_path(root, artifact)
+                if target is None or not target.exists():
+                    register_result["errors"].append(f"source_artifact_missing:{source.get('knowledge_id')}")
+                    continue
+                expected_hash = source.get("sha256")
+                if expected_hash and _sha256_path(target) != expected_hash:
+                    register_result["errors"].append(f"source_artifact_hash_mismatch:{source.get('knowledge_id')}")
+            if register_result["errors"]:
+                errors.append("source_register_inconsistent")
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"offline_source_register_unreadable:{exc}")
+    return {
+        "bundle": str(root),
+        "bundle_version": manifest.get("bundle_version"),
+        "network_policy": manifest.get("network_policy"),
+        "valid": not errors,
+        "errors": errors,
+        "missing_files": sorted(missing_files),
+        "mismatched_files": sorted(mismatched_files),
+        "extra_files": extra_files,
+        "checked_files": len(listed),
+        "source_register": register_result,
+    }
+
+
+def _json_file_map(directory: str | Path) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    path = Path(directory)
+    if not path.exists():
+        return result
+    for item in path.glob("*.json"):
+        try:
+            payload = json.loads(item.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        key = payload.get("evidence_id") or payload.get("invocation_id") or payload.get("decision_id")
+        if key:
+            result[str(key)] = payload
+    return result
+
+
+def audit_gate(
+    gate_path: str | Path,
+    *,
+    evidence_dir: str | Path | None = None,
+    meeting_path: str | Path | None = None,
+    decision_path: str | Path | None = None,
+    invocation_dir: str | Path | None = None,
+    registry_path: str | Path = AGENT_REGISTRY,
+    workflow_path: str | Path = WORKFLOW_MAP,
+    international: bool = False,
+) -> dict[str, Any]:
+    """Audit a gate without promoting it.
+
+    The audit rejects document-presence-only evidence, checks provenance and
+    verification fields, and reconciles meeting participants and invocation
+    records with the registry/workflow. It reports blockers rather than
+    changing project state; a human still owns the final gate decision.
+    """
+
+    gate_file = Path(gate_path)
+    gate = json.loads(gate_file.read_text(encoding="utf-8"))
+    evidence_path = Path(evidence_dir) if evidence_dir else gate_file.parent.parent / "evidence"
+    evidence = _json_file_map(evidence_path)
+    errors: list[str] = []
+    warnings: list[str] = []
+    evidence_results: list[dict[str, Any]] = []
+    required_evidence = gate.get("required_evidence_ids", [])
+    if not required_evidence:
+        errors.append("gate_required_evidence_ids_empty")
+    for evidence_id in required_evidence:
+        record = evidence.get(evidence_id)
+        if not record:
+            errors.append(f"evidence_missing:{evidence_id}")
+            evidence_results.append({"evidence_id": evidence_id, "valid": False, "errors": ["missing_record"]})
+            continue
+        record_errors: list[str] = []
+        source = record.get("source", {})
+        if not SHA256_RE.fullmatch(str(record.get("content_hash", ""))):
+            record_errors.append("content_hash_not_sha256")
+        for field in ("owner", "document_number", "revision", "locator"):
+            if not source.get(field):
+                record_errors.append(f"source_{field}_missing")
+        if record.get("reliability_tier") not in {"T0", "T1", "T2", "T3", "T4", "T5"}:
+            record_errors.append("reliability_tier_invalid")
+        if record.get("verification_status") not in {"verified", "conditionally_verified"}:
+            record_errors.append("verification_not_accepted")
+        if not record.get("used_by_missions"):
+            record_errors.append("used_by_missions_missing")
+        if record.get("verification_status") == "verified" and (not record.get("verified_by") or not record.get("verified_at")):
+            record_errors.append("verified_record_reviewer_or_time_missing")
+        if record_errors:
+            errors.extend(f"{evidence_id}:{item}" for item in record_errors)
+        evidence_results.append({"evidence_id": evidence_id, "valid": not record_errors, "errors": record_errors})
+    for condition in gate.get("entry_conditions", []):
+        if condition.get("satisfied") and not condition.get("evidence_ids"):
+            errors.append(f"satisfied_condition_without_evidence:{condition.get('condition_id')}")
+
+    human_review = {"registry_valid": True, "expected_agents": [], "missing_agents": [], "orphan_invocations": [], "pending_signoff": []}
+    international_result = {"active": international, "required_agents": [], "missing_agents": [], "required_gate_checks": []}
+    workflow = json.loads(Path(workflow_path).read_text(encoding="utf-8")) if workflow_path and Path(workflow_path).exists() else {}
+    if international:
+        phase_controls = workflow.get("international_overlay_phase_controls", {})
+        phase_agents = {agent for phase in workflow.get("phases", []) if phase.get("gate_id") == gate.get("gate_id") for agent in phase_controls.get(phase.get("phase_id"), {}).get("agent_ids", [])}
+        overlay = json.loads(INTERNATIONAL_OVERLAY.read_text(encoding="utf-8")) if INTERNATIONAL_OVERLAY.exists() else {}
+        gate_requirements = next((item for item in overlay.get("gate_requirements", []) if item.get("gate_id") == gate.get("gate_id")), {})
+        council_ids = set(gate_requirements.get("required_councils", []))
+        council_agents = {agent for council in overlay.get("expert_councils", []) if council.get("council_id") in council_ids for agent in council.get("agent_ids", [])}
+        international_result["required_agents"] = sorted(phase_agents | council_agents)
+        international_result["required_gate_checks"] = workflow.get("international_overlay_policy", {}).get("required_gate_checks", {}).get(gate.get("gate_id"), [])
+    meeting = None
+    if meeting_path:
+        meeting = json.loads(Path(meeting_path).read_text(encoding="utf-8"))
+        registry = json.loads(Path(registry_path).read_text(encoding="utf-8"))
+        registry_ids = {item.get("agent_id") for item in registry.get("agents", [])}
+        participants = set(meeting.get("participant_agent_ids", []))
+        unknown_participants = sorted(participants - registry_ids)
+        if unknown_participants:
+            human_review["registry_valid"] = False
+            errors.append("meeting_unknown_agents:" + ",".join(unknown_participants))
+        expected = meeting.get("extensions", {}).get("required_agent_ids", [])
+        if not expected and workflow_path and Path(workflow_path).exists():
+            expected = sorted({agent for phase in workflow.get("phases", []) if phase.get("gate_id") == gate.get("gate_id") for agent in phase.get("required_agent_ids", [])})
+        if international:
+            expected = sorted(set(expected) | set(international_result["required_agents"]))
+        human_review["expected_agents"] = sorted(expected)
+        human_review["missing_agents"] = sorted(set(expected) - participants)
+        if international:
+            international_result["missing_agents"] = sorted(set(international_result["required_agents"]) - participants)
+            if international_result["missing_agents"]:
+                errors.append("international_overlay_agents_missing:" + ",".join(international_result["missing_agents"]))
+        if human_review["missing_agents"]:
+            errors.append("meeting_required_agents_missing:" + ",".join(human_review["missing_agents"]))
+        invocations = _json_file_map(invocation_dir or gate_file.parent.parent / "invocations")
+        invocation_agents: set[str] = set()
+        for invocation_id in meeting.get("invocation_ids", []):
+            invocation = invocations.get(invocation_id)
+            if not invocation:
+                errors.append(f"invocation_missing:{invocation_id}")
+                continue
+            agent_id = invocation.get("agent_id")
+            invocation_agents.add(agent_id)
+            if agent_id not in participants:
+                human_review["orphan_invocations"].append(invocation_id)
+                errors.append(f"invocation_agent_not_participant:{invocation_id}")
+            if invocation.get("human_review", {}).get("required") and invocation.get("human_review", {}).get("status") in {"pending", "conditional"}:
+                human_review["pending_signoff"].append(invocation_id)
+        if human_review["pending_signoff"]:
+            warnings.append("human_review_pending:" + ",".join(human_review["pending_signoff"]))
+        missing_invocation_agents = sorted(set(expected) - invocation_agents)
+        human_review["missing_invocation_agents"] = missing_invocation_agents
+        if missing_invocation_agents:
+            errors.append("required_agents_without_invocation:" + ",".join(missing_invocation_agents))
+
+    decision = None
+    if decision_path:
+        decision = json.loads(Path(decision_path).read_text(encoding="utf-8"))
+        if not decision.get("evidence_ids"):
+            errors.append("decision_evidence_ids_empty")
+        if not decision.get("human_signoff"):
+            errors.append("decision_human_signoff_required")
+        if decision.get("status") in {"approved", "pass", "conditional"} and not decision.get("decided_at"):
+            errors.append("approved_decision_without_decided_at")
+        if decision.get("status") in {"approved", "pass", "conditional"} and any(item.get("user_id") is None for item in decision.get("approvers", [])):
+            errors.append("approved_decision_without_named_human_approver")
+
+    return {
+        "gate_id": gate.get("gate_id"),
+        "gate_path": str(gate_file),
+        "valid": not errors,
+        "errors": errors,
+        "warnings": warnings,
+        "evidence": {"required_count": len(required_evidence), "records": evidence_results},
+        "human_in_loop": human_review,
+        "international_overlay": international_result,
+        "recommendation": "eligible_for_human_decision" if not errors else "hold_until_audit_errors_resolved",
+    }
 
 
 def connect(db_path: str | Path = DEFAULT_DB) -> sqlite3.Connection:
@@ -670,6 +958,17 @@ def main() -> None:
     offline_check_parser = sub.add_parser("offline-check")
     offline_bundle_parser = sub.add_parser("build-offline-bundle")
     offline_bundle_parser.add_argument("--output", default=str(OFFLINE_BUNDLE_DIR))
+    verify_bundle_parser = sub.add_parser("verify-offline-bundle")
+    verify_bundle_parser.add_argument("--bundle", default=str(OFFLINE_BUNDLE_DIR))
+    audit_parser = sub.add_parser("audit-gate")
+    audit_parser.add_argument("gate")
+    audit_parser.add_argument("--evidence-dir")
+    audit_parser.add_argument("--meeting")
+    audit_parser.add_argument("--decision")
+    audit_parser.add_argument("--invocation-dir")
+    audit_parser.add_argument("--registry", default=str(AGENT_REGISTRY))
+    audit_parser.add_argument("--workflow", default=str(WORKFLOW_MAP))
+    audit_parser.add_argument("--international", action="store_true", help="enforce the international overlay for this gate")
     args = parser.parse_args()
 
     if args.command == "init":
@@ -690,6 +989,10 @@ def main() -> None:
         print(json.dumps(offline_check(), ensure_ascii=False, indent=2))
     elif args.command == "build-offline-bundle":
         print(json.dumps(build_offline_bundle(args.output), ensure_ascii=False, indent=2))
+    elif args.command == "verify-offline-bundle":
+        print(json.dumps(verify_offline_bundle(args.bundle), ensure_ascii=False, indent=2))
+    elif args.command == "audit-gate":
+        print(json.dumps(audit_gate(args.gate, evidence_dir=args.evidence_dir, meeting_path=args.meeting, decision_path=args.decision, invocation_dir=args.invocation_dir, registry_path=args.registry, workflow_path=args.workflow, international=args.international), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,25 @@
+{
+  "invocation_id": "CALL-G0-PMO-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-PMO-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "G0 헌장·범위·RACI·게이트 승인 준비 검토",
+  "context_refs": ["FHZ-CHARTER-001", "FHZ-REQ-001", "D-021"],
+  "status": "blocked",
+  "position": {
+    "summary": "오프라인 검색에서 승인 가능한 PMO 근거 항목을 매칭하지 못해 기준선 승인 의견을 낼 수 없다.",
+    "recommendation": "request_more_data",
+    "confidence": "not_assessed",
+    "conditions": ["ProjectIntent 실제 입력 등록", "G0 승인자 검토·서명 기록"],
+    "dissent_refs": []
+  },
+  "output_refs": [],
+  "blockers": [{"blocker_id": "BLK-CALL-PMO-001", "severity": "high", "message": "승인에 필요한 실제 프로젝트 입력과 사람 승인 기록이 없다.", "owner_role": "PMO", "resolution_required": "ProjectIntent와 G0 검토 기록을 등록한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "G0 기준선은 PMO 단독으로 승인할 수 없다.", "target_roles": ["Sponsor", "Chief Engineer", "HSE/Regulatory Authority"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "PMO", "user_id": null, "display_name": null, "organization": null}, {"role": "Sponsor", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": [], "retrieval_warnings": ["no active verified knowledge matched; do not infer a decision"]}
+}

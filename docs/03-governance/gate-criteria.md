@@ -265,3 +265,31 @@ Sponsor `A`, Operations/Commissioning/QA `R`, HSE/Regulatory/Chief Engineer `C`
 - 조건부 통과는 보완항목·담당자·기한·재검토 게이트를 명시한다.
 - 새로운 법규·설계변경·사고·공급조건 변경은 이전 게이트를 `REOPEN`할 수 있다.
 - 게이트 재개방 시 영향을 받는 문서와 미션은 자동으로 `CHANGE_IMPACT_REQUIRED`가 된다.
+
+## 12. Evidence·휴먼 승인·국제 오버레이 강제 규칙
+
+게이트 상태 변경은 다음 순서를 따른다.
+
+```text
+Evidence 레코드 등록
+  → source/version/hash/reliability/scope 검증
+  → required_evidence_ids 대조
+  → Agent 호출·참여자·Human-in-the-loop 로그 대조
+  → Gate audit 통과
+  → 지정 인간 승인자 서명
+  → 기준선 승격
+```
+
+- 문서 목록, 파일 생성일, AI 요약만으로는 게이트 Evidence를 충족하지 않는다.
+- 안전·법규·허가·계약·시공·운영 판단은 관련 Agent의 호출 기록과 실제 사람 검토 상태가 모두 있어야 한다.
+- 국제 조건(`host_country != Korea`, 국경간 계약, 국제금융, 외국 EPC/공급자)이 하나라도 활성화되면 `agents/international-overlay.json`의 게이트별 Council·최소 인간 역할·필수 검증항목을 해당 Gate에 추가한다.
+- 국제 오버레이는 단순 참고 문서가 아니다. G2에서는 표준·인증·계통·공급망 적용표, G3에서는 현지 인허가·E&S·언어 통제, G4에서는 FIDIC/준거법·대주단 기술실사·조달/통관·다국어 계약 일치성을 필수 검증한다.
+- OpenAI·Claude·SolarPro의 독립 판정은 각각 출처가 있는 `AgentInvocation`으로 기록하고, PMO는 합의 여부·이견·미해결 조건을 Decision Log에 남긴다. AI 합의는 인간 승인으로 간주하지 않는다.
+
+## 13. 병렬 실행·예외·재기준선
+
+- 같은 Phase의 미션은 `parallel_group`과 선행조건이 명시되고 서로의 출력을 변경하지 않을 때만 병렬 실행한다.
+- 병렬 실행은 Gate 순서를 없애지 않는다. 각 트랙은 개별 Evidence·리뷰·출력 버전을 남기고, Gate에서는 모든 필수 트랙을 통합 검증한다.
+- 인허가 준비와 EPC 준비처럼 병렬 가능한 작업은 허용하되, 공통 입력이 변경되면 영향을 받는 트랙을 즉시 중단하고 `REVIEW_REQUIRED`로 전환한다.
+- 예외는 PMO Change Request로 등록하며, 영향범위·안전성·비용·일정·계약·규제 영향을 검토한 뒤 승인한다. 법정 안전·허가 조건은 예외 처리할 수 없다.
+- 승인된 변경은 새 기준선 버전으로 기록하고, 종속 미션·Evidence·Gate를 재실행한다. 과거 기록은 삭제하지 않는다.

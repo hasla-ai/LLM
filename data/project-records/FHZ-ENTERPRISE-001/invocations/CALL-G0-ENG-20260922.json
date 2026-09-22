@@ -1,0 +1,25 @@
+{
+  "invocation_id": "CALL-G0-ENG-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-ENG-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "Chief Engineer 관점의 요구사항·설계기준·책임경계 검토",
+  "context_refs": ["FHZ-CHARTER-001", "FHZ-REQ-001", "D-021"],
+  "status": "blocked",
+  "position": {
+    "summary": "오프라인 검색에서 설계기준 승인에 사용할 active verified 근거를 매칭하지 못했다.",
+    "recommendation": "request_more_data",
+    "confidence": "not_assessed",
+    "conditions": ["설계 책임경계와 실제 ProjectIntent 확정", "전문분야별 기준문서 연결"],
+    "dissent_refs": []
+  },
+  "output_refs": [],
+  "blockers": [{"blocker_id": "BLK-CALL-ENG-001", "severity": "high", "message": "설계기준과 실제 사업조건의 연결이 기준선화되지 않았다.", "owner_role": "Chief Engineer", "resolution_required": "ProjectIntent와 분야별 Design Basis를 등록하고 독립검토를 요청한다.", "due_at": null}],
+  "escalation": {"required": true, "reason": "기술 기준선은 Chief Engineer와 분야별 Professional의 확인이 필요하다.", "target_roles": ["Chief Engineer", "Hydrogen Process Lead", "Electrical/Grid Lead", "HSE/Regulatory Authority"]},
+  "human_review": {"required": true, "status": "pending", "reviewers": [{"role": "Chief Engineer", "user_id": null, "display_name": null, "organization": null}, {"role": "Independent Reviewer", "user_id": null, "display_name": null, "organization": null}]},
+  "started_at": "2026-09-22T09:05:20Z",
+  "completed_at": "2026-09-22T09:05:20Z",
+  "trace": {"model_id": null, "prompt_version": "retrieval-v1", "source_refs": ["python -m knowledge.pipeline search --offline"], "request_id": "RET-AUTO-20260922T090520Z"},
+  "extensions": {"retrieval_hits": [], "retrieval_warnings": ["no active verified knowledge matched; do not infer a decision"]}
+}

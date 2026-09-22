@@ -49,10 +49,12 @@ PM 기준선 추가:
 - `docs/02-engineering/h2-calc-kernel.md`: 계산 커널 설계 — 8기본차원·근거등급 전파·불확실도
 - `docs/02-engineering/h2-calc-kernel-overlay.md`: SCRUM-29 controlled_overlay 기준선 (기존 문서를 이 경로로 이동)
 - `docs/03-governance/findings-2026-09-22.md`: 단계 분류 충돌과 계산 결함 검토 결과
+- `docs/03-governance/scrum-cross-cutting-integration.md`: SCRUM-29·SCRUM-30–38·SCRUM-39와 G0–G7 전체 연결 기준선
 - `docs/03-governance/mission-library-100.json`: 선행관계·완료기준·차단조건이 채워진 미션 라이브러리 참고본
 - `knowledge/formula-library-h2.json`: 수소 플랜트 고유식 18개, 검증 케이스 22개
 - `tools/validate_formulas.py`: 공식 검증 케이스 실행 + 스키마 검증 (레포 최초 테스트)
 - `app/calc.py`: 총발전단/순출력·잔압·저장밀도를 고친 계산 모듈
+- `security/audit.py`: 보호 자산·Gate·Evidence·공식·계산기 기준값 출처를 검사하는 읽기 전용 감사
 - `app/static/h2-module.html`: 계산 워크벤치
 - `app/static/h2-mission-engine.html`: 100개 미션 게이팅 엔진
 
@@ -71,7 +73,7 @@ PM 기준선 추가:
 - G0 검토회의와 HOLD 권고를 `data/project-records/FHZ-ENTERPRISE-001/meetings/MTG-G0-2026-09-22.json` 및 `data/project-records/FHZ-ENTERPRISE-001/decisions/DEC-G0-HOLD-2026-09-22.json`에 기록했다.
 - PMO·Chief Engineer·HSE·Product·Data·AI Safety·Independent Reviewer Agent의 오프라인 사전검토 7건을 `data/project-records/FHZ-ENTERPRISE-001/invocations/`에 기록했다. 매칭 부족·KGS 원문 부족·인간 서명 필요를 이유로 G0 HOLD를 유지한다.
 - Sola 검토 6개 항목을 `data/project-records/FHZ-ENTERPRISE-001/external-reviews/SOLA-G0-2026-09-22.json`으로 기록했다. `AG-AI-001`·`AG-GOV-001` 호출을 추가하고 회의 참가자·필수 Agent·Invocation 정합성 검사를 연결했다.
-- `verify-offline-bundle` 결과는 114개 파일·해시·초과/누락 파일·source register 정합성 모두 통과했다. 단, 출처 9건은 여전히 `metadata_only`이므로 `offline-check`의 `baseline_ready=false`는 유지한다.
+- `verify-offline-bundle` 결과는 119개 파일·해시·초과/누락 파일·source register 정합성 모두 통과했다. 단, 출처 9건은 여전히 `metadata_only`이므로 `offline-check`의 `baseline_ready=false`는 유지한다.
 - `audit-gate`는 7개 G0 Evidence가 모두 `unverified`이고 인간 검토가 대기 중임을 검출하여 `hold_until_audit_errors_resolved`를 반환했다. 이는 실패가 아니라 문서 존재만으로 G0가 통과되지 않는지 확인한 정상 차단이다.
 - SCRUM-29 커널 기준선은 `docs/02-engineering/h2-calc-kernel-overlay.md`와 `knowledge/calculation-kernel.json`에 기록하고, SCRUM-39 보호 기준은 `security/protection-policy.json`과 `python -m security.audit`에 연결했다. 기존 SCRUM-18과 G0–G7의 순서·의미는 변경하지 않았다.
 - `python tools/validate_formulas.py`를 실행했다. 검증 케이스 23건 통과·0건 실패, 스키마 6건 통과·0건 실패다. 기존 일반공식 15개 중 14개는 `validation_case`가 없어 경고로 남는다(F-05, SCRUM-36).

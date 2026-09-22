@@ -1,0 +1,18 @@
+{
+  "invocation_id": "CALL-G0-GOV-20260922",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "agent_id": "AG-GOV-001",
+  "meeting_id": "MTG-G0-2026-09-22",
+  "decision_id": "DEC-G0-HOLD-2026-09-22",
+  "purpose": "Sponsor 권한·G0 의사결정·중단기준 검토",
+  "context_refs": ["FHZ-CHARTER-001", "D-021", "REV-SOLA-G0-2026-09-22"],
+  "status": "human_review",
+  "position": {"summary":"Sponsor 의사결정은 실제 사업입력·근거·전문가 의견·사람 서명을 확인한 뒤에만 가능하다.","recommendation":"hold","confidence":"high","conditions":["ProjectIntent 등록","offline baseline readiness 확인","지정 인간 승인자 서명"],"dissent_refs":[]},
+  "output_refs": [],
+  "blockers": [{"blocker_id":"BLK-CALL-GOV-001","severity":"high","message":"G0 승인 입력이 완성되지 않았다.","owner_role":"Sponsor","resolution_required":"G0 audit 오류를 해소하고 인간 승인 기록을 남긴다.","due_at":null}],
+  "escalation": {"required":true,"reason":"Project stop/pass 권한은 실제 Sponsor가 행사해야 한다.","target_roles":["Sponsor","PMO","Chief Engineer"]},
+  "human_review": {"required":true,"status":"pending","reviewers":[{"role":"Sponsor","user_id":null,"display_name":null,"organization":null}]},
+  "started_at":"2026-09-22T09:05:20Z","completed_at":"2026-09-22T09:05:20Z",
+  "trace":{"model_id":null,"prompt_version":"gate-audit-v1","source_refs":["docs/03-governance/gate-criteria.md","knowledge/pipeline.py"],"request_id":"AUDIT-G0-20260922T090520Z"},
+  "extensions":{"decision_authority":"human_sponsor_only"}
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "policy_id": "FHZ-SECURITY-CODE-PROTECTION-001",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "version": "1.0.0",
+  "jira_issue": "SCRUM-39",
+  "protected_program": "SCRUM-18",
+  "protected_invariants": [
+    "G0-G7 order and gate meaning",
+    "Evidence provenance and human signoff semantics",
+    "offline deny_all_remote_fetch policy",
+    "international overlay activation and responsibility",
+    "append-only project records",
+    "legacy app and forge_model remain preserved"
+  ],
+  "protected_assets": [
+    {"path":"app/","classification":"legacy_runtime","change_rule":"change_request_and_regression"},
+    {"path":"forge_model/","classification":"legacy_model","change_rule":"change_request_and_regression"},
+    {"path":"agents/","classification":"internal_protected","change_rule":"registry_review_and_agent_audit"},
+    {"path":"workflow/","classification":"internal_protected","change_rule":"PMO_change_and_process_audit"},
+    {"path":"schemas/","classification":"internal_protected","change_rule":"schema_version_migration_and_examples"},
+    {"path":"knowledge/","classification":"source_and_formula_protected","change_rule":"source_hash_review_and_rebuild"},
+    {"path":"docs/03-governance/","classification":"governance_high","change_rule":"decision_log_and_human_approval"},
+    {"path":"data/project-records/","classification":"audit_high","change_rule":"append_only_no_delete"}
+  ],
+  "forbidden_changes": [
+    "bypass_human_signoff",
+    "change_gate_order_without_decision_log",
+    "execute_dynamic_formula_code",
+    "promote_unverified_evidence_to_baseline",
+    "enable_remote_fetch_in_offline_mode",
+    "overwrite_or_delete_prior_project_record"
+  ],
+  "required_controls": [
+    "pre_execution_schema_validation",
+    "content_hash_and_manifest_validation",
+    "least_privilege_and_role_separation",
+    "append_only_audit_log",
+    "calculation_inputs_from_versioned_library",
+    "change_request_and_regression_test",
+    "human_review_for_high_risk_outputs"
+  ],
+  "extensions": {"mode":"read_only_audit_overlay","does_not_replace":"G0-G7_gate_approval"}
+}
