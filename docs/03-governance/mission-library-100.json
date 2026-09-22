@@ -1,0 +1,6159 @@
+{
+  "contractVersion": "1.0.0",
+  "generatedAt": "2026-09-17",
+  "scope": "수소연료전지 발전소 (PAFC/MCFC/SOFC) — 전 생애주기, 한국 + 국제 기준 병행",
+  "constants": {
+    "LHV_H2_kWh_kg": 33.322,
+    "HHV_H2_kWh_kg": 39.394,
+    "M_H2": 2.016,
+    "M_O2": 31.998,
+    "M_H2O": 18.015,
+    "M_N2": 28.014,
+    "R": 8.314462,
+    "O2_mass_frac_air": 0.2314,
+    "gamma_H2": 1.41,
+    "hours_yr": 8760
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "n": "정의·데이터계약",
+      "gate": "G0 기준 동결"
+    },
+    {
+      "id": "P1",
+      "n": "사업성·시장·입찰",
+      "gate": "G1 사업성"
+    },
+    {
+      "id": "P2",
+      "n": "부지·GIS·토지",
+      "gate": "G2 부지확정"
+    },
+    {
+      "id": "P3",
+      "n": "수소 공급체계",
+      "gate": "G3 공급확정"
+    },
+    {
+      "id": "P4",
+      "n": "계통연계",
+      "gate": "G4 연계확정"
+    },
+    {
+      "id": "P5",
+      "n": "설계기준·FEED",
+      "gate": "G5 FEED승인"
+    },
+    {
+      "id": "P6",
+      "n": "안전성·리스크",
+      "gate": "G6 SafetyCase"
+    },
+    {
+      "id": "P7",
+      "n": "인허가",
+      "gate": "G7 인허가완결"
+    },
+    {
+      "id": "P8",
+      "n": "금융·계약·조달",
+      "gate": "G8 FID"
+    },
+    {
+      "id": "P9",
+      "n": "시공·시운전·인수",
+      "gate": "G9 COD"
+    }
+  ],
+  "roles": {
+    "OWN": {
+      "n": "발주처 투자심의",
+      "ext": false
+    },
+    "PM": {
+      "n": "사업총괄 PM",
+      "ext": false
+    },
+    "DEV": {
+      "n": "사업개발 책임",
+      "ext": false
+    },
+    "PE-EL": {
+      "n": "전기 책임 (전기안전/전기기술사)",
+      "ext": false,
+      "lic": true
+    },
+    "PE-GAS": {
+      "n": "가스 책임 (가스기술사)",
+      "ext": false,
+      "lic": true
+    },
+    "PE-MEC": {
+      "n": "기계 책임 (기계기술사)",
+      "ext": false,
+      "lic": true
+    },
+    "PE-CIV": {
+      "n": "토목·건축 책임",
+      "ext": false,
+      "lic": true
+    },
+    "PE-CTL": {
+      "n": "계장·제어 책임",
+      "ext": false
+    },
+    "HSE": {
+      "n": "안전보건 책임",
+      "ext": false
+    },
+    "LEG": {
+      "n": "인허가·법무 책임",
+      "ext": false
+    },
+    "FIN": {
+      "n": "재무 책임",
+      "ext": false
+    },
+    "QA": {
+      "n": "품질보증 책임",
+      "ext": false
+    },
+    "AHJ": {
+      "n": "관계행정기관 (외부)",
+      "ext": true
+    }
+  },
+  "evidenceTypes": {
+    "STATUTE": {
+      "n": "법령",
+      "req": [
+        "법령명",
+        "조항",
+        "시행일",
+        "출처URL"
+      ],
+      "strict": true
+    },
+    "CODE": {
+      "n": "기술기준",
+      "req": [
+        "코드번호",
+        "판/개정번호",
+        "발행일",
+        "발행기관"
+      ],
+      "strict": true
+    },
+    "CALC": {
+      "n": "계산서",
+      "req": [
+        "계산ID",
+        "입력값",
+        "산식버전",
+        "단위검증"
+      ],
+      "strict": true
+    },
+    "TEST": {
+      "n": "시험성적서",
+      "req": [
+        "시험기관",
+        "성적서번호",
+        "시험일"
+      ],
+      "strict": true
+    },
+    "SURVEY": {
+      "n": "현장조사",
+      "req": [
+        "조사일",
+        "조사자",
+        "좌표"
+      ],
+      "strict": false
+    },
+    "EXTDATA": {
+      "n": "외부DB",
+      "req": [
+        "데이터셋",
+        "스냅샷일자",
+        "출처"
+      ],
+      "strict": true
+    },
+    "OFFICIAL": {
+      "n": "공문",
+      "req": [
+        "문서번호",
+        "발신기관",
+        "수신일"
+      ],
+      "strict": true
+    },
+    "DRAWING": {
+      "n": "도면",
+      "req": [
+        "도면번호",
+        "Rev",
+        "발행일"
+      ],
+      "strict": true
+    },
+    "CONTRACT": {
+      "n": "계약서",
+      "req": [
+        "계약명",
+        "체결일",
+        "당사자"
+      ],
+      "strict": true
+    },
+    "MINUTES": {
+      "n": "회의록",
+      "req": [
+        "일자",
+        "참석자"
+      ],
+      "strict": false
+    },
+    "VENDOR": {
+      "n": "벤더자료",
+      "req": [
+        "제조사",
+        "문서번호",
+        "개정일"
+      ],
+      "strict": false
+    }
+  },
+  "missionKinds": {
+    "DEF": {
+      "n": "정의·계약",
+      "d": "사람이 값을 확정하고 동결한다"
+    },
+    "CALC": {
+      "n": "결정론적 계산",
+      "d": "코드가 계산한다. AI는 숫자를 만들지 않는다"
+    },
+    "EXT": {
+      "n": "외부자료 조회",
+      "d": "외부 DB/기관 자료 없이는 진행 불가"
+    },
+    "DRAFT": {
+      "n": "초안 생성",
+      "d": "AI 초안 허용. 초안은 가정으로만 등록된다"
+    },
+    "EXPERT": {
+      "n": "자격자 판정",
+      "d": "유자격 전문가 승인 없이는 통과 불가"
+    },
+    "FILE": {
+      "n": "관청 제출",
+      "d": "외부 기관의 회신 공문이 있어야 종료"
+    },
+    "GATE": {
+      "n": "단계 게이트",
+      "d": "선행 미션 전건 승인 + 게이트 판정"
+    }
+  },
+  "schemaEntities": [
+    "ProjectIntent",
+    "SiteCandidate",
+    "HydrogenSpec",
+    "PowerSpec",
+    "GridSpec",
+    "DesignBasis",
+    "Evidence",
+    "Mission",
+    "Gate",
+    "PermitRequirement",
+    "Document",
+    "ReviewDecision"
+  ],
+  "calculators": {
+    "module_config": {
+      "name": "모듈 구성",
+      "version": "1.0.0",
+      "mission": "M016",
+      "note": null,
+      "inputs": [
+        {
+          "key": "targetMW",
+          "label": "목표 순출력",
+          "unit": "MW",
+          "seedDefault": 20
+        },
+        {
+          "key": "rating_kW",
+          "label": "모듈 정격",
+          "unit": "kW",
+          "seedDefault": 440
+        },
+        {
+          "key": "spare",
+          "label": "예비 모듈",
+          "unit": "개",
+          "seedDefault": 0
+        }
+      ],
+      "outputs": [
+        {
+          "key": "count",
+          "label": "필요 모듈 수",
+          "unit": "개"
+        },
+        {
+          "key": "installedMW",
+          "label": "설치용량",
+          "unit": "MW"
+        },
+        {
+          "key": "margin_pct",
+          "label": "설계 여유",
+          "unit": "%"
+        }
+      ],
+      "formula": "i=>{const c=Math.ceil(i.targetMW*1000/i.rating_kW);const tot=(c+i.spare)*i.rating_kW/1000; return{count:c+i.spare,installedMW:tot,margin_pct:(tot/i.targetMW-1)*100}}"
+    },
+    "h2_demand": {
+      "name": "수소 수요량",
+      "version": "1.0.0",
+      "mission": "M031",
+      "note": "효율은 총발전단(Gross AC)/수소 LHV 입력 기준. 기준 발열량 33.322 kWh/kg.",
+      "inputs": [
+        {
+          "key": "installedMW",
+          "label": "설치용량(총발전단)",
+          "unit": "MW",
+          "seedDefault": 20
+        },
+        {
+          "key": "etaEl",
+          "label": "발전효율 LHV",
+          "unit": "%",
+          "seedDefault": 50
+        },
+        {
+          "key": "parasitic",
+          "label": "소내부하율",
+          "unit": "%",
+          "seedDefault": 8
+        },
+        {
+          "key": "cf",
+          "label": "이용률",
+          "unit": "%",
+          "seedDefault": 90
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fuelIn_kW",
+          "label": "수소 투입열량",
+          "unit": "kW"
+        },
+        {
+          "key": "flow_kg_h",
+          "label": "수소 소비량",
+          "unit": "kg/h"
+        },
+        {
+          "key": "netMW",
+          "label": "순출력",
+          "unit": "MW"
+        },
+        {
+          "key": "annual_t_yr",
+          "label": "연간 수소량",
+          "unit": "t/yr"
+        },
+        {
+          "key": "sfc_kg_MWh",
+          "label": "단위소비율",
+          "unit": "kg/MWh"
+        }
+      ],
+      "formula": "i=>{const fuel=i.installedMW*1000/(i.etaEl/100);const flow=fuel/33.322; const net=i.installedMW*(1-i.parasitic/100); return{fuelIn_kW:fuel,flow_kg_h:flow,netMW:net, annual_t_yr:flow*8760*(i.cf/100)/1000,sfc_kg_MWh:flow/i.installedMW}}"
+    },
+    "storage_sizing": {
+      "name": "저장용량 산정",
+      "version": "1.0.0",
+      "mission": "M035",
+      "note": null,
+      "inputs": [
+        {
+          "key": "flow_kg_h",
+          "label": "수소 소비량",
+          "unit": "kg/h",
+          "seedDefault": 1200
+        },
+        {
+          "key": "cf",
+          "label": "이용률",
+          "unit": "%",
+          "seedDefault": 90
+        },
+        {
+          "key": "autonomy",
+          "label": "자립일수",
+          "unit": "day",
+          "seedDefault": 2
+        },
+        {
+          "key": "usable",
+          "label": "사용가능 비율",
+          "unit": "%",
+          "seedDefault": 80
+        },
+        {
+          "key": "payload",
+          "label": "1대 적재량",
+          "unit": "kg",
+          "seedDefault": 340
+        }
+      ],
+      "outputs": [
+        {
+          "key": "daily_kg",
+          "label": "일 소비량",
+          "unit": "kg/day"
+        },
+        {
+          "key": "required_kg",
+          "label": "필요 저장량",
+          "unit": "kg"
+        },
+        {
+          "key": "units",
+          "label": "용기/트레일러 수",
+          "unit": "대"
+        },
+        {
+          "key": "trips_day",
+          "label": "일 운송횟수",
+          "unit": "회/day"
+        }
+      ],
+      "formula": "i=>{const d=i.flow_kg_h*24*(i.cf/100);const req=d*i.autonomy/(i.usable/100); return{daily_kg:d,required_kg:req,units:Math.ceil(req/i.payload),trips_day:d/i.payload}}"
+    },
+    "mass_energy_balance": {
+      "name": "물질·에너지 수지",
+      "version": "1.0.0",
+      "mission": "M052",
+      "note": "H2 + ½O2 → H2O. 화학량론 질량비: O2/H2 = 7.9360, H2O/H2 = 8.9360.",
+      "inputs": [
+        {
+          "key": "flow_kg_h",
+          "label": "수소 투입",
+          "unit": "kg/h",
+          "seedDefault": 1200
+        },
+        {
+          "key": "etaEl",
+          "label": "발전효율 LHV",
+          "unit": "%",
+          "seedDefault": 50
+        },
+        {
+          "key": "heatRec",
+          "label": "열회수율 LHV",
+          "unit": "%",
+          "seedDefault": 25
+        },
+        {
+          "key": "lambda",
+          "label": "공기비",
+          "unit": "-",
+          "seedDefault": 2
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fuelIn_kW",
+          "label": "투입열량",
+          "unit": "kW"
+        },
+        {
+          "key": "elec_kW",
+          "label": "전기출력",
+          "unit": "kW"
+        },
+        {
+          "key": "heat_kW",
+          "label": "회수열",
+          "unit": "kW"
+        },
+        {
+          "key": "loss_kW",
+          "label": "손실",
+          "unit": "kW"
+        },
+        {
+          "key": "o2_kg_h",
+          "label": "산소 소비",
+          "unit": "kg/h"
+        },
+        {
+          "key": "air_kg_h",
+          "label": "공기 공급",
+          "unit": "kg/h"
+        },
+        {
+          "key": "water_kg_h",
+          "label": "생성수",
+          "unit": "kg/h"
+        },
+        {
+          "key": "massResidual_pct",
+          "label": "질량수지 잔차",
+          "unit": "%"
+        }
+      ],
+      "formula": "i=>{const fuel=i.flow_kg_h*33.322;const el=fuel*i.etaEl/100;const ht=fuel*i.heatRec/100; const o2=i.flow_kg_h*7.9360;const air=o2/0.2314*i.lambda;const w=i.flow_kg_h*8.9360; const mIn=i.flow_kg_h+air;const mOut=w+(air-o2); return{fuelIn_kW:fuel,elec_kW:el,heat_kW:ht,loss_kW:fuel-el-ht,o2_kg_h:o2,air_kg_h:air, water_kg_h:w,massResidual_pct:(mIn-mOut)/mIn*100}}"
+    },
+    "parasitic_load": {
+      "name": "소내부하 산정",
+      "version": "1.0.0",
+      "mission": "M054",
+      "note": null,
+      "inputs": [
+        {
+          "key": "installedMW",
+          "label": "설치용량",
+          "unit": "MW",
+          "seedDefault": 20
+        },
+        {
+          "key": "blower_kW",
+          "label": "공기공급",
+          "unit": "kW",
+          "seedDefault": 620
+        },
+        {
+          "key": "cooling_kW",
+          "label": "냉각계통",
+          "unit": "kW",
+          "seedDefault": 480
+        },
+        {
+          "key": "h2sys_kW",
+          "label": "수소계통",
+          "unit": "kW",
+          "seedDefault": 210
+        },
+        {
+          "key": "ctrl_kW",
+          "label": "제어·계측",
+          "unit": "kW",
+          "seedDefault": 55
+        },
+        {
+          "key": "aux_kW",
+          "label": "기타 소내",
+          "unit": "kW",
+          "seedDefault": 190
+        }
+      ],
+      "outputs": [
+        {
+          "key": "total_kW",
+          "label": "소내부하 합계",
+          "unit": "kW"
+        },
+        {
+          "key": "parasitic_pct",
+          "label": "소내부하율",
+          "unit": "%"
+        },
+        {
+          "key": "netMW",
+          "label": "순출력",
+          "unit": "MW"
+        }
+      ],
+      "formula": "i=>{const t=i.blower_kW+i.cooling_kW+i.h2sys_kW+i.ctrl_kW+i.aux_kW; return{total_kW:t,parasitic_pct:t/(i.installedMW*1000)*100,netMW:i.installedMW-t/1000}}"
+    },
+    "release_rate": {
+      "name": "누출률 (초크드 오리피스)",
+      "version": "1.0.0",
+      "mission": "M064",
+      "note": "등엔트로피 초크류 이상기체 가정. γ=1.41, R_s(H2)=4124.2 J/kg·K. 화염길이는 이 계산기가 산출하지 않는다 — 검증된 상관식 근거(M065)가 등록되어야 한다.",
+      "inputs": [
+        {
+          "key": "p_barg",
+          "label": "저장압력",
+          "unit": "barg",
+          "seedDefault": 200
+        },
+        {
+          "key": "t_C",
+          "label": "온도",
+          "unit": "°C",
+          "seedDefault": 15
+        },
+        {
+          "key": "d_mm",
+          "label": "누출공 직경",
+          "unit": "mm",
+          "seedDefault": 3
+        },
+        {
+          "key": "cd",
+          "label": "유출계수",
+          "unit": "-",
+          "seedDefault": 0.62
+        }
+      ],
+      "outputs": [
+        {
+          "key": "area_mm2",
+          "label": "누출 단면적",
+          "unit": "mm²"
+        },
+        {
+          "key": "mdot_kg_s",
+          "label": "질량유량",
+          "unit": "kg/s"
+        },
+        {
+          "key": "mdot_kg_min",
+          "label": "질량유량",
+          "unit": "kg/min"
+        },
+        {
+          "key": "vol_Nm3_h",
+          "label": "표준상태 환산",
+          "unit": "Nm³/h"
+        }
+      ],
+      "formula": "i=>{const P=(i.p_barg+1.01325)*1e5,T=i.t_C+273.15,g=1.41,Rs=4124.2; const A=Math.PI*Math.pow(i.d_mm/1000,2)/4; const m=i.cd*A*P*Math.sqrt(g/(Rs*T))*Math.pow(2/(g+1),(g+1)/(2*(g-1))); return{area_mm2:A*1e6,mdot_kg_s:m,mdot_kg_min:m*60,vol_Nm3_h:m*3600/0.08988}}"
+    },
+    "logistics": {
+      "name": "공급 물류",
+      "version": "1.0.0",
+      "mission": "M033",
+      "note": null,
+      "inputs": [
+        {
+          "key": "distance_km",
+          "label": "편도 거리",
+          "unit": "km",
+          "seedDefault": 85
+        },
+        {
+          "key": "speed_kmh",
+          "label": "평균 속도",
+          "unit": "km/h",
+          "seedDefault": 45
+        },
+        {
+          "key": "handling_h",
+          "label": "상하차·검사 시간",
+          "unit": "h",
+          "seedDefault": 3
+        },
+        {
+          "key": "daily_kg",
+          "label": "일 소비량",
+          "unit": "kg/day",
+          "seedDefault": 25920
+        },
+        {
+          "key": "payload",
+          "label": "1대 적재량",
+          "unit": "kg",
+          "seedDefault": 340
+        }
+      ],
+      "outputs": [
+        {
+          "key": "cycle_h",
+          "label": "1회 순환시간",
+          "unit": "h"
+        },
+        {
+          "key": "trips_day",
+          "label": "일 운송횟수",
+          "unit": "회/day"
+        },
+        {
+          "key": "fleet",
+          "label": "상시 필요 대수",
+          "unit": "대"
+        },
+        {
+          "key": "arrival_int_min",
+          "label": "평균 도착간격",
+          "unit": "min"
+        }
+      ],
+      "formula": "i=>{const cyc=i.distance_km*2/i.speed_kmh+i.handling_h;const trips=i.daily_kg/i.payload; return{cycle_h:cyc,trips_day:trips,fleet:Math.ceil(trips*cyc/24),arrival_int_min:24*60/trips}}"
+    },
+    "route_check": {
+      "name": "중량물 운송 제약",
+      "version": "1.0.0",
+      "mission": "M027",
+      "note": null,
+      "inputs": [
+        {
+          "key": "mod_mass_t",
+          "label": "모듈 중량",
+          "unit": "t",
+          "seedDefault": 28
+        },
+        {
+          "key": "mod_w_m",
+          "label": "모듈 폭",
+          "unit": "m",
+          "seedDefault": 2.9
+        },
+        {
+          "key": "mod_h_m",
+          "label": "모듈 높이",
+          "unit": "m",
+          "seedDefault": 3.2
+        },
+        {
+          "key": "bridge_t",
+          "label": "경로 최소 교량하중",
+          "unit": "t",
+          "seedDefault": 40
+        },
+        {
+          "key": "clear_h_m",
+          "label": "경로 최소 통과높이",
+          "unit": "m",
+          "seedDefault": 4.5
+        },
+        {
+          "key": "lane_w_m",
+          "label": "경로 최소 차로폭",
+          "unit": "m",
+          "seedDefault": 3
+        }
+      ],
+      "outputs": [
+        {
+          "key": "massMargin_t",
+          "label": "하중 여유",
+          "unit": "t"
+        },
+        {
+          "key": "heightMargin_m",
+          "label": "높이 여유",
+          "unit": "m"
+        },
+        {
+          "key": "widthMargin_m",
+          "label": "폭 여유",
+          "unit": "m"
+        },
+        {
+          "key": "pass",
+          "label": "통과 가능 (1=가능)",
+          "unit": "-"
+        }
+      ],
+      "formula": "i=>{const tr=i.mod_mass_t+12;const mm=i.bridge_t-tr,hm=i.clear_h_m-(i.mod_h_m+1.2),wm=i.lane_w_m-i.mod_w_m; return{massMargin_t:mm,heightMargin_m:hm,widthMargin_m:wm,pass:(mm>0&&hm>0&&wm>0)?1:0}}"
+    },
+    "bulk_qty": {
+      "name": "배관·케이블 물량",
+      "version": "1.0.0",
+      "mission": "M059",
+      "note": null,
+      "inputs": [
+        {
+          "key": "area_m2",
+          "label": "플랜트 면적",
+          "unit": "m²",
+          "seedDefault": 9000
+        },
+        {
+          "key": "modules",
+          "label": "모듈 수",
+          "unit": "개",
+          "seedDefault": 46
+        },
+        {
+          "key": "pipeFactor",
+          "label": "배관 원단위",
+          "unit": "m/모듈",
+          "seedDefault": 38
+        },
+        {
+          "key": "cableFactor",
+          "label": "케이블 원단위",
+          "unit": "m/모듈",
+          "seedDefault": 145
+        },
+        {
+          "key": "waste_pct",
+          "label": "할증률",
+          "unit": "%",
+          "seedDefault": 12
+        }
+      ],
+      "outputs": [
+        {
+          "key": "pipe_m",
+          "label": "배관 연장",
+          "unit": "m"
+        },
+        {
+          "key": "cable_m",
+          "label": "케이블 연장",
+          "unit": "m"
+        },
+        {
+          "key": "rack_m",
+          "label": "랙·트레이 연장",
+          "unit": "m"
+        }
+      ],
+      "formula": "i=>{const w=1+i.waste_pct/100; return{pipe_m:i.modules*i.pipeFactor*w,cable_m:i.modules*i.cableFactor*w, rack_m:Math.sqrt(i.area_m2)*4.2*w}}"
+    },
+    "capex_range": {
+      "name": "사업비 범위",
+      "version": "1.0.0",
+      "mission": "M018",
+      "note": null,
+      "inputs": [
+        {
+          "key": "installedMW",
+          "label": "설치용량",
+          "unit": "MW",
+          "seedDefault": 20
+        },
+        {
+          "key": "unitLow",
+          "label": "기기단가 하한",
+          "unit": "억원/MW",
+          "seedDefault": 38
+        },
+        {
+          "key": "unitMid",
+          "label": "기기단가 중앙",
+          "unit": "억원/MW",
+          "seedDefault": 46
+        },
+        {
+          "key": "unitHigh",
+          "label": "기기단가 상한",
+          "unit": "억원/MW",
+          "seedDefault": 55
+        },
+        {
+          "key": "bopPct",
+          "label": "BOP·토건 비율",
+          "unit": "%",
+          "seedDefault": 28
+        },
+        {
+          "key": "gridCost",
+          "label": "계통연계 비용",
+          "unit": "억원",
+          "seedDefault": 65
+        },
+        {
+          "key": "conting",
+          "label": "예비비",
+          "unit": "%",
+          "seedDefault": 12
+        }
+      ],
+      "outputs": [
+        {
+          "key": "low",
+          "label": "하한",
+          "unit": "억원"
+        },
+        {
+          "key": "mid",
+          "label": "중앙",
+          "unit": "억원"
+        },
+        {
+          "key": "high",
+          "label": "상한",
+          "unit": "억원"
+        },
+        {
+          "key": "perMW",
+          "label": "중앙 단가",
+          "unit": "억원/MW"
+        }
+      ],
+      "formula": "i=>{const b=u=>(i.installedMW*u*(1+i.bopPct/100)+i.gridCost)*(1+i.conting/100); const m=b(i.unitMid);return{low:b(i.unitLow),mid:m,high:b(i.unitHigh),perMW:m/i.installedMW}}"
+    },
+    "capex_detail": {
+      "name": "사업비 상세",
+      "version": "1.0.0",
+      "mission": "M081",
+      "note": null,
+      "inputs": [
+        {
+          "key": "equip",
+          "label": "주기기",
+          "unit": "억원",
+          "seedDefault": 920
+        },
+        {
+          "key": "bop",
+          "label": "BOP·기계",
+          "unit": "억원",
+          "seedDefault": 180
+        },
+        {
+          "key": "civil",
+          "label": "토건",
+          "unit": "억원",
+          "seedDefault": 140
+        },
+        {
+          "key": "elec",
+          "label": "전기·계장",
+          "unit": "억원",
+          "seedDefault": 120
+        },
+        {
+          "key": "grid",
+          "label": "계통연계",
+          "unit": "억원",
+          "seedDefault": 65
+        },
+        {
+          "key": "soft",
+          "label": "인허가·설계·금융",
+          "unit": "억원",
+          "seedDefault": 85
+        },
+        {
+          "key": "conting",
+          "label": "예비비",
+          "unit": "%",
+          "seedDefault": 10
+        }
+      ],
+      "outputs": [
+        {
+          "key": "direct",
+          "label": "직접비",
+          "unit": "억원"
+        },
+        {
+          "key": "total",
+          "label": "총사업비",
+          "unit": "억원"
+        },
+        {
+          "key": "equipShare_pct",
+          "label": "주기기 비중",
+          "unit": "%"
+        }
+      ],
+      "formula": "i=>{const d=i.equip+i.bop+i.civil+i.elec+i.grid+i.soft; return{direct:d,total:d*(1+i.conting/100),equipShare_pct:i.equip/d*100}}"
+    },
+    "lcoe": {
+      "name": "LCOE",
+      "version": "1.0.0",
+      "mission": "M019",
+      "note": "CRF = i(1+i)^n / ((1+i)^n − 1). 연료비 = 수소단가 ÷ (효율 × 33.322).",
+      "inputs": [
+        {
+          "key": "capex",
+          "label": "총사업비",
+          "unit": "억원",
+          "seedDefault": 1661
+        },
+        {
+          "key": "opexFix",
+          "label": "고정 O&M",
+          "unit": "억원/yr",
+          "seedDefault": 42
+        },
+        {
+          "key": "h2Price",
+          "label": "수소 단가",
+          "unit": "원/kg",
+          "seedDefault": 7500
+        },
+        {
+          "key": "netMW",
+          "label": "순출력",
+          "unit": "MW",
+          "seedDefault": 18.4
+        },
+        {
+          "key": "cf",
+          "label": "이용률",
+          "unit": "%",
+          "seedDefault": 90
+        },
+        {
+          "key": "etaEl",
+          "label": "발전효율 LHV",
+          "unit": "%",
+          "seedDefault": 50
+        },
+        {
+          "key": "disc",
+          "label": "할인율",
+          "unit": "%",
+          "seedDefault": 6.5
+        },
+        {
+          "key": "life",
+          "label": "운전기간",
+          "unit": "yr",
+          "seedDefault": 20
+        }
+      ],
+      "outputs": [
+        {
+          "key": "crf",
+          "label": "자본회수계수",
+          "unit": "-"
+        },
+        {
+          "key": "annualGWh",
+          "label": "연간 발전량",
+          "unit": "GWh"
+        },
+        {
+          "key": "capexPart",
+          "label": "자본비",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "opexPart",
+          "label": "고정운영비",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "fuelPart",
+          "label": "연료비",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "lcoe",
+          "label": "LCOE",
+          "unit": "원/kWh"
+        }
+      ],
+      "formula": "i=>{const r=i.disc/100,n=i.life;const crf=r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1); const kWh=i.netMW*1000*8760*i.cf/100; const cp=i.capex*1e8*crf/kWh, op=i.opexFix*1e8/kWh, fu=i.h2Price/(i.etaEl/100*33.322); return{crf:crf,annualGWh:kWh/1e6,capexPart:cp,opexPart:op,fuelPart:fu,lcoe:cp+op+fu}}"
+    },
+    "scenario_compare": {
+      "name": "시나리오 비교",
+      "version": "1.0.0",
+      "mission": "M082",
+      "note": null,
+      "inputs": [
+        {
+          "key": "baseLcoe",
+          "label": "기준 LCOE",
+          "unit": "원/kWh",
+          "seedDefault": 583
+        },
+        {
+          "key": "price",
+          "label": "판매단가",
+          "unit": "원/kWh",
+          "seedDefault": 610
+        },
+        {
+          "key": "h2Swing",
+          "label": "수소단가 변동폭",
+          "unit": "%",
+          "seedDefault": 25
+        },
+        {
+          "key": "fuelShare",
+          "label": "연료비 비중",
+          "unit": "%",
+          "seedDefault": 55
+        },
+        {
+          "key": "cfSwing",
+          "label": "이용률 변동폭",
+          "unit": "%",
+          "seedDefault": 8
+        }
+      ],
+      "outputs": [
+        {
+          "key": "pessLcoe",
+          "label": "비관 LCOE",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "optLcoe",
+          "label": "낙관 LCOE",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "baseMargin",
+          "label": "기준 마진",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "pessMargin",
+          "label": "비관 마진",
+          "unit": "원/kWh"
+        },
+        {
+          "key": "breakEvenH2_pct",
+          "label": "손익분기 수소단가 변동",
+          "unit": "%"
+        }
+      ],
+      "formula": "i=>{const fs=i.fuelShare/100; const pess=i.baseLcoe*(1+fs*i.h2Swing/100)*(1+i.cfSwing/100); const opt=i.baseLcoe*(1-fs*i.h2Swing/100)*(1-i.cfSwing/100); return{pessLcoe:pess,optLcoe:opt,baseMargin:i.price-i.baseLcoe,pessMargin:i.price-pess, breakEvenH2_pct:(i.price-i.baseLcoe)/(i.baseLcoe*fs)*100}}"
+    },
+    "performance_test": {
+      "name": "성능시험 판정",
+      "version": "1.0.0",
+      "mission": "M098",
+      "note": null,
+      "inputs": [
+        {
+          "key": "measMW",
+          "label": "실측 출력",
+          "unit": "MW",
+          "seedDefault": 18.1
+        },
+        {
+          "key": "guarMW",
+          "label": "보증 출력",
+          "unit": "MW",
+          "seedDefault": 18.4
+        },
+        {
+          "key": "measEta",
+          "label": "실측 효율",
+          "unit": "%",
+          "seedDefault": 48.6
+        },
+        {
+          "key": "guarEta",
+          "label": "보증 효율",
+          "unit": "%",
+          "seedDefault": 50
+        },
+        {
+          "key": "corrFactor",
+          "label": "보정계수",
+          "unit": "-",
+          "seedDefault": 1.008
+        },
+        {
+          "key": "ldRate",
+          "label": "출력 위약단가",
+          "unit": "억원/MW",
+          "seedDefault": 22
+        }
+      ],
+      "outputs": [
+        {
+          "key": "corrMW",
+          "label": "보정 출력",
+          "unit": "MW"
+        },
+        {
+          "key": "mwGap_pct",
+          "label": "출력 편차",
+          "unit": "%"
+        },
+        {
+          "key": "etaGap_pp",
+          "label": "효율 편차",
+          "unit": "%p"
+        },
+        {
+          "key": "ld",
+          "label": "위약금",
+          "unit": "억원"
+        },
+        {
+          "key": "verdict",
+          "label": "판정 (1=합격)",
+          "unit": "-"
+        }
+      ],
+      "formula": "i=>{const c=i.measMW*i.corrFactor;const gap=(c-i.guarMW)/i.guarMW*100; return{corrMW:c,mwGap_pct:gap,etaGap_pp:i.measEta-i.guarEta, ld:Math.max(0,(i.guarMW-c))*i.ldRate,verdict:(c>=i.guarMW&&i.measEta>=i.guarEta)?1:0}}"
+    }
+  },
+  "missions": [
+    {
+      "id": "M001",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "프로젝트 의도 확정",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [],
+      "inputs": [],
+      "outputs": [
+        "ProjectIntent.purpose",
+        "ProjectIntent.netCapacityMW",
+        "ProjectIntent.codTarget",
+        "ProjectIntent.dealStructure",
+        "ProjectIntent.offtaker"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "목적·정격출력·COD 중 하나라도 미확정",
+        "발주처 승인 주체 미지정"
+      ],
+      "acceptanceCriterion": "ProjectIntent의 5개 필드가 모두 값을 가지고, 발주처 승인 공문번호가 근거로 연결되어 있다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M002",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "단위계·기준상태 동결",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M001"
+      ],
+      "inputs": [
+        "ProjectIntent"
+      ],
+      "outputs": [
+        "DesignBasis.unitSystem",
+        "DesignBasis.refTempK",
+        "DesignBasis.refPressurekPa",
+        "DesignBasis.heatingValueBasis"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "LHV/HHV 기준 미명시",
+        "기준온도·압력 미명시"
+      ],
+      "acceptanceCriterion": "SI 단위계, 기준상태(온도 K·압력 kPa), 발열량 기준(LHV 또는 HHV)이 명시되고 이후 모든 계산이 이 값을 참조한다",
+      "durationDays": 3,
+      "calculator": null
+    },
+    {
+      "id": "M003",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "데이터 계약 v1 동결",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M002"
+      ],
+      "inputs": [
+        "DesignBasis.unitSystem"
+      ],
+      "outputs": [
+        "Schema@v1"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "엔티티 12종 중 미정의 항목 존재",
+        "필드별 단위 미기재"
+      ],
+      "acceptanceCriterion": "ProjectIntent·SiteCandidate·HydrogenSpec·PowerSpec·GridSpec·DesignBasis·Evidence·Mission·Gate·PermitRequirement·Document·ReviewDecision 12종 스키마가 버전 고정되고 모든 수치 필드에 단위가 붙어 있다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M004",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "프로젝트 그래프 초기화·ID 체계",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M003"
+      ],
+      "inputs": [
+        "Schema@v1"
+      ],
+      "outputs": [
+        "ProjectGraph.root",
+        "IdPolicy"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "ID 충돌 규칙 미정의"
+      ],
+      "acceptanceCriterion": "모든 노드가 유일 ID를 가지며, 채팅이 아닌 그래프에서 조회·역참조가 가능하다",
+      "durationDays": 2,
+      "calculator": null
+    },
+    {
+      "id": "M005",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "승인권한·자격요건(RACI) 등록",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M004"
+      ],
+      "inputs": [
+        "ProjectGraph.root"
+      ],
+      "outputs": [
+        "ApprovalMatrix"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "자격자 승인이 필요한 미션에 유자격자 미지정",
+        "승인자 부재 시 대행 규칙 없음"
+      ],
+      "acceptanceCriterion": "자격 필수 역할(전기·가스·기계·토목)에 자격번호가 확인된 실명이 매핑되고, 미지정 역할이 0건이다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M006",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "근거 저장소·무결성·보존정책",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M004"
+      ],
+      "inputs": [
+        "Schema@v1.Evidence"
+      ],
+      "outputs": [
+        "EvidencePolicy"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "QA",
+        "name": "품질보증 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "근거 유형별 필수속성 미정의",
+        "보존기간 미정"
+      ],
+      "acceptanceCriterion": "근거 유형별 필수속성이 정의되고, 필수속성 누락 근거는 시스템이 저장 단계에서 거부한다",
+      "durationDays": 3,
+      "calculator": null
+    },
+    {
+      "id": "M007",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "가정 레지스터 개설·폐기 규칙",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M006"
+      ],
+      "inputs": [
+        "EvidencePolicy"
+      ],
+      "outputs": [
+        "AssumptionRegister"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "QA",
+        "name": "품질보증 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "가정의 만료·검증 규칙 미정의"
+      ],
+      "acceptanceCriterion": "모든 가정이 소유자·만료일·검증방법·영향 미션을 갖고, 만료된 가정은 하위 미션을 자동 차단한다",
+      "durationDays": 3,
+      "calculator": null
+    },
+    {
+      "id": "M008",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "미션 DAG·게이트·차단조건 등록",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M007"
+      ],
+      "inputs": [
+        "AssumptionRegister"
+      ],
+      "outputs": [
+        "MissionGraph",
+        "GateSet"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "순환 의존 존재",
+        "게이트 통과조건 미정의"
+      ],
+      "acceptanceCriterion": "100개 미션의 선행관계에 순환이 없고(위상정렬 성공), 10개 게이트 각각에 통과조건이 기술되어 있다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M009",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "형상관리·문서번호·Rev 규칙",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M008"
+      ],
+      "inputs": [
+        "MissionGraph"
+      ],
+      "outputs": [
+        "DocPolicy"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "QA",
+        "name": "품질보증 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "Rev 승격 권한 미정의"
+      ],
+      "acceptanceCriterion": "문서번호 체계와 Rev 승격 조건이 정의되고, 승인되지 않은 Rev는 하위 미션 입력으로 사용될 수 없다",
+      "durationDays": 3,
+      "calculator": null
+    },
+    {
+      "id": "M010",
+      "phase": "P0",
+      "phaseName": "정의·데이터계약",
+      "title": "G0 — 기준 동결 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M005",
+        "M009"
+      ],
+      "inputs": [
+        "ApprovalMatrix",
+        "DocPolicy"
+      ],
+      "outputs": [
+        "Gate.G0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P0 미션 중 미승인 존재"
+      ],
+      "acceptanceCriterion": "M001~M009 전건이 승인 상태이며, 이후 기준 변경은 변경관리 절차를 거쳐야만 가능하다",
+      "durationDays": 2,
+      "calculator": null
+    },
+    {
+      "id": "M011",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "수소발전 입찰시장 트랙 결정",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M010"
+      ],
+      "inputs": [
+        "ProjectIntent.netCapacityMW"
+      ],
+      "outputs": [
+        "ProjectIntent.marketTrack",
+        "ProjectIntent.bidWindow"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "DEV",
+        "name": "사업개발 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "해당 연도 입찰공고문 미확보",
+        "낙찰 요건·평가배점 미확인"
+      ],
+      "acceptanceCriterion": "일반수소/청정수소 중 하나가 선택되고, 근거로 해당 연도 공고문(문서번호·공고일)이 연결되어 있다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M012",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "청정수소 인증 적용성·탄소집약도 요건 확인",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M011"
+      ],
+      "inputs": [
+        "ProjectIntent.marketTrack"
+      ],
+      "outputs": [
+        "HydrogenSpec.ciThreshold_kgCO2e_kgH2",
+        "HydrogenSpec.certScheme"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "STATUTE",
+          "name": "법령",
+          "requiredAttributes": [
+            "법령명",
+            "조항",
+            "시행일",
+            "출처URL"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "적용 고시 조문 미검증",
+        "산정경계(Well-to-Gate) 미정의"
+      ],
+      "acceptanceCriterion": "적용되는 탄소집약도 기준값과 산정경계가 고시 조문·시행일 근거와 함께 등록되어 있다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M013",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "수익구조 정의",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M011"
+      ],
+      "inputs": [
+        "ProjectIntent.marketTrack"
+      ],
+      "outputs": [
+        "ProjectIntent.revenueModel"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "정산 산식 미확정",
+        "계약기간 미확정"
+      ],
+      "acceptanceCriterion": "전력·인증서·열 각 수익원의 산식과 계약기간이 수치로 정의되어 재무모델이 직접 참조할 수 있다",
+      "durationDays": 7,
+      "calculator": null
+    },
+    {
+      "id": "M014",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "열 판매 가능성 검토",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M013"
+      ],
+      "inputs": [
+        "ProjectIntent.revenueModel"
+      ],
+      "outputs": [
+        "PowerSpec.heatOfftake",
+        "PowerSpec.heatRecoveryPct"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "DEV",
+        "name": "사업개발 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "열 수요처 미식별 시 열수익 0으로 고정"
+      ],
+      "acceptanceCriterion": "열 수요처 유무가 판정되고, 있을 경우 연간 열판매량(GJ)과 배관거리가 근거와 함께 등록된다",
+      "durationDays": 12,
+      "calculator": null
+    },
+    {
+      "id": "M015",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "연료전지 방식 확정 (PAFC/MCFC/SOFC)",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M011"
+      ],
+      "inputs": [
+        "ProjectIntent.netCapacityMW",
+        "HydrogenSpec.certScheme"
+      ],
+      "outputs": [
+        "PowerSpec.fcType",
+        "PowerSpec.moduleRating_kW",
+        "PowerSpec.etaEl_LHV_pct",
+        "PowerSpec.opTemp_C"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        },
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "벤더 성능 시험성적서 미수령",
+        "연료 사양(순수소/개질) 미확정"
+      ],
+      "acceptanceCriterion": "3개 방식 비교표가 동일 조건으로 작성되고, 선정안의 효율·정격이 제3자 시험성적서 번호로 뒷받침된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M016",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "설비용량·모듈 구성 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M015"
+      ],
+      "inputs": [
+        "ProjectIntent.netCapacityMW",
+        "PowerSpec.moduleRating_kW"
+      ],
+      "outputs": [
+        "PowerSpec.moduleCount",
+        "PowerSpec.installedMW"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "모듈 정격 미확정",
+        "예비 모듈 정책 미정"
+      ],
+      "acceptanceCriterion": "모듈 수량이 계산기 출력으로 산출되고, 설치용량이 목표 순출력 이상임이 단위검증을 통과한 계산서로 확인된다",
+      "durationDays": 3,
+      "calculator": "module_config"
+    },
+    {
+      "id": "M017",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "이용률·성능저하·스택 교체주기 등록",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M016"
+      ],
+      "inputs": [
+        "PowerSpec.fcType"
+      ],
+      "outputs": [
+        "PowerSpec.cf_pct",
+        "PowerSpec.degradation_pct_yr",
+        "PowerSpec.stackLife_hr"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "벤더 성능저하 곡선 미수령",
+        "보증조건과 가정값 불일치"
+      ],
+      "acceptanceCriterion": "연차별 출력저하율과 스택 교체주기가 벤더 보증문서의 조항번호와 함께 등록되고, 가정 레지스터에 만료일이 설정되어 있다",
+      "durationDays": 7,
+      "calculator": null
+    },
+    {
+      "id": "M018",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "CAPEX·OPEX 범위 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M016",
+        "M017"
+      ],
+      "inputs": [
+        "PowerSpec.installedMW",
+        "PowerSpec.stackLife_hr"
+      ],
+      "outputs": [
+        "Cost.capexRange",
+        "Cost.opexRange"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "단가 출처 미확보",
+        "환율·기준연도 미고정"
+      ],
+      "acceptanceCriterion": "저·중·고 3개 값으로 산출되고, 각 단가의 출처·기준연도·환율이 근거에 기재되어 있다",
+      "durationDays": 10,
+      "calculator": "capex_range"
+    },
+    {
+      "id": "M019",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "재무모델 v0 — LCOE·IRR·DSCR",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M013",
+        "M018"
+      ],
+      "inputs": [
+        "Cost.capexRange",
+        "ProjectIntent.revenueModel",
+        "PowerSpec.cf_pct"
+      ],
+      "outputs": [
+        "Finance.lcoe",
+        "Finance.irr",
+        "Finance.dscrMin"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "수소 구매단가 미확정 시 민감도 범위로만 산출"
+      ],
+      "acceptanceCriterion": "LCOE가 단위검증을 통과한 계산서로 산출되고, 수소단가·이용률·CAPEX 3개 축의 민감도 표가 첨부된다",
+      "durationDays": 10,
+      "calculator": "lcoe"
+    },
+    {
+      "id": "M020",
+      "phase": "P1",
+      "phaseName": "사업성·시장·입찰",
+      "title": "G1 — 사업성 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M012",
+        "M014",
+        "M019"
+      ],
+      "inputs": [
+        "Finance.irr",
+        "Finance.dscrMin"
+      ],
+      "outputs": [
+        "Gate.G1",
+        "ReviewDecision.G1"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P1 미션 중 미승인 존재",
+        "IRR·DSCR 허들 미달"
+      ],
+      "acceptanceCriterion": "사업성 허들 대비 결과가 명시되고, 진행/조건부진행/중단 중 하나가 문서화된 결정으로 기록된다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M021",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "후보부지 롱리스트 등록",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M020"
+      ],
+      "inputs": [
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "SiteCandidate[]"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "DEV",
+        "name": "사업개발 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "후보 3건 미만",
+        "좌표·지번 누락"
+      ],
+      "acceptanceCriterion": "각 후보가 지번·좌표·면적·현 용도를 갖고 등록되며, 면적이 개략 소요면적 이상이다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M022",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "지적·소유·용도지역 확인",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M021"
+      ],
+      "inputs": [
+        "SiteCandidate[].parcelId"
+      ],
+      "outputs": [
+        "SiteCandidate[].zoning",
+        "SiteCandidate[].ownership",
+        "SiteCandidate[].landUseLimit"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "용도지역상 발전시설 입지 불가",
+        "소유권·지상권 분쟁 존재"
+      ],
+      "acceptanceCriterion": "각 후보의 용도지역과 입지 가능 여부가 토지이용계획확인원(발급일 기재)으로 확인된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M023",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "표고·경사·지반 1차 검토",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M021"
+      ],
+      "inputs": [
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "SiteCandidate[].slope_pct",
+        "SiteCandidate[].bearingAssumption"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "SURVEY",
+          "name": "현장조사",
+          "requiredAttributes": [
+            "조사일",
+            "조사자",
+            "좌표"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-CIV",
+        "name": "토목·건축 책임",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "지반 지지력 가정 미검증 상태로 기초 설계 진입 금지"
+      ],
+      "acceptanceCriterion": "경사·표고가 공간정보 데이터셋(스냅샷 일자 기재)으로 산출되고, 지반 가정이 가정 레지스터에 만료일과 함께 등록된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M024",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "재해위험 스크리닝",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M023"
+      ],
+      "inputs": [
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "SiteCandidate[].hazardFlags"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-CIV",
+        "name": "토목·건축 책임",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "침수·산사태 위험구역 저촉 시 해당 후보 차단"
+      ],
+      "acceptanceCriterion": "홍수·산사태·지진 3개 항목이 각각 공인 데이터셋 기준으로 판정되고 저촉 여부가 기록된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M025",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "환경·보호지역 중첩 검토",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M022"
+      ],
+      "inputs": [
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "SiteCandidate[].envOverlaps"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "보호지역 중첩 시 협의 경로 미확인 상태로 진행 금지"
+      ],
+      "acceptanceCriterion": "생태·상수원·문화재·군사 등 중첩 레이어가 조회되고, 중첩 시 필요한 협의 절차가 PermitMatrix에 항목으로 생성된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M026",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "주거·이격·수용성 스크리닝",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M024"
+      ],
+      "inputs": [
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "SiteCandidate[].nearestResidential_m",
+        "SiteCandidate[].acceptanceRisk"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "SURVEY",
+          "name": "현장조사",
+          "requiredAttributes": [
+            "조사일",
+            "조사자",
+            "좌표"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "DEV",
+        "name": "사업개발 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "최근접 주거지 거리 미측정"
+      ],
+      "acceptanceCriterion": "최근접 주거·학교·다중이용시설까지의 실거리가 측정되어 기록되고, 이 값이 안전거리 판정(M066)의 입력으로 연결된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M027",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "중량물 운송로·진입도로 검토",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M016",
+        "M021"
+      ],
+      "inputs": [
+        "PowerSpec.moduleCount",
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "SiteCandidate[].accessFeasible",
+        "Logistics.routeConstraints"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "SURVEY",
+          "name": "현장조사",
+          "requiredAttributes": [
+            "조사일",
+            "조사자",
+            "좌표"
+          ],
+          "strict": false
+        },
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-CIV",
+        "name": "토목·건축 책임",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "모듈 제원 초과 구간 존재 시 대안 경로 확보 전까지 차단"
+      ],
+      "acceptanceCriterion": "모듈 중량·폭·높이 대비 경로상 교량 하중·통과높이·회전반경이 검토되고 제약구간 목록이 산출된다",
+      "durationDays": 15,
+      "calculator": "route_check"
+    },
+    {
+      "id": "M028",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "용수·배수·하수 접속 검토",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M021"
+      ],
+      "inputs": [
+        "SiteCandidate[].coord"
+      ],
+      "outputs": [
+        "Utility.waterSource",
+        "Utility.dischargeRoute"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "공업용수 인입 불가 시 대체 수원 확정 전까지 차단"
+      ],
+      "acceptanceCriterion": "용수 공급원·필요수량·배수 방류지점이 확인되고, 관리기관 회신 또는 공개 데이터 근거가 연결된다",
+      "durationDays": 12,
+      "calculator": null
+    },
+    {
+      "id": "M029",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "부지 평가·우선부지 선정",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M022",
+        "M025",
+        "M026",
+        "M027",
+        "M028"
+      ],
+      "inputs": [
+        "SiteCandidate[]"
+      ],
+      "outputs": [
+        "ProjectIntent.selectedSite",
+        "SiteEvaluation.matrix"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "평가 가중치가 평가 이후에 변경됨",
+        "차단 플래그가 있는 후보가 1순위"
+      ],
+      "acceptanceCriterion": "가중치가 평가 착수 전에 동결되고, 선정 사유와 탈락 사유가 후보별로 기록된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M030",
+      "phase": "P2",
+      "phaseName": "부지·GIS·토지",
+      "title": "G2 — 부지 확정 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M029"
+      ],
+      "inputs": [
+        "ProjectIntent.selectedSite"
+      ],
+      "outputs": [
+        "Gate.G2",
+        "LandControl.method"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "토지 확보 수단(매매·임대·지상권) 미확정"
+      ],
+      "acceptanceCriterion": "확정 부지 1건과 토지 확보 방식·일정이 계약 또는 합의문서로 확인된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M031",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "수소 수요량 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M016",
+        "M017"
+      ],
+      "inputs": [
+        "PowerSpec.installedMW",
+        "PowerSpec.etaEl_LHV_pct",
+        "PowerSpec.parasitic_pct",
+        "PowerSpec.cf_pct"
+      ],
+      "outputs": [
+        "HydrogenSpec.flow_kg_h",
+        "HydrogenSpec.annual_t_yr"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "효율 기준(LHV/HHV) 불일치",
+        "소내부하 미반영"
+      ],
+      "acceptanceCriterion": "kg/h와 t/yr가 계산기 출력으로 산출되고, 발열량 기준이 M002 동결값과 일치함이 단위검증으로 확인된다",
+      "durationDays": 3,
+      "calculator": "h2_demand"
+    },
+    {
+      "id": "M032",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "공급 옵션 비교",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M031"
+      ],
+      "inputs": [
+        "HydrogenSpec.flow_kg_h"
+      ],
+      "outputs": [
+        "HydrogenSpec.supplyOptionSet"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "AI 초안 상태로 승인 시도"
+      ],
+      "acceptanceCriterion": "튜브트레일러·파이프라인·암모니아 크래킹·부생수소 4개 옵션이 동일 항목으로 비교되고, 초안 단계 항목은 모두 가정으로 표시되어 있다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M033",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "공급원 후보·물류거리 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M032",
+        "M030"
+      ],
+      "inputs": [
+        "HydrogenSpec.supplyOptionSet",
+        "ProjectIntent.selectedSite"
+      ],
+      "outputs": [
+        "HydrogenSpec.sourceCandidates",
+        "Logistics.dailyTrips"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "공급원 생산능력 미확인"
+      ],
+      "acceptanceCriterion": "공급원별 거리·왕복시간·일일 운송횟수가 산출되고, 각 공급원의 여유 생산능력이 근거로 확인된다",
+      "durationDays": 15,
+      "calculator": "logistics"
+    },
+    {
+      "id": "M034",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "수소 품질 규격 확정",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M015",
+        "M032"
+      ],
+      "inputs": [
+        "PowerSpec.fcType"
+      ],
+      "outputs": [
+        "HydrogenSpec.purity_pct",
+        "HydrogenSpec.impurityLimits"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "적용 품질규격 코드 판번호 미검증",
+        "벤더 허용 불순물 한계 미수령"
+      ],
+      "acceptanceCriterion": "불순물 항목별 상한값이 인용 규격(코드번호·판번호·발행일)과 벤더 요구조건 양쪽으로 확인되고, 더 엄격한 값이 채택된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M035",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "저장용량·자립일수 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M031",
+        "M033"
+      ],
+      "inputs": [
+        "HydrogenSpec.flow_kg_h",
+        "Logistics.dailyTrips"
+      ],
+      "outputs": [
+        "HydrogenSpec.storage_kg",
+        "HydrogenSpec.storagePressure_barg",
+        "HydrogenSpec.autonomy_day"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "자립일수 정책 미확정",
+        "사용가능 잔압 한계 미반영"
+      ],
+      "acceptanceCriterion": "저장량이 자립일수·사용가능비율을 반영해 산출되고, 저장 형태(용기·저장탱크)와 압력이 함께 확정된다",
+      "durationDays": 7,
+      "calculator": "storage_sizing"
+    },
+    {
+      "id": "M036",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "압력체계·감압·배관 설계기준",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M035",
+        "M034"
+      ],
+      "inputs": [
+        "HydrogenSpec.storagePressure_barg",
+        "HydrogenSpec.purity_pct"
+      ],
+      "outputs": [
+        "DesignBasis.pressureSystem",
+        "DesignBasis.pipingCode",
+        "DesignBasis.materialSpec"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "배관 설계코드 판번호 미검증",
+        "수소취성 고려 재질 기준 미확정"
+      ],
+      "acceptanceCriterion": "압력단계별 설계압력·재질·용접기준이 인용 코드 조항과 함께 확정되고, 자격자 서명이 존재한다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M037",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "수소 공급계약 조건 초안",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M033",
+        "M034",
+        "M035"
+      ],
+      "inputs": [
+        "HydrogenSpec.sourceCandidates",
+        "HydrogenSpec.impurityLimits"
+      ],
+      "outputs": [
+        "Contract.h2SupplyTerms"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "품질 미달 시 책임조항 부재",
+        "공급중단 시 배상조항 부재"
+      ],
+      "acceptanceCriterion": "물량·가격조정식·품질보증·공급중단 배상·계약기간 5개 항목이 모두 조문 초안으로 존재한다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M038",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "공급중단 시나리오·백업 정책",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M035",
+        "M037"
+      ],
+      "inputs": [
+        "HydrogenSpec.autonomy_day",
+        "Contract.h2SupplyTerms"
+      ],
+      "outputs": [
+        "Ops.supplyContingency"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "백업 공급원 미확보 상태로 자립일수 하향 금지"
+      ],
+      "acceptanceCriterion": "공급중단 지속시간별 발전 감발 곡선이 산출되고, 각 구간의 대응조치와 책임자가 지정된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M039",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "탄소집약도·추적성 데이터 체인",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M012",
+        "M033"
+      ],
+      "inputs": [
+        "HydrogenSpec.ciThreshold_kgCO2e_kgH2",
+        "HydrogenSpec.sourceCandidates"
+      ],
+      "outputs": [
+        "HydrogenSpec.ciActual",
+        "Compliance.traceabilityChain"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "STATUTE",
+          "name": "법령",
+          "requiredAttributes": [
+            "법령명",
+            "조항",
+            "시행일",
+            "출처URL"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "공급원의 탄소집약도 증빙 미확보",
+        "추적성 단절 구간 존재"
+      ],
+      "acceptanceCriterion": "생산부터 인수까지 각 구간의 배출량 산정 주체·증빙서류·검증기관이 끊김 없이 연결되고 기준값 이하임이 확인된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M040",
+      "phase": "P3",
+      "phaseName": "수소 공급체계",
+      "title": "G3 — 수소 공급 확정 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M036",
+        "M038",
+        "M039"
+      ],
+      "inputs": [
+        "Contract.h2SupplyTerms",
+        "Ops.supplyContingency"
+      ],
+      "outputs": [
+        "Gate.G3"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P3 미션 중 미승인 존재",
+        "공급 LOI/MOU 미체결"
+      ],
+      "acceptanceCriterion": "공급 물량·품질·기간이 구속력 있는 문서로 확보되고, 미확보 시 대안이 승인된 결정으로 기록된다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M041",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "연계지점 후보 식별",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M030",
+        "M016"
+      ],
+      "inputs": [
+        "ProjectIntent.selectedSite",
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "GridSpec.poiCandidates"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "연계 가능 변전소·선로 미식별"
+      ],
+      "acceptanceCriterion": "후보 연계지점별 거리·전압·기존 여유용량이 조회되어 등록된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M042",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "계통 연계용량 검토 신청·회신",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M041"
+      ],
+      "inputs": [
+        "GridSpec.poiCandidates",
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "GridSpec.capacityStudyResult"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "회신 미수령 상태로 설계 확정 금지",
+        "보강공사 필요 시 비용·기간 미반영"
+      ],
+      "acceptanceCriterion": "계통운영기관 회신 공문(문서번호·수신일)이 존재하고, 허용 연계용량과 보강 필요사항이 명시되어 있다",
+      "durationDays": 60,
+      "calculator": null
+    },
+    {
+      "id": "M043",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "연계전압·연계방식 결정",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M042"
+      ],
+      "inputs": [
+        "GridSpec.capacityStudyResult"
+      ],
+      "outputs": [
+        "GridSpec.voltage_kV",
+        "GridSpec.connectionType"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "회신 조건과 불일치하는 전압 선택"
+      ],
+      "acceptanceCriterion": "연계전압과 방식이 회신 조건 범위 내에서 선택되고, 적용 이용규정 조항이 근거로 연결된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M044",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "계통영향 검토 (조류·단락·전압)",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M043"
+      ],
+      "inputs": [
+        "GridSpec.voltage_kV",
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "GridSpec.faultLevel_kA",
+        "GridSpec.voltageRise_pct"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        },
+        {
+          "type": "EXTDATA",
+          "name": "외부DB",
+          "requiredAttributes": [
+            "데이터셋",
+            "스냅샷일자",
+            "출처"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "계통 임피던스 데이터 미수령",
+        "단락용량 초과"
+      ],
+      "acceptanceCriterion": "조류·단락·전압변동 3개 해석이 실제 계통 임피던스 데이터를 입력으로 수행되고 기준 초과 항목이 0건이거나 대책이 확정된다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M045",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "보호협조·계전방식 설계기준",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M044"
+      ],
+      "inputs": [
+        "GridSpec.faultLevel_kA"
+      ],
+      "outputs": [
+        "GridSpec.protectionScheme",
+        "GridSpec.relaySettings"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "단독운전 방지 방식 미확정",
+        "보호협조 곡선 미검증"
+      ],
+      "acceptanceCriterion": "보호요소·정정치·협조곡선이 산출되고, 단독운전 방지 방식이 계통운영기관 요구조건과 일치함이 확인된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M046",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "전력품질 기준 적용",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M043"
+      ],
+      "inputs": [
+        "GridSpec.connectionType",
+        "PowerSpec.moduleCount"
+      ],
+      "outputs": [
+        "GridSpec.pqLimits"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "적용 기준 판번호 미검증",
+        "인버터 고조파 시험성적서 미수령"
+      ],
+      "acceptanceCriterion": "고조파·플리커·역률·직류분 한계값이 인용 기준과 함께 등록되고, 인버터 성적서 값이 한계 이내임이 대조된다",
+      "durationDays": 12,
+      "calculator": null
+    },
+    {
+      "id": "M047",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "연계설비 범위·소유경계 확정",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M045",
+        "M046"
+      ],
+      "inputs": [
+        "GridSpec.protectionScheme"
+      ],
+      "outputs": [
+        "GridSpec.ownershipBoundary",
+        "GridSpec.scopeSplit"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "소유·유지보수 경계 미합의"
+      ],
+      "acceptanceCriterion": "단선도상에 소유경계·운전책임 경계가 표시되고, 양 당사자가 동일 도면 Rev에 합의한 기록이 있다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M048",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "계량·정산설비 요건 확정",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M047"
+      ],
+      "inputs": [
+        "GridSpec.ownershipBoundary"
+      ],
+      "outputs": [
+        "GridSpec.meteringSpec"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "계량 정확도 등급 미확정"
+      ],
+      "acceptanceCriterion": "계량기·변성기 사양과 정확도 등급, 검정 요건이 정산 규정 근거와 함께 확정된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M049",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "계통연계 계약 조건 확정",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M047",
+        "M048"
+      ],
+      "inputs": [
+        "GridSpec.scopeSplit",
+        "GridSpec.meteringSpec"
+      ],
+      "outputs": [
+        "Contract.gridConnection"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "보강공사 분담금 미확정",
+        "준공 연계 일정 미합의"
+      ],
+      "acceptanceCriterion": "공사비 분담·일정·책임범위가 계약 문서로 확정되고 재무모델에 반영된다",
+      "durationDays": 30,
+      "calculator": null
+    },
+    {
+      "id": "M050",
+      "phase": "P4",
+      "phaseName": "계통연계",
+      "title": "G4 — 계통연계 확정 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M049"
+      ],
+      "inputs": [
+        "Contract.gridConnection"
+      ],
+      "outputs": [
+        "Gate.G4"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P4 미션 중 미승인 존재"
+      ],
+      "acceptanceCriterion": "연계용량·전압·일정·비용 4개 항목이 구속력 있는 문서로 확정되고 일정이 COD 목표와 정합한다",
+      "durationDays": 5,
+      "calculator": null
+    },
+    {
+      "id": "M051",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "설계기준서(DesignBasis) v1 발행",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M040",
+        "M050"
+      ],
+      "inputs": [
+        "DesignBasis.pressureSystem",
+        "GridSpec.voltage_kV",
+        "HydrogenSpec.purity_pct"
+      ],
+      "outputs": [
+        "Document.DBD@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "상위 확정값 중 미승인 항목 참조",
+        "적용 코드 목록에 미검증 항목 존재"
+      ],
+      "acceptanceCriterion": "설계기준서가 인용하는 모든 수치가 승인된 상위 미션의 출력과 일치하고, 인용 코드 전건이 판번호 검증을 통과했다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M052",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "물질·에너지 수지 작성",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M051",
+        "M031"
+      ],
+      "inputs": [
+        "HydrogenSpec.flow_kg_h",
+        "PowerSpec.etaEl_LHV_pct",
+        "PowerSpec.heatRecoveryPct"
+      ],
+      "outputs": [
+        "Process.MEB",
+        "Process.waterProduced_kg_h",
+        "Process.airFlow_kg_h",
+        "Process.heatOut_kW"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "입출 질량 불일치 허용오차 초과",
+        "발열량 기준 혼용"
+      ],
+      "acceptanceCriterion": "입력 질량과 출력 질량의 차가 허용오차 이내이고, 에너지 수지의 잔차가 명시된 한계 이내임이 계산서로 확인된다",
+      "durationDays": 12,
+      "calculator": "mass_energy_balance"
+    },
+    {
+      "id": "M053",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "공정흐름도(PFD) 작성",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M052"
+      ],
+      "inputs": [
+        "Process.MEB"
+      ],
+      "outputs": [
+        "Document.PFD@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "MEB 미승인 상태로 PFD 발행",
+        "스트림 번호와 MEB 행 불일치"
+      ],
+      "acceptanceCriterion": "모든 스트림이 MEB의 행과 1:1로 대응하고, 스트림별 유량·온도·압력이 도면에 표기된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M054",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "소내부하·보조전력 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M052"
+      ],
+      "inputs": [
+        "Process.airFlow_kg_h",
+        "Process.heatOut_kW",
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "PowerSpec.parasitic_pct",
+        "PowerSpec.netOutputMW"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "순출력이 ProjectIntent 목표 미달 시 상위 미션 재개정 필요"
+      ],
+      "acceptanceCriterion": "기기별 소비전력 목록이 합산되어 소내부하율이 산출되고, 그 결과가 M031 수요량 계산에 역반영되어 수렴한다",
+      "durationDays": 10,
+      "calculator": "parasitic_load"
+    },
+    {
+      "id": "M055",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "장비목록(Equipment List) v1",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M053",
+        "M054"
+      ],
+      "inputs": [
+        "Document.PFD@Rev0"
+      ],
+      "outputs": [
+        "Document.EQL@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "PFD 기기와 장비목록 태그 불일치",
+        "누락 기기 확인 절차 미수행"
+      ],
+      "acceptanceCriterion": "PFD상 모든 기기가 태그번호를 갖고 장비목록에 존재하며, 역방향 대조에서 고아 항목이 0건이다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M056",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "배치도(Plot Plan) v1",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M055",
+        "M029"
+      ],
+      "inputs": [
+        "Document.EQL@Rev0",
+        "ProjectIntent.selectedSite"
+      ],
+      "outputs": [
+        "Document.PLOT@Rev0",
+        "Layout.area_m2"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-CIV",
+        "name": "토목·건축 책임",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "안전거리 미판정(M066) 상태에서 배치 확정 금지",
+        "진입·유지보수 동선 미확보"
+      ],
+      "acceptanceCriterion": "기기 배치·유지보수 공간·차량 동선이 표시되고, 이격거리 항목은 잠정값으로 표시되어 M066 승인 전까지 확정 표기가 금지된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M057",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "단선결선도(SLD) v1",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M047",
+        "M054"
+      ],
+      "inputs": [
+        "GridSpec.scopeSplit",
+        "PowerSpec.netOutputMW"
+      ],
+      "outputs": [
+        "Document.SLD@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "보호방식 미확정",
+        "소유경계 미표기"
+      ],
+      "acceptanceCriterion": "발전기부터 연계점까지 모든 차단기·보호요소·계량점이 표시되고 소유경계가 도면상 명확히 구분된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M058",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "P&ID v1",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M053",
+        "M036"
+      ],
+      "inputs": [
+        "Document.PFD@Rev0",
+        "DesignBasis.pressureSystem"
+      ],
+      "outputs": [
+        "Document.PID@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-CTL",
+        "name": "계장·제어 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "안전밸브 설정압 미확정",
+        "HAZOP(M063) 미실시 상태로 Rev1 승격 금지"
+      ],
+      "acceptanceCriterion": "모든 배관·계기·밸브가 태그를 갖고, 안전밸브 설정압과 인터록 항목이 표기되며, HAZOP 입력으로 사용 가능한 상태다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M059",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "배관·케이블 물량 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M056",
+        "M057",
+        "M058"
+      ],
+      "inputs": [
+        "Document.PLOT@Rev0",
+        "Document.SLD@Rev0",
+        "Document.PID@Rev0"
+      ],
+      "outputs": [
+        "Cost.bulkQty"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "배치 잠정 상태의 물량을 확정 물량으로 사용 금지"
+      ],
+      "acceptanceCriterion": "구경·재질별 배관 연장과 규격별 케이블 연장이 배치도 기준으로 산출되고, 할증률과 근거가 명시된다",
+      "durationDays": 15,
+      "calculator": "bulk_qty"
+    },
+    {
+      "id": "M060",
+      "phase": "P5",
+      "phaseName": "설계기준·FEED",
+      "title": "G5 — FEED 승인 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M059"
+      ],
+      "inputs": [
+        "Document.PID@Rev0",
+        "Cost.bulkQty"
+      ],
+      "outputs": [
+        "Gate.G5"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P5 미션 중 미승인 존재",
+        "도면 간 상호 불일치 미해소"
+      ],
+      "acceptanceCriterion": "PFD·P&ID·SLD·배치도·장비목록 상호 대조에서 불일치 항목이 0건이고 FEED 패키지가 RFP 첨부 가능 상태다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M061",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "수소 위험특성·시나리오 후보 도출",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M058"
+      ],
+      "inputs": [
+        "Document.PID@Rev0",
+        "HydrogenSpec.storagePressure_barg"
+      ],
+      "outputs": [
+        "Safety.scenarioCandidates"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "HSE",
+        "name": "안전보건 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "AI 초안이 검토 없이 확정 시나리오로 승격됨"
+      ],
+      "acceptanceCriterion": "누출·화재·폭발·질식·저온 등 유형별 시나리오 후보가 도출되고, 전건이 가정 상태로 표시되어 확정 근거로 사용될 수 없다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M062",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "HAZID 워크숍 실시",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M061"
+      ],
+      "inputs": [
+        "Safety.scenarioCandidates"
+      ],
+      "outputs": [
+        "Safety.hazidRegister"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "HSE",
+        "name": "안전보건 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "유자격 진행자 부재",
+        "설계·운전·안전 분야 참석자 미충족"
+      ],
+      "acceptanceCriterion": "참석자 명단·자격이 기록되고, 초안 시나리오별로 채택·기각·수정 판정이 사유와 함께 남는다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M063",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "HAZOP 노드 정의·실시",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M062",
+        "M058"
+      ],
+      "inputs": [
+        "Document.PID@Rev0",
+        "Safety.hazidRegister"
+      ],
+      "outputs": [
+        "Safety.hazopRegister",
+        "Document.PID@Rev1"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "P&ID Rev0 미승인",
+        "권고사항 미처리 상태로 종결"
+      ],
+      "acceptanceCriterion": "모든 노드가 가이드워드별로 검토되고, 권고사항 각각에 담당자·기한·처리결과가 기록되어 미처리 0건이다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M064",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "누출률 산정 (초크드 오리피스)",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M063"
+      ],
+      "inputs": [
+        "HydrogenSpec.storagePressure_barg",
+        "Safety.hazopRegister"
+      ],
+      "outputs": [
+        "Safety.releaseRates_kg_s"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "누출공 직경 시나리오 미합의"
+      ],
+      "acceptanceCriterion": "시나리오별 누출공 직경에 대해 질량유량이 열역학 산식으로 산출되고, 산식·상수·단위검증 결과가 계산서에 기재된다",
+      "durationDays": 10,
+      "calculator": "release_rate"
+    },
+    {
+      "id": "M065",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "확산·제트화염 평가",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M064"
+      ],
+      "inputs": [
+        "Safety.releaseRates_kg_s"
+      ],
+      "outputs": [
+        "Safety.dispersionResult",
+        "Safety.jetFlameLength_m"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "적용 상관식·모델의 출처 미검증 상태에서 결과 산출 금지",
+        "모델 적용범위 밖 조건 사용"
+      ],
+      "acceptanceCriterion": "사용한 상관식 또는 해석모델의 출처(코드번호·판번호 또는 문헌)와 적용 유효범위가 근거로 등록되고, 입력 조건이 그 범위 안에 있음이 확인된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M066",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "안전거리·이격거리 판정",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M065",
+        "M026"
+      ],
+      "inputs": [
+        "Safety.jetFlameLength_m",
+        "SiteCandidate.nearestResidential_m"
+      ],
+      "outputs": [
+        "Safety.separationDistances"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "STATUTE",
+          "name": "법령",
+          "requiredAttributes": [
+            "법령명",
+            "조항",
+            "시행일",
+            "출처URL"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "법정 이격거리 조문 미검증",
+        "자격자 서명 부재",
+        "계산값과 법정값 중 작은 값 채택 시도"
+      ],
+      "acceptanceCriterion": "법정 이격거리와 해석 기반 거리 중 더 큰 값이 채택되고, 유자격 가스기술사 서명과 적용 조문이 함께 기록된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M067",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "방호계층분석·SIL 배정",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M063"
+      ],
+      "inputs": [
+        "Safety.hazopRegister"
+      ],
+      "outputs": [
+        "Safety.lopaResult",
+        "Safety.silAssignment"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-CTL",
+        "name": "계장·제어 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "목표 위험수준 미정의",
+        "독립방호계층 독립성 미검증"
+      ],
+      "acceptanceCriterion": "시나리오별 목표 위험수준 대비 방호계층 감소계수가 제시되고, SIL 등급이 배정된 안전계장기능 목록이 확정된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M068",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "방폭구역 설정·환기 설계",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M064",
+        "M056"
+      ],
+      "inputs": [
+        "Safety.releaseRates_kg_s",
+        "Document.PLOT@Rev0"
+      ],
+      "outputs": [
+        "Safety.hazardousAreaClassification",
+        "Design.ventilation"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-EL",
+        "name": "전기 책임 (전기안전/전기기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "적용 방폭 기준 판번호 미검증",
+        "환기 횟수 근거 부재"
+      ],
+      "acceptanceCriterion": "Zone 구분 도면이 발행되고, 각 구역의 방폭 등급 요구사항과 환기 설계값이 인용 기준 조항과 함께 확정된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M069",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "감지·소화설비 및 비상대응계획",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M067",
+        "M068"
+      ],
+      "inputs": [
+        "Safety.silAssignment",
+        "Safety.hazardousAreaClassification"
+      ],
+      "outputs": [
+        "Safety.detectionDesign",
+        "Ops.emergencyPlan"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "HSE",
+        "name": "안전보건 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "감지기 배치 근거 부재",
+        "비상연락체계·대피경로 미확정"
+      ],
+      "acceptanceCriterion": "가스·화재 감지기 종류·수량·배치 근거가 제시되고, 비상대응계획에 시나리오별 조치·연락체계·대피경로가 포함된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M070",
+      "phase": "P6",
+      "phaseName": "안전성·리스크",
+      "title": "G6 — SafetyCase 승인 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M066",
+        "M069"
+      ],
+      "inputs": [
+        "Safety.separationDistances",
+        "Ops.emergencyPlan"
+      ],
+      "outputs": [
+        "Gate.G6",
+        "Document.SafetyCase@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "HSE",
+        "name": "안전보건 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P6 미션 중 미승인 존재",
+        "HAZOP 권고 미처리 존재",
+        "자격자 서명 누락"
+      ],
+      "acceptanceCriterion": "안전성 검토서가 발행되고, 배치도의 이격거리 잠정 표기가 확정 표기로 승격 가능한 상태가 된다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M071",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "관할 확인·PermitMatrix 생성",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M030",
+        "M016"
+      ],
+      "inputs": [
+        "ProjectIntent.selectedSite",
+        "PowerSpec.installedMW"
+      ],
+      "outputs": [
+        "PermitRequirement[]"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "허가권자(중앙/광역/기초) 미확정"
+      ],
+      "acceptanceCriterion": "인허가 항목별로 근거법령 후보·소관기관·처리기간·선후관계가 등록되고, 모든 항목이 미검증 상태로 표시되어 있다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M072",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "적용 법령·조문 검증",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M071"
+      ],
+      "inputs": [
+        "PermitRequirement[]"
+      ],
+      "outputs": [
+        "PermitRequirement[].statuteVerified"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "STATUTE",
+          "name": "법령",
+          "requiredAttributes": [
+            "법령명",
+            "조항",
+            "시행일",
+            "출처URL"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "조문의 시행일이 확인되지 않음",
+        "개정 예정 사항 미확인",
+        "기억에 의존한 조문 인용"
+      ],
+      "acceptanceCriterion": "각 인허가 항목의 근거 조항이 법령명·조항·시행일·출처URL과 함께 확인되고, 미검증 항목이 0건이다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M073",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "적용 기술기준 판번호 검증",
+      "kind": "EXT",
+      "kindRule": "외부 DB/기관 자료 없이는 진행 불가",
+      "dependsOn": [
+        "M051",
+        "M072"
+      ],
+      "inputs": [
+        "Document.DBD@Rev0"
+      ],
+      "outputs": [
+        "DesignBasis.codeRegister"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "QA",
+        "name": "품질보증 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "인용 코드의 최신 판번호 미확인",
+        "설계에 이미 반영된 코드가 폐지·대체됨"
+      ],
+      "acceptanceCriterion": "설계에 인용된 모든 기술기준이 코드번호·판번호·발행일로 확인되고, 폐지·대체된 기준을 참조하는 설계문서가 0건이다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M074",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "발전사업허가 신청·취득",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M072",
+        "M019"
+      ],
+      "inputs": [
+        "ProjectIntent",
+        "Finance.irr"
+      ],
+      "outputs": [
+        "Permit.generationLicense"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "재무·기술 요건 증빙 미구비",
+        "보완요구 미이행"
+      ],
+      "acceptanceCriterion": "허가증(문서번호·허가일·허가용량)이 수령되고, 허가 조건 각각이 이행계획과 함께 등록된다",
+      "durationDays": 120,
+      "calculator": null
+    },
+    {
+      "id": "M075",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "개발행위·전용·건축 인허가",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M074",
+        "M056"
+      ],
+      "inputs": [
+        "Permit.generationLicense",
+        "Document.PLOT@Rev0"
+      ],
+      "outputs": [
+        "Permit.landDevelopment",
+        "Permit.building"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "산지·농지 전용 대상 여부 미확정",
+        "건축 인허가 도서 미구비"
+      ],
+      "acceptanceCriterion": "개발행위 및 건축 관련 허가·신고가 각각 접수번호와 처리결과로 확인되고 조건사항이 등록된다",
+      "durationDays": 120,
+      "calculator": null
+    },
+    {
+      "id": "M076",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "환경 관련 협의",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M025",
+        "M074"
+      ],
+      "inputs": [
+        "SiteCandidate.envOverlaps",
+        "Permit.generationLicense"
+      ],
+      "outputs": [
+        "Permit.environmental"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "평가 대상 여부 판정 미확정",
+        "대기·소음 배출 기준 적용 여부 미확인"
+      ],
+      "acceptanceCriterion": "환경영향평가 대상 여부가 판정되고, 대기·소음·수질 각 항목의 신고·허가 또는 비대상 확인이 문서로 존재한다",
+      "durationDays": 150,
+      "calculator": null
+    },
+    {
+      "id": "M077",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "고압가스 시설 허가·기술검토",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M070",
+        "M073"
+      ],
+      "inputs": [
+        "Document.SafetyCase@Rev0",
+        "DesignBasis.codeRegister"
+      ],
+      "outputs": [
+        "Permit.highPressureGas"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "SafetyCase 미승인",
+        "안전거리 미확정",
+        "기술검토 보완 미이행"
+      ],
+      "acceptanceCriterion": "시설 구분(제조·저장·사용)이 확정되고, 기술검토 결과와 허가·신고 처리결과가 문서번호로 확인된다",
+      "durationDays": 120,
+      "calculator": null
+    },
+    {
+      "id": "M078",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "소방·위험물 협의",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M069",
+        "M075"
+      ],
+      "inputs": [
+        "Safety.detectionDesign",
+        "Permit.building"
+      ],
+      "outputs": [
+        "Permit.fire"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "소방시설 설계도서 미구비",
+        "위험물 해당 여부 미판정"
+      ],
+      "acceptanceCriterion": "소방 관련 동의·신고 결과가 수령되고, 지적사항 각각의 반영 여부가 도면 Rev로 추적된다",
+      "durationDays": 90,
+      "calculator": null
+    },
+    {
+      "id": "M079",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "공사계획 인가/신고 및 유해위험방지계획서",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M074",
+        "M060"
+      ],
+      "inputs": [
+        "Permit.generationLicense",
+        "Document.PID@Rev1"
+      ],
+      "outputs": [
+        "Permit.constructionPlan",
+        "Permit.hazardPreventionPlan"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "설계도서 미승인 상태로 제출",
+        "착공 예정일과 처리기간 충돌"
+      ],
+      "acceptanceCriterion": "공사계획 처리결과와 유해위험방지계획서 심사결과가 각각 문서로 확인되고 착공 가능일이 확정된다",
+      "durationDays": 90,
+      "calculator": null
+    },
+    {
+      "id": "M080",
+      "phase": "P7",
+      "phaseName": "인허가",
+      "title": "G7 — 인허가 완결성 게이트",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M075",
+        "M076",
+        "M077",
+        "M078",
+        "M079"
+      ],
+      "inputs": [
+        "PermitRequirement[]"
+      ],
+      "outputs": [
+        "Gate.G7",
+        "Compliance.permitStatus"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "PermitMatrix에 미취득·미검증 항목 존재",
+        "허가 조건 중 미이행 항목이 착공 선행조건에 해당"
+      ],
+      "acceptanceCriterion": "PermitMatrix 전 항목이 취득·비대상·조건부 중 하나로 종결되고, 조건부 항목은 이행 기한과 담당자가 지정되어 있다",
+      "durationDays": 10,
+      "calculator": null
+    },
+    {
+      "id": "M081",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "사업비 상세 산정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M059",
+        "M080"
+      ],
+      "inputs": [
+        "Cost.bulkQty",
+        "Document.EQL@Rev0"
+      ],
+      "outputs": [
+        "Cost.capexDetail",
+        "Cost.contingency_pct"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "견적 미수령 항목이 총액의 일정비율 초과",
+        "예비비 산정 근거 부재"
+      ],
+      "acceptanceCriterion": "항목별 견적 출처가 명시되고, 견적 기반 비율과 추정 기반 비율이 구분되어 정확도 등급이 선언된다",
+      "durationDays": 20,
+      "calculator": "capex_detail"
+    },
+    {
+      "id": "M082",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "재무모델 v1·민감도·시나리오 비교",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M081",
+        "M049",
+        "M037"
+      ],
+      "inputs": [
+        "Cost.capexDetail",
+        "Contract.h2SupplyTerms",
+        "Contract.gridConnection"
+      ],
+      "outputs": [
+        "Finance.modelV1",
+        "Finance.sensitivity",
+        "Finance.scenarios"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "v0 대비 변경 사유 미기록"
+      ],
+      "acceptanceCriterion": "기준·비관·낙관 3개 시나리오의 IRR·DSCR·LCOE가 산출되고, v0 대비 모든 변경 항목이 사유와 함께 추적된다",
+      "durationDays": 20,
+      "calculator": "scenario_compare"
+    },
+    {
+      "id": "M083",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "금융조달 구조 확정",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M082"
+      ],
+      "inputs": [
+        "Finance.modelV1"
+      ],
+      "outputs": [
+        "Finance.fundingStructure",
+        "Finance.covenants"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "대주단 실사 지적사항 미해소",
+        "약정 조건과 재무모델 불일치"
+      ],
+      "acceptanceCriterion": "자기자본·타인자본 비율과 약정 조건이 확정되고, 재무모델이 해당 조건으로 재계산되어 DSCR 허들을 만족한다",
+      "durationDays": 45,
+      "calculator": null
+    },
+    {
+      "id": "M084",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "보험 패키지 설계",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M083",
+        "M070"
+      ],
+      "inputs": [
+        "Finance.covenants",
+        "Document.SafetyCase@Rev0"
+      ],
+      "outputs": [
+        "Risk.insurancePackage"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "FIN",
+        "name": "재무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "수소 특유 위험에 대한 담보 제외조항 미검토"
+      ],
+      "acceptanceCriterion": "건설·배상·가동중단 각 담보의 부보금액과 면책·제외조항이 확인되고, 대주단 요구조건과 대조 완료된다",
+      "durationDays": 30,
+      "calculator": null
+    },
+    {
+      "id": "M085",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "EPC RFP 작성",
+      "kind": "DRAFT",
+      "kindRule": "AI 초안 허용. 초안은 가정으로만 등록된다",
+      "dependsOn": [
+        "M060",
+        "M080"
+      ],
+      "inputs": [
+        "Document.PID@Rev1",
+        "Compliance.permitStatus"
+      ],
+      "outputs": [
+        "Document.RFP@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "FEED 패키지 미승인",
+        "성능보증 항목·측정방법 미정의"
+      ],
+      "acceptanceCriterion": "기술사양·성능보증값·측정방법·위약조건·업무분장이 모두 기재되고, 첨부 도면 Rev가 승인본과 일치한다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M086",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "입찰자 사전자격심사·RFP 배포",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M085"
+      ],
+      "inputs": [
+        "Document.RFP@Rev0"
+      ],
+      "outputs": [
+        "Procurement.bidderList"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "수소 취급 실적 요건 미정의",
+        "적격 입찰자 3사 미만"
+      ],
+      "acceptanceCriterion": "사전자격 기준이 배포 전에 동결되고, 통과 업체별 실적 증빙이 기준 항목별로 대조되어 기록된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M087",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "기술·상업 평가 실시",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M086"
+      ],
+      "inputs": [
+        "Procurement.bidderList"
+      ],
+      "outputs": [
+        "Procurement.evaluationResult"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "평가 배점이 제안서 수령 이후 변경됨",
+        "기술·상업 평가자 분리 미준수"
+      ],
+      "acceptanceCriterion": "배점표가 제안서 수령 전에 동결되고, 평가위원별 채점과 종합순위가 사유와 함께 기록된다",
+      "durationDays": 25,
+      "calculator": null
+    },
+    {
+      "id": "M088",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "EPC 계약 체결",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M087",
+        "M084"
+      ],
+      "inputs": [
+        "Procurement.evaluationResult",
+        "Risk.insurancePackage"
+      ],
+      "outputs": [
+        "Contract.epc"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "성능보증치가 재무모델 가정보다 낮음",
+        "지체상금 한도가 대주단 요구 미달"
+      ],
+      "acceptanceCriterion": "출력·효율·가용률 보증치가 재무모델 가정 이상이고, 미달 시 배상 산식과 한도가 계약 조문으로 확정된다",
+      "durationDays": 45,
+      "calculator": null
+    },
+    {
+      "id": "M089",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "주기기 공급계약 체결",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M088",
+        "M015"
+      ],
+      "inputs": [
+        "Contract.epc",
+        "PowerSpec.fcType"
+      ],
+      "outputs": [
+        "Contract.equipmentSupply"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "LEG",
+        "name": "인허가·법무 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "납기가 공정 임계경로와 불일치",
+        "스택 교체 조건·장기서비스 조건 미확정"
+      ],
+      "acceptanceCriterion": "납기·성능보증·스택 교체 및 장기유지보수 조건이 확정되고, 납기가 임계경로 일정과 정합함이 계산으로 확인된다",
+      "durationDays": 30,
+      "calculator": null
+    },
+    {
+      "id": "M090",
+      "phase": "P8",
+      "phaseName": "금융·계약·조달",
+      "title": "G8 — 최종투자결정(FID)",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M083",
+        "M088",
+        "M089"
+      ],
+      "inputs": [
+        "Finance.fundingStructure",
+        "Contract.epc",
+        "Contract.equipmentSupply"
+      ],
+      "outputs": [
+        "Gate.G8",
+        "ReviewDecision.FID"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P8 미션 중 미승인 존재",
+        "선행조건 미충족 항목 존재"
+      ],
+      "acceptanceCriterion": "금융·계약·인허가 선행조건 목록이 전건 충족으로 확인되고, 투자 결정이 서명된 결의로 기록된다",
+      "durationDays": 15,
+      "calculator": null
+    },
+    {
+      "id": "M091",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "상세설계 승인·IFC 도면 발행",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M090"
+      ],
+      "inputs": [
+        "Contract.epc",
+        "Document.PID@Rev1"
+      ],
+      "outputs": [
+        "Document.IFC@Rev0"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "FEED 대비 변경사항이 변경관리 절차 미경유",
+        "인허가 조건과 불일치"
+      ],
+      "acceptanceCriterion": "시공용 도면이 발행되고, FEED 대비 모든 변경이 변경관리 번호와 영향평가(안전·인허가·비용)와 함께 승인되어 있다",
+      "durationDays": 60,
+      "calculator": null
+    },
+    {
+      "id": "M092",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "시공계획·안전보건관리계획 승인",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M091",
+        "M079"
+      ],
+      "inputs": [
+        "Document.IFC@Rev0",
+        "Permit.hazardPreventionPlan"
+      ],
+      "outputs": [
+        "Document.ConstructionPlan",
+        "Document.HSEPlan"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "HSE",
+        "name": "안전보건 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "작업위험성평가 미실시",
+        "고위험작업 허가절차 미정의"
+      ],
+      "acceptanceCriterion": "공종별 시공순서·검사·정지점(Hold Point)이 정의되고, 고위험작업의 작업허가 절차와 책임자가 지정된다",
+      "durationDays": 20,
+      "calculator": null
+    },
+    {
+      "id": "M093",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "토건·기초 시공 및 검측",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M092"
+      ],
+      "inputs": [
+        "Document.ConstructionPlan"
+      ],
+      "outputs": [
+        "Construction.civilComplete",
+        "QA.itpRecords.civil"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "SURVEY",
+          "name": "현장조사",
+          "requiredAttributes": [
+            "조사일",
+            "조사자",
+            "좌표"
+          ],
+          "strict": false
+        },
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-CIV",
+        "name": "토목·건축 책임",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "지반 실측값이 설계 가정과 상이",
+        "정지점 미승인 상태로 후속 공정 진행"
+      ],
+      "acceptanceCriterion": "기초 콘크리트 강도·앵커 위치 허용오차·지반 지지력이 시험성적서로 확인되고, 모든 정지점에 검측 서명이 존재한다",
+      "durationDays": 120,
+      "calculator": null
+    },
+    {
+      "id": "M094",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "기자재 입고·공장/현장 수락시험",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M089",
+        "M093"
+      ],
+      "inputs": [
+        "Contract.equipmentSupply"
+      ],
+      "outputs": [
+        "QA.fatRecords",
+        "QA.satRecords"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "QA",
+        "name": "품질보증 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "FAT 불합격 항목 미조치",
+        "운송 중 손상 미확인"
+      ],
+      "acceptanceCriterion": "기기별 공장시험 성적서가 수령되고, 불합격 항목의 조치 결과가 재시험 성적서로 확인된다",
+      "durationDays": 90,
+      "calculator": null
+    },
+    {
+      "id": "M095",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "기계·전기·계장 설치 완료 확인",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M094"
+      ],
+      "inputs": [
+        "QA.satRecords",
+        "Document.IFC@Rev0"
+      ],
+      "outputs": [
+        "Construction.mechanicalCompletion",
+        "QA.punchList"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-CTL",
+        "name": "계장·제어 책임",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "A급 펀치 미해소 상태로 시운전 진입 금지",
+        "루프체크 미완료"
+      ],
+      "acceptanceCriterion": "설치가 IFC 도면과 일치함이 확인되고, 계장 루프체크 완료율 100%, A급 펀치 잔여 0건이다",
+      "durationDays": 120,
+      "calculator": null
+    },
+    {
+      "id": "M096",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "기밀·내압·퍼지 시험 (수소계통)",
+      "kind": "EXPERT",
+      "kindRule": "유자격 전문가 승인 없이는 통과 불가",
+      "dependsOn": [
+        "M095",
+        "M077"
+      ],
+      "inputs": [
+        "Construction.mechanicalCompletion",
+        "Permit.highPressureGas"
+      ],
+      "outputs": [
+        "QA.pressureTestRecords",
+        "QA.purgeRecord"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CODE",
+          "name": "기술기준",
+          "requiredAttributes": [
+            "코드번호",
+            "판/개정번호",
+            "발행일",
+            "발행기관"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PE-GAS",
+        "name": "가스 책임 (가스기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "시험압력·유지시간이 적용 코드 미달",
+        "퍼지 후 잔류산소 농도 기준 초과",
+        "작업허가 미발급"
+      ],
+      "acceptanceCriterion": "적용 코드가 요구하는 시험압력·유지시간·누설률 기준을 충족한 성적서가 존재하고, 퍼지 후 잔류산소 농도가 기준 이하임이 측정값으로 확인된다",
+      "durationDays": 30,
+      "calculator": null
+    },
+    {
+      "id": "M097",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "사용전검사·계통 병입",
+      "kind": "FILE",
+      "kindRule": "외부 기관의 회신 공문이 있어야 종료",
+      "dependsOn": [
+        "M096",
+        "M049"
+      ],
+      "inputs": [
+        "QA.pressureTestRecords",
+        "Contract.gridConnection"
+      ],
+      "outputs": [
+        "Permit.preUseInspection",
+        "Ops.firstSync"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "AHJ",
+        "name": "관계행정기관 (외부)",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "검사 불합격 항목 미조치",
+        "보호계전기 정정치 미검증",
+        "계통운영기관 병입 승인 미수령"
+      ],
+      "acceptanceCriterion": "사용전검사 합격 문서가 수령되고, 보호계전기 정정치 시험 결과와 최초 병입 일시가 기록된다",
+      "durationDays": 45,
+      "calculator": null
+    },
+    {
+      "id": "M098",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "성능시험·보증치 판정",
+      "kind": "CALC",
+      "kindRule": "코드가 계산한다. AI는 숫자를 만들지 않는다",
+      "dependsOn": [
+        "M097"
+      ],
+      "inputs": [
+        "Ops.firstSync",
+        "Contract.epc"
+      ],
+      "outputs": [
+        "Performance.testResult",
+        "Performance.guaranteeVerdict"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "TEST",
+          "name": "시험성적서",
+          "requiredAttributes": [
+            "시험기관",
+            "성적서번호",
+            "시험일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CALC",
+          "name": "계산서",
+          "requiredAttributes": [
+            "계산ID",
+            "입력값",
+            "산식버전",
+            "단위검증"
+          ],
+          "strict": true
+        }
+      ],
+      "approver": {
+        "role": "PE-MEC",
+        "name": "기계 책임 (기계기술사)",
+        "licenseRequired": true
+      },
+      "blockerCandidates": [
+        "시험조건이 계약상 보정조건과 불일치",
+        "계측기 검교정 성적서 미확보"
+      ],
+      "acceptanceCriterion": "보정 후 출력·효율·배출값이 계약 보증치와 대조되고, 미달 시 배상 산식이 적용된 금액이 산출된다",
+      "durationDays": 30,
+      "calculator": "performance_test"
+    },
+    {
+      "id": "M099",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "인수인계·운영매뉴얼·교육",
+      "kind": "DEF",
+      "kindRule": "사람이 값을 확정하고 동결한다",
+      "dependsOn": [
+        "M098"
+      ],
+      "inputs": [
+        "Performance.testResult"
+      ],
+      "outputs": [
+        "Document.OMManual",
+        "Ops.handoverPackage",
+        "Ops.trainingRecord"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "DRAWING",
+          "name": "도면",
+          "requiredAttributes": [
+            "도면번호",
+            "Rev",
+            "발행일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        },
+        {
+          "type": "VENDOR",
+          "name": "벤더자료",
+          "requiredAttributes": [
+            "제조사",
+            "문서번호",
+            "개정일"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "PM",
+        "name": "사업총괄 PM",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "As-built 도면 미제출",
+        "예비품 목록 미인도",
+        "운전원 자격·교육 미이수"
+      ],
+      "acceptanceCriterion": "As-built 도면·운영매뉴얼·예비품·교육이수 기록이 인수 목록 대비 누락 0건으로 확인되고 인수확인서가 서명된다",
+      "durationDays": 30,
+      "calculator": null
+    },
+    {
+      "id": "M100",
+      "phase": "P9",
+      "phaseName": "시공·시운전·인수",
+      "title": "G9 — 상업운전 개시(COD) 선언",
+      "kind": "GATE",
+      "kindRule": "선행 미션 전건 승인 + 게이트 판정",
+      "dependsOn": [
+        "M099"
+      ],
+      "inputs": [
+        "Ops.handoverPackage",
+        "Performance.guaranteeVerdict"
+      ],
+      "outputs": [
+        "Gate.G9",
+        "ProjectIntent.codActual"
+      ],
+      "requiredEvidence": [
+        {
+          "type": "OFFICIAL",
+          "name": "공문",
+          "requiredAttributes": [
+            "문서번호",
+            "발신기관",
+            "수신일"
+          ],
+          "strict": true
+        },
+        {
+          "type": "CONTRACT",
+          "name": "계약서",
+          "requiredAttributes": [
+            "계약명",
+            "체결일",
+            "당사자"
+          ],
+          "strict": true
+        },
+        {
+          "type": "MINUTES",
+          "name": "회의록",
+          "requiredAttributes": [
+            "일자",
+            "참석자"
+          ],
+          "strict": false
+        }
+      ],
+      "approver": {
+        "role": "OWN",
+        "name": "발주처 투자심의",
+        "licenseRequired": false
+      },
+      "blockerCandidates": [
+        "P9 미션 중 미승인 존재",
+        "잔여 펀치 중 운전 제약 항목 존재",
+        "허가 조건 중 미이행 항목 존재"
+      ],
+      "acceptanceCriterion": "성능보증 판정·인수확인·인허가 조건 이행이 모두 종결되고, COD 일자가 계약·정산 체계에 등록된다",
+      "durationDays": 5,
+      "calculator": null
+    }
+  ]
+}

@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme-root>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수소연료전지 발전소 — 미션 실행 엔진</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E7EAE4; --panel:#F3F5F0; --sunk:#DADFD6; --ink:#182029; --ink-2:#4E5A5F;
+  --ink-3:#7C8781; --rule:#B7BEB4; --rule-2:#C9CFC6;
+  --h2:#3B4FBF; --h2-soft:#DDE1F6; --trip:#A8342A; --trip-soft:#F2DEDB;
+  --hold:#8A6210; --hold-soft:#F0E5CE; --ok:#2C5F46;
+  --tile:26px; --gap:3px;
+  --f-sans:"IBM Plex Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#14181A; --panel:#1C2124; --sunk:#0E1113; --ink:#E4E8E2; --ink-2:#A6B0AC;
+    --ink-3:#6E7975; --rule:#39413E; --rule-2:#2B3234;
+    --h2:#8A9BF0; --h2-soft:#232A4A; --trip:#E08376; --trip-soft:#3A211D;
+    --hold:#D9AE5C; --hold-soft:#332A17; --ok:#74B896;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14181A; --panel:#1C2124; --sunk:#0E1113; --ink:#E4E8E2; --ink-2:#A6B0AC;
+  --ink-3:#6E7975; --rule:#39413E; --rule-2:#2B3234;
+  --h2:#8A9BF0; --h2-soft:#232A4A; --trip:#E08376; --trip-soft:#3A211D;
+  --hold:#D9AE5C; --hold-soft:#332A17; --ok:#74B896;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--f-sans); font-weight:400; font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+a{color:var(--h2)}
+:focus-visible{outline:2px solid var(--h2); outline-offset:2px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 72px}
+
+/* ── 머리 ───────────────────────────────────── */
+.mast{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;
+      border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:6px}
+.mast h1{font-size:19px;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.3}
+.mast .sub{color:var(--ink-2);font-size:12.5px;font-weight:300;margin-top:2px}
+.readout{display:flex;gap:18px;flex-wrap:wrap}
+.readout div{text-align:right}
+.readout b{display:block;font-family:var(--f-mono);font-size:17px;font-weight:600;
+           font-variant-numeric:tabular-nums;line-height:1.1}
+.readout span{font-size:10.5px;color:var(--ink-3);font-weight:300}
+
+.notice{border:1px solid var(--rule);border-left:3px solid var(--hold);background:var(--hold-soft);
+        color:var(--ink);padding:8px 11px;font-size:12px;margin:12px 0;line-height:1.5}
+.notice b{font-weight:600}
+
+/* ── 탭 ─────────────────────────────────────── */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--rule);margin:16px 0 18px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;
+  padding:8px 14px;cursor:pointer;color:var(--ink-3);font-weight:400;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+.tabs button:hover{color:var(--ink)}
+.view[hidden]{display:none}
+
+/* ── 애넌시에이터 매트릭스 ─────────────────────── */
+.matrix{border:1px solid var(--rule);background:var(--panel);padding:12px 12px 10px;overflow-x:auto}
+.mrow{display:grid;grid-template-columns:118px 1fr;align-items:center;gap:10px;margin-bottom:var(--gap)}
+.mrow .plabel{font-size:11px;color:var(--ink-2);line-height:1.25;text-align:right;font-weight:300}
+.mrow .plabel em{font-family:var(--f-mono);font-style:normal;font-weight:600;color:var(--ink);
+                 font-size:11px;margin-right:5px}
+.tiles{display:grid;grid-template-columns:repeat(9,1fr) 1.55fr;gap:var(--gap);min-width:330px}
+.tile{position:relative;height:var(--tile);border:1px solid var(--rule-2);background:var(--sunk);
+  font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;
+  font-variant-numeric:tabular-nums;transition:none}
+.tile:hover{border-color:var(--ink-2)}
+.tile[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.tile.t-ready{background:var(--panel);border-color:var(--ink-2);color:var(--ink)}
+.tile.t-running{background:var(--panel);border-color:var(--hold);color:var(--ink)}
+.tile.t-running::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--hold)}
+.tile.t-submitted{background:linear-gradient(to top,var(--h2-soft) 50%,var(--panel) 50%);
+  border-color:var(--h2);color:var(--ink)}
+.tile.t-approved{background:var(--h2);border-color:var(--h2);color:#fff;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%)}
+.tile.t-blocked{border-color:var(--trip);color:var(--trip);
+  background:repeating-linear-gradient(45deg,var(--trip-soft) 0 4px,transparent 4px 8px)}
+.tile.t-gate{font-weight:600;letter-spacing:.02em}
+.tile.t-gate::after{content:"";position:absolute;left:4px;top:5px;bottom:5px;width:1px;background:currentColor;opacity:.45}
+@keyframes energize{0%{background-color:var(--sunk)}35%{background-color:var(--h2)}100%{background-color:var(--panel)}}
+.tile.pulse{animation:energize .5s ease-out}
+@media (prefers-reduced-motion:reduce){.tile.pulse{animation:none}}
+
+@media (max-width:620px){
+  :root{--tile:23px}
+  .mrow{grid-template-columns:30px 1fr;gap:7px}
+  .mrow .plabel span{display:none}
+  .mrow .plabel em{margin-right:0}
+  .tiles{min-width:290px}
+  .mast h1{font-size:17px}
+  .readout{gap:13px}
+}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;padding-top:9px;border-top:1px solid var(--rule-2);
+        font-size:10.5px;color:var(--ink-2);font-weight:300}
+.legend i{display:inline-block;width:15px;height:11px;border:1px solid var(--rule-2);
+          background:var(--sunk);vertical-align:-1px;margin-right:4px}
+.legend .t-ready{background:var(--panel);border-color:var(--ink-2)}
+.legend .t-running{background:var(--panel);border-color:var(--hold);border-left-width:3px}
+.legend .t-submitted{background:linear-gradient(to top,var(--h2-soft) 50%,var(--panel) 50%);border-color:var(--h2)}
+.legend .t-approved{background:var(--h2);border-color:var(--h2)}
+.legend .t-blocked{border-color:var(--trip);background:repeating-linear-gradient(45deg,var(--trip-soft) 0 3px,transparent 3px 6px)}
+
+/* ── 도시에 (미션 상세) ─────────────────────── */
+.dossier{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:16px;margin-top:18px}
+@media (max-width:900px){.dossier{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);background:var(--panel);padding:14px 15px}
+.card>h3{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--ink-2);
+  padding-bottom:7px;border-bottom:1px solid var(--rule-2);letter-spacing:0}
+.mhead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:3px}
+.mhead .mid{font-family:var(--f-mono);font-size:19px;font-weight:600;color:var(--h2);
+            font-variant-numeric:tabular-nums}
+.mhead .mt{font-size:16.5px;font-weight:500;letter-spacing:-.01em}
+.meta{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 13px}
+.chip{border:1px solid var(--rule);padding:2px 7px;font-size:10.5px;color:var(--ink-2);
+      background:var(--paper);font-weight:400}
+.chip.k{border-color:var(--h2);color:var(--h2)}
+.chip.st{font-family:var(--f-mono);font-weight:600}
+.chip.st-APPROVED{background:var(--h2);color:#fff;border-color:var(--h2)}
+.chip.st-BLOCKED{background:var(--trip-soft);color:var(--trip);border-color:var(--trip)}
+.chip.st-RUNNING{background:var(--hold-soft);color:var(--hold);border-color:var(--hold)}
+.chip.st-SUBMITTED{background:var(--h2-soft);color:var(--h2);border-color:var(--h2)}
+.chip.st-LOCKED{color:var(--ink-3)}
+
+.slot{margin-bottom:15px}
+.slot>h4{margin:0 0 5px;font-size:11px;font-weight:600;color:var(--ink-2)}
+.slot p{margin:0;font-size:13px;color:var(--ink);line-height:1.55}
+ul.tight{margin:0;padding-left:16px}
+ul.tight li{font-size:12.5px;margin-bottom:3px;line-height:1.5}
+ul.tight li.no{color:var(--trip)}
+ul.tight li.yes{color:var(--ok)}
+ul.tight li.wait{color:var(--hold)}
+.empty{color:var(--ink-3);font-size:12.5px;font-style:normal}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.verify{border-left:3px solid var(--h2);background:var(--h2-soft);padding:9px 11px;
+        font-size:12.5px;line-height:1.55}
+.blocklist{border-left:3px solid var(--trip);background:var(--trip-soft);padding:9px 11px}
+.blocklist li{color:var(--ink)}
+
+/* ── 버튼 / 폼 ──────────────────────────────── */
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:6px 13px;
+     cursor:pointer;font-size:12.5px;font-weight:500}
+.btn:hover{opacity:.87}
+.btn:disabled{background:var(--sunk);border-color:var(--rule);color:var(--ink-3);cursor:not-allowed;opacity:1}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.warn{background:var(--trip);border-color:var(--trip);color:#fff}
+.btn.sm{padding:3px 9px;font-size:11.5px}
+.acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--rule-2)}
+label.fl{display:block;font-size:11px;color:var(--ink-2);margin-bottom:3px;font-weight:400}
+input[type=text],input[type=number],input[type=date],select,textarea{
+  width:100%;border:1px solid var(--rule);background:var(--paper);padding:5px 8px;font-size:12.5px}
+input.seed{border-color:var(--hold);background:var(--hold-soft)}
+textarea{resize:vertical;min-height:52px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+@media (max-width:560px){.frow{grid-template-columns:1fr}}
+.cbrow{display:flex;gap:7px;align-items:flex-start;margin-bottom:5px;font-size:12.5px;line-height:1.45}
+.cbrow input{margin-top:4px;flex:0 0 auto;accent-color:var(--trip)}
+
+/* ── 표 ─────────────────────────────────────── */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+th{font-size:10.5px;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule)}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.scrollx{overflow-x:auto}
+tr.bad td{color:var(--trip)}
+
+/* ── 계산기 ─────────────────────────────────── */
+.calcgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.calcgrid{grid-template-columns:1fr}}
+.outrow{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--rule-2);font-size:12.5px}
+.outrow b{font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums}
+.outrow em{font-style:normal;color:var(--ink-3);font-size:10.5px;margin-left:4px}
+pre.result{background:var(--sunk);border:1px solid var(--rule-2);padding:10px;overflow-x:auto;
+  font-family:var(--f-mono);font-size:11px;line-height:1.5;margin:0;white-space:pre-wrap;word-break:break-word}
+
+/* ── 지표 ───────────────────────────────────── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1px;background:var(--rule-2);border:1px solid var(--rule)}
+.metric{background:var(--panel);padding:11px 12px}
+.metric b{display:block;font-family:var(--f-mono);font-size:21px;font-weight:600;
+          font-variant-numeric:tabular-nums;line-height:1.15}
+.metric span{font-size:10.5px;color:var(--ink-3);line-height:1.35;display:block;margin-top:2px}
+.metric.alarm b{color:var(--trip)}
+.metric.hold b{color:var(--hold)}
+.bar{height:5px;background:var(--sunk);border:1px solid var(--rule-2);margin-top:7px;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--h2);display:block}
+
+footer{margin-top:28px;padding-top:12px;border-top:1px solid var(--rule);
+       font-size:11px;color:var(--ink-3);font-weight:300;line-height:1.6}
+.dim{color:var(--ink-3)}
+.warnword{color:var(--trip);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1>수소연료전지 발전소 — 미션 실행 엔진</h1>
+    <div class="sub">100개 검증 가능 미션 · 입력·출력·근거·승인·차단조건 추적 · 한국 + 국제 기준 병행</div>
+  </div>
+  <div class="readout">
+    <div><b id="ro-appr">0</b><span>승인 완료</span></div>
+    <div><b id="ro-block">0</b><span>차단</span></div>
+    <div><b id="ro-gate">0/10</b><span>게이트</span></div>
+    <div><b id="ro-cp">—</b><span>잔여 임계경로(일)</span></div>
+  </div>
+</header>
+
+<div class="notice">
+  <b>이 엔진은 법령·기준을 기억으로 답하지 않습니다.</b> 인허가·기술기준 항목은 전부 미검증 상태로 시작하며,
+  출처·조항·시행일·판번호가 등록되어야만 승인 경로가 열립니다. 계산기의 <span class="warnword">주황색 입력칸</span>은
+  예시값이며 근거로 대체하기 전에는 해당 미션이 승인되지 않습니다.
+</div>
+
+<div id="storage-note"></div>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  data-view="board">미션판</button>
+  <button role="tab" aria-selected="false" data-view="calc">계산엔진</button>
+  <button role="tab" aria-selected="false" data-view="evidence">근거함</button>
+  <button role="tab" aria-selected="false" data-view="permit">인허가 매트릭스</button>
+  <button role="tab" aria-selected="false" data-view="metrics">지표·책임성</button>
+  <button role="tab" aria-selected="false" data-view="contract">데이터 계약</button>
+</nav>
+
+<section class="view" id="v-board">
+  <div class="matrix" id="matrix"></div>
+  <div class="legend">
+    <span><i></i>잠김 — 선행 미승인</span>
+    <span><i class="t-ready"></i>착수 가능</span>
+    <span><i class="t-running"></i>진행 중</span>
+    <span><i class="t-submitted"></i>승인 대기</span>
+    <span><i class="t-approved"></i>승인</span>
+    <span><i class="t-blocked"></i>차단</span>
+    <span class="dim">행 = 단계, 각 행의 마지막 칸 = 게이트</span>
+  </div>
+
+  <div class="dossier">
+    <div><div class="card" id="dossier"></div></div>
+    <div>
+      <div class="card" id="approval"></div>
+      <div class="card" style="margin-top:16px">
+        <h3>MissionResult — run_mission(id, input)</h3>
+        <pre class="result" id="mresult">미션을 선택하세요.</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-calc" hidden>
+  <div class="card" style="margin-bottom:16px">
+    <h3>결정론적 계산엔진 — 언어모델은 이 숫자를 만들지 않습니다</h3>
+    <label class="fl">계산기</label>
+    <select id="calc-pick"></select>
+    <p class="empty" id="calc-note" style="margin-top:8px"></p>
+  </div>
+  <div class="calcgrid">
+    <div class="card">
+      <h3>입력 <span class="dim" style="font-weight:400">— 단위 선언 필수</span></h3>
+      <div id="calc-in"></div>
+      <div class="acts">
+        <button class="btn" id="calc-run">계산 실행</button>
+        <button class="btn ghost" id="calc-reset">예시값 복원</button>
+        <button class="btn ghost" id="calc-attach">계산서를 미션 근거로 등록</button>
+      </div>
+      <p class="empty" id="calc-msg" style="margin-top:8px"></p>
+    </div>
+    <div class="card">
+      <h3>출력</h3>
+      <div id="calc-out"><p class="empty">계산을 실행하세요.</p></div>
+      <h3 style="margin-top:16px">단위 검증</h3>
+      <div id="calc-unit"><p class="empty">—</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-evidence" hidden>
+  <div class="calcgrid">
+    <div class="card">
+      <h3>근거 등록</h3>
+      <div class="frow">
+        <div><label class="fl">유형</label><select id="ev-type"></select></div>
+        <div><label class="fl">연결 미션</label><select id="ev-mission"></select></div>
+      </div>
+      <div style="margin-bottom:9px"><label class="fl">제목</label><input type="text" id="ev-title" placeholder="근거 문서의 제목"></div>
+      <div id="ev-attrs"></div>
+      <div class="acts"><button class="btn" id="ev-add">근거 등록</button></div>
+      <p class="empty" id="ev-msg" style="margin-top:8px"></p>
+    </div>
+    <div class="card">
+      <h3>가정 등록 <span class="dim" style="font-weight:400">— 만료 시 하위 미션 자동 차단</span></h3>
+      <div style="margin-bottom:9px"><label class="fl">가정 내용</label><textarea id="as-text" placeholder="예: 지반 허용지지력 200 kN/m² (지질주상도 미확보 상태의 잠정값)"></textarea></div>
+      <div class="frow">
+        <div><label class="fl">연결 미션</label><select id="as-mission"></select></div>
+        <div><label class="fl">만료일</label><input type="date" id="as-expiry"></div>
+      </div>
+      <div style="margin-bottom:9px"><label class="fl">검증 방법</label><input type="text" id="as-method" placeholder="예: 지반조사 보고서로 대체"></div>
+      <div class="acts"><button class="btn" id="as-add">가정 등록</button></div>
+      <p class="empty" id="as-msg" style="margin-top:8px"></p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>등록된 근거</h3>
+    <div class="scrollx"><table id="ev-table"></table></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>가정 레지스터</h3>
+    <div class="scrollx"><table id="as-table"></table></div>
+  </div>
+</section>
+
+<section class="view" id="v-permit" hidden>
+  <div class="notice">
+    아래는 <b>후보 목록</b>입니다. 법령명은 초기값으로 제시되지만 조항·시행일·출처는 비어 있습니다.
+    검증 전 항목은 설계·제출 근거로 쓸 수 없고 M072·M073·M080의 승인을 차단합니다.
+  </div>
+  <div class="card">
+    <h3>PermitMatrix — 관할 확인 → 법령 후보 → 조문 검증 → 최신본 확인</h3>
+    <div class="scrollx"><table id="permit-table"></table></div>
+  </div>
+  <div class="card" id="permit-edit" style="margin-top:16px" hidden></div>
+</section>
+
+<section class="view" id="v-metrics" hidden>
+  <div class="card" style="margin-bottom:16px">
+    <h3>책임성 지표 — 문장 품질이 아니라 누락·오차·수정률로 측정</h3>
+    <div class="metrics" id="metric-grid"></div>
+  </div>
+  <div class="calcgrid">
+    <div class="card">
+      <h3>단계별 진척</h3>
+      <div id="phase-progress"></div>
+    </div>
+    <div class="card">
+      <h3>차단 사유 집계</h3>
+      <div class="scrollx"><table id="block-table"></table></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>프로젝트 그래프 내보내기</h3>
+    <p class="empty" style="margin-bottom:10px">미션 상태·근거·가정·계산·인허가·결정을 하나의 JSON 그래프로 내보냅니다. 채팅 기록이 아니라 이 그래프가 기록입니다.</p>
+    <div class="acts">
+      <button class="btn" id="export-json">그래프 내보내기 (JSON)</button>
+      <button class="btn ghost" id="export-csv">미션 대장 내보내기 (CSV)</button>
+      <button class="btn ghost warn" id="reset-all">진행 상태 초기화</button>
+    </div>
+    <p class="empty" id="export-msg" style="margin-top:8px"></p>
+  </div>
+</section>
+
+<section class="view" id="v-contract" hidden>
+  <div class="card">
+    <h3>1단계 — 고정 스키마 (동결 대상)</h3>
+    <div class="scrollx"><table id="schema-table"></table></div>
+  </div>
+  <div class="calcgrid" style="margin-top:16px">
+    <div class="card">
+      <h3>근거 유형별 필수 속성</h3>
+      <div class="scrollx"><table id="evtype-table"></table></div>
+    </div>
+    <div class="card">
+      <h3>승인 역할</h3>
+      <div class="scrollx"><table id="role-table"></table></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>미션 종류별 규칙</h3>
+    <div class="scrollx"><table id="kind-table"></table></div>
+  </div>
+</section>
+
+<footer>
+  계약 버전 <span class="mono" id="cv"></span> · 기준 발열량 LHV 33.322 kWh/kg · 화학량론 O₂/H₂ 7.9360, H₂O/H₂ 8.9360<br>
+  이 도구는 진행을 차단하기 위한 것이지 판단을 대체하지 않습니다. 안전거리·SIL·인허가 적합성의 최종 판정은 유자격자만 할 수 있습니다.
+</footer>
+</div>
+
+<script>
+// ── 1단계: 표준 데이터 계약 (동결 대상) ───────────────────────────
+const CONTRACT_VERSION = "1.0.0";
+
+const ROLES = {
+  OWN:    { n: "발주처 투자심의",       ext: false },
+  PM:     { n: "사업총괄 PM",           ext: false },
+  DEV:    { n: "사업개발 책임",         ext: false },
+  "PE-EL":{ n: "전기 책임 (전기안전/전기기술사)", ext: false, lic: true },
+  "PE-GAS":{n: "가스 책임 (가스기술사)", ext: false, lic: true },
+  "PE-MEC":{n: "기계 책임 (기계기술사)", ext: false, lic: true },
+  "PE-CIV":{n: "토목·건축 책임",         ext: false, lic: true },
+  "PE-CTL":{n: "계장·제어 책임",         ext: false },
+  HSE:    { n: "안전보건 책임",          ext: false },
+  LEG:    { n: "인허가·법무 책임",       ext: false },
+  FIN:    { n: "재무 책임",              ext: false },
+  QA:     { n: "품질보증 책임",          ext: false },
+  AHJ:    { n: "관계행정기관 (외부)",     ext: true  }
+};
+
+// 근거 유형 — req 필드는 해당 근거가 유효하려면 반드시 채워져야 하는 속성
+const EV_TYPES = {
+  STATUTE:  { n:"법령",     req:["법령명","조항","시행일","출처URL"], strict:true },
+  CODE:     { n:"기술기준", req:["코드번호","판/개정번호","발행일","발행기관"], strict:true },
+  CALC:     { n:"계산서",   req:["계산ID","입력값","산식버전","단위검증"], strict:true },
+  TEST:     { n:"시험성적서",req:["시험기관","성적서번호","시험일"], strict:true },
+  SURVEY:   { n:"현장조사", req:["조사일","조사자","좌표"], strict:false },
+  EXTDATA:  { n:"외부DB",   req:["데이터셋","스냅샷일자","출처"], strict:true },
+  OFFICIAL: { n:"공문",     req:["문서번호","발신기관","수신일"], strict:true },
+  DRAWING:  { n:"도면",     req:["도면번호","Rev","발행일"], strict:true },
+  CONTRACT: { n:"계약서",   req:["계약명","체결일","당사자"], strict:true },
+  MINUTES:  { n:"회의록",   req:["일자","참석자"], strict:false },
+  VENDOR:   { n:"벤더자료", req:["제조사","문서번호","개정일"], strict:false }
+};
+
+const KINDS = {
+  DEF:    { n:"정의·계약",     d:"사람이 값을 확정하고 동결한다" },
+  CALC:   { n:"결정론적 계산", d:"코드가 계산한다. AI는 숫자를 만들지 않는다" },
+  EXT:    { n:"외부자료 조회", d:"외부 DB/기관 자료 없이는 진행 불가" },
+  DRAFT:  { n:"초안 생성",     d:"AI 초안 허용. 초안은 가정으로만 등록된다" },
+  EXPERT: { n:"자격자 판정",   d:"유자격 전문가 승인 없이는 통과 불가" },
+  FILE:   { n:"관청 제출",     d:"외부 기관의 회신 공문이 있어야 종료" },
+  GATE:   { n:"단계 게이트",   d:"선행 미션 전건 승인 + 게이트 판정" }
+};
+
+const PHASES = [
+  { id:"P0", n:"정의·데이터계약", gate:"G0 기준 동결" },
+  { id:"P1", n:"사업성·시장·입찰", gate:"G1 사업성" },
+  { id:"P2", n:"부지·GIS·토지",    gate:"G2 부지확정" },
+  { id:"P3", n:"수소 공급체계",    gate:"G3 공급확정" },
+  { id:"P4", n:"계통연계",         gate:"G4 연계확정" },
+  { id:"P5", n:"설계기준·FEED",    gate:"G5 FEED승인" },
+  { id:"P6", n:"안전성·리스크",    gate:"G6 SafetyCase" },
+  { id:"P7", n:"인허가",           gate:"G7 인허가완결" },
+  { id:"P8", n:"금융·계약·조달",   gate:"G8 FID" },
+  { id:"P9", n:"시공·시운전·인수", gate:"G9 COD" }
+];
+
+// ── 4단계: 결정론적 계산엔진 ──────────────────────────────────────
+// 모든 상수는 명시. AI는 이 값들을 추정하지 않는다.
+const CONST = {
+  LHV_H2_kWh_kg: 33.322,   // 119.96 MJ/kg
+  HHV_H2_kWh_kg: 39.394,   // 141.82 MJ/kg
+  M_H2: 2.016, M_O2: 31.998, M_H2O: 18.015, M_N2: 28.014,
+  R: 8.314462,             // J/mol·K
+  O2_mass_frac_air: 0.2314,
+  gamma_H2: 1.41,
+  hours_yr: 8760
+};
+
+// ── 4단계: 결정론적 계산엔진 ─────────────────────────────────────
+// 규칙: 이 파일의 함수만 숫자를 만든다. 언어모델은 숫자를 생성하지 않는다.
+// 모든 입력·출력은 단위를 선언하며, 단위 검증 실패 시 계산 결과는 무효 처리된다.
+const CALCS = {
+ module_config:{ n:"모듈 구성", ver:"1.0.0", ref:"M016",
+  in:[{k:"targetMW",l:"목표 순출력",u:"MW",d:20},{k:"rating_kW",l:"모듈 정격",u:"kW",d:440},{k:"spare",l:"예비 모듈",u:"개",d:0}],
+  out:[{k:"count",l:"필요 모듈 수",u:"개"},{k:"installedMW",l:"설치용량",u:"MW"},{k:"margin_pct",l:"설계 여유",u:"%"}],
+  f:i=>{const c=Math.ceil(i.targetMW*1000/i.rating_kW);const tot=(c+i.spare)*i.rating_kW/1000;
+        return{count:c+i.spare,installedMW:tot,margin_pct:(tot/i.targetMW-1)*100}}},
+
+ h2_demand:{ n:"수소 수요량", ver:"1.0.0", ref:"M031",
+  note:"효율은 총발전단(Gross AC)/수소 LHV 입력 기준. 기준 발열량 33.322 kWh/kg.",
+  in:[{k:"installedMW",l:"설치용량(총발전단)",u:"MW",d:20},{k:"etaEl",l:"발전효율 LHV",u:"%",d:50},
+      {k:"parasitic",l:"소내부하율",u:"%",d:8},{k:"cf",l:"이용률",u:"%",d:90}],
+  out:[{k:"fuelIn_kW",l:"수소 투입열량",u:"kW"},{k:"flow_kg_h",l:"수소 소비량",u:"kg/h"},
+       {k:"netMW",l:"순출력",u:"MW"},{k:"annual_t_yr",l:"연간 수소량",u:"t/yr"},{k:"sfc_kg_MWh",l:"단위소비율",u:"kg/MWh"}],
+  f:i=>{const fuel=i.installedMW*1000/(i.etaEl/100);const flow=fuel/33.322;
+        const net=i.installedMW*(1-i.parasitic/100);
+        return{fuelIn_kW:fuel,flow_kg_h:flow,netMW:net,
+               annual_t_yr:flow*8760*(i.cf/100)/1000,sfc_kg_MWh:flow/i.installedMW}}},
+
+ storage_sizing:{ n:"저장용량 산정", ver:"1.0.0", ref:"M035",
+  in:[{k:"flow_kg_h",l:"수소 소비량",u:"kg/h",d:1200},{k:"cf",l:"이용률",u:"%",d:90},
+      {k:"autonomy",l:"자립일수",u:"day",d:2},{k:"usable",l:"사용가능 비율",u:"%",d:80},
+      {k:"payload",l:"1대 적재량",u:"kg",d:340}],
+  out:[{k:"daily_kg",l:"일 소비량",u:"kg/day"},{k:"required_kg",l:"필요 저장량",u:"kg"},
+       {k:"units",l:"용기/트레일러 수",u:"대"},{k:"trips_day",l:"일 운송횟수",u:"회/day"}],
+  f:i=>{const d=i.flow_kg_h*24*(i.cf/100);const req=d*i.autonomy/(i.usable/100);
+        return{daily_kg:d,required_kg:req,units:Math.ceil(req/i.payload),trips_day:d/i.payload}}},
+
+ mass_energy_balance:{ n:"물질·에너지 수지", ver:"1.0.0", ref:"M052",
+  note:"H2 + ½O2 → H2O. 화학량론 질량비: O2/H2 = 7.9360, H2O/H2 = 8.9360.",
+  in:[{k:"flow_kg_h",l:"수소 투입",u:"kg/h",d:1200},{k:"etaEl",l:"발전효율 LHV",u:"%",d:50},
+      {k:"heatRec",l:"열회수율 LHV",u:"%",d:25},{k:"lambda",l:"공기비",u:"-",d:2.0}],
+  out:[{k:"fuelIn_kW",l:"투입열량",u:"kW"},{k:"elec_kW",l:"전기출력",u:"kW"},{k:"heat_kW",l:"회수열",u:"kW"},
+       {k:"loss_kW",l:"손실",u:"kW"},{k:"o2_kg_h",l:"산소 소비",u:"kg/h"},{k:"air_kg_h",l:"공기 공급",u:"kg/h"},
+       {k:"water_kg_h",l:"생성수",u:"kg/h"},{k:"massResidual_pct",l:"질량수지 잔차",u:"%"}],
+  f:i=>{const fuel=i.flow_kg_h*33.322;const el=fuel*i.etaEl/100;const ht=fuel*i.heatRec/100;
+        const o2=i.flow_kg_h*7.9360;const air=o2/0.2314*i.lambda;const w=i.flow_kg_h*8.9360;
+        const mIn=i.flow_kg_h+air;const mOut=w+(air-o2);
+        return{fuelIn_kW:fuel,elec_kW:el,heat_kW:ht,loss_kW:fuel-el-ht,o2_kg_h:o2,air_kg_h:air,
+               water_kg_h:w,massResidual_pct:(mIn-mOut)/mIn*100}}},
+
+ parasitic_load:{ n:"소내부하 산정", ver:"1.0.0", ref:"M054",
+  in:[{k:"installedMW",l:"설치용량",u:"MW",d:20},{k:"blower_kW",l:"공기공급",u:"kW",d:620},
+      {k:"cooling_kW",l:"냉각계통",u:"kW",d:480},{k:"h2sys_kW",l:"수소계통",u:"kW",d:210},
+      {k:"ctrl_kW",l:"제어·계측",u:"kW",d:55},{k:"aux_kW",l:"기타 소내",u:"kW",d:190}],
+  out:[{k:"total_kW",l:"소내부하 합계",u:"kW"},{k:"parasitic_pct",l:"소내부하율",u:"%"},{k:"netMW",l:"순출력",u:"MW"}],
+  f:i=>{const t=i.blower_kW+i.cooling_kW+i.h2sys_kW+i.ctrl_kW+i.aux_kW;
+        return{total_kW:t,parasitic_pct:t/(i.installedMW*1000)*100,netMW:i.installedMW-t/1000}}},
+
+ release_rate:{ n:"누출률 (초크드 오리피스)", ver:"1.0.0", ref:"M064",
+  note:"등엔트로피 초크류 이상기체 가정. γ=1.41, R_s(H2)=4124.2 J/kg·K. 화염길이는 이 계산기가 산출하지 않는다 — 검증된 상관식 근거(M065)가 등록되어야 한다.",
+  in:[{k:"p_barg",l:"저장압력",u:"barg",d:200},{k:"t_C",l:"온도",u:"°C",d:15},
+      {k:"d_mm",l:"누출공 직경",u:"mm",d:3},{k:"cd",l:"유출계수",u:"-",d:0.62}],
+  out:[{k:"area_mm2",l:"누출 단면적",u:"mm²"},{k:"mdot_kg_s",l:"질량유량",u:"kg/s"},
+       {k:"mdot_kg_min",l:"질량유량",u:"kg/min"},{k:"vol_Nm3_h",l:"표준상태 환산",u:"Nm³/h"}],
+  f:i=>{const P=(i.p_barg+1.01325)*1e5,T=i.t_C+273.15,g=1.41,Rs=4124.2;
+        const A=Math.PI*Math.pow(i.d_mm/1000,2)/4;
+        const m=i.cd*A*P*Math.sqrt(g/(Rs*T))*Math.pow(2/(g+1),(g+1)/(2*(g-1)));
+        return{area_mm2:A*1e6,mdot_kg_s:m,mdot_kg_min:m*60,vol_Nm3_h:m*3600/0.08988}}},
+
+ logistics:{ n:"공급 물류", ver:"1.0.0", ref:"M033",
+  in:[{k:"distance_km",l:"편도 거리",u:"km",d:85},{k:"speed_kmh",l:"평균 속도",u:"km/h",d:45},
+      {k:"handling_h",l:"상하차·검사 시간",u:"h",d:3},{k:"daily_kg",l:"일 소비량",u:"kg/day",d:25920},
+      {k:"payload",l:"1대 적재량",u:"kg",d:340}],
+  out:[{k:"cycle_h",l:"1회 순환시간",u:"h"},{k:"trips_day",l:"일 운송횟수",u:"회/day"},
+       {k:"fleet",l:"상시 필요 대수",u:"대"},{k:"arrival_int_min",l:"평균 도착간격",u:"min"}],
+  f:i=>{const cyc=i.distance_km*2/i.speed_kmh+i.handling_h;const trips=i.daily_kg/i.payload;
+        return{cycle_h:cyc,trips_day:trips,fleet:Math.ceil(trips*cyc/24),arrival_int_min:24*60/trips}}},
+
+ route_check:{ n:"중량물 운송 제약", ver:"1.0.0", ref:"M027",
+  in:[{k:"mod_mass_t",l:"모듈 중량",u:"t",d:28},{k:"mod_w_m",l:"모듈 폭",u:"m",d:2.9},
+      {k:"mod_h_m",l:"모듈 높이",u:"m",d:3.2},{k:"bridge_t",l:"경로 최소 교량하중",u:"t",d:40},
+      {k:"clear_h_m",l:"경로 최소 통과높이",u:"m",d:4.5},{k:"lane_w_m",l:"경로 최소 차로폭",u:"m",d:3.0}],
+  out:[{k:"massMargin_t",l:"하중 여유",u:"t"},{k:"heightMargin_m",l:"높이 여유",u:"m"},
+       {k:"widthMargin_m",l:"폭 여유",u:"m"},{k:"pass",l:"통과 가능 (1=가능)",u:"-"}],
+  f:i=>{const tr=i.mod_mass_t+12;const mm=i.bridge_t-tr,hm=i.clear_h_m-(i.mod_h_m+1.2),wm=i.lane_w_m-i.mod_w_m;
+        return{massMargin_t:mm,heightMargin_m:hm,widthMargin_m:wm,pass:(mm>0&&hm>0&&wm>0)?1:0}}},
+
+ bulk_qty:{ n:"배관·케이블 물량", ver:"1.0.0", ref:"M059",
+  in:[{k:"area_m2",l:"플랜트 면적",u:"m²",d:9000},{k:"modules",l:"모듈 수",u:"개",d:46},
+      {k:"pipeFactor",l:"배관 원단위",u:"m/모듈",d:38},{k:"cableFactor",l:"케이블 원단위",u:"m/모듈",d:145},
+      {k:"waste_pct",l:"할증률",u:"%",d:12}],
+  out:[{k:"pipe_m",l:"배관 연장",u:"m"},{k:"cable_m",l:"케이블 연장",u:"m"},{k:"rack_m",l:"랙·트레이 연장",u:"m"}],
+  f:i=>{const w=1+i.waste_pct/100;
+        return{pipe_m:i.modules*i.pipeFactor*w,cable_m:i.modules*i.cableFactor*w,
+               rack_m:Math.sqrt(i.area_m2)*4.2*w}}},
+
+ capex_range:{ n:"사업비 범위", ver:"1.0.0", ref:"M018",
+  in:[{k:"installedMW",l:"설치용량",u:"MW",d:20},{k:"unitLow",l:"기기단가 하한",u:"억원/MW",d:38},
+      {k:"unitMid",l:"기기단가 중앙",u:"억원/MW",d:46},{k:"unitHigh",l:"기기단가 상한",u:"억원/MW",d:55},
+      {k:"bopPct",l:"BOP·토건 비율",u:"%",d:28},{k:"gridCost",l:"계통연계 비용",u:"억원",d:65},
+      {k:"conting",l:"예비비",u:"%",d:12}],
+  out:[{k:"low",l:"하한",u:"억원"},{k:"mid",l:"중앙",u:"억원"},{k:"high",l:"상한",u:"억원"},{k:"perMW",l:"중앙 단가",u:"억원/MW"}],
+  f:i=>{const b=u=>(i.installedMW*u*(1+i.bopPct/100)+i.gridCost)*(1+i.conting/100);
+        const m=b(i.unitMid);return{low:b(i.unitLow),mid:m,high:b(i.unitHigh),perMW:m/i.installedMW}}},
+
+ capex_detail:{ n:"사업비 상세", ver:"1.0.0", ref:"M081",
+  in:[{k:"equip",l:"주기기",u:"억원",d:920},{k:"bop",l:"BOP·기계",u:"억원",d:180},
+      {k:"civil",l:"토건",u:"억원",d:140},{k:"elec",l:"전기·계장",u:"억원",d:120},
+      {k:"grid",l:"계통연계",u:"억원",d:65},{k:"soft",l:"인허가·설계·금융",u:"억원",d:85},
+      {k:"conting",l:"예비비",u:"%",d:10}],
+  out:[{k:"direct",l:"직접비",u:"억원"},{k:"total",l:"총사업비",u:"억원"},{k:"equipShare_pct",l:"주기기 비중",u:"%"}],
+  f:i=>{const d=i.equip+i.bop+i.civil+i.elec+i.grid+i.soft;
+        return{direct:d,total:d*(1+i.conting/100),equipShare_pct:i.equip/d*100}}},
+
+ lcoe:{ n:"LCOE", ver:"1.0.0", ref:"M019",
+  note:"CRF = i(1+i)^n / ((1+i)^n − 1). 연료비 = 수소단가 ÷ (효율 × 33.322).",
+  in:[{k:"capex",l:"총사업비",u:"억원",d:1661},{k:"opexFix",l:"고정 O&M",u:"억원/yr",d:42},
+      {k:"h2Price",l:"수소 단가",u:"원/kg",d:7500},{k:"netMW",l:"순출력",u:"MW",d:18.4},
+      {k:"cf",l:"이용률",u:"%",d:90},{k:"etaEl",l:"발전효율 LHV",u:"%",d:50},
+      {k:"disc",l:"할인율",u:"%",d:6.5},{k:"life",l:"운전기간",u:"yr",d:20}],
+  out:[{k:"crf",l:"자본회수계수",u:"-"},{k:"annualGWh",l:"연간 발전량",u:"GWh"},
+       {k:"capexPart",l:"자본비",u:"원/kWh"},{k:"opexPart",l:"고정운영비",u:"원/kWh"},
+       {k:"fuelPart",l:"연료비",u:"원/kWh"},{k:"lcoe",l:"LCOE",u:"원/kWh"}],
+  f:i=>{const r=i.disc/100,n=i.life;const crf=r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+        const kWh=i.netMW*1000*8760*i.cf/100;
+        const cp=i.capex*1e8*crf/kWh, op=i.opexFix*1e8/kWh, fu=i.h2Price/(i.etaEl/100*33.322);
+        return{crf:crf,annualGWh:kWh/1e6,capexPart:cp,opexPart:op,fuelPart:fu,lcoe:cp+op+fu}}},
+
+ scenario_compare:{ n:"시나리오 비교", ver:"1.0.0", ref:"M082",
+  in:[{k:"baseLcoe",l:"기준 LCOE",u:"원/kWh",d:583},{k:"price",l:"판매단가",u:"원/kWh",d:610},
+      {k:"h2Swing",l:"수소단가 변동폭",u:"%",d:25},{k:"fuelShare",l:"연료비 비중",u:"%",d:55},
+      {k:"cfSwing",l:"이용률 변동폭",u:"%",d:8}],
+  out:[{k:"pessLcoe",l:"비관 LCOE",u:"원/kWh"},{k:"optLcoe",l:"낙관 LCOE",u:"원/kWh"},
+       {k:"baseMargin",l:"기준 마진",u:"원/kWh"},{k:"pessMargin",l:"비관 마진",u:"원/kWh"},
+       {k:"breakEvenH2_pct",l:"손익분기 수소단가 변동",u:"%"}],
+  f:i=>{const fs=i.fuelShare/100;
+        const pess=i.baseLcoe*(1+fs*i.h2Swing/100)*(1+i.cfSwing/100);
+        const opt=i.baseLcoe*(1-fs*i.h2Swing/100)*(1-i.cfSwing/100);
+        return{pessLcoe:pess,optLcoe:opt,baseMargin:i.price-i.baseLcoe,pessMargin:i.price-pess,
+               breakEvenH2_pct:(i.price-i.baseLcoe)/(i.baseLcoe*fs)*100}}},
+
+ performance_test:{ n:"성능시험 판정", ver:"1.0.0", ref:"M098",
+  in:[{k:"measMW",l:"실측 출력",u:"MW",d:18.1},{k:"guarMW",l:"보증 출력",u:"MW",d:18.4},
+      {k:"measEta",l:"실측 효율",u:"%",d:48.6},{k:"guarEta",l:"보증 효율",u:"%",d:50},
+      {k:"corrFactor",l:"보정계수",u:"-",d:1.008},{k:"ldRate",l:"출력 위약단가",u:"억원/MW",d:22}],
+  out:[{k:"corrMW",l:"보정 출력",u:"MW"},{k:"mwGap_pct",l:"출력 편차",u:"%"},
+       {k:"etaGap_pp",l:"효율 편차",u:"%p"},{k:"ld",l:"위약금",u:"억원"},{k:"verdict",l:"판정 (1=합격)",u:"-"}],
+  f:i=>{const c=i.measMW*i.corrFactor;const gap=(c-i.guarMW)/i.guarMW*100;
+        return{corrMW:c,mwGap_pct:gap,etaGap_pp:i.measEta-i.guarEta,
+               ld:Math.max(0,(i.guarMW-c))*i.ldRate,verdict:(c>=i.guarMW&&i.measEta>=i.guarEta)?1:0}}}
+};
+
+// 미션 라이브러리 A — P0~P4 (M001~M050)
+// 키: id, ph(단계), t(제목), k(종류), dp(선행), in(입력), out(출력),
+//     ev(필수 근거유형), ap(승인자), bl(차단조건), v(검증 기준), du(기간일), ca(계산기)
+const MISSIONS_A = [
+/* P0 정의·데이터계약 */
+{id:"M001",ph:0,t:"프로젝트 의도 확정",k:"DEF",dp:[],
+ in:[],out:["ProjectIntent.purpose","ProjectIntent.netCapacityMW","ProjectIntent.codTarget","ProjectIntent.dealStructure","ProjectIntent.offtaker"],
+ ev:["MINUTES","OFFICIAL"],ap:"OWN",du:10,
+ bl:["목적·정격출력·COD 중 하나라도 미확정","발주처 승인 주체 미지정"],
+ v:"ProjectIntent의 5개 필드가 모두 값을 가지고, 발주처 승인 공문번호가 근거로 연결되어 있다"},
+
+{id:"M002",ph:0,t:"단위계·기준상태 동결",k:"DEF",dp:["M001"],
+ in:["ProjectIntent"],out:["DesignBasis.unitSystem","DesignBasis.refTempK","DesignBasis.refPressurekPa","DesignBasis.heatingValueBasis"],
+ ev:["CODE"],ap:"PM",du:3,
+ bl:["LHV/HHV 기준 미명시","기준온도·압력 미명시"],
+ v:"SI 단위계, 기준상태(온도 K·압력 kPa), 발열량 기준(LHV 또는 HHV)이 명시되고 이후 모든 계산이 이 값을 참조한다"},
+
+{id:"M003",ph:0,t:"데이터 계약 v1 동결",k:"DEF",dp:["M002"],
+ in:["DesignBasis.unitSystem"],out:["Schema@v1"],
+ ev:["MINUTES"],ap:"PM",du:5,
+ bl:["엔티티 12종 중 미정의 항목 존재","필드별 단위 미기재"],
+ v:"ProjectIntent·SiteCandidate·HydrogenSpec·PowerSpec·GridSpec·DesignBasis·Evidence·Mission·Gate·PermitRequirement·Document·ReviewDecision 12종 스키마가 버전 고정되고 모든 수치 필드에 단위가 붙어 있다"},
+
+{id:"M004",ph:0,t:"프로젝트 그래프 초기화·ID 체계",k:"DEF",dp:["M003"],
+ in:["Schema@v1"],out:["ProjectGraph.root","IdPolicy"],
+ ev:["MINUTES"],ap:"PM",du:2,
+ bl:["ID 충돌 규칙 미정의"],
+ v:"모든 노드가 유일 ID를 가지며, 채팅이 아닌 그래프에서 조회·역참조가 가능하다"},
+
+{id:"M005",ph:0,t:"승인권한·자격요건(RACI) 등록",k:"DEF",dp:["M004"],
+ in:["ProjectGraph.root"],out:["ApprovalMatrix"],
+ ev:["OFFICIAL"],ap:"OWN",du:5,
+ bl:["자격자 승인이 필요한 미션에 유자격자 미지정","승인자 부재 시 대행 규칙 없음"],
+ v:"자격 필수 역할(전기·가스·기계·토목)에 자격번호가 확인된 실명이 매핑되고, 미지정 역할이 0건이다"},
+
+{id:"M006",ph:0,t:"근거 저장소·무결성·보존정책",k:"DEF",dp:["M004"],
+ in:["Schema@v1.Evidence"],out:["EvidencePolicy"],
+ ev:["MINUTES"],ap:"QA",du:3,
+ bl:["근거 유형별 필수속성 미정의","보존기간 미정"],
+ v:"근거 유형별 필수속성이 정의되고, 필수속성 누락 근거는 시스템이 저장 단계에서 거부한다"},
+
+{id:"M007",ph:0,t:"가정 레지스터 개설·폐기 규칙",k:"DEF",dp:["M006"],
+ in:["EvidencePolicy"],out:["AssumptionRegister"],
+ ev:["MINUTES"],ap:"QA",du:3,
+ bl:["가정의 만료·검증 규칙 미정의"],
+ v:"모든 가정이 소유자·만료일·검증방법·영향 미션을 갖고, 만료된 가정은 하위 미션을 자동 차단한다"},
+
+{id:"M008",ph:0,t:"미션 DAG·게이트·차단조건 등록",k:"DEF",dp:["M007"],
+ in:["AssumptionRegister"],out:["MissionGraph","GateSet"],
+ ev:["MINUTES"],ap:"PM",du:5,
+ bl:["순환 의존 존재","게이트 통과조건 미정의"],
+ v:"100개 미션의 선행관계에 순환이 없고(위상정렬 성공), 10개 게이트 각각에 통과조건이 기술되어 있다"},
+
+{id:"M009",ph:0,t:"형상관리·문서번호·Rev 규칙",k:"DEF",dp:["M008"],
+ in:["MissionGraph"],out:["DocPolicy"],
+ ev:["MINUTES"],ap:"QA",du:3,
+ bl:["Rev 승격 권한 미정의"],
+ v:"문서번호 체계와 Rev 승격 조건이 정의되고, 승인되지 않은 Rev는 하위 미션 입력으로 사용될 수 없다"},
+
+{id:"M010",ph:0,t:"G0 — 기준 동결 게이트",k:"GATE",dp:["M005","M009"],
+ in:["ApprovalMatrix","DocPolicy"],out:["Gate.G0"],
+ ev:["MINUTES","OFFICIAL"],ap:"OWN",du:2,
+ bl:["P0 미션 중 미승인 존재"],
+ v:"M001~M009 전건이 승인 상태이며, 이후 기준 변경은 변경관리 절차를 거쳐야만 가능하다"},
+
+/* P1 사업성·시장·입찰 */
+{id:"M011",ph:1,t:"수소발전 입찰시장 트랙 결정",k:"EXT",dp:["M010"],
+ in:["ProjectIntent.netCapacityMW"],out:["ProjectIntent.marketTrack","ProjectIntent.bidWindow"],
+ ev:["OFFICIAL","EXTDATA"],ap:"DEV",du:10,
+ bl:["해당 연도 입찰공고문 미확보","낙찰 요건·평가배점 미확인"],
+ v:"일반수소/청정수소 중 하나가 선택되고, 근거로 해당 연도 공고문(문서번호·공고일)이 연결되어 있다"},
+
+{id:"M012",ph:1,t:"청정수소 인증 적용성·탄소집약도 요건 확인",k:"EXT",dp:["M011"],
+ in:["ProjectIntent.marketTrack"],out:["HydrogenSpec.ciThreshold_kgCO2e_kgH2","HydrogenSpec.certScheme"],
+ ev:["STATUTE","OFFICIAL"],ap:"LEG",du:10,
+ bl:["적용 고시 조문 미검증","산정경계(Well-to-Gate) 미정의"],
+ v:"적용되는 탄소집약도 기준값과 산정경계가 고시 조문·시행일 근거와 함께 등록되어 있다"},
+
+{id:"M013",ph:1,t:"수익구조 정의",k:"DEF",dp:["M011"],
+ in:["ProjectIntent.marketTrack"],out:["ProjectIntent.revenueModel"],
+ ev:["OFFICIAL"],ap:"FIN",du:7,
+ bl:["정산 산식 미확정","계약기간 미확정"],
+ v:"전력·인증서·열 각 수익원의 산식과 계약기간이 수치로 정의되어 재무모델이 직접 참조할 수 있다"},
+
+{id:"M014",ph:1,t:"열 판매 가능성 검토",k:"EXT",dp:["M013"],
+ in:["ProjectIntent.revenueModel"],out:["PowerSpec.heatOfftake","PowerSpec.heatRecoveryPct"],
+ ev:["EXTDATA","MINUTES"],ap:"DEV",du:12,
+ bl:["열 수요처 미식별 시 열수익 0으로 고정"],
+ v:"열 수요처 유무가 판정되고, 있을 경우 연간 열판매량(GJ)과 배관거리가 근거와 함께 등록된다"},
+
+{id:"M015",ph:1,t:"연료전지 방식 확정 (PAFC/MCFC/SOFC)",k:"DEF",dp:["M011"],
+ in:["ProjectIntent.netCapacityMW","HydrogenSpec.certScheme"],
+ out:["PowerSpec.fcType","PowerSpec.moduleRating_kW","PowerSpec.etaEl_LHV_pct","PowerSpec.opTemp_C"],
+ ev:["VENDOR","TEST"],ap:"PE-MEC",du:20,
+ bl:["벤더 성능 시험성적서 미수령","연료 사양(순수소/개질) 미확정"],
+ v:"3개 방식 비교표가 동일 조건으로 작성되고, 선정안의 효율·정격이 제3자 시험성적서 번호로 뒷받침된다"},
+
+{id:"M016",ph:1,t:"설비용량·모듈 구성 산정",k:"CALC",dp:["M015"],ca:"module_config",
+ in:["ProjectIntent.netCapacityMW","PowerSpec.moduleRating_kW"],
+ out:["PowerSpec.moduleCount","PowerSpec.installedMW"],
+ ev:["CALC"],ap:"PE-MEC",du:3,
+ bl:["모듈 정격 미확정","예비 모듈 정책 미정"],
+ v:"모듈 수량이 계산기 출력으로 산출되고, 설치용량이 목표 순출력 이상임이 단위검증을 통과한 계산서로 확인된다"},
+
+{id:"M017",ph:1,t:"이용률·성능저하·스택 교체주기 등록",k:"DEF",dp:["M016"],
+ in:["PowerSpec.fcType"],out:["PowerSpec.cf_pct","PowerSpec.degradation_pct_yr","PowerSpec.stackLife_hr"],
+ ev:["VENDOR"],ap:"PE-MEC",du:7,
+ bl:["벤더 성능저하 곡선 미수령","보증조건과 가정값 불일치"],
+ v:"연차별 출력저하율과 스택 교체주기가 벤더 보증문서의 조항번호와 함께 등록되고, 가정 레지스터에 만료일이 설정되어 있다"},
+
+{id:"M018",ph:1,t:"CAPEX·OPEX 범위 산정",k:"CALC",dp:["M016","M017"],ca:"capex_range",
+ in:["PowerSpec.installedMW","PowerSpec.stackLife_hr"],out:["Cost.capexRange","Cost.opexRange"],
+ ev:["CALC","VENDOR"],ap:"FIN",du:10,
+ bl:["단가 출처 미확보","환율·기준연도 미고정"],
+ v:"저·중·고 3개 값으로 산출되고, 각 단가의 출처·기준연도·환율이 근거에 기재되어 있다"},
+
+{id:"M019",ph:1,t:"재무모델 v0 — LCOE·IRR·DSCR",k:"CALC",dp:["M013","M018"],ca:"lcoe",
+ in:["Cost.capexRange","ProjectIntent.revenueModel","PowerSpec.cf_pct"],
+ out:["Finance.lcoe","Finance.irr","Finance.dscrMin"],
+ ev:["CALC"],ap:"FIN",du:10,
+ bl:["수소 구매단가 미확정 시 민감도 범위로만 산출"],
+ v:"LCOE가 단위검증을 통과한 계산서로 산출되고, 수소단가·이용률·CAPEX 3개 축의 민감도 표가 첨부된다"},
+
+{id:"M020",ph:1,t:"G1 — 사업성 게이트",k:"GATE",dp:["M012","M014","M019"],
+ in:["Finance.irr","Finance.dscrMin"],out:["Gate.G1","ReviewDecision.G1"],
+ ev:["MINUTES","OFFICIAL"],ap:"OWN",du:5,
+ bl:["P1 미션 중 미승인 존재","IRR·DSCR 허들 미달"],
+ v:"사업성 허들 대비 결과가 명시되고, 진행/조건부진행/중단 중 하나가 문서화된 결정으로 기록된다"},
+
+/* P2 부지·GIS·토지 */
+{id:"M021",ph:2,t:"후보부지 롱리스트 등록",k:"DEF",dp:["M020"],
+ in:["PowerSpec.installedMW"],out:["SiteCandidate[]"],
+ ev:["EXTDATA"],ap:"DEV",du:10,
+ bl:["후보 3건 미만","좌표·지번 누락"],
+ v:"각 후보가 지번·좌표·면적·현 용도를 갖고 등록되며, 면적이 개략 소요면적 이상이다"},
+
+{id:"M022",ph:2,t:"지적·소유·용도지역 확인",k:"EXT",dp:["M021"],
+ in:["SiteCandidate[].parcelId"],out:["SiteCandidate[].zoning","SiteCandidate[].ownership","SiteCandidate[].landUseLimit"],
+ ev:["EXTDATA","OFFICIAL"],ap:"LEG",du:15,
+ bl:["용도지역상 발전시설 입지 불가","소유권·지상권 분쟁 존재"],
+ v:"각 후보의 용도지역과 입지 가능 여부가 토지이용계획확인원(발급일 기재)으로 확인된다"},
+
+{id:"M023",ph:2,t:"표고·경사·지반 1차 검토",k:"EXT",dp:["M021"],
+ in:["SiteCandidate[].coord"],out:["SiteCandidate[].slope_pct","SiteCandidate[].bearingAssumption"],
+ ev:["EXTDATA","SURVEY"],ap:"PE-CIV",du:15,
+ bl:["지반 지지력 가정 미검증 상태로 기초 설계 진입 금지"],
+ v:"경사·표고가 공간정보 데이터셋(스냅샷 일자 기재)으로 산출되고, 지반 가정이 가정 레지스터에 만료일과 함께 등록된다"},
+
+{id:"M024",ph:2,t:"재해위험 스크리닝",k:"EXT",dp:["M023"],
+ in:["SiteCandidate[].coord"],out:["SiteCandidate[].hazardFlags"],
+ ev:["EXTDATA"],ap:"PE-CIV",du:10,
+ bl:["침수·산사태 위험구역 저촉 시 해당 후보 차단"],
+ v:"홍수·산사태·지진 3개 항목이 각각 공인 데이터셋 기준으로 판정되고 저촉 여부가 기록된다"},
+
+{id:"M025",ph:2,t:"환경·보호지역 중첩 검토",k:"EXT",dp:["M022"],
+ in:["SiteCandidate[].coord"],out:["SiteCandidate[].envOverlaps"],
+ ev:["EXTDATA","OFFICIAL"],ap:"LEG",du:15,
+ bl:["보호지역 중첩 시 협의 경로 미확인 상태로 진행 금지"],
+ v:"생태·상수원·문화재·군사 등 중첩 레이어가 조회되고, 중첩 시 필요한 협의 절차가 PermitMatrix에 항목으로 생성된다"},
+
+{id:"M026",ph:2,t:"주거·이격·수용성 스크리닝",k:"EXT",dp:["M024"],
+ in:["SiteCandidate[].coord"],out:["SiteCandidate[].nearestResidential_m","SiteCandidate[].acceptanceRisk"],
+ ev:["EXTDATA","SURVEY"],ap:"DEV",du:15,
+ bl:["최근접 주거지 거리 미측정"],
+ v:"최근접 주거·학교·다중이용시설까지의 실거리가 측정되어 기록되고, 이 값이 안전거리 판정(M066)의 입력으로 연결된다"},
+
+{id:"M027",ph:2,t:"중량물 운송로·진입도로 검토",k:"CALC",dp:["M016","M021"],ca:"route_check",
+ in:["PowerSpec.moduleCount","SiteCandidate[].coord"],out:["SiteCandidate[].accessFeasible","Logistics.routeConstraints"],
+ ev:["SURVEY","EXTDATA"],ap:"PE-CIV",du:15,
+ bl:["모듈 제원 초과 구간 존재 시 대안 경로 확보 전까지 차단"],
+ v:"모듈 중량·폭·높이 대비 경로상 교량 하중·통과높이·회전반경이 검토되고 제약구간 목록이 산출된다"},
+
+{id:"M028",ph:2,t:"용수·배수·하수 접속 검토",k:"EXT",dp:["M021"],
+ in:["SiteCandidate[].coord"],out:["Utility.waterSource","Utility.dischargeRoute"],
+ ev:["EXTDATA","OFFICIAL"],ap:"PE-MEC",du:12,
+ bl:["공업용수 인입 불가 시 대체 수원 확정 전까지 차단"],
+ v:"용수 공급원·필요수량·배수 방류지점이 확인되고, 관리기관 회신 또는 공개 데이터 근거가 연결된다"},
+
+{id:"M029",ph:2,t:"부지 평가·우선부지 선정",k:"DEF",dp:["M022","M025","M026","M027","M028"],
+ in:["SiteCandidate[]"],out:["ProjectIntent.selectedSite","SiteEvaluation.matrix"],
+ ev:["MINUTES"],ap:"OWN",du:10,
+ bl:["평가 가중치가 평가 이후에 변경됨","차단 플래그가 있는 후보가 1순위"],
+ v:"가중치가 평가 착수 전에 동결되고, 선정 사유와 탈락 사유가 후보별로 기록된다"},
+
+{id:"M030",ph:2,t:"G2 — 부지 확정 게이트",k:"GATE",dp:["M029"],
+ in:["ProjectIntent.selectedSite"],out:["Gate.G2","LandControl.method"],
+ ev:["CONTRACT","OFFICIAL"],ap:"OWN",du:10,
+ bl:["토지 확보 수단(매매·임대·지상권) 미확정"],
+ v:"확정 부지 1건과 토지 확보 방식·일정이 계약 또는 합의문서로 확인된다"},
+
+/* P3 수소 공급체계 */
+{id:"M031",ph:3,t:"수소 수요량 산정",k:"CALC",dp:["M016","M017"],ca:"h2_demand",
+ in:["PowerSpec.installedMW","PowerSpec.etaEl_LHV_pct","PowerSpec.parasitic_pct","PowerSpec.cf_pct"],
+ out:["HydrogenSpec.flow_kg_h","HydrogenSpec.annual_t_yr"],
+ ev:["CALC"],ap:"PE-MEC",du:3,
+ bl:["효율 기준(LHV/HHV) 불일치","소내부하 미반영"],
+ v:"kg/h와 t/yr가 계산기 출력으로 산출되고, 발열량 기준이 M002 동결값과 일치함이 단위검증으로 확인된다"},
+
+{id:"M032",ph:3,t:"공급 옵션 비교",k:"DRAFT",dp:["M031"],
+ in:["HydrogenSpec.flow_kg_h"],out:["HydrogenSpec.supplyOptionSet"],
+ ev:["MINUTES","VENDOR"],ap:"PE-GAS",du:15,
+ bl:["AI 초안 상태로 승인 시도"],
+ v:"튜브트레일러·파이프라인·암모니아 크래킹·부생수소 4개 옵션이 동일 항목으로 비교되고, 초안 단계 항목은 모두 가정으로 표시되어 있다"},
+
+{id:"M033",ph:3,t:"공급원 후보·물류거리 산정",k:"CALC",dp:["M032","M030"],ca:"logistics",
+ in:["HydrogenSpec.supplyOptionSet","ProjectIntent.selectedSite"],
+ out:["HydrogenSpec.sourceCandidates","Logistics.dailyTrips"],
+ ev:["EXTDATA","CALC"],ap:"PE-GAS",du:15,
+ bl:["공급원 생산능력 미확인"],
+ v:"공급원별 거리·왕복시간·일일 운송횟수가 산출되고, 각 공급원의 여유 생산능력이 근거로 확인된다"},
+
+{id:"M034",ph:3,t:"수소 품질 규격 확정",k:"EXT",dp:["M015","M032"],
+ in:["PowerSpec.fcType"],out:["HydrogenSpec.purity_pct","HydrogenSpec.impurityLimits"],
+ ev:["CODE","VENDOR"],ap:"PE-GAS",du:10,
+ bl:["적용 품질규격 코드 판번호 미검증","벤더 허용 불순물 한계 미수령"],
+ v:"불순물 항목별 상한값이 인용 규격(코드번호·판번호·발행일)과 벤더 요구조건 양쪽으로 확인되고, 더 엄격한 값이 채택된다"},
+
+{id:"M035",ph:3,t:"저장용량·자립일수 산정",k:"CALC",dp:["M031","M033"],ca:"storage_sizing",
+ in:["HydrogenSpec.flow_kg_h","Logistics.dailyTrips"],
+ out:["HydrogenSpec.storage_kg","HydrogenSpec.storagePressure_barg","HydrogenSpec.autonomy_day"],
+ ev:["CALC"],ap:"PE-GAS",du:7,
+ bl:["자립일수 정책 미확정","사용가능 잔압 한계 미반영"],
+ v:"저장량이 자립일수·사용가능비율을 반영해 산출되고, 저장 형태(용기·저장탱크)와 압력이 함께 확정된다"},
+
+{id:"M036",ph:3,t:"압력체계·감압·배관 설계기준",k:"EXPERT",dp:["M035","M034"],
+ in:["HydrogenSpec.storagePressure_barg","HydrogenSpec.purity_pct"],
+ out:["DesignBasis.pressureSystem","DesignBasis.pipingCode","DesignBasis.materialSpec"],
+ ev:["CODE"],ap:"PE-GAS",du:15,
+ bl:["배관 설계코드 판번호 미검증","수소취성 고려 재질 기준 미확정"],
+ v:"압력단계별 설계압력·재질·용접기준이 인용 코드 조항과 함께 확정되고, 자격자 서명이 존재한다"},
+
+{id:"M037",ph:3,t:"수소 공급계약 조건 초안",k:"DRAFT",dp:["M033","M034","M035"],
+ in:["HydrogenSpec.sourceCandidates","HydrogenSpec.impurityLimits"],out:["Contract.h2SupplyTerms"],
+ ev:["MINUTES"],ap:"FIN",du:20,
+ bl:["품질 미달 시 책임조항 부재","공급중단 시 배상조항 부재"],
+ v:"물량·가격조정식·품질보증·공급중단 배상·계약기간 5개 항목이 모두 조문 초안으로 존재한다"},
+
+{id:"M038",ph:3,t:"공급중단 시나리오·백업 정책",k:"EXPERT",dp:["M035","M037"],
+ in:["HydrogenSpec.autonomy_day","Contract.h2SupplyTerms"],out:["Ops.supplyContingency"],
+ ev:["MINUTES","CALC"],ap:"PE-GAS",du:10,
+ bl:["백업 공급원 미확보 상태로 자립일수 하향 금지"],
+ v:"공급중단 지속시간별 발전 감발 곡선이 산출되고, 각 구간의 대응조치와 책임자가 지정된다"},
+
+{id:"M039",ph:3,t:"탄소집약도·추적성 데이터 체인",k:"EXT",dp:["M012","M033"],
+ in:["HydrogenSpec.ciThreshold_kgCO2e_kgH2","HydrogenSpec.sourceCandidates"],
+ out:["HydrogenSpec.ciActual","Compliance.traceabilityChain"],
+ ev:["STATUTE","OFFICIAL","EXTDATA"],ap:"LEG",du:20,
+ bl:["공급원의 탄소집약도 증빙 미확보","추적성 단절 구간 존재"],
+ v:"생산부터 인수까지 각 구간의 배출량 산정 주체·증빙서류·검증기관이 끊김 없이 연결되고 기준값 이하임이 확인된다"},
+
+{id:"M040",ph:3,t:"G3 — 수소 공급 확정 게이트",k:"GATE",dp:["M036","M038","M039"],
+ in:["Contract.h2SupplyTerms","Ops.supplyContingency"],out:["Gate.G3"],
+ ev:["CONTRACT","MINUTES"],ap:"OWN",du:5,
+ bl:["P3 미션 중 미승인 존재","공급 LOI/MOU 미체결"],
+ v:"공급 물량·품질·기간이 구속력 있는 문서로 확보되고, 미확보 시 대안이 승인된 결정으로 기록된다"},
+
+/* P4 계통연계 */
+{id:"M041",ph:4,t:"연계지점 후보 식별",k:"EXT",dp:["M030","M016"],
+ in:["ProjectIntent.selectedSite","PowerSpec.installedMW"],out:["GridSpec.poiCandidates"],
+ ev:["EXTDATA"],ap:"PE-EL",du:10,
+ bl:["연계 가능 변전소·선로 미식별"],
+ v:"후보 연계지점별 거리·전압·기존 여유용량이 조회되어 등록된다"},
+
+{id:"M042",ph:4,t:"계통 연계용량 검토 신청·회신",k:"FILE",dp:["M041"],
+ in:["GridSpec.poiCandidates","PowerSpec.installedMW"],out:["GridSpec.capacityStudyResult"],
+ ev:["OFFICIAL"],ap:"PE-EL",du:60,
+ bl:["회신 미수령 상태로 설계 확정 금지","보강공사 필요 시 비용·기간 미반영"],
+ v:"계통운영기관 회신 공문(문서번호·수신일)이 존재하고, 허용 연계용량과 보강 필요사항이 명시되어 있다"},
+
+{id:"M043",ph:4,t:"연계전압·연계방식 결정",k:"DEF",dp:["M042"],
+ in:["GridSpec.capacityStudyResult"],out:["GridSpec.voltage_kV","GridSpec.connectionType"],
+ ev:["OFFICIAL","CODE"],ap:"PE-EL",du:10,
+ bl:["회신 조건과 불일치하는 전압 선택"],
+ v:"연계전압과 방식이 회신 조건 범위 내에서 선택되고, 적용 이용규정 조항이 근거로 연결된다"},
+
+{id:"M044",ph:4,t:"계통영향 검토 (조류·단락·전압)",k:"EXPERT",dp:["M043"],
+ in:["GridSpec.voltage_kV","PowerSpec.installedMW"],out:["GridSpec.faultLevel_kA","GridSpec.voltageRise_pct"],
+ ev:["CALC","EXTDATA"],ap:"PE-EL",du:25,
+ bl:["계통 임피던스 데이터 미수령","단락용량 초과"],
+ v:"조류·단락·전압변동 3개 해석이 실제 계통 임피던스 데이터를 입력으로 수행되고 기준 초과 항목이 0건이거나 대책이 확정된다"},
+
+{id:"M045",ph:4,t:"보호협조·계전방식 설계기준",k:"EXPERT",dp:["M044"],
+ in:["GridSpec.faultLevel_kA"],out:["GridSpec.protectionScheme","GridSpec.relaySettings"],
+ ev:["CODE","CALC"],ap:"PE-EL",du:20,
+ bl:["단독운전 방지 방식 미확정","보호협조 곡선 미검증"],
+ v:"보호요소·정정치·협조곡선이 산출되고, 단독운전 방지 방식이 계통운영기관 요구조건과 일치함이 확인된다"},
+
+{id:"M046",ph:4,t:"전력품질 기준 적용",k:"EXT",dp:["M043"],
+ in:["GridSpec.connectionType","PowerSpec.moduleCount"],out:["GridSpec.pqLimits"],
+ ev:["CODE"],ap:"PE-EL",du:12,
+ bl:["적용 기준 판번호 미검증","인버터 고조파 시험성적서 미수령"],
+ v:"고조파·플리커·역률·직류분 한계값이 인용 기준과 함께 등록되고, 인버터 성적서 값이 한계 이내임이 대조된다"},
+
+{id:"M047",ph:4,t:"연계설비 범위·소유경계 확정",k:"DEF",dp:["M045","M046"],
+ in:["GridSpec.protectionScheme"],out:["GridSpec.ownershipBoundary","GridSpec.scopeSplit"],
+ ev:["OFFICIAL","DRAWING"],ap:"PE-EL",du:15,
+ bl:["소유·유지보수 경계 미합의"],
+ v:"단선도상에 소유경계·운전책임 경계가 표시되고, 양 당사자가 동일 도면 Rev에 합의한 기록이 있다"},
+
+{id:"M048",ph:4,t:"계량·정산설비 요건 확정",k:"EXT",dp:["M047"],
+ in:["GridSpec.ownershipBoundary"],out:["GridSpec.meteringSpec"],
+ ev:["CODE","OFFICIAL"],ap:"PE-EL",du:10,
+ bl:["계량 정확도 등급 미확정"],
+ v:"계량기·변성기 사양과 정확도 등급, 검정 요건이 정산 규정 근거와 함께 확정된다"},
+
+{id:"M049",ph:4,t:"계통연계 계약 조건 확정",k:"FILE",dp:["M047","M048"],
+ in:["GridSpec.scopeSplit","GridSpec.meteringSpec"],out:["Contract.gridConnection"],
+ ev:["CONTRACT","OFFICIAL"],ap:"LEG",du:30,
+ bl:["보강공사 분담금 미확정","준공 연계 일정 미합의"],
+ v:"공사비 분담·일정·책임범위가 계약 문서로 확정되고 재무모델에 반영된다"},
+
+{id:"M050",ph:4,t:"G4 — 계통연계 확정 게이트",k:"GATE",dp:["M049"],
+ in:["Contract.gridConnection"],out:["Gate.G4"],
+ ev:["CONTRACT","MINUTES"],ap:"OWN",du:5,
+ bl:["P4 미션 중 미승인 존재"],
+ v:"연계용량·전압·일정·비용 4개 항목이 구속력 있는 문서로 확정되고 일정이 COD 목표와 정합한다"}
+];
+
+// 미션 라이브러리 B — P5~P9 (M051~M100)
+const MISSIONS_B = [
+/* P5 설계기준·FEED */
+{id:"M051",ph:5,t:"설계기준서(DesignBasis) v1 발행",k:"DEF",dp:["M040","M050"],
+ in:["DesignBasis.pressureSystem","GridSpec.voltage_kV","HydrogenSpec.purity_pct"],
+ out:["Document.DBD@Rev0"],
+ ev:["DRAWING","CODE"],ap:"PE-MEC",du:20,
+ bl:["상위 확정값 중 미승인 항목 참조","적용 코드 목록에 미검증 항목 존재"],
+ v:"설계기준서가 인용하는 모든 수치가 승인된 상위 미션의 출력과 일치하고, 인용 코드 전건이 판번호 검증을 통과했다"},
+
+{id:"M052",ph:5,t:"물질·에너지 수지 작성",k:"CALC",dp:["M051","M031"],ca:"mass_energy_balance",
+ in:["HydrogenSpec.flow_kg_h","PowerSpec.etaEl_LHV_pct","PowerSpec.heatRecoveryPct"],
+ out:["Process.MEB","Process.waterProduced_kg_h","Process.airFlow_kg_h","Process.heatOut_kW"],
+ ev:["CALC"],ap:"PE-MEC",du:12,
+ bl:["입출 질량 불일치 허용오차 초과","발열량 기준 혼용"],
+ v:"입력 질량과 출력 질량의 차가 허용오차 이내이고, 에너지 수지의 잔차가 명시된 한계 이내임이 계산서로 확인된다"},
+
+{id:"M053",ph:5,t:"공정흐름도(PFD) 작성",k:"DRAFT",dp:["M052"],
+ in:["Process.MEB"],out:["Document.PFD@Rev0"],
+ ev:["DRAWING"],ap:"PE-MEC",du:15,
+ bl:["MEB 미승인 상태로 PFD 발행","스트림 번호와 MEB 행 불일치"],
+ v:"모든 스트림이 MEB의 행과 1:1로 대응하고, 스트림별 유량·온도·압력이 도면에 표기된다"},
+
+{id:"M054",ph:5,t:"소내부하·보조전력 산정",k:"CALC",dp:["M052"],ca:"parasitic_load",
+ in:["Process.airFlow_kg_h","Process.heatOut_kW","PowerSpec.installedMW"],
+ out:["PowerSpec.parasitic_pct","PowerSpec.netOutputMW"],
+ ev:["CALC","VENDOR"],ap:"PE-EL",du:10,
+ bl:["순출력이 ProjectIntent 목표 미달 시 상위 미션 재개정 필요"],
+ v:"기기별 소비전력 목록이 합산되어 소내부하율이 산출되고, 그 결과가 M031 수요량 계산에 역반영되어 수렴한다"},
+
+{id:"M055",ph:5,t:"장비목록(Equipment List) v1",k:"DEF",dp:["M053","M054"],
+ in:["Document.PFD@Rev0"],out:["Document.EQL@Rev0"],
+ ev:["DRAWING","VENDOR"],ap:"PE-MEC",du:15,
+ bl:["PFD 기기와 장비목록 태그 불일치","누락 기기 확인 절차 미수행"],
+ v:"PFD상 모든 기기가 태그번호를 갖고 장비목록에 존재하며, 역방향 대조에서 고아 항목이 0건이다"},
+
+{id:"M056",ph:5,t:"배치도(Plot Plan) v1",k:"DRAFT",dp:["M055","M029"],
+ in:["Document.EQL@Rev0","ProjectIntent.selectedSite"],out:["Document.PLOT@Rev0","Layout.area_m2"],
+ ev:["DRAWING"],ap:"PE-CIV",du:20,
+ bl:["안전거리 미판정(M066) 상태에서 배치 확정 금지","진입·유지보수 동선 미확보"],
+ v:"기기 배치·유지보수 공간·차량 동선이 표시되고, 이격거리 항목은 잠정값으로 표시되어 M066 승인 전까지 확정 표기가 금지된다"},
+
+{id:"M057",ph:5,t:"단선결선도(SLD) v1",k:"DRAFT",dp:["M047","M054"],
+ in:["GridSpec.scopeSplit","PowerSpec.netOutputMW"],out:["Document.SLD@Rev0"],
+ ev:["DRAWING","CALC"],ap:"PE-EL",du:20,
+ bl:["보호방식 미확정","소유경계 미표기"],
+ v:"발전기부터 연계점까지 모든 차단기·보호요소·계량점이 표시되고 소유경계가 도면상 명확히 구분된다"},
+
+{id:"M058",ph:5,t:"P&ID v1",k:"DRAFT",dp:["M053","M036"],
+ in:["Document.PFD@Rev0","DesignBasis.pressureSystem"],out:["Document.PID@Rev0"],
+ ev:["DRAWING","CODE"],ap:"PE-CTL",du:25,
+ bl:["안전밸브 설정압 미확정","HAZOP(M063) 미실시 상태로 Rev1 승격 금지"],
+ v:"모든 배관·계기·밸브가 태그를 갖고, 안전밸브 설정압과 인터록 항목이 표기되며, HAZOP 입력으로 사용 가능한 상태다"},
+
+{id:"M059",ph:5,t:"배관·케이블 물량 산정",k:"CALC",dp:["M056","M057","M058"],ca:"bulk_qty",
+ in:["Document.PLOT@Rev0","Document.SLD@Rev0","Document.PID@Rev0"],out:["Cost.bulkQty"],
+ ev:["CALC","DRAWING"],ap:"PE-MEC",du:15,
+ bl:["배치 잠정 상태의 물량을 확정 물량으로 사용 금지"],
+ v:"구경·재질별 배관 연장과 규격별 케이블 연장이 배치도 기준으로 산출되고, 할증률과 근거가 명시된다"},
+
+{id:"M060",ph:5,t:"G5 — FEED 승인 게이트",k:"GATE",dp:["M059"],
+ in:["Document.PID@Rev0","Cost.bulkQty"],out:["Gate.G5"],
+ ev:["DRAWING","MINUTES"],ap:"OWN",du:10,
+ bl:["P5 미션 중 미승인 존재","도면 간 상호 불일치 미해소"],
+ v:"PFD·P&ID·SLD·배치도·장비목록 상호 대조에서 불일치 항목이 0건이고 FEED 패키지가 RFP 첨부 가능 상태다"},
+
+/* P6 안전성·리스크 */
+{id:"M061",ph:6,t:"수소 위험특성·시나리오 후보 도출",k:"DRAFT",dp:["M058"],
+ in:["Document.PID@Rev0","HydrogenSpec.storagePressure_barg"],out:["Safety.scenarioCandidates"],
+ ev:["MINUTES"],ap:"HSE",du:10,
+ bl:["AI 초안이 검토 없이 확정 시나리오로 승격됨"],
+ v:"누출·화재·폭발·질식·저온 등 유형별 시나리오 후보가 도출되고, 전건이 가정 상태로 표시되어 확정 근거로 사용될 수 없다"},
+
+{id:"M062",ph:6,t:"HAZID 워크숍 실시",k:"EXPERT",dp:["M061"],
+ in:["Safety.scenarioCandidates"],out:["Safety.hazidRegister"],
+ ev:["MINUTES"],ap:"HSE",du:10,
+ bl:["유자격 진행자 부재","설계·운전·안전 분야 참석자 미충족"],
+ v:"참석자 명단·자격이 기록되고, 초안 시나리오별로 채택·기각·수정 판정이 사유와 함께 남는다"},
+
+{id:"M063",ph:6,t:"HAZOP 노드 정의·실시",k:"EXPERT",dp:["M062","M058"],
+ in:["Document.PID@Rev0","Safety.hazidRegister"],out:["Safety.hazopRegister","Document.PID@Rev1"],
+ ev:["MINUTES","DRAWING"],ap:"PE-GAS",du:25,
+ bl:["P&ID Rev0 미승인","권고사항 미처리 상태로 종결"],
+ v:"모든 노드가 가이드워드별로 검토되고, 권고사항 각각에 담당자·기한·처리결과가 기록되어 미처리 0건이다"},
+
+{id:"M064",ph:6,t:"누출률 산정 (초크드 오리피스)",k:"CALC",dp:["M063"],ca:"release_rate",
+ in:["HydrogenSpec.storagePressure_barg","Safety.hazopRegister"],out:["Safety.releaseRates_kg_s"],
+ ev:["CALC"],ap:"PE-GAS",du:10,
+ bl:["누출공 직경 시나리오 미합의"],
+ v:"시나리오별 누출공 직경에 대해 질량유량이 열역학 산식으로 산출되고, 산식·상수·단위검증 결과가 계산서에 기재된다"},
+
+{id:"M065",ph:6,t:"확산·제트화염 평가",k:"EXPERT",dp:["M064"],
+ in:["Safety.releaseRates_kg_s"],out:["Safety.dispersionResult","Safety.jetFlameLength_m"],
+ ev:["CODE","CALC"],ap:"PE-GAS",du:20,
+ bl:["적용 상관식·모델의 출처 미검증 상태에서 결과 산출 금지","모델 적용범위 밖 조건 사용"],
+ v:"사용한 상관식 또는 해석모델의 출처(코드번호·판번호 또는 문헌)와 적용 유효범위가 근거로 등록되고, 입력 조건이 그 범위 안에 있음이 확인된다"},
+
+{id:"M066",ph:6,t:"안전거리·이격거리 판정",k:"EXPERT",dp:["M065","M026"],
+ in:["Safety.jetFlameLength_m","SiteCandidate.nearestResidential_m"],out:["Safety.separationDistances"],
+ ev:["STATUTE","CODE","CALC"],ap:"PE-GAS",du:20,
+ bl:["법정 이격거리 조문 미검증","자격자 서명 부재","계산값과 법정값 중 작은 값 채택 시도"],
+ v:"법정 이격거리와 해석 기반 거리 중 더 큰 값이 채택되고, 유자격 가스기술사 서명과 적용 조문이 함께 기록된다"},
+
+{id:"M067",ph:6,t:"방호계층분석·SIL 배정",k:"EXPERT",dp:["M063"],
+ in:["Safety.hazopRegister"],out:["Safety.lopaResult","Safety.silAssignment"],
+ ev:["CODE","MINUTES"],ap:"PE-CTL",du:20,
+ bl:["목표 위험수준 미정의","독립방호계층 독립성 미검증"],
+ v:"시나리오별 목표 위험수준 대비 방호계층 감소계수가 제시되고, SIL 등급이 배정된 안전계장기능 목록이 확정된다"},
+
+{id:"M068",ph:6,t:"방폭구역 설정·환기 설계",k:"EXPERT",dp:["M064","M056"],
+ in:["Safety.releaseRates_kg_s","Document.PLOT@Rev0"],out:["Safety.hazardousAreaClassification","Design.ventilation"],
+ ev:["CODE","DRAWING"],ap:"PE-EL",du:20,
+ bl:["적용 방폭 기준 판번호 미검증","환기 횟수 근거 부재"],
+ v:"Zone 구분 도면이 발행되고, 각 구역의 방폭 등급 요구사항과 환기 설계값이 인용 기준 조항과 함께 확정된다"},
+
+{id:"M069",ph:6,t:"감지·소화설비 및 비상대응계획",k:"EXPERT",dp:["M067","M068"],
+ in:["Safety.silAssignment","Safety.hazardousAreaClassification"],out:["Safety.detectionDesign","Ops.emergencyPlan"],
+ ev:["CODE","MINUTES"],ap:"HSE",du:20,
+ bl:["감지기 배치 근거 부재","비상연락체계·대피경로 미확정"],
+ v:"가스·화재 감지기 종류·수량·배치 근거가 제시되고, 비상대응계획에 시나리오별 조치·연락체계·대피경로가 포함된다"},
+
+{id:"M070",ph:6,t:"G6 — SafetyCase 승인 게이트",k:"GATE",dp:["M066","M069"],
+ in:["Safety.separationDistances","Ops.emergencyPlan"],out:["Gate.G6","Document.SafetyCase@Rev0"],
+ ev:["MINUTES","OFFICIAL"],ap:"HSE",du:10,
+ bl:["P6 미션 중 미승인 존재","HAZOP 권고 미처리 존재","자격자 서명 누락"],
+ v:"안전성 검토서가 발행되고, 배치도의 이격거리 잠정 표기가 확정 표기로 승격 가능한 상태가 된다"},
+
+/* P7 인허가 */
+{id:"M071",ph:7,t:"관할 확인·PermitMatrix 생성",k:"EXT",dp:["M030","M016"],
+ in:["ProjectIntent.selectedSite","PowerSpec.installedMW"],out:["PermitRequirement[]"],
+ ev:["OFFICIAL"],ap:"LEG",du:15,
+ bl:["허가권자(중앙/광역/기초) 미확정"],
+ v:"인허가 항목별로 근거법령 후보·소관기관·처리기간·선후관계가 등록되고, 모든 항목이 미검증 상태로 표시되어 있다"},
+
+{id:"M072",ph:7,t:"적용 법령·조문 검증",k:"EXT",dp:["M071"],
+ in:["PermitRequirement[]"],out:["PermitRequirement[].statuteVerified"],
+ ev:["STATUTE"],ap:"LEG",du:25,
+ bl:["조문의 시행일이 확인되지 않음","개정 예정 사항 미확인","기억에 의존한 조문 인용"],
+ v:"각 인허가 항목의 근거 조항이 법령명·조항·시행일·출처URL과 함께 확인되고, 미검증 항목이 0건이다"},
+
+{id:"M073",ph:7,t:"적용 기술기준 판번호 검증",k:"EXT",dp:["M051","M072"],
+ in:["Document.DBD@Rev0"],out:["DesignBasis.codeRegister"],
+ ev:["CODE"],ap:"QA",du:20,
+ bl:["인용 코드의 최신 판번호 미확인","설계에 이미 반영된 코드가 폐지·대체됨"],
+ v:"설계에 인용된 모든 기술기준이 코드번호·판번호·발행일로 확인되고, 폐지·대체된 기준을 참조하는 설계문서가 0건이다"},
+
+{id:"M074",ph:7,t:"발전사업허가 신청·취득",k:"FILE",dp:["M072","M019"],
+ in:["ProjectIntent","Finance.irr"],out:["Permit.generationLicense"],
+ ev:["OFFICIAL"],ap:"AHJ",du:120,
+ bl:["재무·기술 요건 증빙 미구비","보완요구 미이행"],
+ v:"허가증(문서번호·허가일·허가용량)이 수령되고, 허가 조건 각각이 이행계획과 함께 등록된다"},
+
+{id:"M075",ph:7,t:"개발행위·전용·건축 인허가",k:"FILE",dp:["M074","M056"],
+ in:["Permit.generationLicense","Document.PLOT@Rev0"],out:["Permit.landDevelopment","Permit.building"],
+ ev:["OFFICIAL","DRAWING"],ap:"AHJ",du:120,
+ bl:["산지·농지 전용 대상 여부 미확정","건축 인허가 도서 미구비"],
+ v:"개발행위 및 건축 관련 허가·신고가 각각 접수번호와 처리결과로 확인되고 조건사항이 등록된다"},
+
+{id:"M076",ph:7,t:"환경 관련 협의",k:"FILE",dp:["M025","M074"],
+ in:["SiteCandidate.envOverlaps","Permit.generationLicense"],out:["Permit.environmental"],
+ ev:["OFFICIAL"],ap:"AHJ",du:150,
+ bl:["평가 대상 여부 판정 미확정","대기·소음 배출 기준 적용 여부 미확인"],
+ v:"환경영향평가 대상 여부가 판정되고, 대기·소음·수질 각 항목의 신고·허가 또는 비대상 확인이 문서로 존재한다"},
+
+{id:"M077",ph:7,t:"고압가스 시설 허가·기술검토",k:"FILE",dp:["M070","M073"],
+ in:["Document.SafetyCase@Rev0","DesignBasis.codeRegister"],out:["Permit.highPressureGas"],
+ ev:["OFFICIAL","CODE","DRAWING"],ap:"AHJ",du:120,
+ bl:["SafetyCase 미승인","안전거리 미확정","기술검토 보완 미이행"],
+ v:"시설 구분(제조·저장·사용)이 확정되고, 기술검토 결과와 허가·신고 처리결과가 문서번호로 확인된다"},
+
+{id:"M078",ph:7,t:"소방·위험물 협의",k:"FILE",dp:["M069","M075"],
+ in:["Safety.detectionDesign","Permit.building"],out:["Permit.fire"],
+ ev:["OFFICIAL"],ap:"AHJ",du:90,
+ bl:["소방시설 설계도서 미구비","위험물 해당 여부 미판정"],
+ v:"소방 관련 동의·신고 결과가 수령되고, 지적사항 각각의 반영 여부가 도면 Rev로 추적된다"},
+
+{id:"M079",ph:7,t:"공사계획 인가/신고 및 유해위험방지계획서",k:"FILE",dp:["M074","M060"],
+ in:["Permit.generationLicense","Document.PID@Rev1"],out:["Permit.constructionPlan","Permit.hazardPreventionPlan"],
+ ev:["OFFICIAL","DRAWING"],ap:"AHJ",du:90,
+ bl:["설계도서 미승인 상태로 제출","착공 예정일과 처리기간 충돌"],
+ v:"공사계획 처리결과와 유해위험방지계획서 심사결과가 각각 문서로 확인되고 착공 가능일이 확정된다"},
+
+{id:"M080",ph:7,t:"G7 — 인허가 완결성 게이트",k:"GATE",dp:["M075","M076","M077","M078","M079"],
+ in:["PermitRequirement[]"],out:["Gate.G7","Compliance.permitStatus"],
+ ev:["OFFICIAL"],ap:"LEG",du:10,
+ bl:["PermitMatrix에 미취득·미검증 항목 존재","허가 조건 중 미이행 항목이 착공 선행조건에 해당"],
+ v:"PermitMatrix 전 항목이 취득·비대상·조건부 중 하나로 종결되고, 조건부 항목은 이행 기한과 담당자가 지정되어 있다"},
+
+/* P8 금융·계약·조달 */
+{id:"M081",ph:8,t:"사업비 상세 산정",k:"CALC",dp:["M059","M080"],ca:"capex_detail",
+ in:["Cost.bulkQty","Document.EQL@Rev0"],out:["Cost.capexDetail","Cost.contingency_pct"],
+ ev:["CALC","VENDOR"],ap:"FIN",du:20,
+ bl:["견적 미수령 항목이 총액의 일정비율 초과","예비비 산정 근거 부재"],
+ v:"항목별 견적 출처가 명시되고, 견적 기반 비율과 추정 기반 비율이 구분되어 정확도 등급이 선언된다"},
+
+{id:"M082",ph:8,t:"재무모델 v1·민감도·시나리오 비교",k:"CALC",dp:["M081","M049","M037"],ca:"scenario_compare",
+ in:["Cost.capexDetail","Contract.h2SupplyTerms","Contract.gridConnection"],
+ out:["Finance.modelV1","Finance.sensitivity","Finance.scenarios"],
+ ev:["CALC"],ap:"FIN",du:20,
+ bl:["v0 대비 변경 사유 미기록"],
+ v:"기준·비관·낙관 3개 시나리오의 IRR·DSCR·LCOE가 산출되고, v0 대비 모든 변경 항목이 사유와 함께 추적된다"},
+
+{id:"M083",ph:8,t:"금융조달 구조 확정",k:"DEF",dp:["M082"],
+ in:["Finance.modelV1"],out:["Finance.fundingStructure","Finance.covenants"],
+ ev:["CONTRACT","MINUTES"],ap:"FIN",du:45,
+ bl:["대주단 실사 지적사항 미해소","약정 조건과 재무모델 불일치"],
+ v:"자기자본·타인자본 비율과 약정 조건이 확정되고, 재무모델이 해당 조건으로 재계산되어 DSCR 허들을 만족한다"},
+
+{id:"M084",ph:8,t:"보험 패키지 설계",k:"DEF",dp:["M083","M070"],
+ in:["Finance.covenants","Document.SafetyCase@Rev0"],out:["Risk.insurancePackage"],
+ ev:["CONTRACT"],ap:"FIN",du:30,
+ bl:["수소 특유 위험에 대한 담보 제외조항 미검토"],
+ v:"건설·배상·가동중단 각 담보의 부보금액과 면책·제외조항이 확인되고, 대주단 요구조건과 대조 완료된다"},
+
+{id:"M085",ph:8,t:"EPC RFP 작성",k:"DRAFT",dp:["M060","M080"],
+ in:["Document.PID@Rev1","Compliance.permitStatus"],out:["Document.RFP@Rev0"],
+ ev:["DRAWING","MINUTES"],ap:"PM",du:25,
+ bl:["FEED 패키지 미승인","성능보증 항목·측정방법 미정의"],
+ v:"기술사양·성능보증값·측정방법·위약조건·업무분장이 모두 기재되고, 첨부 도면 Rev가 승인본과 일치한다"},
+
+{id:"M086",ph:8,t:"입찰자 사전자격심사·RFP 배포",k:"DEF",dp:["M085"],
+ in:["Document.RFP@Rev0"],out:["Procurement.bidderList"],
+ ev:["OFFICIAL","MINUTES"],ap:"PM",du:20,
+ bl:["수소 취급 실적 요건 미정의","적격 입찰자 3사 미만"],
+ v:"사전자격 기준이 배포 전에 동결되고, 통과 업체별 실적 증빙이 기준 항목별로 대조되어 기록된다"},
+
+{id:"M087",ph:8,t:"기술·상업 평가 실시",k:"DEF",dp:["M086"],
+ in:["Procurement.bidderList"],out:["Procurement.evaluationResult"],
+ ev:["MINUTES"],ap:"OWN",du:25,
+ bl:["평가 배점이 제안서 수령 이후 변경됨","기술·상업 평가자 분리 미준수"],
+ v:"배점표가 제안서 수령 전에 동결되고, 평가위원별 채점과 종합순위가 사유와 함께 기록된다"},
+
+{id:"M088",ph:8,t:"EPC 계약 체결",k:"DEF",dp:["M087","M084"],
+ in:["Procurement.evaluationResult","Risk.insurancePackage"],out:["Contract.epc"],
+ ev:["CONTRACT"],ap:"LEG",du:45,
+ bl:["성능보증치가 재무모델 가정보다 낮음","지체상금 한도가 대주단 요구 미달"],
+ v:"출력·효율·가용률 보증치가 재무모델 가정 이상이고, 미달 시 배상 산식과 한도가 계약 조문으로 확정된다"},
+
+{id:"M089",ph:8,t:"주기기 공급계약 체결",k:"DEF",dp:["M088","M015"],
+ in:["Contract.epc","PowerSpec.fcType"],out:["Contract.equipmentSupply"],
+ ev:["CONTRACT","VENDOR"],ap:"LEG",du:30,
+ bl:["납기가 공정 임계경로와 불일치","스택 교체 조건·장기서비스 조건 미확정"],
+ v:"납기·성능보증·스택 교체 및 장기유지보수 조건이 확정되고, 납기가 임계경로 일정과 정합함이 계산으로 확인된다"},
+
+{id:"M090",ph:8,t:"G8 — 최종투자결정(FID)",k:"GATE",dp:["M083","M088","M089"],
+ in:["Finance.fundingStructure","Contract.epc","Contract.equipmentSupply"],out:["Gate.G8","ReviewDecision.FID"],
+ ev:["MINUTES","OFFICIAL","CONTRACT"],ap:"OWN",du:15,
+ bl:["P8 미션 중 미승인 존재","선행조건 미충족 항목 존재"],
+ v:"금융·계약·인허가 선행조건 목록이 전건 충족으로 확인되고, 투자 결정이 서명된 결의로 기록된다"},
+
+/* P9 시공·시운전·인수·운영 */
+{id:"M091",ph:9,t:"상세설계 승인·IFC 도면 발행",k:"DEF",dp:["M090"],
+ in:["Contract.epc","Document.PID@Rev1"],out:["Document.IFC@Rev0"],
+ ev:["DRAWING","CALC"],ap:"PE-MEC",du:60,
+ bl:["FEED 대비 변경사항이 변경관리 절차 미경유","인허가 조건과 불일치"],
+ v:"시공용 도면이 발행되고, FEED 대비 모든 변경이 변경관리 번호와 영향평가(안전·인허가·비용)와 함께 승인되어 있다"},
+
+{id:"M092",ph:9,t:"시공계획·안전보건관리계획 승인",k:"DEF",dp:["M091","M079"],
+ in:["Document.IFC@Rev0","Permit.hazardPreventionPlan"],out:["Document.ConstructionPlan","Document.HSEPlan"],
+ ev:["MINUTES","OFFICIAL"],ap:"HSE",du:20,
+ bl:["작업위험성평가 미실시","고위험작업 허가절차 미정의"],
+ v:"공종별 시공순서·검사·정지점(Hold Point)이 정의되고, 고위험작업의 작업허가 절차와 책임자가 지정된다"},
+
+{id:"M093",ph:9,t:"토건·기초 시공 및 검측",k:"DEF",dp:["M092"],
+ in:["Document.ConstructionPlan"],out:["Construction.civilComplete","QA.itpRecords.civil"],
+ ev:["TEST","SURVEY","DRAWING"],ap:"PE-CIV",du:120,
+ bl:["지반 실측값이 설계 가정과 상이","정지점 미승인 상태로 후속 공정 진행"],
+ v:"기초 콘크리트 강도·앵커 위치 허용오차·지반 지지력이 시험성적서로 확인되고, 모든 정지점에 검측 서명이 존재한다"},
+
+{id:"M094",ph:9,t:"기자재 입고·공장/현장 수락시험",k:"DEF",dp:["M089","M093"],
+ in:["Contract.equipmentSupply"],out:["QA.fatRecords","QA.satRecords"],
+ ev:["TEST","VENDOR"],ap:"QA",du:90,
+ bl:["FAT 불합격 항목 미조치","운송 중 손상 미확인"],
+ v:"기기별 공장시험 성적서가 수령되고, 불합격 항목의 조치 결과가 재시험 성적서로 확인된다"},
+
+{id:"M095",ph:9,t:"기계·전기·계장 설치 완료 확인",k:"DEF",dp:["M094"],
+ in:["QA.satRecords","Document.IFC@Rev0"],out:["Construction.mechanicalCompletion","QA.punchList"],
+ ev:["DRAWING","MINUTES"],ap:"PE-CTL",du:120,
+ bl:["A급 펀치 미해소 상태로 시운전 진입 금지","루프체크 미완료"],
+ v:"설치가 IFC 도면과 일치함이 확인되고, 계장 루프체크 완료율 100%, A급 펀치 잔여 0건이다"},
+
+{id:"M096",ph:9,t:"기밀·내압·퍼지 시험 (수소계통)",k:"EXPERT",dp:["M095","M077"],
+ in:["Construction.mechanicalCompletion","Permit.highPressureGas"],out:["QA.pressureTestRecords","QA.purgeRecord"],
+ ev:["TEST","CODE","MINUTES"],ap:"PE-GAS",du:30,
+ bl:["시험압력·유지시간이 적용 코드 미달","퍼지 후 잔류산소 농도 기준 초과","작업허가 미발급"],
+ v:"적용 코드가 요구하는 시험압력·유지시간·누설률 기준을 충족한 성적서가 존재하고, 퍼지 후 잔류산소 농도가 기준 이하임이 측정값으로 확인된다"},
+
+{id:"M097",ph:9,t:"사용전검사·계통 병입",k:"FILE",dp:["M096","M049"],
+ in:["QA.pressureTestRecords","Contract.gridConnection"],out:["Permit.preUseInspection","Ops.firstSync"],
+ ev:["OFFICIAL","TEST"],ap:"AHJ",du:45,
+ bl:["검사 불합격 항목 미조치","보호계전기 정정치 미검증","계통운영기관 병입 승인 미수령"],
+ v:"사용전검사 합격 문서가 수령되고, 보호계전기 정정치 시험 결과와 최초 병입 일시가 기록된다"},
+
+{id:"M098",ph:9,t:"성능시험·보증치 판정",k:"CALC",dp:["M097"],ca:"performance_test",
+ in:["Ops.firstSync","Contract.epc"],out:["Performance.testResult","Performance.guaranteeVerdict"],
+ ev:["TEST","CALC"],ap:"PE-MEC",du:30,
+ bl:["시험조건이 계약상 보정조건과 불일치","계측기 검교정 성적서 미확보"],
+ v:"보정 후 출력·효율·배출값이 계약 보증치와 대조되고, 미달 시 배상 산식이 적용된 금액이 산출된다"},
+
+{id:"M099",ph:9,t:"인수인계·운영매뉴얼·교육",k:"DEF",dp:["M098"],
+ in:["Performance.testResult"],out:["Document.OMManual","Ops.handoverPackage","Ops.trainingRecord"],
+ ev:["DRAWING","MINUTES","VENDOR"],ap:"PM",du:30,
+ bl:["As-built 도면 미제출","예비품 목록 미인도","운전원 자격·교육 미이수"],
+ v:"As-built 도면·운영매뉴얼·예비품·교육이수 기록이 인수 목록 대비 누락 0건으로 확인되고 인수확인서가 서명된다"},
+
+{id:"M100",ph:9,t:"G9 — 상업운전 개시(COD) 선언",k:"GATE",dp:["M099"],
+ in:["Ops.handoverPackage","Performance.guaranteeVerdict"],out:["Gate.G9","ProjectIntent.codActual"],
+ ev:["OFFICIAL","CONTRACT","MINUTES"],ap:"OWN",du:5,
+ bl:["P9 미션 중 미승인 존재","잔여 펀치 중 운전 제약 항목 존재","허가 조건 중 미이행 항목 존재"],
+ v:"성능보증 판정·인수확인·인허가 조건 이행이 모두 종결되고, COD 일자가 계약·정산 체계에 등록된다"}
+];
+
+/* ══════════════════════════════════════════════════════════════
+   3단계 — 프로젝트 그래프.  기록은 대화가 아니라 이 그래프다.
+   ══════════════════════════════════════════════════════════════ */
+const MISSIONS = MISSIONS_A.concat(MISSIONS_B);
+const BY = Object.fromEntries(MISSIONS.map(m => [m.id, m]));
+const KIDS = {}; MISSIONS.forEach(m => KIDS[m.id] = []);
+MISSIONS.forEach(m => m.dp.forEach(d => KIDS[d].push(m.id)));
+
+const SCHEMA = [
+  ["ProjectIntent", "사업 목적·정격출력(MW)·COD·사업구조·판매처·선정부지", "M001"],
+  ["SiteCandidate", "지번·좌표·면적·용도지역·경사·재해플래그·환경중첩·최근접주거(m)", "M021"],
+  ["HydrogenSpec", "유량(kg/h)·연간량(t/yr)·순도(%)·불순물한계·저장량(kg)·압력(barg)·탄소집약도", "M031"],
+  ["PowerSpec", "방식·모듈정격(kW)·모듈수·설치용량(MW)·효율(%LHV)·이용률·소내부하율·성능저하율", "M015"],
+  ["GridSpec", "연계지점·전압(kV)·연계용량(MW)·단락용량(kA)·보호방식·전력품질한계·소유경계", "M041"],
+  ["DesignBasis", "단위계·기준상태·발열량기준·압력체계·배관코드·재질사양·코드레지스터", "M002"],
+  ["Evidence", "유형·제목·필수속성·연결미션·등록자·등록일시·검증여부", "M006"],
+  ["Mission", "id·단계·종류·선행·입력·출력·필수근거·승인자·차단조건·검증기준·기간", "M008"],
+  ["Gate", "게이트id·선행미션집합·통과조건·판정·결정일·승인자", "M008"],
+  ["PermitRequirement", "구분·근거법령·조항·시행일·출처·소관기관·처리기간·상태·검증여부", "M071"],
+  ["Document", "문서번호·종류·Rev·발행일·승인자·상위입력문서", "M009"],
+  ["ReviewDecision", "대상·판정·사유·조건·결정자·결정일", "M005"]
+];
+
+/* 인허가·기술기준 후보 — 전부 미검증 상태로 시작한다. */
+const PERMIT_SEED = [
+  ["법령", "전기사업법", "발전사업허가", "산업통상자원부 / 시·도"],
+  ["법령", "전기사업법", "공사계획 인가·신고", "산업통상자원부 / 시·도"],
+  ["법령", "전기안전관리법", "사용전검사·전기안전관리자 선임", "한국전기안전공사"],
+  ["법령", "수소경제 육성 및 수소 안전관리에 관한 법률", "수소용품·수소연료사용시설", "한국가스안전공사"],
+  ["법령", "고압가스 안전관리법", "고압가스 제조·저장·사용시설 허가/신고", "시·군·구 / 한국가스안전공사"],
+  ["법령", "국토의 계획 및 이용에 관한 법률", "개발행위허가", "시·군·구"],
+  ["법령", "건축법", "건축허가·사용승인", "시·군·구"],
+  ["법령", "환경영향평가법", "환경영향평가 / 소규모 환경영향평가", "유역·지방환경청"],
+  ["법령", "대기환경보전법", "대기오염물질 배출시설 설치 신고·허가", "시·도"],
+  ["법령", "소음·진동관리법", "소음·진동 배출시설 신고", "시·군·구"],
+  ["법령", "물환경보전법", "폐수배출시설 신고·허가", "시·도"],
+  ["법령", "산지관리법", "산지전용허가", "시·군·구 / 산림청"],
+  ["법령", "농지법", "농지전용허가", "시·군·구"],
+  ["법령", "도로법", "도로점용허가", "도로관리청"],
+  ["법령", "소방시설 설치 및 관리에 관한 법률", "건축허가 등의 동의", "소방서"],
+  ["법령", "위험물안전관리법", "위험물 해당 여부 판정", "소방서"],
+  ["법령", "산업안전보건법", "유해위험방지계획서", "한국산업안전보건공단"],
+  ["법령", "중대재해 처벌 등에 관한 법률", "안전보건 확보의무 체계", "—"],
+  ["법령", "신에너지 및 재생에너지 개발·이용·보급 촉진법", "연료전지 설비확인", "한국에너지공단"],
+  ["법령", "집단에너지사업법", "열 공급 해당 여부", "산업통상자원부"],
+  ["기술기준", "KGS Code", "고정형 연료전지 / 수소연료사용시설 (코드번호 확인 필요)", "한국가스안전공사"],
+  ["기술기준", "전기설비기술기준", "전기설비 기술기준 및 판단기준", "산업통상자원부"],
+  ["기술기준", "송·배전용 전기설비 이용규정", "계통연계 기술요건", "계통운영기관"],
+  ["기술기준", "IEC 62282", "연료전지 기술 — 안전·성능·설치", "IEC"],
+  ["기술기준", "ISO 14687", "수소 연료 품질 규격", "ISO"],
+  ["기술기준", "ISO/TR 15916", "수소 시스템 안전 기본 고려사항", "ISO"],
+  ["기술기준", "NFPA 2", "수소 기술 코드", "NFPA"],
+  ["기술기준", "NFPA 853", "고정형 연료전지 발전설비", "NFPA"],
+  ["기술기준", "ASME B31.12", "수소 배관", "ASME"],
+  ["기술기준", "ASME BPVC", "압력용기 설계·제작", "ASME"],
+  ["기술기준", "IEC 60079", "폭발위험장소 구분 및 방폭기기", "IEC"],
+  ["기술기준", "IEC 61511", "공정산업 안전계장시스템 / SIL", "IEC"],
+  ["기술기준", "API 521", "감압 및 방출 시스템", "API"],
+  ["기술기준", "IEEE 1547", "분산전원 계통연계", "IEEE"]
+];
+
+/* ── 상태 저장소 ───────────────────────────────────────────── */
+const S = { missions:{}, evidence:{}, assumptions:{}, calcs:{}, permits:{}, meta:{ counters:{} } };
+let DB = null, DLS = null, SAMPLE = null, ME = null, WRITABLE = true;
+let sel = "M001", curCalc = "h2_demand", calcInputs = {}, calcProv = {}, lastCalc = null;
+const LSKEY = "h2engine.v1";
+
+const RO = Object.freeze({ state:"NEW", manual:Object.freeze([]), rejects:0 });
+const rec = id => S.missions[id] || RO;
+/* 스냅샷 본문은 동결되어 있다 — 쓰기 전에 반드시 복제한다. */
+const mut = id => { const r = S.missions[id] || RO;
+  return { ...r, manual: [...(r.manual || [])] }; };
+const clone = o => JSON.parse(JSON.stringify(o));
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+  ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const today = () => new Date().toISOString().slice(0, 10);
+const uid = p => p + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const num = (v, d) => {
+  if (!isFinite(v)) return "—";
+  const a = Math.abs(v);
+  return v.toLocaleString("ko-KR", { maximumFractionDigits: d != null ? d : (a >= 1000 ? 0 : a >= 10 ? 2 : 4) });
+};
+
+/* ── 2단계 엔진: 상태·차단조건·실행 ────────────────────────── */
+const evFor = id => Object.values(S.evidence).filter(e => e.missionId === id);
+const asFor = id => Object.values(S.assumptions).filter(a => a.missionId === id);
+const calcFor = id => Object.values(S.calcs).filter(c => c.missionId === id).slice(-1)[0];
+
+function evValid(e) {
+  const t = EV_TYPES[e.type]; if (!t) return false;
+  if (!t.strict) return !!e.title;
+  return !!e.title && t.req.every(k => (e.attrs || {})[k] && String(e.attrs[k]).trim());
+}
+
+function blockersOf(id) {
+  const m = BY[id], r = rec(id), out = [];
+  const unmet = m.dp.filter(d => rec(d).state !== "APPROVED");
+  if (unmet.length) out.push({ c:"선행", t:"선행 미션 미승인 — " + unmet.join(", ") });
+
+  const have = evFor(id).filter(evValid);
+  const miss = m.ev.filter(t => !have.some(e => e.type === t));
+  if (miss.length) out.push({ c:"근거", t:"필수 근거 미충족 — " + miss.map(t => EV_TYPES[t].n).join(", ") });
+
+  const bad = evFor(id).filter(e => !evValid(e));
+  if (bad.length) out.push({ c:"근거", t:"필수 속성이 빠진 근거 " + bad.length + "건 — 유효 근거로 계수되지 않음" });
+
+  const exp = asFor(id).filter(a => a.status === "open" && a.expiry && a.expiry < today());
+  if (exp.length) out.push({ c:"가정", t:"만료된 가정 " + exp.length + "건 — 검증 또는 폐기 필요" });
+
+  if (m.ca) {
+    const c = calcFor(id);
+    if (!c) out.push({ c:"계산", t:"계산 미실행 — " + CALCS[m.ca].n });
+    else {
+      if (c.seeds > 0) out.push({ c:"예시값", t:"근거 없는 예시값 입력 " + c.seeds + "건 — 실제값으로 대체 필요" });
+      if (!c.unitOk) out.push({ c:"단위", t:"단위 검증 실패 — 계산 결과 무효" });
+    }
+  }
+
+  const role = ROLES[m.ap];
+  if (role.lic && !(S.meta.assigned || {})[m.ap])
+    out.push({ c:"자격", t:"유자격 승인자 미지정 — " + role.n });
+
+  if (id === "M072") {
+    const n = Object.values(S.permits).filter(p => p.kind === "법령" && !p.verified).length;
+    if (n) out.push({ c:"법령", t:"조문·시행일 미검증 법령 " + n + "건" });
+  }
+  if (id === "M073") {
+    const n = Object.values(S.permits).filter(p => p.kind === "기술기준" && !p.verified).length;
+    if (n) out.push({ c:"기준", t:"판번호 미검증 기술기준 " + n + "건" });
+  }
+  if (id === "M080") {
+    const n = Object.values(S.permits).filter(p => p.kind === "법령" && !["취득","비대상","조건부"].includes(p.status || "")).length;
+    if (n) out.push({ c:"인허가", t:"미종결 인허가 항목 " + n + "건" });
+  }
+
+  (r.manual || []).forEach(t => out.push({ c:"수동", t }));
+  return out;
+}
+
+/* 진행 차단과 승인 차단을 구분한다.
+   - 선행 미승인        → LOCKED   (착수 자체가 불가)
+   - 수동 차단·만료 가정 → BLOCKED  (언제든 경보)
+   - 제출했는데 미충족   → BLOCKED  (닫으려는데 근거가 없다 — 이게 핵심 경보)
+   착수 전 미션이 "근거가 아직 없다"는 이유로 차단 표시되지는 않는다. */
+const HARD = ["수동", "가정"];
+function stateOf(id) {
+  const r = rec(id);
+  if (r.state === "APPROVED") return "APPROVED";
+  const b = blockersOf(id);
+  if (b.some(x => x.c === "선행")) return "LOCKED";
+  if (b.some(x => HARD.includes(x.c))) return "BLOCKED";
+  if (r.state === "SUBMITTED") return b.length ? "BLOCKED" : "SUBMITTED";
+  if (r.state === "RUNNING") return "RUNNING";
+  return "READY";
+}
+
+/* run_mission(mission_id, input) -> MissionResult */
+function runMission(id, input) {
+  const m = BY[id], b = blockersOf(id), st = stateOf(id);
+  const have = evFor(id).filter(evValid);
+  const c = m.ca ? calcFor(id) : null;
+  const wouldUnlock = KIDS[id].filter(k =>
+    BY[k].dp.every(d => d === id || rec(d).state === "APPROVED") && rec(k).state !== "APPROVED");
+  return {
+    missionId: id, at: new Date().toISOString(), contract: CONTRACT_VERSION,
+    kind: m.k, phase: PHASES[m.ph].id, approver: m.ap + " (" + ROLES[m.ap].n + ")",
+    inputs: m.in, outputs: m.out,
+    depsCheck: { required: m.dp, unmet: m.dp.filter(d => rec(d).state !== "APPROVED") },
+    evidenceCheck: {
+      required: m.ev, satisfied: [...new Set(have.map(e => e.type))],
+      missing: m.ev.filter(t => !have.some(e => e.type === t))
+    },
+    computed: c ? { calculator: m.ca, version: CALCS[m.ca].ver, unitCheck: c.unitOk ? "pass" : "fail",
+                    seededInputs: c.seeds, outputs: c.out } : null,
+    assumptions: asFor(id).map(a => ({ id:a.id, text:a.text, expiry:a.expiry, status:a.status })),
+    blockers: b.map(x => "[" + x.c + "] " + x.t),
+    verifyCriterion: m.v,
+    state: st,
+    verdict: st === "APPROVED" ? "APPROVED"
+           : b.length ? "BLOCKED"
+           : st === "SUBMITTED" ? "READY_FOR_APPROVAL" : "NEEDS_WORK",
+    nextUnlocked: wouldUnlock,
+    input: input || null
+  };
+}
+
+function cpmRemaining() {
+  const es = {}, ef = {}, ord = [], ind = {}, ad = {};
+  MISSIONS.forEach(m => { ind[m.id] = 0; ad[m.id] = []; });
+  MISSIONS.forEach(m => m.dp.forEach(d => { ad[d].push(m.id); ind[m.id]++; }));
+  let q = MISSIONS.filter(m => ind[m.id] === 0).map(m => m.id);
+  while (q.length) { const x = q.shift(); ord.push(x); ad[x].forEach(y => { if (--ind[y] === 0) q.push(y); }); }
+  ord.forEach(id => {
+    const m = BY[id], d = rec(id).state === "APPROVED" ? 0 : m.du;
+    es[id] = m.dp.length ? Math.max(...m.dp.map(x => ef[x])) : 0;
+    ef[id] = es[id] + d;
+  });
+  return Math.max(...Object.values(ef));
+}
+
+function metrics() {
+  const sts = {}; MISSIONS.forEach(m => { const s = stateOf(m.id); sts[s] = (sts[s] || 0) + 1; });
+  const evAll = Object.values(S.evidence), pm = Object.values(S.permits);
+  return {
+    approved: sts.APPROVED || 0,
+    blocked: sts.BLOCKED || 0,
+    gatesPassed: MISSIONS.filter(m => m.k === "GATE" && rec(m.id).state === "APPROVED").length,
+    unverifiedLaw: pm.filter(p => p.kind === "법령" && !p.verified).length,
+    unverifiedCode: pm.filter(p => p.kind === "기술기준" && !p.verified).length,
+    seeded: MISSIONS.reduce((a, m) => a + (m.ca ? ((calcFor(m.id) || {}).seeds || 0) : 0), 0),
+    unitFail: Object.values(S.calcs).filter(c => !c.unitOk).length,
+    invalidEv: evAll.filter(e => !evValid(e)).length,
+    openAssum: Object.values(S.assumptions).filter(a => a.status === "open").length,
+    expiredAssum: Object.values(S.assumptions).filter(a => a.status === "open" && a.expiry && a.expiry < today()).length,
+    rejects: MISSIONS.reduce((a, m) => a + (rec(m.id).rejects || 0), 0),
+    refused: S.meta.counters.refusedApprovals || 0,
+    cp: cpmRemaining(),
+    evPerMission: MISSIONS.length ? (evAll.filter(evValid).length / MISSIONS.length) : 0
+  };
+}
+
+/* ── 저장 ─────────────────────────────────────────────────── */
+function lsSave() {
+  try { localStorage.setItem(LSKEY, JSON.stringify({
+    missions:S.missions, evidence:S.evidence, assumptions:S.assumptions,
+    calcs:S.calcs, permits:S.permits, meta:S.meta })); } catch (e) {}
+}
+function lsLoad() {
+  try { const r = localStorage.getItem(LSKEY); if (!r) return false;
+    Object.assign(S, JSON.parse(r)); S.meta.counters = S.meta.counters || {}; return true; } catch (e) { return false; }
+}
+async function put(coll, id, doc) {
+  S[coll][id] = doc;
+  if (DB && WRITABLE) {
+    try { await DB.doc(coll + "/" + id).set(doc); }
+    catch (e) { if (e && e.code === "invalid_argument") { WRITABLE = false; note(); } }
+  } else lsSave();
+
+  render();
+}
+async function putMeta() {
+  if (DB && WRITABLE) { try { await DB.doc("project/meta").set(S.meta); } catch (e) {} } else lsSave();
+}
+function note() {
+  const el = document.getElementById("storage-note");
+  if (!DB) el.innerHTML = '<div class="notice">저장소에 연결되지 않아 이 브라우저에만 기록됩니다. 다른 승인자와 공유되지 않습니다.</div>';
+  else if (!WRITABLE) el.innerHTML = '<div class="notice">읽기 권한만 있습니다. 상태 변경은 저장되지 않습니다.</div>';
+  else el.innerHTML = "";
+}
+
+/* ── 렌더 ─────────────────────────────────────────────────── */
+function renderMatrix() {
+  const el = document.getElementById("matrix");
+  let h = "";
+  PHASES.forEach((p, pi) => {
+    const rows = MISSIONS.filter(m => m.ph === pi);
+    h += '<div class="mrow"><div class="plabel"><em>' + p.id + "</em><span>" + esc(p.n) + "</span></div><div class=\"tiles\">";
+    rows.forEach(m => {
+      const st = stateOf(m.id), n = parseInt(m.id.slice(1), 10);
+      h += '<button class="tile t-' + st.toLowerCase() + (m.k === "GATE" ? " t-gate" : "") + '"' +
+           ' data-id="' + m.id + '" aria-pressed="' + (sel === m.id) + '"' +
+           ' title="' + esc(m.id + " " + m.t + " · " + st) + '">' +
+           (m.k === "GATE" ? p.gate.split(" ")[0] : n) + "</button>";
+    });
+    h += "</div></div>";
+  });
+  el.innerHTML = h;
+  el.querySelectorAll(".tile").forEach(b => b.onclick = () => { sel = b.dataset.id; render(); });
+}
+
+function renderDossier() {
+  const m = BY[sel], r = rec(sel), st = stateOf(sel), b = blockersOf(sel);
+  const have = evFor(sel), ok = have.filter(evValid), as = asFor(sel), c = m.ca ? calcFor(sel) : null;
+  let h = '<div class="mhead"><span class="mid">' + m.id + '</span><span class="mt">' + esc(m.t) + "</span></div>";
+  h += '<div class="meta">' +
+    '<span class="chip">' + PHASES[m.ph].id + " " + esc(PHASES[m.ph].n) + "</span>" +
+    '<span class="chip k">' + esc(KINDS[m.k].n) + "</span>" +
+    '<span class="chip st st-' + st + '">' + st + "</span>" +
+    '<span class="chip">기간 ' + m.du + "일</span>" +
+    '<span class="chip">승인 ' + esc(ROLES[m.ap].n) + (ROLES[m.ap].lic ? " · 자격필수" : "") + "</span></div>";
+
+  h += '<div class="slot"><h4>완료 판정 기준</h4><div class="verify">' + esc(m.v) + "</div></div>";
+  h += '<div class="slot"><h4>규칙</h4><p class="dim" style="font-size:12px">' + esc(KINDS[m.k].d) + "</p></div>";
+
+  h += '<div class="frow"><div><div class="slot"><h4>입력</h4>' +
+    (m.in.length ? '<ul class="tight">' + m.in.map(x => '<li class="mono" style="font-size:11.5px">' + esc(x) + "</li>").join("") + "</ul>"
+                 : '<p class="empty">없음 — 최초 미션</p>') + "</div></div>";
+  h += '<div><div class="slot"><h4>출력</h4><ul class="tight">' +
+    m.out.map(x => '<li class="mono" style="font-size:11.5px">' + esc(x) + "</li>").join("") + "</ul></div></div></div>";
+
+  h += '<div class="slot"><h4>선행 미션</h4>' + (m.dp.length
+    ? '<ul class="tight">' + m.dp.map(d => '<li class="' + (rec(d).state === "APPROVED" ? "yes" : "no") + '">' +
+        d + " " + esc(BY[d].t) + " — " + (rec(d).state === "APPROVED" ? "승인" : "미승인") + "</li>").join("") + "</ul>"
+    : '<p class="empty">없음</p>') + "</div>";
+
+  h += '<div class="slot"><h4>필수 근거</h4><ul class="tight">' + m.ev.map(t => {
+    const got = ok.filter(e => e.type === t).length;
+    return '<li class="' + (got ? "yes" : "no") + '">' + esc(EV_TYPES[t].n) + " — " +
+      (got ? got + "건 등록" : "미등록") +
+      '<span class="dim" style="font-size:11px"> · 필수속성: ' + EV_TYPES[t].req.join(", ") + "</span></li>";
+  }).join("") + "</ul></div>";
+
+  if (c) h += '<div class="slot"><h4>계산 결과 — ' + esc(CALCS[m.ca].n) + " v" + CALCS[m.ca].ver + "</h4>" +
+    '<ul class="tight">' + CALCS[m.ca].out.map(o =>
+      "<li>" + esc(o.l) + ' <b class="mono">' + num(c.out[o.k]) + "</b> " + esc(o.u) + "</li>").join("") +
+    "</ul>" + (c.seeds ? '<p class="empty" style="color:var(--hold)">예시값 ' + c.seeds + "건 잔존</p>" : "") + "</div>";
+  else if (m.ca) h += '<div class="slot"><h4>계산</h4><p class="empty">' + esc(CALCS[m.ca].n) + " 미실행 — 계산엔진 탭에서 실행</p></div>";
+
+  h += '<div class="slot"><h4>가정 ' + (as.length ? "(" + as.length + ")" : "") + "</h4>" + (as.length
+    ? '<ul class="tight">' + as.map(a => '<li class="' + (a.expiry && a.expiry < today() ? "no" : "wait") + '">' +
+        esc(a.text) + '<span class="dim"> · 만료 ' + esc(a.expiry || "미설정") + "</span></li>").join("") + "</ul>"
+    : '<p class="empty">등록된 가정 없음</p>') + "</div>";
+
+  h += '<div class="slot"><h4>차단조건 후보 — 해당하면 체크하여 차단</h4>' +
+    m.bl.map((t, i) => '<label class="cbrow"><input type="checkbox" data-bl="' + i + '"' +
+      ((r.manual || []).includes(t) ? " checked" : "") + "><span>" + esc(t) + "</span></label>").join("") + "</div>";
+
+  if (b.length) h += '<div class="slot"><h4>현재 활성 차단 ' + b.length + '건</h4><ul class="tight blocklist">' +
+    b.map(x => "<li><b>[" + esc(x.c) + "]</b> " + esc(x.t) + "</li>").join("") + "</ul></div>";
+
+  document.getElementById("dossier").innerHTML = h;
+  document.querySelectorAll("[data-bl]").forEach(cb => cb.onchange = () => {
+    const t = BY[sel].bl[+cb.dataset.bl], r2 = mut(sel);
+    r2.manual = cb.checked ? [...new Set([...r2.manual, t])] : r2.manual.filter(x => x !== t);
+    put("missions", sel, r2);
+  });
+}
+
+function renderApproval() {
+  const m = BY[sel], r = rec(sel), st = stateOf(sel), b = blockersOf(sel);
+  const ok = evFor(sel).filter(evValid), as = asFor(sel);
+  const unlocks = KIDS[sel].filter(k => BY[k].dp.every(d => d === sel || rec(d).state === "APPROVED"));
+  const canApprove = st === "SUBMITTED" && b.length === 0;
+
+  let h = "<h3>9단계 승인 화면 — 무엇을 알고, 무엇을 가정했는가</h3>";
+  h += '<div class="slot"><h4>1. 무엇을 알고 있는가</h4>' + (ok.length
+    ? '<ul class="tight">' + ok.map(e => '<li class="yes">' + esc(EV_TYPES[e.type].n) + " — " + esc(e.title) + "</li>").join("") + "</ul>"
+    : '<p class="empty">검증된 근거 없음</p>') + "</div>";
+  h += '<div class="slot"><h4>2. 무엇을 가정했는가</h4>' + (as.length
+    ? '<ul class="tight">' + as.map(a => '<li class="wait">' + esc(a.text) + "</li>").join("") + "</ul>"
+    : '<p class="empty">등록된 가정 없음</p>') + "</div>";
+  h += '<div class="slot"><h4>3. 어떤 근거를 사용했는가</h4>' + (ok.length
+    ? '<ul class="tight">' + ok.map(e => '<li class="mono" style="font-size:11px">' +
+        Object.entries(e.attrs || {}).map(([k, v]) => esc(k) + "=" + esc(v)).join(" · ") + "</li>").join("") + "</ul>"
+    : '<p class="empty">—</p>') + "</div>";
+  h += '<div class="slot"><h4>4. 무엇이 부족한가</h4>' + (b.length
+    ? '<ul class="tight">' + b.map(x => '<li class="no">' + esc(x.t) + "</li>").join("") + "</ul>"
+    : '<p class="empty" style="color:var(--ok)">부족한 항목 없음</p>') + "</div>";
+  h += '<div class="slot"><h4>5. 누가 승인해야 하는가</h4><p>' + esc(ROLES[m.ap].n) +
+    (ROLES[m.ap].lic ? ' <span class="chip">자격 확인 필수</span>' : "") +
+    (r.approvedBy ? '<br><span class="dim" style="font-size:11.5px">승인: ' + esc(r.approvedAt || "") + "</span>" : "") + "</p></div>";
+  h += '<div class="slot"><h4>6. 승인하지 않으면 무엇이 막히는가</h4>' + (unlocks.length
+    ? '<ul class="tight">' + unlocks.map(k => "<li>" + k + " " + esc(BY[k].t) + "</li>").join("") +
+      "</ul><p class=\"empty\">하위 전체 " + descendants(sel).size + "개 미션이 잠긴 상태로 유지됩니다.</p>"
+    : '<p class="empty">직접 잠기는 후속 미션 없음 (말단)</p>') + "</div>";
+
+  h += '<div class="acts">' +
+    '<button class="btn ghost" id="a-start"' + (st === "LOCKED" || r.state === "RUNNING" || r.state === "SUBMITTED" || st === "APPROVED" ? " disabled" : "") + ">착수</button>" +
+    '<button class="btn ghost" id="a-submit"' + (r.state !== "RUNNING" ? " disabled" : "") + ">제출</button>" +
+    '<button class="btn" id="a-approve">승인</button>' +
+    '<button class="btn ghost warn" id="a-reject"' + (r.state !== "SUBMITTED" ? " disabled" : "") + ">반려</button>";
+  if (m.k === "DRAFT") h += '<button class="btn ghost" id="a-draft">초안 생성 → 가정 등록</button>';
+  h += "</div>";
+  if (!canApprove) h += '<p class="empty" style="margin-top:8px">승인 조건: 제출 상태 + 활성 차단 0건. 현재 ' + st + ", 차단 " + b.length + "건.</p>";
+  h += '<p class="empty" id="a-msg" style="margin-top:6px"></p>';
+  document.getElementById("approval").innerHTML = h;
+
+  const g = i => document.getElementById(i);
+  g("a-start").onclick = () => { const r2 = mut(sel); r2.state = "RUNNING"; r2.startedAt = new Date().toISOString(); put("missions", sel, r2); };
+  g("a-submit").onclick = () => { const r2 = mut(sel); r2.state = "SUBMITTED"; r2.submittedAt = new Date().toISOString(); put("missions", sel, r2); };
+  g("a-reject").onclick = () => { const r2 = mut(sel); r2.state = "RUNNING"; r2.rejects = (r2.rejects || 0) + 1; put("missions", sel, r2); };
+  g("a-approve").onclick = () => {
+    const bb = blockersOf(sel), st2 = stateOf(sel);
+    if (bb.length || st2 !== "SUBMITTED") {
+      S.meta = { ...S.meta, counters: { ...S.meta.counters,
+        refusedApprovals: (S.meta.counters.refusedApprovals || 0) + 1 } };
+      putMeta();
+      g("a-msg").innerHTML = '<span class="warnword">승인 거부됨 — ' +
+        (st2 !== "SUBMITTED" ? "제출 상태가 아닙니다." : "활성 차단 " + bb.length + "건: " + esc(bb[0].t)) + "</span>";
+      render();
+      return;
+    }
+    const before = MISSIONS.filter(x => stateOf(x.id) === "LOCKED").map(x => x.id);
+    const r2 = mut(sel); r2.state = "APPROVED"; r2.approvedAt = new Date().toISOString();
+    r2.approvedBy = ME && ME.id ? ME.id : "local";
+    put("missions", sel, r2).then(() => {
+      const now = new Set(MISSIONS.filter(x => stateOf(x.id) === "LOCKED").map(x => x.id));
+      before.filter(x => !now.has(x)).forEach((x, i) => {
+        const t = document.querySelector('.tile[data-id="' + x + '"]');
+        if (t) setTimeout(() => { t.classList.add("pulse"); setTimeout(() => t.classList.remove("pulse"), 520); }, i * 70);
+      });
+    });
+  };
+  const d = g("a-draft"); if (d) d.onclick = draftAssumptions;
+}
+
+function descendants(id) {
+  const seen = new Set(), q = [...KIDS[id]];
+  while (q.length) { const x = q.pop(); if (seen.has(x)) continue; seen.add(x); KIDS[x].forEach(y => q.push(y)); }
+  return seen;
+}
+
+function renderResult() {
+  document.getElementById("mresult").textContent = JSON.stringify(runMission(sel, null), null, 1);
+}
+
+/* ── 계산엔진 ─────────────────────────────────────────────── */
+function calcSetup(id) {
+  curCalc = id; const c = CALCS[id];
+  calcInputs = {}; calcProv = {};
+  c.in.forEach(f => { calcInputs[f.k] = f.d; calcProv[f.k] = "seed"; });
+  lastCalc = null;
+  document.getElementById("calc-note").textContent =
+    (c.note ? c.note + "  " : "") + "연결 미션 " + c.ref + " — " + BY[c.ref].t;
+  renderCalc();
+}
+function renderCalc() {
+  const c = CALCS[curCalc];
+  document.getElementById("calc-in").innerHTML = c.in.map(f =>
+    '<div style="margin-bottom:8px"><label class="fl">' + esc(f.l) +
+    ' <span class="mono dim">[' + esc(f.u) + "]</span>" +
+    (calcProv[f.k] === "seed" ? ' <span class="warnword" style="font-size:10.5px">예시값</span>' : "") +
+    '</label><input type="number" step="any" data-ck="' + f.k + '" value="' + f.d + '"' +
+    (calcProv[f.k] === "seed" ? ' class="seed"' : "") + "></div>").join("");
+  document.querySelectorAll("[data-ck]").forEach(i => {
+    i.value = calcInputs[i.dataset.ck];
+    i.oninput = () => {
+      const k = i.dataset.ck, v = parseFloat(i.value);
+      calcInputs[k] = isFinite(v) ? v : 0;
+      calcProv[k] = (v === CALCS[curCalc].in.find(f => f.k === k).d) ? "seed" : "user";
+      i.classList.toggle("seed", calcProv[k] === "seed");
+      const lbl = i.previousElementSibling.querySelector(".warnword");
+      if (lbl) lbl.style.display = calcProv[k] === "seed" ? "" : "none";
+    };
+  });
+  if (lastCalc) {
+    document.getElementById("calc-out").innerHTML = c.out.map(o =>
+      '<div class="outrow"><span>' + esc(o.l) + "</span><span><b>" + num(lastCalc.out[o.k]) +
+      "</b><em>" + esc(o.u) + "</em></span></div>").join("");
+    document.getElementById("calc-unit").innerHTML =
+      '<ul class="tight"><li class="' + (lastCalc.unitOk ? "yes" : "no") + '">단위 선언 대조 ' +
+      (lastCalc.unitOk ? "통과" : "실패") + " — 입력 " + c.in.length + "항목, 출력 " + c.out.length + "항목</li>" +
+      '<li class="' + (lastCalc.seeds ? "no" : "yes") + '">근거 없는 예시값 ' + lastCalc.seeds + "건</li>" +
+      '<li class="' + (lastCalc.finite ? "yes" : "no") + '">수치 유한성 ' + (lastCalc.finite ? "통과" : "실패") + "</li></ul>";
+  } else {
+    document.getElementById("calc-out").innerHTML = '<p class="empty">계산을 실행하세요.</p>';
+    document.getElementById("calc-unit").innerHTML = '<p class="empty">—</p>';
+  }
+}
+function runCalc() {
+  const c = CALCS[curCalc];
+  let out, finite = true;
+  try { out = c.f(calcInputs); } catch (e) { out = {}; finite = false; }
+  const declared = c.out.map(o => o.k);
+  const unitOk = declared.every(k => k in out) && Object.keys(out).every(k => declared.includes(k));
+  Object.values(out).forEach(v => { if (typeof v !== "number" || !isFinite(v)) finite = false; });
+  lastCalc = { calcId: curCalc, ver: c.ver, inputs: { ...calcInputs }, prov: { ...calcProv }, out,
+               unitOk: unitOk && finite, finite, seeds: Object.values(calcProv).filter(p => p === "seed").length };
+  renderCalc();
+}
+function attachCalc() {
+  if (!lastCalc) { document.getElementById("calc-msg").textContent = "먼저 계산을 실행하세요."; return; }
+  const mid = CALCS[curCalc].ref;
+  const id = "c_" + mid + "_" + curCalc;        // 재실행 시 덮어쓴다 — 누적 금지
+  const doc = { id, missionId: mid, ...lastCalc, at: new Date().toISOString() };
+  put("calcs", id, doc);
+  const eid = "e_" + mid + "_" + curCalc;
+  put("evidence", eid, { id: eid, type: "CALC", title: CALCS[curCalc].n + " 계산서", missionId: mid,
+    attrs: { "계산ID": id, "입력값": JSON.stringify(lastCalc.inputs), "산식버전": curCalc + " v" + CALCS[curCalc].ver,
+             "단위검증": lastCalc.unitOk ? "pass" : "fail" }, at: new Date().toISOString() });
+  document.getElementById("calc-msg").innerHTML = mid + " 에 계산서가 근거로 등록되었습니다." +
+    (lastCalc.seeds ? ' <span class="warnword">예시값 ' + lastCalc.seeds + "건이 남아 있어 승인은 차단됩니다.</span>" : "");
+}
+
+/* ── 7단계: AI 초안은 근거가 아니라 가정으로만 들어간다 ─────── */
+async function draftAssumptions() {
+  const el = document.getElementById("a-msg");
+  if (!SAMPLE) { el.textContent = "초안 생성 기능을 사용할 수 없습니다."; return; }
+  el.textContent = "초안 생성 중…";
+  const m = BY[sel];
+  try {
+    const r = await SAMPLE.json(
+      "너는 수소연료전지 발전소 프로젝트의 초안 작성기다. 아래 미션에 대해 검토 후보 항목을 5개 제시하라.\n" +
+      "미션: " + m.id + " " + m.t + "\n완료 기준: " + m.v + "\n차단조건 후보: " + m.bl.join(" / ") + "\n" +
+      "규칙: 법령 조항번호·기준 판번호·수치 기준값을 만들어내지 마라. 확인이 필요한 항목을 질문 형태로 써라.\n" +
+      'JSON만 출력: {"items":["...","...","...","...","..."]}', { modelTier: "quick" });
+    const items = (r && r.items || []).slice(0, 5);
+    if (!items.length) { el.textContent = "초안을 받지 못했습니다."; return; }
+    const exp = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
+    for (const t of items) {
+      const id = uid("a");
+      S.assumptions[id] = { id, missionId: sel, text: "[초안] " + t, owner: "AI 초안", expiry: exp,
+        method: "전문가 검토로 채택 또는 폐기", status: "open", at: new Date().toISOString() };
+      if (DB && WRITABLE) { try { await DB.doc("assumptions/" + id).set(S.assumptions[id]); } catch (e) {} }
+    }
+    lsSave(); render();
+    document.getElementById("a-msg").innerHTML =
+      items.length + "건이 <b>가정</b>으로 등록되었습니다. 근거가 아니며 30일 후 만료되어 하위 미션을 차단합니다.";
+  } catch (e) {
+    el.textContent = e && e.code === "not_granted" ? "초안 생성이 허용되지 않았습니다." : "초안 생성에 실패했습니다.";
+  }
+}
+
+/* ── 근거·가정 탭 ─────────────────────────────────────────── */
+function setupEvidenceControls() {
+  const sels = MISSIONS.map(m => '<option value="' + m.id + '">' + m.id + " " + esc(m.t) + "</option>").join("");
+  const et = document.getElementById("ev-type");
+  et.innerHTML = Object.entries(EV_TYPES).map(([k, v]) => '<option value="' + k + '">' + esc(v.n) + "</option>").join("");
+  document.getElementById("ev-mission").innerHTML = sels;
+  document.getElementById("as-mission").innerHTML = sels;
+  et.onchange = evAttrs;
+  evAttrs();
+}
+/* 표만 다시 그린다 — 입력 중인 값을 건드리지 않는다. */
+function renderEvidenceTab() {
+  const evs = Object.values(S.evidence);
+  document.getElementById("ev-table").innerHTML =
+    "<tr><th>유형</th><th>제목</th><th>미션</th><th>필수속성</th><th>상태</th><th></th></tr>" +
+    (evs.length ? evs.map(e => '<tr class="' + (evValid(e) ? "" : "bad") + '"><td>' + esc(EV_TYPES[e.type].n) +
+      "</td><td>" + esc(e.title) + '</td><td class="mono">' + esc(e.missionId) + '</td><td class="mono" style="font-size:10.5px">' +
+      Object.entries(e.attrs || {}).map(([k, v]) => esc(k) + "=" + esc(String(v).slice(0, 28))).join(" · ") +
+      "</td><td>" + (evValid(e) ? "유효" : "속성 누락") +
+      '</td><td><button class="btn ghost sm" data-evdel="' + e.id + '">삭제</button></td></tr>').join("")
+      : '<tr><td colspan="6" class="empty">등록된 근거 없음</td></tr>');
+  document.querySelectorAll("[data-evdel]").forEach(b => b.onclick = () => {
+    delete S.evidence[b.dataset.evdel];
+    if (DB && WRITABLE) DB.doc("evidence/" + b.dataset.evdel).delete().catch(() => {});
+    lsSave(); render();
+  });
+
+  const as = Object.values(S.assumptions);
+  document.getElementById("as-table").innerHTML =
+    "<tr><th>가정</th><th>미션</th><th>만료</th><th>검증 방법</th><th>상태</th><th></th></tr>" +
+    (as.length ? as.map(a => {
+      const dead = a.status === "open" && a.expiry && a.expiry < today();
+      return '<tr class="' + (dead ? "bad" : "") + '"><td>' + esc(a.text) + '</td><td class="mono">' + esc(a.missionId) +
+        '</td><td class="mono">' + esc(a.expiry || "—") + "</td><td>" + esc(a.method || "—") + "</td><td>" +
+        (a.status === "closed" ? "검증 완료" : dead ? "만료 — 차단 중" : "유효") +
+        '</td><td>' + (a.status === "open" ? '<button class="btn ghost sm" data-asok="' + a.id + '">검증 완료</button>' : "") +
+        '<button class="btn ghost sm" data-asdel="' + a.id + '">삭제</button></td></tr>';
+    }).join("") : '<tr><td colspan="6" class="empty">등록된 가정 없음</td></tr>');
+  document.querySelectorAll("[data-asok]").forEach(b => b.onclick = () => {
+    const a = clone(S.assumptions[b.dataset.asok]); a.status = "closed"; put("assumptions", a.id, a);
+  });
+  document.querySelectorAll("[data-asdel]").forEach(b => b.onclick = () => {
+    delete S.assumptions[b.dataset.asdel];
+    if (DB && WRITABLE) DB.doc("assumptions/" + b.dataset.asdel).delete().catch(() => {});
+    lsSave(); render();
+  });
+}
+function evAttrs() {
+  const t = EV_TYPES[document.getElementById("ev-type").value];
+  document.getElementById("ev-attrs").innerHTML = t.req.map(k =>
+    '<div style="margin-bottom:8px"><label class="fl">' + esc(k) +
+    (t.strict ? ' <span class="warnword" style="font-size:10px">필수</span>' : "") +
+    '</label><input type="text" data-attr="' + esc(k) + '"></div>').join("");
+}
+
+/* ── 인허가 매트릭스 ──────────────────────────────────────── */
+function renderPermits() {
+  const ps = Object.values(S.permits);
+  document.getElementById("permit-table").innerHTML =
+    "<tr><th>구분</th><th>근거 법령 / 기준 (후보)</th><th>대상</th><th>조항</th><th>시행일·판번호</th><th>출처</th><th>소관</th><th>상태</th><th></th></tr>" +
+    ps.map(p => '<tr class="' + (p.verified ? "" : "bad") + '"><td>' + esc(p.kind) + "</td><td>" + esc(p.name) +
+      "</td><td>" + esc(p.target) + '</td><td class="mono">' + esc(p.article || "—") +
+      '</td><td class="mono">' + esc(p.date || "—") + "</td><td>" + (p.url ? esc(p.url.slice(0, 26)) : "—") +
+      "</td><td>" + esc(p.agency) + "</td><td>" + (p.verified ? esc(p.status || "검증됨") : "미검증") +
+      '</td><td><button class="btn ghost sm" data-pv="' + p.id + '">검증 입력</button></td></tr>').join("");
+  document.querySelectorAll("[data-pv]").forEach(b => b.onclick = () => permitForm(b.dataset.pv));
+}
+function permitForm(id) {
+  const p = clone(S.permits[id]), el = document.getElementById("permit-edit");
+  el.hidden = false;
+  el.innerHTML = "<h3>" + esc(p.name) + " — " + esc(p.target) + "</h3>" +
+    '<div class="frow"><div><label class="fl">조항 (예: 제7조제1항)</label><input type="text" id="p-art" value="' + esc(p.article || "") + '"></div>' +
+    '<div><label class="fl">시행일 또는 판번호</label><input type="text" id="p-date" value="' + esc(p.date || "") + '"></div></div>' +
+    '<div class="frow"><div><label class="fl">출처 URL</label><input type="text" id="p-url" value="' + esc(p.url || "") + '"></div>' +
+    '<div><label class="fl">상태</label><select id="p-st">' +
+    ["미검증", "검토중", "취득", "비대상", "조건부"].map(s =>
+      '<option' + (p.status === s ? " selected" : "") + ">" + s + "</option>").join("") + "</select></div></div>" +
+    '<div class="acts"><button class="btn" id="p-save">검증 저장</button>' +
+    '<button class="btn ghost" id="p-close">닫기</button></div>' +
+    '<p class="empty" style="margin-top:8px">조항·시행일(판번호)·출처 3개가 모두 있어야 검증으로 인정됩니다.</p>';
+  document.getElementById("p-save").onclick = () => {
+    p.article = document.getElementById("p-art").value.trim();
+    p.date = document.getElementById("p-date").value.trim();
+    p.url = document.getElementById("p-url").value.trim();
+    p.status = document.getElementById("p-st").value;
+    p.verified = !!(p.article && p.date && p.url);
+    put("permits", id, p); el.hidden = true;
+  };
+  document.getElementById("p-close").onclick = () => { el.hidden = true; };
+}
+
+/* ── 지표 ─────────────────────────────────────────────────── */
+function renderMetrics() {
+  const k = metrics();
+  const cells = [
+    ["approved", k.approved + "/100", "승인 완료 미션", ""],
+    ["gate", k.gatesPassed + "/10", "게이트 통과", ""],
+    ["blocked", k.blocked, "차단 미션", k.blocked ? "alarm" : ""],
+    ["law", k.unverifiedLaw, "미검증 법령 조문", k.unverifiedLaw ? "alarm" : ""],
+    ["code", k.unverifiedCode, "미검증 기술기준 판번호", k.unverifiedCode ? "alarm" : ""],
+    ["seed", k.seeded, "근거 없는 예시값 입력", k.seeded ? "hold" : ""],
+    ["unit", k.unitFail, "단위 검증 실패", k.unitFail ? "alarm" : ""],
+    ["invev", k.invalidEv, "속성 누락 근거", k.invalidEv ? "alarm" : ""],
+    ["asm", k.openAssum, "미해소 가정", k.openAssum ? "hold" : ""],
+    ["exp", k.expiredAssum, "만료 가정", k.expiredAssum ? "alarm" : ""],
+    ["rej", k.rejects, "반려 횟수 (전문가 수정률 대리)", ""],
+    ["ref", k.refused, "차단된 승인 시도", k.refused ? "alarm" : ""],
+    ["cp", num(k.cp, 0), "잔여 임계경로 (일)", ""],
+    ["evm", num(k.evPerMission, 2), "미션당 유효 근거", ""]
+  ];
+  document.getElementById("metric-grid").innerHTML = cells.map(c =>
+    '<div class="metric ' + c[3] + '"><b>' + c[1] + "</b><span>" + c[2] + "</span></div>").join("");
+
+  document.getElementById("phase-progress").innerHTML = PHASES.map((p, i) => {
+    const rows = MISSIONS.filter(m => m.ph === i);
+    const a = rows.filter(m => rec(m.id).state === "APPROVED").length;
+    const bl = rows.filter(m => stateOf(m.id) === "BLOCKED").length;
+    return '<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:12px">' +
+      "<span><b class=\"mono\">" + p.id + "</b> " + esc(p.n) + "</span>" +
+      '<span class="mono">' + a + "/10" + (bl ? ' <span class="warnword">차단 ' + bl + "</span>" : "") + "</span></div>" +
+      '<div class="bar"><i style="width:' + (a * 10) + '%"></i></div></div>';
+  }).join("");
+
+  const agg = {};
+  MISSIONS.forEach(m => blockersOf(m.id).forEach(b => {
+    agg[b.c] = agg[b.c] || { n: 0, ms: [] };
+    agg[b.c].n++; if (agg[b.c].ms.length < 6) agg[b.c].ms.push(m.id);
+  }));
+  const rows = Object.entries(agg).sort((a, b) => b[1].n - a[1].n);
+  document.getElementById("block-table").innerHTML =
+    '<tr><th>사유</th><th class="num">건수</th><th>해당 미션</th></tr>' +
+    (rows.length ? rows.map(([c, v]) => "<tr><td>" + esc(c) + '</td><td class="num">' + v.n +
+      '</td><td class="mono" style="font-size:11px">' + v.ms.join(" ") + (v.n > 6 ? " …" : "") + "</td></tr>").join("")
+      : '<tr><td colspan="3" class="empty">차단 없음</td></tr>');
+}
+
+function renderContract() {
+  document.getElementById("cv").textContent = CONTRACT_VERSION;
+  document.getElementById("schema-table").innerHTML =
+    "<tr><th>엔티티</th><th>주요 필드 (단위 포함)</th><th>확정 미션</th></tr>" +
+    SCHEMA.map(r => '<tr><td class="mono">' + esc(r[0]) + "</td><td>" + esc(r[1]) +
+      '</td><td class="mono">' + esc(r[2]) + "</td></tr>").join("");
+  document.getElementById("evtype-table").innerHTML =
+    "<tr><th>유형</th><th>필수 속성</th><th>엄격</th></tr>" +
+    Object.entries(EV_TYPES).map(([k, v]) => "<tr><td>" + esc(v.n) + "</td><td>" + esc(v.req.join(", ")) +
+      "</td><td>" + (v.strict ? "예" : "아니오") + "</td></tr>").join("");
+  document.getElementById("role-table").innerHTML =
+    "<tr><th>코드</th><th>역할</th><th>담당 미션</th></tr>" +
+    Object.entries(ROLES).map(([k, v]) => '<tr><td class="mono">' + esc(k) + "</td><td>" + esc(v.n) +
+      (v.lic ? " · 자격 필수" : "") + '</td><td class="num">' + MISSIONS.filter(m => m.ap === k).length + "</td></tr>").join("");
+  document.getElementById("kind-table").innerHTML =
+    "<tr><th>종류</th><th>규칙</th><th class=\"num\">미션 수</th></tr>" +
+    Object.entries(KINDS).map(([k, v]) => "<tr><td>" + esc(v.n) + "</td><td>" + esc(v.d) +
+      '</td><td class="num">' + MISSIONS.filter(m => m.k === k).length + "</td></tr>").join("");
+}
+
+/* ── 전체 렌더 ────────────────────────────────────────────── */
+function render() {
+  const k = metrics();
+  document.getElementById("ro-appr").textContent = k.approved;
+  document.getElementById("ro-block").textContent = k.blocked;
+  document.getElementById("ro-gate").textContent = k.gatesPassed + "/10";
+  document.getElementById("ro-cp").textContent = num(k.cp, 0);
+  renderMatrix(); renderDossier(); renderApproval(); renderResult();
+  renderEvidenceTab(); renderPermits(); renderMetrics();
+}
+
+/* ── 내보내기 ─────────────────────────────────────────────── */
+function graph() {
+  return {
+    contractVersion: CONTRACT_VERSION, exportedAt: new Date().toISOString(),
+    schema: SCHEMA.map(r => ({ entity: r[0], fields: r[1], definedBy: r[2] })),
+    roles: ROLES, evidenceTypes: EV_TYPES, phases: PHASES,
+    missions: MISSIONS.map(m => ({
+      ...m, phaseId: PHASES[m.ph].id, kindName: KINDS[m.k].n, approverName: ROLES[m.ap].n,
+      runtime: rec(m.id), state: stateOf(m.id), activeBlockers: blockersOf(m.id),
+      evidence: evFor(m.id).map(e => e.id), assumptions: asFor(m.id).map(a => a.id)
+    })),
+    evidence: S.evidence, assumptions: S.assumptions, calculations: S.calcs,
+    permitMatrix: S.permits, metrics: metrics()
+  };
+}
+async function save(name, data) {
+  const msg = document.getElementById("export-msg");
+  if (DLS) {
+    try { await DLS.save({ filename: name, data }); msg.textContent = "저장되었습니다."; }
+    catch (e) { msg.textContent = e && e.code === "declined" ? "저장이 취소되었습니다." : "저장할 수 없습니다."; }
+  } else {
+    try { await navigator.clipboard.writeText(data); msg.textContent = "내려받기를 쓸 수 없어 클립보드에 복사했습니다."; }
+    catch (e) { msg.textContent = "내보내기를 사용할 수 없습니다."; }
+  }
+}
+
+/* ── 부팅 ─────────────────────────────────────────────────── */
+function seedPermits() {
+  if (Object.keys(S.permits).length) return;
+  PERMIT_SEED.forEach((p, i) => {
+    const id = "P" + String(i + 1).padStart(3, "0");
+    S.permits[id] = { id, kind: p[0], name: p[1], target: p[2], agency: p[3],
+      article: "", date: "", url: "", status: "미검증", verified: false };
+  });
+}
+
+function wire() {
+  document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
+    document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+    document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "v-" + b.dataset.view);
+  });
+  const cp = document.getElementById("calc-pick");
+  cp.innerHTML = Object.entries(CALCS).map(([k, c]) =>
+    '<option value="' + k + '">' + c.ref + " · " + esc(c.n) + "</option>").join("");
+  cp.onchange = () => calcSetup(cp.value);
+  document.getElementById("calc-run").onclick = runCalc;
+  document.getElementById("calc-reset").onclick = () => calcSetup(curCalc);
+  document.getElementById("calc-attach").onclick = attachCalc;
+
+  document.getElementById("ev-add").onclick = () => {
+    const type = document.getElementById("ev-type").value;
+    const title = document.getElementById("ev-title").value.trim();
+    const mid = document.getElementById("ev-mission").value;
+    const attrs = {}; document.querySelectorAll("[data-attr]").forEach(i => { if (i.value.trim()) attrs[i.dataset.attr] = i.value.trim(); });
+    if (!title) { document.getElementById("ev-msg").textContent = "제목을 입력하세요."; return; }
+    const id = uid("e"), doc = { id, type, title, missionId: mid, attrs, at: new Date().toISOString() };
+    put("evidence", id, doc);
+    document.getElementById("ev-title").value = "";
+    document.getElementById("ev-msg").innerHTML = evValid(doc)
+      ? "유효한 근거로 등록되었습니다."
+      : '<span class="warnword">등록되었으나 필수 속성이 비어 있어 유효 근거로 계수되지 않습니다.</span>';
+  };
+  document.getElementById("as-add").onclick = () => {
+    const text = document.getElementById("as-text").value.trim();
+    if (!text) { document.getElementById("as-msg").textContent = "가정 내용을 입력하세요."; return; }
+    const id = uid("a");
+    put("assumptions", id, { id, missionId: document.getElementById("as-mission").value, text,
+      expiry: document.getElementById("as-expiry").value || "",
+      method: document.getElementById("as-method").value.trim(), status: "open", at: new Date().toISOString() });
+    document.getElementById("as-text").value = "";
+    document.getElementById("as-msg").textContent = "가정으로 등록되었습니다. 근거가 아닙니다.";
+  };
+
+  document.getElementById("export-json").onclick = () =>
+    save("h2-project-graph.json", JSON.stringify(graph(), null, 2));
+  document.getElementById("export-csv").onclick = () => {
+    const head = ["id","단계","제목","종류","상태","승인자","선행","필수근거","기간일","차단수","완료판정기준"];
+    const rows = MISSIONS.map(m => [m.id, PHASES[m.ph].id, m.t, KINDS[m.k].n, stateOf(m.id), ROLES[m.ap].n,
+      m.dp.join(" "), m.ev.map(e => EV_TYPES[e].n).join(" "), m.du, blockersOf(m.id).length, m.v]);
+    const csv = "\uFEFF" + [head, ...rows].map(r =>
+      r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(",")).join("\n");
+    save("h2-mission-register.csv", csv);
+  };
+  document.getElementById("reset-all").onclick = async () => {
+    S.missions = {}; S.evidence = {}; S.assumptions = {}; S.calcs = {}; S.permits = {}; S.meta = { counters: {} };
+    seedPermits(); lsSave();
+    if (DB && WRITABLE) {
+      for (const c of ["missions", "evidence", "assumptions", "calcs"]) {
+        try { const s = await DB.collection(c).get(); s.docs.forEach(d => DB.doc(c + "/" + d.id).delete().catch(() => {})); } catch (e) {}
+      }
+      Object.values(S.permits).forEach(p => DB.doc("permits/" + p.id).set(p).catch(() => {}));
+      putMeta();
+    }
+    sel = "M001"; render();
+    document.getElementById("export-msg").textContent = "초기화되었습니다.";
+  };
+}
+
+window.__ENGINE = { S, MISSIONS, BY, KIDS, CALCS, PHASES, ROLES, EV_TYPES,
+  stateOf, blockersOf, runMission, metrics, graph, cpmRemaining };
+
+(function init() {
+  lsLoad(); seedPermits(); wire(); setupEvidenceControls();
+  renderContract(); calcSetup("h2_demand"); render(); note();
+})();
+
+(async function connect() {
+  if (!window.claude || !window.claude.use) return;
+  try { DB = await claude.use("db"); } catch (e) { DB = null; }
+  try { DLS = await claude.use("downloads"); } catch (e) { DLS = null; }
+  try { SAMPLE = await claude.use("sample"); } catch (e) { SAMPLE = null; }
+  try { const u = await claude.use("user"); if (u) { ME = await u.me(); const w = await u.can("data.write"); if (w === false) WRITABLE = false; } } catch (e) {}
+  note();
+  if (!DB) return;
+  try {                                   // 1회 시딩 — 스냅샷 콜백 안에서 쓰지 않는다
+    const s = await DB.collection("permits").get();
+    if (!s.docs.length) for (const p of Object.values(S.permits)) await DB.doc("permits/" + p.id).set(p);
+  } catch (e) { if (e && e.code === "invalid_argument") WRITABLE = false; note(); }
+  const bind = (coll) => DB.collection(coll).onSnapshot(snap => {
+    const o = {}; snap.docs.forEach(d => o[d.id] = d.data());
+    if (coll === "permits" && !snap.docs.length) return;  // 시딩 전 빈 스냅샷은 무시
+    S[coll] = o;
+    render();
+  }, () => {});
+  ["missions", "evidence", "assumptions", "calcs", "permits"].forEach(bind);
+  DB.doc("project/meta").onSnapshot(s => {
+    if (s.exists) { S.meta = s.data(); S.meta.counters = S.meta.counters || {}; render(); }
+  }, () => {});
+})();
+
+</script>
+</body>
+</html>

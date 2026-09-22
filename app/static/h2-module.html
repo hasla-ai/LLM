@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forge H2 — 수소 계산 모듈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E7EAE4; --panel:#F3F5F0; --sunk:#DCE0D8; --deep:#CFD5CB;
+  --ink:#161E26; --ink-2:#4B575C; --ink-3:#7A857F;
+  --rule:#B5BCB2; --rule-2:#C8CEC5;
+  --h2:#33469F; --h2-soft:#DEE2F7; --trip:#A3302A; --trip-soft:#F3DCD9;
+  --hold:#876009; --hold-soft:#F1E7CD; --ok:#2A5C43;
+  --LH:22px;
+  --fm:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  --fs:"IBM Plex Sans KR",system-ui,-apple-system,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111517; --panel:#191E21; --sunk:#0C0F11; --deep:#232A2D;
+  --ink:#E6EAE4; --ink-2:#A3ADA9; --ink-3:#6B7672;
+  --rule:#343C39; --rule-2:#272E30;
+  --h2:#8FA0F2; --h2-soft:#1E2446; --trip:#E28275; --trip-soft:#38201C;
+  --hold:#D8AD5B; --hold-soft:#312915; --ok:#71B694;
+}}
+:root[data-theme="dark"]{
+  --paper:#111517; --panel:#191E21; --sunk:#0C0F11; --deep:#232A2D;
+  --ink:#E6EAE4; --ink-2:#A3ADA9; --ink-3:#6B7672;
+  --rule:#343C39; --rule-2:#272E30;
+  --h2:#8FA0F2; --h2-soft:#1E2446; --trip:#E28275; --trip-soft:#38201C;
+  --hold:#D8AD5B; --hold-soft:#312915; --ok:#71B694;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--fs);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--h2);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:18px 14px 64px}
+
+/* 머리 */
+.mast{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;
+      border-bottom:2px solid var(--ink);padding-bottom:11px}
+.mast h1{margin:0;font-size:18px;font-weight:600;letter-spacing:-.01em}
+.mast h1 span{font-family:var(--fm);font-weight:500;color:var(--h2);margin-right:8px}
+.thesis{font-size:12.5px;color:var(--ink-2);font-weight:300;margin-top:3px;max-width:62ch}
+.stat{display:flex;gap:16px;flex-wrap:wrap}
+.stat div{text-align:right}
+.stat b{display:block;font-family:var(--fm);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat span{font-size:10px;color:var(--ink-3);font-weight:300}
+.stat .bad b{color:var(--trip)}
+
+/* 도구막대 */
+.bar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:14px 0 10px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:5px 12px;cursor:pointer;font-size:12.5px;font-weight:500}
+.btn:hover{opacity:.87}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.ghost[aria-pressed="true"]{border-color:var(--ink);background:var(--deep)}
+.btn:disabled{background:var(--sunk);border-color:var(--rule);color:var(--ink-3);cursor:not-allowed}
+.bar .sp{flex:1}
+.bar .hint{font-size:11px;color:var(--ink-3);font-weight:300}
+
+/* 워크벤치 — 편집기 + 원장 */
+.bench{border:1px solid var(--rule);background:var(--panel);display:grid;
+       grid-template-columns:34px minmax(0,1fr) 250px;overflow:auto;max-height:62vh}
+.gut,.led{font-family:var(--fm);font-size:12.5px;line-height:var(--LH)}
+.gut{background:var(--sunk);border-right:1px solid var(--rule-2);color:var(--ink-3);
+     text-align:right;padding:10px 6px 10px 0;font-variant-numeric:tabular-nums;user-select:none}
+.gut div{height:var(--LH)}
+.gut div.err{color:var(--trip);font-weight:600}
+#ed{display:block;width:100%;border:0;background:transparent;color:var(--ink);
+    font-family:var(--fm);font-size:12.5px;line-height:var(--LH);padding:10px 12px;
+    white-space:pre;overflow-x:auto;overflow-y:hidden;resize:none;tab-size:2;min-height:100%}
+#ed:focus{outline:none}
+.led{border-left:1px solid var(--rule-2);padding:10px 10px 10px 8px;background:var(--panel)}
+.led div{height:var(--LH);display:flex;align-items:center;gap:6px;justify-content:flex-end;
+         white-space:nowrap;overflow:hidden}
+.led .v{font-variant-numeric:tabular-nums;font-weight:500}
+.led .u{color:var(--ink-3);font-size:11px}
+.led .e{color:var(--trip);font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.led .obj{color:var(--h2);font-size:11px;font-weight:500}
+
+/* 근거 등급 배지 — 색과 형태를 함께 쓴다 */
+.tier{font-family:var(--fm);font-size:9.5px;font-weight:600;font-style:normal;
+      border:1px solid;padding:0 3px;line-height:14px;display:inline-block;min-width:20px;text-align:center}
+.t0,.t1,.t2{color:var(--h2);border-color:var(--h2);background:var(--h2-soft)}
+.t3,.t4,.t5{color:var(--hold);border-color:var(--hold);background:var(--hold-soft)}
+.t5{border-style:dashed}
+.tx{color:var(--trip);border-color:var(--trip);
+    background:repeating-linear-gradient(45deg,var(--trip-soft) 0 3px,transparent 3px 6px)}
+
+/* 탭 */
+.tabs{display:flex;border-bottom:1px solid var(--rule);margin:16px 0 14px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;
+  padding:7px 13px;cursor:pointer;color:var(--ink-3);white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+.view[hidden]{display:none}
+
+.card{border:1px solid var(--rule);background:var(--panel);padding:13px 14px}
+.card h3{margin:0 0 9px;font-size:12px;font-weight:600;color:var(--ink-2);
+         padding-bottom:6px;border-bottom:1px solid var(--rule-2)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:5px 7px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+th{font-size:10px;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule)}
+td.n,th.n{text-align:right;font-family:var(--fm);font-variant-numeric:tabular-nums}
+td.m{font-family:var(--fm);font-size:11px}
+tr.bad td{color:var(--trip)}
+.scrollx{overflow-x:auto}
+.empty{color:var(--ink-3);font-size:12px}
+.warnword{color:var(--trip);font-weight:500}
+ul.tight{margin:0;padding-left:16px}
+ul.tight li{font-size:12px;margin-bottom:3px}
+pre.sheet{background:var(--sunk);border:1px solid var(--rule-2);padding:11px;overflow-x:auto;
+  font-family:var(--fm);font-size:11px;line-height:1.55;margin:0;white-space:pre-wrap;word-break:break-word;
+  max-height:440px;overflow-y:auto}
+.stamp{display:inline-block;border:2px solid var(--trip);color:var(--trip);padding:3px 9px;
+  font-family:var(--fm);font-size:11px;font-weight:600;transform:rotate(-1.5deg);margin-bottom:9px}
+.stamp.ok{border-color:var(--ok);color:var(--ok)}
+figure{margin:0}
+figcaption{font-size:11px;color:var(--ink-3);margin-bottom:6px}
+svg .ax{stroke:var(--rule);stroke-width:1}
+svg .gr{stroke:var(--rule-2);stroke-width:1;stroke-dasharray:2 3}
+svg .ln{stroke:var(--h2);stroke-width:1.6;fill:none}
+svg .bar{fill:var(--h2-soft);stroke:var(--h2);stroke-width:.8}
+svg .p90{stroke:var(--trip);stroke-width:1.4;stroke-dasharray:3 2}
+svg text{font-family:var(--fm);font-size:9px;fill:var(--ink-3)}
+svg text.k{fill:var(--ink);font-weight:600}
+footer{margin-top:24px;padding-top:11px;border-top:1px solid var(--rule);
+       font-size:11px;color:var(--ink-3);font-weight:300;line-height:1.6}
+@media (max-width:760px){
+  .bench{grid-template-columns:28px minmax(0,1fr);max-height:46vh}
+  .led{grid-column:1/-1;border-left:0;border-top:1px solid var(--rule-2)}
+  .led div{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1><span>H₂</span>Forge H2 — 수소 계산 모듈</h1>
+    <div class="thesis">모든 값이 단위·불확실도·근거등급을 함께 들고 다닌다. 단위는 대수가 만들고, 근거 없는 값은 하류를 오염시키며, 오염된 계산서는 발행되지 않는다.</div>
+  </div>
+  <div class="stat">
+    <div><b id="s-line">0</b><span>계산행</span></div>
+    <div id="w-err"><b id="s-err">0</b><span>오류</span></div>
+    <div id="w-un"><b id="s-un">0</b><span>근거 미확보</span></div>
+    <div><b id="s-tier">—</b><span>최저 등급</span></div>
+  </div>
+</header>
+
+<div class="bar">
+  <button class="btn ghost" data-ex="0" aria-pressed="true">공급·저장 사이징</button>
+  <button class="btn ghost" data-ex="1">LCOE 분포</button>
+  <button class="btn ghost" data-ex="2">누출률·안전</button>
+  <button class="btn ghost" data-ex="3">차원·근거 오류</button>
+  <span class="sp"></span>
+  <span class="hint" id="runhint">입력하면 바로 계산됩니다</span>
+  <button class="btn" id="sheet-btn">계산서 발행</button>
+</div>
+
+<div class="bench">
+  <div class="gut" id="gut"></div>
+  <textarea id="ed" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+  <div class="led" id="led"></div>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  data-v="out">출력</button>
+  <button role="tab" aria-selected="false" data-v="diag">진단</button>
+  <button role="tab" aria-selected="false" data-v="sheet">계산서</button>
+  <button role="tab" aria-selected="false" data-v="fn">함수</button>
+  <button role="tab" aria-selected="false" data-v="unit">단위계</button>
+</nav>
+
+<section class="view" id="v-out"><div id="out"></div></section>
+
+<section class="view" id="v-diag" hidden>
+  <div class="grid2">
+    <div class="card"><h3>오류</h3><div id="d-err"></div></div>
+    <div class="card"><h3>근거 사슬</h3><div class="scrollx"><table id="d-prov"></table></div></div>
+  </div>
+</section>
+
+<section class="view" id="v-sheet" hidden>
+  <div class="card">
+    <h3>계산서 — 자격자 서명 대상 문서</h3>
+    <div id="sheet-stamp"></div>
+    <pre class="sheet" id="sheet">계산서 발행을 누르세요.</pre>
+    <p class="empty" id="sheet-msg" style="margin-top:8px"></p>
+  </div>
+</section>
+
+<section class="view" id="v-fn" hidden>
+  <div class="card"><h3>내장 함수 — 각 함수는 자기 근거등급을 들고 다닌다</h3>
+    <div class="scrollx"><table id="t-fn"></table></div></div>
+</section>
+
+<section class="view" id="v-unit" hidden>
+  <div class="grid2">
+    <div class="card"><h3>단위 — 8개 기본차원 위에 정의된다</h3>
+      <div class="scrollx"><table id="t-unit"></table></div></div>
+    <div class="card"><h3>문법</h3><div id="t-syn"></div></div>
+  </div>
+</section>
+
+<footer>
+  Forge H2 수소 계산 모듈 <span style="font-family:var(--fm)">v1.0.0</span> · 기본차원 kg·m·s·A·K·mol·cd·₩ ·
+  근거등급 T0 관청확인 / T1 기술기준 / T2 시험·실측 / T3 벤더 / T4 유도계산 / T5 가정 / — 근거없음<br>
+  계산이 맞다는 것과 설계가 맞다는 것은 다릅니다. 안전거리·SIL·인허가 적합성의 최종 판정은 유자격자만 할 수 있습니다.
+</footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   Forge H2 수소 계산 커널
+   값 = (SI 수치, 8차원 벡터, 표준편차, 근거)
+   단위는 대수가 만든다. 근거는 상류에서 하류로 전파된다.
+   ═══════════════════════════════════════════════════════════════ */
+const VER = "1.0.0";
+const DN = ["kg","m","s","A","K","mol","cd","₩"];
+const Z8 = () => [0,0,0,0,0,0,0,0];
+const dAdd = (a,b) => a.map((x,i)=>x+b[i]);
+const dSub = (a,b) => a.map((x,i)=>x-b[i]);
+const dMul = (a,n) => a.map(x=>x*n);
+const dEq  = (a,b) => a.every((x,i)=>x===b[i]);
+const dNil = a => a.every(x=>x===0);
+const dKey = a => a.join(",");
+function dStr(a){
+  const p=[],n=[];
+  a.forEach((e,i)=>{ if(e>0) p.push(DN[i]+(e>1?"^"+e:"")); else if(e<0) n.push(DN[i]+(e<-1?"^"+(-e):"")); });
+  if(!p.length && !n.length) return "1";
+  return (p.join("·")||"1") + (n.length ? "/"+n.join("·") : "");
+}
+
+/* ── 단위표 ─────────────────────────────────────────────────── */
+const U = {};
+const du = (n,f,d) => { U[n] = {f,d}; };
+const M=[1,0,0,0,0,0,0,0], L=[0,1,0,0,0,0,0,0], T=[0,0,1,0,0,0,0,0],
+      EA=[0,0,0,1,0,0,0,0], TH=[0,0,0,0,1,0,0,0], MOL=[0,0,0,0,0,1,0,0],
+      CD=[0,0,0,0,0,0,1,0], CUR=[0,0,0,0,0,0,0,1];
+const FORCE=[1,1,-2,0,0,0,0,0], PRES=[1,-1,-2,0,0,0,0,0],
+      ENER=[1,2,-2,0,0,0,0,0], POW=[1,2,-3,0,0,0,0,0],
+      AREA=[0,2,0,0,0,0,0,0], VOL=[0,3,0,0,0,0,0,0];
+du("kg",1,M); du("g",1e-3,M); du("mg",1e-6,M); du("t",1e3,M); du("ton",1e3,M);
+du("m",1,L); du("km",1e3,L); du("cm",1e-2,L); du("mm",1e-3,L);
+du("s",1,T); du("min",60,T); du("h",3600,T); du("hr",3600,T);
+du("day",86400,T); du("yr",31536000,T);        // yr := 8760 h
+du("A",1,EA); du("K",1,TH); du("mol",1,MOL); du("cd",1,CD);
+du("원",1,CUR); du("KRW",1,CUR); du("만원",1e4,CUR); du("억원",1e8,CUR); du("조원",1e12,CUR);
+du("N",1,FORCE); du("kN",1e3,FORCE); du("MN",1e6,FORCE);
+du("Pa",1,PRES); du("kPa",1e3,PRES); du("MPa",1e6,PRES); du("bar",1e5,PRES);
+du("J",1,ENER); du("kJ",1e3,ENER); du("MJ",1e6,ENER); du("GJ",1e9,ENER); du("TJ",1e12,ENER);
+du("Wh",3600,ENER); du("kWh",3.6e6,ENER); du("MWh",3.6e9,ENER); du("GWh",3.6e12,ENER);
+du("W",1,POW); du("kW",1e3,POW); du("MW",1e6,POW); du("GW",1e9,POW);
+du("V",1,[1,2,-3,-1,0,0,0,0]); du("ohm",1,[1,2,-3,-2,0,0,0,0]); du("Hz",1,[0,0,-1,0,0,0,0,0]);
+du("L",1e-3,VOL); du("ha",1e4,AREA);
+du("%",0.01,Z8()); du("ppm",1e-6,Z8()); du("ppb",1e-9,Z8()); du("-",1,Z8()); du("1",1,Z8());
+
+class CalcError extends Error {}
+
+function parseUnit(src){
+  let i=0; const s=String(src);
+  const skip=()=>{ while(i<s.length && /\s/.test(s[i])) i++; };
+  function atom(){
+    skip();
+    if(s[i]==="("){ i++; const r=expr(); skip(); if(s[i]!==")") throw new CalcError("단위 괄호가 닫히지 않았습니다"); i++; return r; }
+    const w = /^[A-Za-z%가-힣₩·]+/.exec(s.slice(i));
+    if(w){ i+=w[0].length;
+      const u=U[w[0]];
+      if(!u) throw new CalcError("알 수 없는 단위: "+w[0]);
+      let f=u.f, d=u.d.slice();
+      const e=/^[0-9]+/.exec(s.slice(i));          // m2 → m^2, m3 → m^3
+      if(e){ i+=e[0].length; const n=parseInt(e[0],10); f=Math.pow(f,n); d=dMul(d,n); }
+      return {f,d};
+    }
+    const n = /^[0-9]+(\.[0-9]+)?/.exec(s.slice(i));
+    if(n){ i+=n[0].length; return {f:parseFloat(n[0]), d:Z8()}; }
+    throw new CalcError("단위를 읽을 수 없습니다: "+s.slice(i));
+  }
+  function pow(){
+    let a=atom(); skip();
+    if(s[i]==="^"){ i++; skip();
+      const m=/^-?[0-9]+/.exec(s.slice(i));
+      if(!m) throw new CalcError("단위 지수가 정수가 아닙니다");
+      i+=m[0].length; const n=parseInt(m[0],10);
+      return {f:Math.pow(a.f,n), d:dMul(a.d,n)};
+    }
+    return a;
+  }
+  function expr(){
+    let a=pow(); skip();
+    while(i<s.length && (s[i]==="*"||s[i]==="/"||s[i]==="·")){
+      const op=s[i]; i++; const b=pow();
+      a = op==="/" ? {f:a.f/b.f, d:dSub(a.d,b.d)} : {f:a.f*b.f, d:dAdd(a.d,b.d)};
+      skip();
+    }
+    return a;
+  }
+  const r=expr(); skip();
+  if(i<s.length) throw new CalcError("단위 해석 실패: "+s);
+  return r;
+}
+const UC = {};
+const uOf = u => (UC[u] || (UC[u] = parseUnit(u)));
+
+/* ── 표시 단위 선호표 ──────────────────────────────────────── */
+const PREF = {};
+const pref = (rep, list) => { PREF[dKey(uOf(rep).d)] = list; };
+pref("kg",   ["t","kg","g","mg"]);
+pref("m",    ["km","m","mm"]);
+pref("s",    ["yr","day","h","min","s"]);
+pref("kg/h", ["t/yr","kg/h","g/s"]);
+pref("W",    ["GW","MW","kW","W"]);
+pref("J",    ["GWh","MWh","kWh","MJ","kJ","J"]);
+pref("bar",  ["bar","kPa","Pa"]);
+pref("m2",   ["ha","m2"]);
+pref("m3",   ["m3","L"]);
+pref("m3/h", ["m3/h"]);
+pref("원",    ["억원","만원","원"]);
+pref("원/kWh",["원/kWh"]);
+pref("원/kg", ["원/kg"]);
+pref("억원/yr",["억원/yr"]);
+pref("kg/m3",["kg/m3"]);
+pref("kWh/kg",["kWh/kg","MJ/kg"]);
+pref("K",    ["K"]);
+pref("A",    ["A"]); pref("V",["V"]);
+pref("J/(kg*K)",["J/(kg*K)"]);
+
+/* 차원에 사람이 읽는 이름을 붙인다 — 오류 메시지가 쓸모 있으려면 필요하다. */
+const DLAB={};
+const lab=(rep,n)=>{ DLAB[dKey(uOf(rep).d)]=n; };
+lab("kg","질량 kg"); lab("m","길이 m"); lab("s","시간 s"); lab("K","온도 K");
+lab("kg/h","질량유량 kg/s"); lab("W","출력 W"); lab("J","에너지 J");
+lab("bar","압력 Pa"); lab("m2","면적 m²"); lab("m3","부피 m³");
+lab("m3/h","체적유량 m³/s"); lab("kg/m3","밀도 kg/m³");
+lab("원","금액 ₩"); lab("원/kWh","전력단가 ₩/J"); lab("원/kg","물질단가 ₩/kg");
+lab("kWh/kg","비에너지 J/kg"); lab("A","전류 A"); lab("V","전압 V");
+const dLabel = d => dNil(d) ? "무차원" : (DLAB[dKey(d)] || dStr(d));
+
+/* ── 근거 등급 ─────────────────────────────────────────────── */
+const TIERS = [
+  ["T0","관청·법령 확인"], ["T1","기술기준 조항"], ["T2","시험성적서·실측"],
+  ["T3","벤더 자료"],      ["T4","유도 계산·조사"], ["T5","가정"], ["—","근거 없음"]
+];
+const EXACT = { tier:0, srcs:["수학 상수"] };
+const NONE  = { tier:6, srcs:[] };
+const pMerge = (...ps) => {
+  let t=0; const s=new Set();
+  ps.forEach(p=>{ if(!p) return; if(p.tier>t) t=p.tier; (p.srcs||[]).forEach(x=>s.add(x)); });
+  return { tier:t, srcs:[...s] };
+};
+
+/* ── 값 ─────────────────────────────────────────────────────── */
+class Q {
+  constructor(v,d,sd,p){ this.v=v; this.d=d||Z8(); this.sd=sd||0; this.p=p||NONE; }
+}
+const qU = (x,u,p) => { const c=uOf(u); return new Q(x*c.f, c.d.slice(), 0, p||EXACT); };
+
+function fmtNum(x){
+  if(!isFinite(x)) return "∞";
+  const a=Math.abs(x);
+  if(a!==0 && (a<1e-4 || a>=1e7)) return x.toExponential(3).replace("e","e");
+  const dp = a>=1000?0 : a>=100?1 : a>=10?2 : a>=1?3 : 4;
+  return x.toLocaleString("ko-KR",{minimumFractionDigits:0,maximumFractionDigits:dp});
+}
+function display(q, forced){
+  if(forced){
+    const c=uOf(forced);
+    if(!dEq(c.d,q.d)) throw new CalcError("표시 단위 불일치 — 결과는 "+dLabel(q.d)+" 인데 ["+forced+"] 는 "+dLabel(c.d));
+    return { n:q.v/c.f, sd:q.sd/c.f, u:forced };
+  }
+  const cands = PREF[dKey(q.d)];
+  if(!cands) return { n:q.v, sd:q.sd, u:dNil(q.d)?"":dStr(q.d) };
+  let best=cands[cands.length-1];
+  for(const c of cands){ const x=Math.abs(q.v/uOf(c).f); if(x>=1 && x<10000){ best=c; break; } }
+  const f=uOf(best).f;
+  return { n:q.v/f, sd:q.sd/f, u:best };
+}
+
+/* ── 내장 함수 ─────────────────────────────────────────────── */
+function need(q,u,name,pos){
+  const c=uOf(u);
+  if(!dEq(q.d,c.d)) throw new CalcError(name+" 의 "+pos+"번째 인자는 "+dLabel(c.d)+" 여야 합니다 (받은 값: "+dLabel(q.d)+")");
+}
+const LIB = {
+  lhv_h2:{a:0,ret:"kWh/kg",tier:4,fml:"FML-H2-001",
+    src:"내장 물성 119.96 MJ/kg — 발행기관·판번호를 붙이면 T1 로 승격",
+    doc:"수소 저위발열량", f:()=>qU(33.322,"kWh/kg")},
+  hhv_h2:{a:0,ret:"kWh/kg",tier:4,fml:"—",
+    src:"내장 물성 141.82 MJ/kg", doc:"수소 고위발열량", f:()=>qU(39.394,"kWh/kg")},
+  rs_h2:{a:0,ret:"J/(kg*K)",tier:4,fml:"FML-H2-014",
+    src:"R/M = 8.314462 / 0.002016", doc:"수소 기체상수", f:()=>qU(4124.2,"J/(kg*K)")},
+  year:{a:0,ret:"h",tier:0,fml:"—",src:"정의 8760 h",doc:"연간 시간",f:()=>qU(8760,"h")},
+  h2_density:{a:3,ret:"kg/m3",tier:4,fml:"FML-H2-006",
+    src:"ρ = P/(Z·Rs·T). Z 는 사용자가 근거와 함께 제공해야 한다",
+    doc:"압축수소 저장밀도 (P, T, Z)",
+    f:(P,Tk,Z)=>{ need(P,"bar","h2_density",1); need(Tk,"K","h2_density",2);
+      if(!dNil(Z.d)) throw new CalcError("h2_density 의 압축계수 Z 는 무차원이어야 합니다");
+      return new Q(P.v/(4124.2*Tk.v*Z.v), uOf("kg/m3").d.slice()); }},
+  choked_flow:{a:5,ret:"kg/s",tier:4,fml:"FML-H2-014",
+    src:"등엔트로피 초크류·이상기체. 화염길이는 산출하지 않는다",
+    doc:"초크드 오리피스 누출률 (Cd, d, P_abs, T, γ)",
+    f:(cd,dm,P,Tk,g)=>{ need(dm,"mm","choked_flow",2); need(P,"bar","choked_flow",3); need(Tk,"K","choked_flow",4);
+      const A=Math.PI*dm.v*dm.v/4, Rs=4124.2;
+      const m=cd.v*A*P.v*Math.sqrt(g.v/(Rs*Tk.v))*Math.pow(2/(g.v+1),(g.v+1)/(2*(g.v-1)));
+      return new Q(m, uOf("kg/s").d.slice()); }},
+  crf:{a:2,ret:"-",tier:0,fml:"FML-H2-015",src:"정의식",
+    doc:"자본회수계수 (r, n)",
+    f:(r,n)=>{ if(!dNil(r.d)) throw new CalcError("crf 의 할인율은 무차원이어야 합니다");
+      const nn = dNil(n.d) ? n.v : n.v/uOf("yr").f;
+      return new Q(r.v*Math.pow(1+r.v,nn)/(Math.pow(1+r.v,nn)-1), Z8()); }},
+  stoich_o2:{a:1,ret:"kg/h",tier:1,fml:"FML-H2-010",src:"H2 + ½O2 → H2O, 15.999/2.016",
+    doc:"화학량론 산소 소비량", f:m=>new Q(m.v*7.9360, m.d.slice())},
+  stoich_h2o:{a:1,ret:"kg/h",tier:1,fml:"FML-H2-011",src:"18.015/2.016",
+    doc:"생성수량", f:m=>new Q(m.v*8.9360, m.d.slice())},
+  air_for_h2:{a:2,ret:"kg/h",tier:1,fml:"FML-H2-012",src:"공기 중 산소 질량분율 0.2314",
+    doc:"공기 공급량 (m_H2, 공기비)",
+    f:(m,lam)=>{ if(!dNil(lam.d)) throw new CalcError("공기비는 무차원이어야 합니다");
+      return new Q(m.v*7.9360/0.2314*lam.v, m.d.slice()); }},
+  ceil:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"올림",f:x=>new Q(Math.ceil(x.v),x.d.slice())},
+  floor:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"내림",f:x=>new Q(Math.floor(x.v),x.d.slice())},
+  abs:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"절댓값",f:x=>new Q(Math.abs(x.v),x.d.slice())},
+  sqrt:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"제곱근",
+    f:x=>{ if(x.d.some(e=>e%2!==0)) throw new CalcError("제곱근의 차원이 홀수입니다: "+dStr(x.d));
+      return new Q(Math.sqrt(x.v), dMul(x.d,0.5)); }},
+  exp:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"지수",
+    f:x=>{ if(!dNil(x.d)) throw new CalcError("exp 의 인자는 무차원이어야 합니다"); return new Q(Math.exp(x.v),Z8()); }},
+  ln:{a:1,ret:"-",tier:0,fml:"—",src:"정의",doc:"자연로그",
+    f:x=>{ if(!dNil(x.d)) throw new CalcError("ln 의 인자는 무차원이어야 합니다"); return new Q(Math.log(x.v),Z8()); }},
+  min:{a:2,ret:"-",tier:0,fml:"—",src:"정의",doc:"최솟값",
+    f:(a,b)=>{ if(!dEq(a.d,b.d)) throw new CalcError("min 의 두 인자 차원이 다릅니다"); return new Q(Math.min(a.v,b.v),a.d.slice()); }},
+  max:{a:2,ret:"-",tier:0,fml:"—",src:"정의",doc:"최댓값",
+    f:(a,b)=>{ if(!dEq(a.d,b.d)) throw new CalcError("max 의 두 인자 차원이 다릅니다"); return new Q(Math.max(a.v,b.v),a.d.slice()); }}
+};
+
+function callFn(name, args){
+  const def = LIB[name];
+  if(!def) throw new CalcError("알 수 없는 함수: "+name);
+  if(args.length !== def.a) throw new CalcError(name+" 은 인자 "+def.a+"개가 필요합니다 (받은 개수 "+args.length+")");
+  const base = def.f(...args);
+  let s2 = 0;                                   // 수치 편미분으로 불확실도 전파
+  args.forEach((a,i)=>{
+    if(!a.sd) return;
+    const up=args.slice(), dn=args.slice();
+    up[i]=new Q(a.v+a.sd,a.d,0,a.p); dn[i]=new Q(a.v-a.sd,a.d,0,a.p);
+    const g=(def.f(...up).v - def.f(...dn).v)/2;
+    if(isFinite(g)) s2 += g*g;
+  });
+  base.sd = Math.sqrt(s2);
+  base.p = pMerge({tier:def.tier, srcs:[name+"(): "+def.src]}, ...args.map(a=>a.p));
+  return base;
+}
+
+/* ── 어휘 분석 ─────────────────────────────────────────────── */
+function lex(line){
+  const tk=[]; let i=0;
+  while(i<line.length){
+    const c=line[i];
+    if(/\s/.test(c)){ i++; continue; }
+    if(c==="%"){ break; }                                   // 주석
+    if(c==="["){ const j=line.indexOf("]",i);
+      if(j<0) throw new CalcError("단위 괄호 [ 가 닫히지 않았습니다");
+      tk.push({t:"unit",v:line.slice(i+1,j).trim()}); i=j+1; continue; }
+    if(c==='"'){ const j=line.indexOf('"',i+1);
+      if(j<0) throw new CalcError("따옴표가 닫히지 않았습니다");
+      tk.push({t:"str",v:line.slice(i+1,j)}); i=j+1; continue; }
+    if(c==="±"){ tk.push({t:"pm"}); i++; continue; }
+    if(c==="+" && line[i+1]==="-"){ tk.push({t:"pm"}); i+=2; continue; }
+    if(c==="@"){ tk.push({t:"at"}); i++; continue; }
+    const n=/^[0-9]+(\.[0-9]+)?([eE][-+]?[0-9]+)?/.exec(line.slice(i));
+    if(n){ tk.push({t:"num",v:parseFloat(n[0]),raw:n[0]}); i+=n[0].length; continue; }
+    const w=/^[A-Za-z_가-힣][A-Za-z0-9_가-힣]*/.exec(line.slice(i));
+    if(w){ tk.push({t:"id",v:w[0]}); i+=w[0].length; continue; }
+    if("+-*/^(),=".includes(c)){ tk.push({t:"op",v:c}); i++; continue; }
+    throw new CalcError("읽을 수 없는 문자: "+c);
+  }
+  return tk;
+}
+
+/* ── 구문 분석 ─────────────────────────────────────────────── */
+function parseLine(line){
+  const tk = lex(line);
+  if(!tk.length) return {kind:"empty"};
+  let i=0;
+  const peek=()=>tk[i], eat=()=>tk[i++];
+  const isOp=(v)=>peek() && peek().t==="op" && peek().v===v;
+
+  function primary(){
+    const t=peek();
+    if(!t) throw new CalcError("식이 끝났습니다");
+    if(t.t==="num"){ eat();
+      const node={t:"num", v:t.v, raw:t.raw, unit:null, sd:0, sdunit:null};
+      if(peek() && peek().t==="unit") node.unit=eat().v;
+      if(peek() && peek().t==="pm"){ eat();
+        const s=eat();
+        if(!s || s.t!=="num") throw new CalcError("± 뒤에는 숫자가 와야 합니다");
+        node.sd=s.v;
+        if(peek() && peek().t==="unit") node.sdunit=eat().v;
+      }
+      return node;
+    }
+    if(t.t==="id"){ eat();
+      if(isOp("(")){ eat(); const args=[];
+        if(!isOp(")")){ args.push(expr());
+          while(isOp(",")){ eat(); args.push(expr()); } }
+        if(!isOp(")")) throw new CalcError("함수 괄호가 닫히지 않았습니다");
+        eat();
+        return {t:"call", n:t.v, args};
+      }
+      return {t:"var", n:t.v};
+    }
+    if(isOp("(")){ eat(); const e=expr();
+      if(!isOp(")")) throw new CalcError("괄호가 닫히지 않았습니다"); eat(); return e; }
+    if(isOp("-")){ eat(); return {t:"neg", a:unary()}; }
+    throw new CalcError("식을 읽을 수 없습니다");
+  }
+  function unary(){ if(isOp("-")){ eat(); return {t:"neg", a:unary()}; } return power(); }
+  function power(){ const b=primary(); if(isOp("^")){ eat(); return {t:"bin",op:"^",a:b,b:unary()}; } return b; }
+  function term(){ let a=unary();
+    while(isOp("*")||isOp("/")){ const o=eat().v; a={t:"bin",op:o,a,b:unary()}; } return a; }
+  function expr(){ let a=term();
+    while(isOp("+")||isOp("-")){ const o=eat().v; a={t:"bin",op:o,a,b:term()}; } return a; }
+
+  let name=null;
+  if(tk.length>1 && tk[0].t==="id" && tk[1].t==="op" && tk[1].v==="="){ name=tk[0].v; i=2; }
+  const node = expr();
+
+  let asUnit=null, tier=null, src=null;
+  if(peek() && peek().t==="id" && peek().v==="as"){ eat();
+    if(!peek() || peek().t!=="unit") throw new CalcError("as 뒤에는 [단위] 가 와야 합니다");
+    asUnit = eat().v;
+  }
+  if(peek() && peek().t==="at"){ eat();
+    const t=eat();
+    if(!t || t.t!=="id" || !/^T[0-5]$/.test(t.v)) throw new CalcError("@ 뒤에는 T0~T5 가 와야 합니다");
+    tier = parseInt(t.v.slice(1),10);
+    if(peek() && peek().t==="str") src = eat().v;
+    if(!src) throw new CalcError('근거등급 뒤에 출처 문자열이 필요합니다: @T2 "문서번호 …"');
+  }
+  if(i<tk.length) throw new CalcError("식 뒤에 해석할 수 없는 내용이 있습니다");
+  return {kind:"stmt", name, node, asUnit, tier, src};
+}
+
+/* ── 평가 ──────────────────────────────────────────────────── */
+const gauss = () => {
+  let u=0,v=0; while(!u) u=Math.random(); while(!v) v=Math.random();
+  return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+};
+
+function evalNode(nd, env, ctx){
+  switch(nd.t){
+    case "num": {
+      let v=nd.v, sd=nd.sd, d=Z8(), tagged=false;
+      if(nd.unit){ const u=uOf(nd.unit); v*=u.f; sd*=u.f; d=u.d.slice(); tagged=true; }
+      if(nd.sdunit){ const u2=uOf(nd.sdunit);
+        if(!dEq(u2.d,d)) throw new CalcError("± 의 단위가 값의 단위와 다릅니다");
+        sd=nd.sd*u2.f; }
+      if(nd.sd>0) tagged=true;
+      if(!Number.isInteger(nd.v)) tagged=true;         // 비정수 → 근거 필요
+      let p = tagged ? (ctx.lit || NONE) : EXACT;
+      if(ctx.mc && sd>0){ v += sd*gauss(); sd = 0; }
+      return new Q(v,d,sd,p);
+    }
+    case "var": {
+      if(ctx.over && Object.prototype.hasOwnProperty.call(ctx.over, nd.n)) return ctx.over[nd.n];
+      if(!(nd.n in env)) throw new CalcError("정의되지 않은 이름: "+nd.n);
+      return env[nd.n];
+    }
+    case "neg": { const a=evalNode(nd.a,env,ctx); return new Q(-a.v,a.d.slice(),a.sd,a.p); }
+    case "call": {
+      if(!LIB[nd.n]) throw new CalcError("알 수 없는 함수: "+nd.n);
+      return callFn(nd.n, nd.args.map(x=>evalNode(x,env,ctx)));
+    }
+    case "bin": {
+      const a=evalNode(nd.a,env,ctx), b=evalNode(nd.b,env,ctx);
+      const p=pMerge(a.p,b.p);
+      if(nd.op==="+"||nd.op==="-"){
+        if(!dEq(a.d,b.d))
+          throw new CalcError("차원 불일치 — "+dLabel(a.d)+" 와(과) "+dLabel(b.d)+" 는 "+(nd.op==="+"?"더할":"뺄")+" 수 없습니다");
+        const v = nd.op==="+" ? a.v+b.v : a.v-b.v;
+        return new Q(v, a.d.slice(), Math.hypot(a.sd,b.sd), p);
+      }
+      if(nd.op==="*"||nd.op==="/"){
+        if(nd.op==="/" && b.v===0) throw new CalcError("0 으로 나눌 수 없습니다");
+        const v = nd.op==="*" ? a.v*b.v : a.v/b.v;
+        const d = nd.op==="*" ? dAdd(a.d,b.d) : dSub(a.d,b.d);
+        const ra = a.v ? a.sd/Math.abs(a.v) : 0, rb = b.v ? b.sd/Math.abs(b.v) : 0;
+        return new Q(v, d, Math.abs(v)*Math.hypot(ra,rb), p);
+      }
+      if(nd.op==="^"){
+        if(!dNil(b.d)) throw new CalcError("지수는 무차원이어야 합니다");
+        if(!dNil(a.d) && !Number.isInteger(b.v)) throw new CalcError("차원이 있는 값의 지수는 정수여야 합니다");
+        const v=Math.pow(a.v,b.v);
+        const ra = a.v ? a.sd/Math.abs(a.v) : 0;
+        return new Q(v, dMul(a.d,b.v), Math.abs(v*b.v)*ra, p);
+      }
+      throw new CalcError("알 수 없는 연산자: "+nd.op);
+    }
+  }
+  throw new CalcError("평가할 수 없는 식");
+}
+
+/* ── 스크립트 실행 ─────────────────────────────────────────── */
+const SPECIAL = { sweep:1, mc:1 };
+
+/* 컴파일과 실행을 분리한다 — 몬테카를로가 수천 번 재파싱하지 않도록. */
+function compile(text){
+  return text.split("\n").map(l => {
+    try { return {ok:true, raw:l, p:parseLine(l)}; }
+    catch(e){ return {ok:false, raw:l, e:e.message}; }
+  });
+}
+
+function run(prog, opt){
+  opt = opt || {};
+  if(typeof prog === "string") prog = compile(prog);
+  const env = {}, rows = [], objs = [];
+  prog.forEach((pr, idx) => {
+    const raw = pr.raw;
+    if(!pr.ok){ rows.push({line:idx, kind:"err", msg:pr.e}); return; }
+    const st = pr.p;
+    if(st.kind==="empty"){ rows.push({line:idx, kind:"blank"}); return; }
+    if(opt.skip && st.name===opt.skip){ rows.push({line:idx, kind:"blank"}); return; }
+
+    // 특수형: sweep / mc 는 인자를 식별자 이름으로 받는다
+    if(st.node.t==="call" && SPECIAL[st.node.n]){
+      if(opt.inner){ rows.push({line:idx, kind:"blank"}); return; }
+      try {
+        const o = special(st.node, env, prog, idx);
+        if(st.name) env[st.name] = o;
+        objs.push(o);
+        rows.push({line:idx, kind:"obj", name:st.name, obj:o});
+      } catch(e){ rows.push({line:idx, kind:"err", msg:e.message}); }
+      return;
+    }
+    const ctx = { lit: st.tier!=null ? {tier:st.tier, srcs:[st.src]} : NONE,
+                  mc: !!opt.mc, over: opt.over };
+    try {
+      const q = evalNode(st.node, env, ctx);
+      if(st.asUnit) display(q, st.asUnit);          // 호환성 사전 검사
+      if(st.name) env[st.name] = q;
+      rows.push({line:idx, kind:"val", name:st.name, q, asUnit:st.asUnit,
+                 tier:st.tier, src:st.src, expr:raw.split("%")[0].trim()});
+    } catch(e){
+      rows.push({line:idx, kind:"err", msg:e.message});
+    }
+  });
+  return { rows, env, objs };
+}
+
+function special(node, env, prog, lineIdx){
+  const argName = a => { if(a.t!=="var") throw new CalcError(node.n+" 의 대상은 변수 이름이어야 합니다"); return a.n; };
+  if(node.n==="sweep"){
+    if(node.args.length!==5) throw new CalcError('sweep(변수, 시작, 끝, 점수, 대상) — 인자 5개');
+    const vn=argName(node.args[0]), tn=argName(node.args[4]);
+    const lo=evalNode(node.args[1],env,{lit:EXACT}), hi=evalNode(node.args[2],env,{lit:EXACT});
+    const n=Math.max(2, Math.min(200, Math.round(evalNode(node.args[3],env,{lit:EXACT}).v)));
+    if(!dEq(lo.d,hi.d)) throw new CalcError("sweep 의 시작·끝 차원이 다릅니다");
+    const xs=[], ys=[]; let yq=null;
+    for(let k=0;k<n;k++){
+      const x = lo.v + (hi.v-lo.v)*k/(n-1);
+      const over={}; over[vn]=new Q(x, lo.d.slice(), 0, {tier:5,srcs:["sweep 대입값"]});
+      const r = run(prog, {over, skip:vn, inner:true});
+      const q = r.env[tn];
+      if(!q) throw new CalcError("sweep 대상 "+tn+" 을 계산할 수 없습니다");
+      xs.push(x); ys.push(q.v); yq=q;
+    }
+    return { kind:"series", xn:vn, yn:tn, xd:lo.d, yd:yq.d, xs, ys, n };
+  }
+  if(node.n==="mc"){
+    if(node.args.length!==2) throw new CalcError("mc(대상, 시행수) — 인자 2개");
+    const tn=argName(node.args[0]);
+    const n=Math.max(100, Math.min(20000, Math.round(evalNode(node.args[1],env,{lit:EXACT}).v)));
+    const s=[]; let yq=null;
+    for(let k=0;k<n;k++){
+      const r=run(prog,{mc:true, inner:true});
+      const q=r.env[tn];
+      if(!q) throw new CalcError("mc 대상 "+tn+" 을 계산할 수 없습니다");
+      s.push(q.v); yq=q;
+    }
+    s.sort((a,b)=>a-b);
+    const pct = p => s[Math.min(s.length-1, Math.max(0, Math.floor(p*(s.length-1))))];
+    const mean = s.reduce((a,b)=>a+b,0)/s.length;
+    const sd = Math.sqrt(s.reduce((a,b)=>a+(b-mean)*(b-mean),0)/s.length);
+    return { kind:"dist", yn:tn, d:yq.d, s, n, mean, sd,
+             p10:pct(0.10), p50:pct(0.50), p90:pct(0.90), p:yq.p };
+  }
+  throw new CalcError("알 수 없는 특수 함수");
+}
+
+/* ═══════════ 워크벤치 UI ═══════════ */
+const EXAMPLES = [
+{ t:"공급·저장 사이징", s:
+`% Forge H2 · 수소 계산 모듈
+% 단위를 한 번도 변환하지 않는다. 대수가 만들어낸다.
+
+P_gross = 20 [MW]           @T3 "벤더 제안서 DS-FC-440 Rev.B"
+eta     = 47.5 [%] ± 0.8    @T2 "성능시험성적서 TR-2026-118"
+cf      = 90 [%]            @T5 "가정: 계획정지 미반영"
+
+m_h2    = P_gross / (eta * lhv_h2())
+annual  = m_h2 * year() * cf            as [t]
+
+% 소내부하 — 순출력과 총발전단을 섞으면 공급물량이 틀어진다
+f_aux   = 7.8 [%] ± 0.6     @T4 "소내부하 집계 CALC-054"
+P_net   = P_gross * (1 - f_aux)
+
+% 저장 — 잔압을 빼지 않으면 설비가 과소산정된다
+days    = 2 [day]           @T5 "가정: 자립일수 정책 미승인"
+usable  = 80 [%]            @T4 "최소사용압력 30 barg 기준"
+S       = m_h2 * days * cf / usable     as [t]
+
+Z       = 1.10              @T5 "가정: 200 bar 압축계수 — 실측표 필요"
+rho     = h2_density(200 [bar], 288.15 [K], Z)   @T3 "저장 설계압력·상온"
+V_store = S / rho                       as [m3]
+
+% 화학량론은 정의값이므로 등급이 내려가지 않는다
+water   = stoich_h2o(m_h2)              as [t/yr]
+air     = air_for_h2(m_h2, 2)           as [kg/h]` },
+
+{ t:"LCOE 분포", s:
+`% 대주단이 보는 것은 평균이 아니라 P90 이다.
+
+capex  = 1661 [억원] ± 180   @T4 "사업비 상세 CALC-081"
+opex   = 42 [억원/yr]        @T4 "장기 O&M 견적"
+p_h2   = 7500 [원/kg] ± 900  @T5 "가정: 장기공급 협상 전"
+eta    = 47.5 [%] ± 0.8      @T2 "성능시험성적서 TR-2026-118"
+P_net  = 18.44 [MW]          @T4 "소내부하 반영 순출력"
+cf     = 90 [%] ± 3          @T5 "가정: 가용률 목표"
+r      = 6.5 [%]             @T3 "대주단 제시 할인율"
+n      = 20 [yr]             @T3 "PPA 기간"
+
+E_yr   = P_net * cf * year()            as [GWh]
+c_fuel = p_h2 / (eta * lhv_h2())        as [원/kWh]
+c_cap  = capex * crf(r, n) / E_yr       as [원/kWh]
+c_opx  = opex * year() / E_yr           as [원/kWh]
+lcoe   = c_cap + c_opx + c_fuel
+
+% 수소단가 하나가 사업을 결정한다
+curve  = sweep(p_h2, 4000 [원/kg], 12000 [원/kg], 25, lcoe)
+
+% ± 가 붙은 모든 입력을 동시에 흔든다
+dist   = mc(lcoe, 2000)` },
+
+{ t:"누출률·안전", s:
+`% 이 계산기는 화염길이를 산출하지 않는다.
+% 화염길이는 검증된 상관식 근거와 자격자 판정이 있어야 한다 (미션 M065).
+
+P_sto  = 200 [bar]    @T3 "저장 설계압력"
+T_sto  = 288.15 [K]   @T5 "가정: 대기온도 15 °C"
+d_hole = 3 [mm]       @T5 "가정: HAZOP 합의 누출공 직경"
+Cd     = 0.62         @T1 "표준 오리피스 유출계수 — 인용 판번호 확인 필요"
+gam    = 1.41         @T4 "수소 비열비 (15 °C)"
+
+mdot   = choked_flow(Cd, d_hole, P_sto + 1.01325 [bar], T_sto, gam)  @T0 "표준대기압 101.325 kPa"
+m_min  = mdot                           as [kg/min]
+
+inv    = 64800 [kg]   @T4 "저장량 산정 CALC-035"
+t_empty = inv / mdot                    as [h]
+
+% 누출공 직경은 결과를 제곱으로 지배한다
+sens   = sweep(d_hole, 1 [mm], 12 [mm], 24, mdot)` },
+
+{ t:"차원·근거 오류", s:
+`% 1 — 차원이 맞지 않으면 계산은 멈춘다. 스프레드시트는 답을 준다.
+P   = 20 [MW]   @T3 "설계 출력"
+t   = 2 [day]   @T5 "가정"
+bad = P + t
+
+% 2 — LHV 와 HHV 를 섞으면 드러난다
+m_lhv = P / (0.475 * lhv_h2())   @T2 "성능시험성적서"
+m_hhv = P / (0.475 * hhv_h2())   @T2 "성능시험성적서"
+gap   = (m_lhv - m_hhv) / m_hhv          as [%]
+
+% 3 — 근거 없는 숫자는 하류를 오염시킨다
+rho_guess = 30 [kg/m3]
+V = 64800 [kg] / rho_guess               as [m3]
+
+% 4 — 표시 단위가 차원과 다르면 거부한다
+wrong = P                                as [kg]
+
+% 5 — 무차원이어야 하는 자리에 차원이 들어오면 거부한다
+nonsense = exp(P)` }
+];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LH = 22;
+let LAST = null, TITLE = EXAMPLES[0].t;
+
+function tierChip(t){
+  const cls = t===6 ? "tx" : "t"+t;
+  return '<i class="tier '+cls+'">'+(t===6?"—":"T"+t)+"</i>";
+}
+
+function paint(){
+  const text = $("ed").value;
+  const lines = text.split("\n");
+  $("ed").style.height = (lines.length*LH + 20) + "px";
+
+  let res;
+  try { res = run(compile(text)); }
+  catch(e){ res = {rows:lines.map((_,i)=>({line:i,kind:"blank"})), env:{}, objs:[]}; }
+  LAST = { text, res };
+
+  const gut=[], led=[];
+  let nval=0, nerr=0, nun=0, worst=-1;
+  for(let i=0;i<lines.length;i++){
+    const r = res.rows[i] || {kind:"blank"};
+    if(r.kind==="err"){ nerr++; gut.push('<div class="err">'+(i+1)+"</div>");
+      led.push('<div><span class="e">'+esc(r.msg)+"</span></div>"); continue; }
+    gut.push("<div>"+(i+1)+"</div>");
+    if(r.kind==="val"){
+      nval++;
+      const t=r.q.p.tier; if(t===6) nun++; if(t>worst) worst=t;
+      let d; try { d = display(r.q, r.asUnit); }
+      catch(e){ led.push('<div><span class="e">'+esc(e.message)+"</span></div>"); continue; }
+      const sd = d.sd ? ' <span class="u">±'+fmtNum(d.sd)+"</span>" : "";
+      led.push("<div>"+tierChip(t)+'<span class="v">'+fmtNum(d.n)+"</span>"+sd+
+               '<span class="u">'+esc(d.u||"")+"</span></div>");
+    } else if(r.kind==="obj"){
+      const o=r.obj;
+      led.push('<div><span class="obj">'+(o.kind==="series"
+        ? "곡선 "+o.n+"점" : "분포 "+o.n+"회")+"</span></div>");
+    } else led.push("<div></div>");
+  }
+  $("gut").innerHTML = gut.join("");
+  $("led").innerHTML = led.join("");
+
+  $("s-line").textContent = nval;
+  $("s-err").textContent  = nerr;
+  $("s-un").textContent   = nun;
+  $("s-tier").textContent = worst<0 ? "—" : (worst===6?"—":"T"+worst);
+  $("w-err").className = nerr ? "bad" : "";
+  $("w-un").className  = nun  ? "bad" : "";
+
+  renderOut(res);
+  renderDiag(res);
+  try { localStorage.setItem("h2mod.draft", text); } catch(e){}
+}
+
+/* ── 출력 (곡선·분포) ──────────────────────────────────────── */
+function axisFmt(v){ return fmtNum(v); }
+
+function chartSeries(o){
+  const xq=new Q(0,o.xd), yq=new Q(0,o.yd);
+  const xs=o.xs.map(v=>{ xq.v=v; return display(new Q(v,o.xd)); });
+  const ys=o.ys.map(v=>display(new Q(v,o.yd)));
+  const xu=xs[Math.floor(xs.length/2)].u, yu=ys[Math.floor(ys.length/2)].u;
+  const X=o.xs.map(v=>v/uOf(xu||"-").f), Y=o.ys.map(v=>v/uOf(yu||"-").f);
+  const x0=Math.min(...X), x1=Math.max(...X), y0=Math.min(...Y), y1=Math.max(...Y);
+  const W=560,H=190,ml=62,mr=12,mt=12,mb=28;
+  const px=v=>ml+(v-x0)/((x1-x0)||1)*(W-ml-mr);
+  const py=v=>H-mb-(v-y0)/((y1-y0)||1)*(H-mt-mb);
+  let g="";
+  for(let k=0;k<=4;k++){ const yy=mt+(H-mt-mb)*k/4;
+    g+='<line class="gr" x1="'+ml+'" y1="'+yy+'" x2="'+(W-mr)+'" y2="'+yy+'"/>';
+    g+='<text x="'+(ml-6)+'" y="'+(yy+3)+'" text-anchor="end">'+axisFmt(y1-(y1-y0)*k/4)+"</text>"; }
+  const pts=X.map((v,i)=>px(v)+","+py(Y[i])).join(" ");
+  return '<figure><figcaption>'+esc(o.xn)+" → "+esc(o.yn)+"  ("+o.n+"점)</figcaption>"+
+    '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img">'+g+
+    '<polyline class="ln" points="'+pts+'"/>'+
+    '<line class="ax" x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'"/>'+
+    '<text x="'+ml+'" y="'+(H-10)+'">'+axisFmt(x0)+" "+esc(xu)+"</text>"+
+    '<text x="'+(W-mr)+'" y="'+(H-10)+'" text-anchor="end">'+axisFmt(x1)+" "+esc(xu)+"</text>"+
+    '<text class="k" x="'+ml+'" y="'+(mt-1)+'">'+esc(yu)+"</text></svg></figure>";
+}
+
+function chartDist(o){
+  const u=display(new Q(o.p50,o.d)).u, f=uOf(u||"-").f;
+  const S=o.s.map(v=>v/f);
+  const lo=S[0], hi=S[S.length-1], NB=30;
+  const bins=new Array(NB).fill(0);
+  S.forEach(v=>{ let k=Math.floor((v-lo)/((hi-lo)||1)*NB); if(k>=NB)k=NB-1; if(k<0)k=0; bins[k]++; });
+  const mx=Math.max(...bins);
+  const W=560,H=190,ml=42,mr=12,mt=16,mb=30;
+  const bw=(W-ml-mr)/NB;
+  let b="";
+  bins.forEach((c,k)=>{ const h=(H-mt-mb)*c/mx;
+    b+='<rect class="bar" x="'+(ml+k*bw)+'" y="'+(H-mb-h)+'" width="'+(bw-1)+'" height="'+h+'"/>'; });
+  const px=v=>ml+(v-lo)/((hi-lo)||1)*(W-ml-mr);
+  const mark=(v,l,cls)=>'<line class="'+cls+'" x1="'+px(v)+'" y1="'+mt+'" x2="'+px(v)+'" y2="'+(H-mb)+'"/>'+
+    '<text class="k" x="'+px(v)+'" y="'+(mt-4)+'" text-anchor="middle">'+l+"</text>";
+  return '<figure><figcaption>'+esc(o.yn)+" 분포 · "+o.n+"회 · 단위 "+esc(u)+"</figcaption>"+
+    '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img">'+b+
+    mark(o.p50/f,"P50 "+fmtNum(o.p50/f),"ax")+
+    mark(o.p90/f,"P90 "+fmtNum(o.p90/f),"p90")+
+    '<line class="ax" x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'"/>'+
+    '<text x="'+ml+'" y="'+(H-10)+'">'+fmtNum(lo)+"</text>"+
+    '<text x="'+(W-mr)+'" y="'+(H-10)+'" text-anchor="end">'+fmtNum(hi)+"</text></svg>"+
+    '<table style="margin-top:6px"><tr><th>P10</th><th>P50</th><th>P90</th><th>평균</th><th>표준편차</th></tr>'+
+    '<tr><td class="n">'+fmtNum(o.p10/f)+'</td><td class="n">'+fmtNum(o.p50/f)+
+    '</td><td class="n">'+fmtNum(o.p90/f)+'</td><td class="n">'+fmtNum(o.mean/f)+
+    '</td><td class="n">'+fmtNum(o.sd/f)+"</td></tr></table></figure>";
+}
+
+function renderOut(res){
+  const objs=res.objs;
+  if(!objs.length){
+    const names=Object.keys(res.env).filter(k=>res.env[k] instanceof Q);
+    $("out").innerHTML = '<div class="card"><h3>값</h3>'+ (names.length
+      ? '<div class="scrollx"><table><tr><th>기호</th><th class="n">값</th><th class="n">불확실도</th><th>단위</th><th>차원</th><th>등급</th></tr>'+
+        names.map(k=>{ const q=res.env[k]; let d; try{d=display(q);}catch(e){return "";}
+          return '<tr><td class="m">'+esc(k)+'</td><td class="n">'+fmtNum(d.n)+
+            '</td><td class="n">'+(d.sd?"± "+fmtNum(d.sd):"—")+'</td><td class="m">'+esc(d.u||"—")+
+            '</td><td class="m">'+esc(dLabel(q.d))+"</td><td>"+tierChip(q.p.tier)+"</td></tr>"; }).join("")+
+        "</table></div>"
+      : '<p class="empty">아직 값이 없습니다.</p>')+"</div>";
+    return;
+  }
+  $("out").innerHTML = objs.map(o=>'<div class="card" style="margin-bottom:14px">'+
+    (o.kind==="series"?chartSeries(o):chartDist(o))+"</div>").join("");
+}
+
+function renderDiag(res){
+  const errs=res.rows.filter(r=>r.kind==="err");
+  $("d-err").innerHTML = errs.length
+    ? '<ul class="tight">'+errs.map(e=>'<li><b class="m">'+(e.line+1)+"행</b> — "+esc(e.msg)+"</li>").join("")+"</ul>"
+    : '<p class="empty" style="color:var(--ok)">오류 없음</p>';
+  const vals=res.rows.filter(r=>r.kind==="val" && r.name);
+  $("d-prov").innerHTML = '<tr><th>기호</th><th>등급</th><th>근거</th></tr>'+
+    (vals.length ? vals.map(r=>'<tr class="'+(r.q.p.tier===6?"bad":"")+'"><td class="m">'+esc(r.name)+
+      "</td><td>"+tierChip(r.q.p.tier)+'</td><td style="font-size:11px">'+
+      (r.q.p.srcs.length?esc(r.q.p.srcs.join(" · ")):'<span class="warnword">근거 없음</span>')+"</td></tr>").join("")
+    : '<tr><td colspan="3" class="empty">—</td></tr>');
+}
+
+/* ── 계산서 ───────────────────────────────────────────────── */
+function sheet(){
+  if(!LAST) return "";
+  const res=LAST.res, rows=res.rows.filter(r=>r.kind==="val");
+  const errs=res.rows.filter(r=>r.kind==="err");
+  const un=rows.filter(r=>r.q.p.tier===6);
+  const worst=rows.reduce((a,r)=>Math.max(a,r.q.p.tier),0);
+  const L=[];
+  L.push("# 계산서 — "+TITLE);
+  L.push("");
+  L.push("| 항목 | 내용 |");
+  L.push("|---|---|");
+  L.push("| 생성도구 | Forge H2 수소 계산 모듈 v"+VER+" |");
+  L.push("| 생성일시 | "+new Date().toISOString().replace("T"," ").slice(0,19)+" |");
+  L.push("| 계산행 | "+rows.length+" |");
+  L.push("| 오류 | "+errs.length+" |");
+  L.push("| 최저 근거등급 | "+(worst===6?"— (근거 없음)":"T"+worst+" "+TIERS[worst][1])+" |");
+  L.push("");
+  const verdict = errs.length ? "발행 불가 — 계산 오류 "+errs.length+"건"
+    : un.length ? "발행 불가 — 근거 미확보 "+un.length+"건"
+    : worst>=5 ? "조건부 — 가정 기반, 기준선 승격 불가"
+    : "발행 가능";
+  L.push("**판정: "+verdict+"**");
+  L.push("");
+  L.push("## 1. 입력 — 근거가 붙은 값");
+  L.push("");
+  L.push("| 기호 | 값 | 단위 | 불확실도 | 등급 | 출처 |");
+  L.push("|---|---:|---|---:|---|---|");
+  rows.filter(r=>r.src).forEach(r=>{
+    let d; try{ d=display(r.q,r.asUnit); }catch(e){ return; }
+    L.push("| "+r.name+" | "+fmtNum(d.n)+" | "+(d.u||"-")+" | "+(d.sd?"± "+fmtNum(d.sd):"—")+
+           " | T"+r.tier+" | "+r.src+" |");
+  });
+  L.push("");
+  L.push("## 2. 계산 — 식과 결과");
+  L.push("");
+  L.push("| # | 식 | 결과 | 단위 | 차원 | 등급 |");
+  L.push("|---:|---|---:|---|---|---|");
+  rows.forEach(r=>{
+    let d; try{ d=display(r.q,r.asUnit); }catch(e){ return; }
+    L.push("| "+(r.line+1)+" | `"+r.expr.replace(/\|/g,"\\|")+"` | "+fmtNum(d.n)+" | "+(d.u||"-")+
+           " | "+dLabel(r.q.d)+" | "+(r.q.p.tier===6?"—":"T"+r.q.p.tier)+" |");
+  });
+  const dists=res.objs.filter(o=>o.kind==="dist");
+  if(dists.length){
+    L.push("");
+    L.push("## 3. 불확실도 — 몬테카를로");
+    L.push("");
+    L.push("| 대상 | 시행 | P10 | P50 | P90 | 단위 |");
+    L.push("|---|---:|---:|---:|---:|---|");
+    dists.forEach(o=>{ const u=display(new Q(o.p50,o.d)).u, f=uOf(u||"-").f;
+      L.push("| "+o.yn+" | "+o.n+" | "+fmtNum(o.p10/f)+" | "+fmtNum(o.p50/f)+" | "+fmtNum(o.p90/f)+" | "+u+" |"); });
+    L.push("");
+    L.push("> 단일값이 아니라 분포입니다. 금융 판정은 P50 이 아니라 P90 으로 합니다.");
+  }
+  L.push("");
+  L.push("## 4. 근거 사슬");
+  L.push("");
+  const srcs=new Set(); rows.forEach(r=>r.q.p.srcs.forEach(s=>srcs.add(s)));
+  [...srcs].sort().forEach(s=>L.push("- "+s));
+  if(un.length){
+    L.push("");
+    L.push("### 근거 미확보 — 아래를 해소하기 전에는 발행할 수 없습니다");
+    un.forEach(r=>L.push("- `"+r.name+"` — "+r.expr));
+  }
+  if(errs.length){
+    L.push("");
+    L.push("### 계산 오류");
+    errs.forEach(e=>L.push("- "+(e.line+1)+"행 — "+e.msg));
+  }
+  L.push("");
+  L.push("## 5. 서명");
+  L.push("");
+  L.push("| 역할 | 성명 | 자격번호 | 일자 | 서명 |");
+  L.push("|---|---|---|---|---|");
+  L.push("| 작성 | | | | |");
+  L.push("| 검토 | | | | |");
+  L.push("| 승인 (유자격자) | | | | |");
+  L.push("");
+  L.push("계산이 맞다는 것과 설계가 맞다는 것은 다릅니다. 안전거리·SIL·인허가 적합성의 최종 판정은 유자격자만 할 수 있습니다.");
+  return L.join("\n");
+}
+
+async function issueSheet(){
+  const md=sheet();
+  $("sheet").textContent=md;
+  const res=LAST.res, rows=res.rows.filter(r=>r.kind==="val");
+  const errs=res.rows.filter(r=>r.kind==="err").length;
+  const un=rows.filter(r=>r.q.p.tier===6).length;
+  const ok = !errs && !un;
+  $("sheet-stamp").innerHTML='<span class="stamp'+(ok?" ok":"")+'">'+
+    (errs?"발행 불가 · 계산 오류 "+errs+"건":un?"발행 불가 · 근거 미확보 "+un+"건":"발행 가능")+"</span>";
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.v==="sheet"));
+  document.querySelectorAll(".view").forEach(v=>v.hidden = v.id!=="v-sheet");
+  const msg=$("sheet-msg");
+  if(!window.__DL){ msg.textContent="파일 저장을 사용할 수 없어 화면에만 표시합니다."; return; }
+  try { await window.__DL.save({filename:"calc-sheet.md", data:md}); msg.textContent="계산서를 저장했습니다."; }
+  catch(e){ msg.textContent = e && e.code==="declined" ? "저장이 취소되었습니다." : "저장할 수 없습니다."; }
+}
+
+/* ── 참조표 ───────────────────────────────────────────────── */
+function renderRef(){
+  $("t-fn").innerHTML='<tr><th>함수</th><th>설명</th><th>반환</th><th>등급</th><th>공식ID</th><th>내장 근거</th></tr>'+
+    Object.entries(LIB).map(([k,v])=>'<tr><td class="m">'+esc(k)+"("+ (v.a?Array(v.a).fill("·").join(","):"") +")</td><td>"+
+      esc(v.doc)+'</td><td class="m">'+esc(v.ret)+"</td><td>"+tierChip(v.tier)+'</td><td class="m">'+esc(v.fml)+
+      '</td><td style="font-size:11px">'+esc(v.src)+"</td></tr>").join("");
+  const byDim={};
+  Object.entries(U).forEach(([n,u])=>{ const k=dLabel(u.d); (byDim[k]=byDim[k]||[]).push(n); });
+  $("t-unit").innerHTML='<tr><th>차원</th><th>단위</th></tr>'+
+    Object.entries(byDim).map(([k,v])=>"<tr><td>"+esc(k)+'</td><td class="m">'+esc(v.join(" "))+"</td></tr>").join("");
+  $("t-syn").innerHTML=
+    '<table><tr><th>문법</th><th>뜻</th></tr>'+
+    [["x = 20 [MW]","값과 단위"],
+     ["x = 47.5 [%] ± 0.8","불확실도 (표준편차)"],
+     ['x = 7500 [원/kg] @T5 "출처"','근거등급과 출처. 없으면 근거없음으로 오염된다'],
+     ["y = a / b  as [kg/h]","표시 단위 지정. 차원이 다르면 거부"],
+     ["sweep(변수, 시작, 끝, 점수, 대상)","변수를 훑어 대상 곡선을 만든다"],
+     ["mc(대상, 시행수)","± 붙은 모든 입력을 흔들어 분포를 만든다"],
+     ["% 주석","줄 끝까지 주석"]].map(r=>'<tr><td class="m">'+esc(r[0])+"</td><td>"+esc(r[1])+"</td></tr>").join("")+
+    "</table>"+
+    '<p class="empty" style="margin-top:9px">정수 무차원 리터럴(1, 24, 2)은 수학 상수로 보아 등급을 떨어뜨리지 않습니다. '+
+    '단위가 붙었거나 비정수이거나 ± 가 붙은 값은 출처를 요구합니다.</p>';
+}
+
+/* ── 배선 ─────────────────────────────────────────────────── */
+let timer=null;
+function boot(){
+  let init=EXAMPLES[0].s;
+  try { const d=localStorage.getItem("h2mod.draft"); if(d && d.trim()) init=d; } catch(e){}
+  $("ed").value=init;
+  document.querySelectorAll("[data-ex]").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.ex; TITLE=EXAMPLES[i].t; $("ed").value=EXAMPLES[i].s;
+    document.querySelectorAll("[data-ex]").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    paint();
+  });
+  $("ed").addEventListener("input",()=>{ clearTimeout(timer); timer=setTimeout(paint,220); });
+  $("ed").addEventListener("keydown",e=>{
+    if(e.key==="Tab"){ e.preventDefault();
+      const s=$("ed").selectionStart, v=$("ed").value;
+      $("ed").value=v.slice(0,s)+"  "+v.slice($("ed").selectionEnd);
+      $("ed").selectionStart=$("ed").selectionEnd=s+2; paint(); }
+  });
+  document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+    document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+    document.querySelectorAll(".view").forEach(v=>v.hidden = v.id!=="v-"+b.dataset.v);
+  });
+  $("sheet-btn").onclick=issueSheet;
+  renderRef(); paint();
+}
+boot();
+
+(async function(){
+  if(!window.claude || !window.claude.use) return;
+  try { window.__DL = await claude.use("downloads"); } catch(e){ window.__DL=null; }
+})();
+
+</script>
+</body>
+</html>
