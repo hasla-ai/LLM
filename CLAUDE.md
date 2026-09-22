@@ -53,7 +53,7 @@ knowledge/            catalog.json, agent-databases/, formula-library.json,
 workflow/             process-agent-map.json — M-001~M-100 Agent 라우팅
 agents/               registry.json, international-overlay.json
 app/                  FastAPI + SQLite. main.py, calc.py, static/
-tools/                validate_formulas.py
+tools/                validate_formulas.py, check_phase_alignment.py
 forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 ```
 
@@ -63,10 +63,14 @@ forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 
 ```
 python tools/validate_formulas.py
+python tools/check_phase_alignment.py
 ```
 
-기대: 검증 케이스 실패 0, 스키마 실패 0.
+기대: 검증 케이스 실패 0, 스키마 실패 0, 단계 불일치 0.
 스키마가 0건으로 나오면 `pip install jsonschema` 로 켠다.
+
+단계(phase) 분류의 정본은 `docs/03-governance/mission-catalog.md` 다 (D-024).
+단계를 바꾸면 카탈로그를 먼저 고치고 `check_phase_alignment.py` 로 나머지 두 파일을 맞춘다.
 
 새 공식을 추가하면 `validation_cases` 를 반드시 채운다. expected 는 표현식을 실제로
 평가해서 넣고 손으로 계산한 값을 넣지 않는다. 검증 케이스 없는 공식은 설계 근거가 못 된다.
@@ -77,13 +81,15 @@ python tools/validate_formulas.py
 
 | ID | 내용 | Jira |
 |---|---|---|
-| F-01 | 단계 분류가 mission-catalog.md / process-agent-map.json / mission-definition.schema.json 세 파일에서 다르다. M-041~M-060 의 20개가 잘못된 Agent 로 라우팅된다. **다른 미션 작업의 선행조건.** | SCRUM-34 |
+| ~~F-01~~ | ~~단계 분류가 세 파일에서 다르다~~ **해소됨 (2026-09-23, D-024).** 카탈로그를 정본으로 삼아 workflow 맵을 v1.1.0 으로 재작성. `check_phase_alignment.py` 가 회귀를 막는다. | SCRUM-34 |
 | F-02 | mission-catalog.md 가 mission-definition.schema.json 의 필수 필드(dependencies, completion_criteria, block_conditions)를 갖고 있지 않다. | — |
 | F-03 | app/main.py 의 계산 결함 4건. 수정 모듈은 app/calc.py 에 있고 교체는 미완. | SCRUM-35 |
 | F-05 | 기존 공식 15개 중 14개에 validation_cases 가 없다. CI 없음. | SCRUM-36 |
 
-**F-01 이 풀리기 전에는 미션 정의를 스키마 충족 상태로 쓰지 않는다.** 어떤 phase 값을
-넣어도 세 문서 중 둘과 어긋난다.
+F-01 이 해소되어 이제 `phase` 값을 스키마대로 쓸 수 있다. 사용 가능한 값은
+`intake · business · site · hydrogen · power_grid · concept_design · safety_permit ·
+feed_epc · construction · operations` 이며 카탈로그 Phase 0~9 와 1:1 대응한다.
+남은 선행조건은 F-02(미션 속성 이식)다.
 
 ## 6. app/main.py 계산 결함 (F-03)
 
@@ -126,7 +132,7 @@ python tools/validate_formulas.py
 | SCRUM-19~26 | G0~G7 게이트 작업 |
 | SCRUM-29 | 에픽 — 수소 계산 커널 (기술개발) |
 | SCRUM-30~33 | 커널 구현 (완료) |
-| SCRUM-34 | F-01 단계 분류 불일치 — 선행조건 |
+| SCRUM-34 | F-01 단계 분류 불일치 — 해소됨 (D-024) |
 | SCRUM-35 | F-03 app/main.py 교체 |
 | SCRUM-36 | F-05 검증 러너 CI 연결 |
 | SCRUM-37 | 계산서를 Evidence 로 등록 |
