@@ -58,7 +58,7 @@ PM 기준선 추가:
 - `app/static/h2-module.html`: 계산 워크벤치
 - `app/static/h2-mission-engine.html`: 100개 미션 게이팅 엔진
 
-다음 개발 단계: **단계 분류 3파일 불일치(F-01, SCRUM-34) 해소 → 미션 정의를 스키마 충족 상태로 이식 → 커널 Python 이식(SCRUM-38) → Knowledge Retrieval 결과를 Agent Invocation·Meeting·Decision 실행기에 연결**
+다음 개발 단계: **D-035 2차 회의록의 기계적 재생성 조치와 DR-01~DR-10 자격자 결정·Gate Evidence 등록 → F-02 기준선 승격 검토 → 커널 Python 이식(SCRUM-38)**
 
 주의: 현재 결과는 예비 검토용이며 실제 설계·안전·인허가 판단은 자격자가 수행해야 합니다.
 
@@ -76,4 +76,12 @@ PM 기준선 추가:
 - `verify-offline-bundle` 결과는 119개 파일·해시·초과/누락 파일·source register 정합성 모두 통과했다. 단, 출처 9건은 여전히 `metadata_only`이므로 `offline-check`의 `baseline_ready=false`는 유지한다.
 - `audit-gate`는 7개 G0 Evidence가 모두 `unverified`이고 인간 검토가 대기 중임을 검출하여 `hold_until_audit_errors_resolved`를 반환했다. 이는 실패가 아니라 문서 존재만으로 G0가 통과되지 않는지 확인한 정상 차단이다.
 - SCRUM-29 커널 기준선은 `docs/02-engineering/h2-calc-kernel-overlay.md`와 `knowledge/calculation-kernel.json`에 기록하고, SCRUM-39 보호 기준은 `security/protection-policy.json`과 `python -m security.audit`에 연결했다. 기존 SCRUM-18과 G0–G7의 순서·의미는 변경하지 않았다.
-- `python tools/validate_formulas.py`를 실행했다. 검증 케이스 23건 통과·0건 실패, 스키마 6건 통과·0건 실패다. 기존 일반공식 15개 중 14개는 `validation_case`가 없어 경고로 남는다(F-05, SCRUM-36).
+- `python tools/validate_formulas.py --strict`를 실행했다. 검증 케이스 37건 통과·0건 실패·0건 경고, 스키마 6건 통과·0건 실패다. 일반공식 15개와 H2 공식 18개 모두 validation case를 갖는다.
+- `python -m unittest discover -s tests -v`는 4건 통과했고, `.github/workflows/quality.yml`이 Python 3.11·3.12에서 같은 검사를 실행한다.
+- F-02 선행관계 결정지 29건은 모두 `confirmed`로 반영되어 모호 0건이 됐다. D-029에 따라 M-046이 `PreliminarySLD`를 산출하고 M-047이 이를 사용하도록 반영했으며, M-058은 `DetailedSLD`를 산출한다. 미션 정의는 전방참조 0건과 dependencies 101건으로 재생성한다.
+- D-030에 따라 카탈로그만 근거로 100개 미션의 목적·완료기준·차단조건을 `mission-content-draft.json`에 작성하고 생성 정의에 병합했다. 해당 내용은 자격자 검토 전 초안이며, 입력·출력 schema_ref와 quality_checks는 다음 F-02 작업으로 남아 있다.
+- D-031에 따라 100개 미션의 입력·출력 schema_ref와 quality_checks를 `mission-contract-draft.json`에 작성하고 생성 정의에 병합했다. 현재 미션 정의는 스키마 100/100·내용 완결 100/100이며, 실제 JSON Schema 등록과 owner 검토 전까지는 기준선이 아니다.
+- D-032에 따라 카탈로그 토큰을 `schemas/mission-contracts.schema.json`의 200개 draft 정의로 등록하고 `schemas/registry.json`에 추가했다. `mission-owner-review-queue.json`에 100개 담당자 검토 항목을 모두 `pending`으로 생성했으며, 실제 승인 기록 전까지 기준선 승격을 차단한다.
+- D-033에 따라 카탈로그에서 고유 입출력 토큰 249건을 생산·소비 미션과 함께 `entity-contract-review-queue.json`에 등록했다. 타입·단위·널 허용·근거 요건은 추측하지 않고 모두 `pending_owner_review`로 남겼으며, 이 큐와 owner 검토 결과가 채워지기 전에는 F-02를 기준선으로 승격하지 않는다.
+- D-034에 따라 100개 미션과 249개 토큰 각각의 제안 판정·근거·Gate Evidence 제안·검토 질문·한계를 `qualified-review-report-missions.*` 및 `qualified-review-report-entities.*`에 기록했다. 모든 결정은 `proposed_not_approved`이며 자격자 서명 전 기준선 승격은 차단한다.
+- D-035 2차 회의록에서 IR-01·IR-02·IR-03의 재현 결과와 기계적 후속조치를 분리 기록했다. 정확일치는 실행계약 기준, 부분일치는 명명 드리프트 감사로 유지하며, DR-01·DR-02·DR-03 등 안전·계통·시운전 계약 공백은 자격자 결정 전 `HOLD`로 남긴다.
