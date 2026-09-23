@@ -14,6 +14,9 @@ PM 도구: Jira `SCRUM` (hangrock.atlassian.net)
 1. **법령·기준을 기억으로 인용하지 않는다.** 법령명까지는 후보로 제시할 수 있으나
    조문번호·KGS 코드번호·판번호·시행일은 검색·확인 없이 쓰지 않는다. 확인 못 하면
    빈칸으로 두고 "검증 필요"로 표시한다. 틀린 조문은 없는 것보다 나쁘다.
+   확인한 서지사항은 `knowledge/verified-citations.json` 에 기록한다 (D-037).
+   **서지 확인은 원문 확보가 아니다.** 조문 내용·적용 범위·적합성 판정은 원문을 반입하고
+   해시를 등록한 뒤 자격자가 한다.
 2. **언어모델이 숫자를 만들지 않는다.** 모든 수치는 코드가 계산한다.
    `knowledge/formula-library-h2.json` 의 공식을 쓰고, 없으면 공식을 먼저 등록한다.
 3. **근거 없는 값은 하류를 오염시킨다.** 값에는 항상 출처와 근거등급이 붙는다.
@@ -55,7 +58,7 @@ agents/               registry.json, international-overlay.json
 app/                  FastAPI + SQLite. main.py, calc.py, static/
 tools/                validate_formulas.py, check_phase_alignment.py,
                       build_mission_definitions.py, check_mission_definitions.py,
-                      audit_catalog_io.py
+                      audit_catalog_io.py, check_citations.py
 forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 ```
 

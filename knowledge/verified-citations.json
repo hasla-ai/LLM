@@ -1,0 +1,146 @@
+{
+  "$schema": "https://forge-h2.local/schemas/verified-citations.schema.json",
+  "project_id": "FHZ-ENTERPRISE-001",
+  "version": "1.0.0",
+  "purpose": "법령·기술기준의 서지사항(코드번호·명칭·판번호·개정일)을 온라인에서 확인한 기록이다. 원문 확보가 아니다.",
+  "policy": [
+    "이 파일은 서지 확인 기록이며 Evidence 가 아니다. 어떤 항목도 그 자체로 Gate 근거가 되지 않는다.",
+    "baseline_eligible 은 local_artifact 와 sha256 이 모두 있을 때만 true 가 될 수 있다. 현재 전건 false 다.",
+    "조문 내용·적용 범위·적합성 판정은 이 파일에 기록하지 않는다. 자격자가 원문으로 판단한다.",
+    "knowledge/offline-source-register.json 의 deny_all_remote_fetch 는 에이전트 런타임 정책이며 이 파일이 그것을 바꾸지 않는다."
+  ],
+  "verification_channel": {
+    "tool": "WebSearch / WebFetch",
+    "shell_network": "blocked_by_sandbox",
+    "artifact_download": "unavailable — 원문 PDF 의 바이트를 받아 해시할 수 없다. 사람이 반입해야 한다."
+  },
+  "citations": [
+    {
+      "citation_id": "CIT-ISO-14687",
+      "kind": "international_standard",
+      "identifier": "ISO 14687",
+      "title_verified": "Hydrogen fuel quality — Product specification",
+      "current_edition": "ISO 14687:2025 (2nd edition)",
+      "superseded_edition": "ISO 14687:2019 (withdrawn)",
+      "effective_date": "2025-02 (월까지만 확인, 일자 미확인)",
+      "statutory_basis": null,
+      "url": "https://www.iso.org/standard/82660.html",
+      "retrieved_at": "2026-09-23",
+      "verification_method": "WebSearch — iso.org 카탈로그 페이지 제목. 페이지 직접 fetch 는 하지 않았다",
+      "verified": [
+        "표준 존재",
+        "현행판 번호",
+        "구판 폐지 여부"
+      ],
+      "not_verified": [
+        "조문 내용",
+        "불순물 한계값",
+        "시행일 일자",
+        "본 프로젝트 적용 여부"
+      ],
+      "relates_to": [
+        "DR-10",
+        "M-033 specify_hydrogen_quality",
+        "H2QualitySpec",
+        "Purity"
+      ],
+      "local_artifact": null,
+      "sha256": null,
+      "baseline_eligible": false
+    },
+    {
+      "citation_id": "CIT-KGS-AH371",
+      "kind": "kr_technical_code",
+      "identifier": "KGS AH371",
+      "title_verified": "고정형 연료전지 제조의 시설·기술·검사 기준",
+      "current_edition": "'24.7.23. 개정",
+      "superseded_edition": null,
+      "effective_date": "2024-07-23",
+      "statutory_basis": null,
+      "url": "https://h2hub.or.kr/main/info/regulation_info.do?mode=view&articleNo=2186",
+      "retrieved_at": "2026-09-23",
+      "verification_method": "WebFetch — 수소경제 종합정보포털 규제개선 정보 페이지 직접 조회",
+      "verified": [
+        "코드번호",
+        "기준 명칭",
+        "개정일"
+      ],
+      "not_verified": [
+        "제정일",
+        "근거 법령",
+        "조문 내용",
+        "발전소 규모 적용 범위"
+      ],
+      "relates_to": [
+        "고정형 연료전지 발전 설비",
+        "M-068 screen_psm_applicability",
+        "M-063 build_gas_permit_path"
+      ],
+      "local_artifact": null,
+      "sha256": null,
+      "baseline_eligible": false
+    },
+    {
+      "citation_id": "CIT-KGS-AH171",
+      "kind": "kr_technical_code",
+      "identifier": "KGS AH171",
+      "title_verified": "수소추출설비 제조의 시설·기술·검사 기준",
+      "current_edition": "'24.7.23. 개정",
+      "superseded_edition": null,
+      "effective_date": "2024-07-23",
+      "statutory_basis": null,
+      "url": "https://h2hub.or.kr/main/info/regulation_info.do?mode=view&articleNo=2185",
+      "retrieved_at": "2026-09-23",
+      "verification_method": "WebFetch — 수소경제 종합정보포털 규제개선 정보 페이지 직접 조회",
+      "verified": [
+        "코드번호",
+        "기준 명칭",
+        "개정일"
+      ],
+      "not_verified": [
+        "제정일",
+        "근거 법령",
+        "조문 내용",
+        "본 프로젝트 적용 여부"
+      ],
+      "relates_to": [
+        "수소추출설비 채택 시 적용 후보",
+        "M-031 select_supply_path"
+      ],
+      "local_artifact": null,
+      "sha256": null,
+      "baseline_eligible": false
+    },
+    {
+      "citation_id": "CIT-KGS-FU671",
+      "kind": "kr_technical_code",
+      "identifier": "KGS FU671",
+      "title_verified": "수소연료사용시설의 시설·기술·검사 기준",
+      "current_edition": null,
+      "superseded_edition": null,
+      "effective_date": null,
+      "statutory_basis": null,
+      "url": "https://cyber.kgs.or.kr/kgscode.Kgscode01introduce.ex.do/",
+      "retrieved_at": "2026-09-23",
+      "verification_method": "WebSearch — 검색 결과에 cyber.kgs.or.kr 의 공개 PDF 경로가 노출됨. 페이지·PDF 직접 확인은 하지 않았다",
+      "verified": [
+        "코드번호와 명칭이 존재한다는 것"
+      ],
+      "not_verified": [
+        "현행 판번호",
+        "개정일",
+        "조문 내용",
+        "적용 범위"
+      ],
+      "relates_to": [
+        "수소연료사용시설 — 본 프로젝트 해당 가능성 높음",
+        "M-062 map_kgs_codes"
+      ],
+      "local_artifact": null,
+      "sha256": null,
+      "baseline_eligible": false,
+      "note": "KGS Code 상세기준 PDF 가 cyber.kgs.or.kr 에서 공개 제공되는 것으로 보인다. offline-source-register 의 KNW-KR-KGS-CODE 가 metadata_only 인 전제와 어긋날 수 있으므로 확인이 필요하다."
+    }
+  ],
+  "decision_ref": "D-037"
+}
