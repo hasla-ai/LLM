@@ -102,9 +102,15 @@ def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
         resolved: list[str] = []
         ambiguous: list[dict] = []
         external: list[str] = []
+        forward: list[dict] = []
         for token in split_tokens(row["inputs"]):
             if token in produced and produced[token] != row["id"]:
                 dep = produced[token]
+                # 선행관계는 앞선 미션만 될 수 있다. 뒤 미션을 가리키면 정본의
+                # 전방참조이므로 선행관계로 만들지 않고 따로 보고한다.
+                if order[dep] > order[row["id"]]:
+                    forward.append({"input_token": token, "produced_by": dep})
+                    continue
                 if dep not in resolved:
                     resolved.append(dep)
                 continue
@@ -124,6 +130,7 @@ def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
             "resolved": sorted(resolved),
             "ambiguous": ambiguous,
             "external": external,
+            "forward": forward,
         }
     return out
 
@@ -143,19 +150,33 @@ def load_confirmed_decisions() -> dict[tuple[str, str], str]:
 def build(rows: list[dict], enum: list[str]) -> list[dict]:
     deps = resolve_dependencies(rows)
     confirmed = load_confirmed_decisions()
+    order = {row["id"]: i for i, row in enumerate(rows)}
     for row in rows:
         dep = deps[row["id"]]
+        dep.setdefault("forward", [])
         still: list[dict] = []
+        applied: list[dict] = []
         for amb in dep["ambiguous"]:
             pick = confirmed.get((row["id"], amb["input_token"]))
-            if pick and pick in amb["candidate_missions"]:
-                if pick not in dep["resolved"]:
-                    dep["resolved"].append(pick)
-                amb["resolved_to"] = pick
-            else:
+            # R1 로 단계 종결 미션에 거는 경우, 그 미션이 해당 엔티티를 직접 산출하지
+            # 않을 수 있다. 선행조건 계약이므로 허용하되 근거를 구분해 남긴다.
+            # 앞선 미션이 아니면 받지 않는다.
+            if not pick or pick not in order or order[pick] >= order[row["id"]]:
                 still.append(amb)
+                continue
+            amb["resolved_to"] = pick
+            amb["binding"] = (
+                "producer" if pick in amb["candidate_missions"]
+                else "gate_precondition"
+            )
+            if pick not in dep["resolved"]:
+                dep["resolved"].append(pick)
+            elif amb["binding"] == "gate_precondition":
+                amb["note"] = "다른 입력으로 이미 선행관계에 있어 간선이 추가되지 않는다"
+            applied.append(amb)
         dep["resolved"] = sorted(dep["resolved"])
         dep["ambiguous"] = still
+        dep["applied"] = applied
 
     defs: list[dict] = []
     for row in rows:
@@ -206,6 +227,8 @@ def build(rows: list[dict], enum: list[str]) -> list[dict]:
                     "resolved_from_io_chain": dep["resolved"],
                     "ambiguous_inputs": dep["ambiguous"],
                     "unresolved_inputs": dep["external"],
+                    "forward_references": dep.get("forward", []),
+                    "resolved_ambiguities": dep.get("applied", []),
                 },
             },
         })
@@ -223,7 +246,9 @@ def main() -> int:
     deps = {d["mission_id"]: d["extensions"]["dependency_derivation"] for d in defs}
     deps = {k: {"resolved": v["resolved_from_io_chain"],
                 "ambiguous": v["ambiguous_inputs"],
-                "external": v["unresolved_inputs"]} for k, v in deps.items()}
+                "external": v["unresolved_inputs"],
+                "forward": v["forward_references"],
+                "applied": v["resolved_ambiguities"]} for k, v in deps.items()}
     confirmed = load_confirmed_decisions()
 
     n_amb = sum(len(d["ambiguous"]) for d in deps.values())
@@ -240,6 +265,12 @@ def main() -> int:
     print(f"  입력 사슬로 확정한 선행관계   {n_res:>3}건 ({with_dep}개 미션)")
     print(f"  모호해서 확정 못 한 입력      {n_amb:>3}건 ({with_amb}개 미션)")
     print(f"  산출 미션이 없는 외부 입력    {n_ext:>3}건")
+    n_fwd = sum(len(d["forward"]) for d in deps.values())
+    if n_fwd:
+        print(f"  정본의 전방참조 (선행관계 불가) {n_fwd:>3}건")
+        for mid, dd in deps.items():
+            for f in dd["forward"]:
+                print(f"      {mid} 의 입력 '{f['input_token']}' 을 뒤 미션 {f['produced_by']} 이 산출한다")
     if confirmed:
         print(f"  결정지에서 반영한 확정     {len(confirmed):>3}건")
     print()

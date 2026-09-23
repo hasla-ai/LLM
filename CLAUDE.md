@@ -66,9 +66,12 @@ forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 python tools/validate_formulas.py
 python tools/check_phase_alignment.py
 python tools/check_mission_definitions.py
+python -m unittest discover -s tests -v
+python -m security.audit
 ```
 
-기대: 검증 케이스 실패 0, 스키마 실패 0, 단계 불일치 0, 미션정의 불일치 0.
+기대: 검증 케이스 실패 0, 스키마 실패 0, 단계 불일치 0, 미션정의 불일치 0,
+회귀 테스트 실패 0, 보호 감사 실패 0.
 스키마가 0건으로 나오면 `pip install jsonschema` 로 켠다.
 
 단계(phase) 분류의 정본은 `docs/03-governance/mission-catalog.md` 다 (D-024).
@@ -84,18 +87,26 @@ python tools/check_mission_definitions.py
 | ID | 내용 | Jira |
 |---|---|---|
 | ~~F-01~~ | ~~단계 분류가 세 파일에서 다르다~~ **해소됨 (2026-09-23, D-024).** 카탈로그를 정본으로 삼아 workflow 맵을 v1.1.0 으로 재작성. `check_phase_alignment.py` 가 회귀를 막는다. | SCRUM-34 |
-| F-02 | mission-catalog.md 가 스키마 필수 필드를 갖고 있지 않다. 골격 `mission-definitions.draft.json` 생성됨 (스키마 100/100, **내용완결 0/100**). 100개 미션의 목적·완료기준·차단조건과 모호한 선행관계 29건은 자격자 작성 대기. `mission-library-100.json` 은 이식 원본이 아니다 (D-025). | — |
-| F-03 | app/main.py 의 계산 결함 4건. 수정 모듈은 app/calc.py 에 있고 교체는 미완. | SCRUM-35 |
-| F-05 | 기존 공식 15개 중 14개에 validation_cases 가 없다. CI 없음. | SCRUM-36 |
+| F-02 | mission-catalog.md 가 스키마 필수 필드를 갖고 있지 않다. 골격 `mission-definitions.draft.json` 생성됨 (스키마 100/100, **내용완결 0/100**). 선행관계 100건 확정(D-028), 100개 미션의 목적·완료기준·차단조건은 자격자 작성 대기. `mission-library-100.json` 은 이식 원본이 아니다 (D-025). | — |
+| ~~F-03~~ | ~~app/main.py 의 계산 결함 4건~~ **해소됨 (2026-09-23).** `/api/mvp/feasibility` 가 공식 라이브러리 기반 계산 커널을 호출하고, 총발전단·순출력·사용가능 저장비율·압력/온도/Z 기반 밀도를 반환한다. | SCRUM-35 |
+| ~~F-05~~ | ~~기존 공식 15개 중 14개에 validation_cases 가 없다. CI 없음~~ **해소됨 (2026-09-23, D-027).** 공식 15개 모두 validation case를 갖고 CI에서 검증한다. | SCRUM-36 |
+| F-06 | 정본 카탈로그에 전방참조가 있다. `M-047`(Phase 4)의 입력 `SLD` 를 `M-058`(Phase 5)이 산출한다. 선행관계로 만들면 순환이 생겨 `forward_references` 로 분리했고 M-047 의 입력 계약은 불완전하다. 자격자 결정 필요. | — |
 
 F-01 이 해소되어 이제 `phase` 값을 스키마대로 쓸 수 있다. 사용 가능한 값은
 `intake · business · site · hydrogen · power_grid · concept_design · safety_permit ·
 feed_epc · construction · operations` 이며 카탈로그 Phase 0~9 와 1:1 대응한다.
 남은 선행조건은 F-02 다. `TODO-AUTHOR` 가 남은 미션 정의는 기준선으로 승격하거나 미션 실행 근거로 쓰지 않는다.
 
-## 6. app/main.py 계산 결함 (F-03)
+## 6. app/main.py 계산 결함 (F-03) — 해소됨 (2026-09-23)
 
-`/api/mvp/feasibility` 에서 확인된 것. `app/calc.py` 가 고쳤고 교체는 별도 작업이다.
+`/api/mvp/feasibility` 를 `app/calc.py` 계산 커널에 연결했다. 기존 `derived` 응답 키는
+유지하고, 계산 근거·가정·신뢰도와 총발전단/순출력 구분을 `calculation` 으로 추가한다.
+
+- LHV는 `knowledge/formula-library-h2.json`의 `reference_values`에서 읽는다.
+- `power_mw`는 총발전단으로 명시하고 소내부하율에서 순출력을 파생한다.
+- 저장 설치량은 사용가능 저장비율을 반영한다.
+- 기본 저장밀도는 압력·온도·압축계수로 계산하며, 공급사 밀도는 명시적 override일 때만 사용한다.
+- `tests/test_calc_integration.py`가 API 하위 호환 키와 네 가지 보정값을 회귀 검증한다.
 
 - LHV `33.33` 이 코드에 하드코딩. 정확값 33.322 kWh/kg. 공식 라이브러리에서 와야 한다.
 - `power_mw` 가 총발전단인지 순출력인지 정의 없음. 소내부하가 모델에 없어 순출력을
@@ -135,8 +146,8 @@ feed_epc · construction · operations` 이며 카탈로그 Phase 0~9 와 1:1 �
 | SCRUM-29 | 에픽 — 수소 계산 커널 (기술개발) |
 | SCRUM-30~33 | 커널 구현 (완료) |
 | SCRUM-34 | F-01 단계 분류 불일치 — 해소됨 (D-024) |
-| SCRUM-35 | F-03 app/main.py 교체 |
-| SCRUM-36 | F-05 검증 러너 CI 연결 |
+| ~~SCRUM-35~~ | ~~F-03 app/main.py 교체~~ **해소됨 (2026-09-23, D-026).** |
+| ~~SCRUM-36~~ | ~~F-05 검증 러너 CI 연결~~ **해소됨 (2026-09-23, D-027).** |
 | SCRUM-37 | 계산서를 Evidence 로 등록 |
 | SCRUM-38 | 커널 Python 이식 |
 

@@ -60,7 +60,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "RawBrief"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -119,7 +121,9 @@
             "M-001"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -133,7 +137,9 @@
       "owner_role": "Chief Engineer",
       "risk_class": "C",
       "gate": "G0",
-      "dependencies": [],
+      "dependencies": [
+        "M-002"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -172,17 +178,23 @@
         "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-002"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Intent",
               "candidate_missions": [
                 "M-001",
                 "M-002"
-              ]
+              ],
+              "resolved_to": "M-002",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -243,7 +255,9 @@
             "Site",
             "국가",
             "지역"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -305,7 +319,9 @@
             "M-004"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -319,7 +335,9 @@
       "owner_role": "PMO",
       "risk_class": "A",
       "gate": "G0",
-      "dependencies": [],
+      "dependencies": [
+        "M-002"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -358,17 +376,23 @@
         "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-002"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Intent",
               "candidate_missions": [
                 "M-001",
                 "M-002"
-              ]
+              ],
+              "resolved_to": "M-002",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -427,7 +451,9 @@
           "unresolved_inputs": [
             "MissingFields",
             "Defaults"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -491,7 +517,9 @@
           "unresolved_inputs": [
             "H2",
             "Capacity"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -552,7 +580,9 @@
             "Budget",
             "Schedule",
             "Target"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -566,7 +596,9 @@
       "owner_role": "PMO",
       "risk_class": "A",
       "gate": "G0",
-      "dependencies": [],
+      "dependencies": [
+        "M-002"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -606,18 +638,24 @@
         "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-002"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Assumptions"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Intent",
               "candidate_missions": [
                 "M-001",
                 "M-002"
-              ]
+              ],
+              "resolved_to": "M-002",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Assumptions"
           ]
         }
       }
@@ -675,7 +713,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "OfftakerData"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -737,7 +777,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Contracts"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -799,7 +841,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Hours"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -861,7 +905,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "H2Availability"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -920,7 +966,9 @@
           "unresolved_inputs": [
             "H2Source",
             "Volume"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -979,7 +1027,9 @@
           "unresolved_inputs": [
             "Quotes",
             "Transport"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1041,7 +1091,9 @@
             "M-014"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1105,7 +1157,9 @@
           "unresolved_inputs": [
             "Capacity",
             "Site"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1170,7 +1224,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Funding"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1232,7 +1288,9 @@
             "M-019"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1291,7 +1349,9 @@
           "unresolved_inputs": [
             "Address",
             "Coordinates"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1350,7 +1410,9 @@
             "M-021"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1412,7 +1474,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Zoning"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1474,7 +1538,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "RightsDocs"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1536,7 +1602,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Elevation"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1598,7 +1666,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Geology"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1655,7 +1725,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "HazardLayers"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1714,7 +1786,9 @@
           "unresolved_inputs": [
             "Ecology",
             "CulturalLayers"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1773,7 +1847,9 @@
           "unresolved_inputs": [
             "Roads",
             "Equipment"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1837,7 +1913,9 @@
           "unresolved_inputs": [
             "Candidates",
             "Constraints"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -1851,7 +1929,10 @@
       "owner_role": "Hydrogen Lead",
       "risk_class": "C",
       "gate": "G2",
-      "dependencies": [],
+      "dependencies": [
+        "M-002",
+        "M-030"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -1892,25 +1973,34 @@
         "risk_class_basis": "담당 'Hydrogen Lead' 이 규칙에 없어 보수적으로 C",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-002",
+            "M-030"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Market"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Intent",
               "candidate_missions": [
                 "M-001",
                 "M-002"
-              ]
+              ],
+              "resolved_to": "M-002",
+              "binding": "producer"
             },
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Market"
           ]
         }
       }
@@ -1968,7 +2058,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "SupplierDocs"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2030,7 +2122,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Vendor"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2092,7 +2186,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "H2Profile"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2151,7 +2247,9 @@
           "unresolved_inputs": [
             "H2Profile",
             "Autonomy"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2210,7 +2308,9 @@
           "unresolved_inputs": [
             "Pressures",
             "Flow"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2224,7 +2324,9 @@
       "owner_role": "Logistics",
       "risk_class": "C",
       "gate": "G2",
-      "dependencies": [],
+      "dependencies": [
+        "M-030"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -2265,19 +2367,25 @@
         "risk_class_basis": "담당 'Logistics' 이 규칙에 없어 보수적으로 C",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-030"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Source",
+            "Roads"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Source",
-            "Roads"
           ]
         }
       }
@@ -2340,7 +2448,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Suppliers"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2399,7 +2509,9 @@
           "unresolved_inputs": [
             "Certificates",
             "References"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2414,6 +2526,7 @@
       "risk_class": "C",
       "gate": "G2",
       "dependencies": [
+        "M-031",
         "M-035",
         "M-039"
       ],
@@ -2458,19 +2571,24 @@
         "risk_class_verified": false,
         "dependency_derivation": {
           "resolved_from_io_chain": [
+            "M-031",
             "M-035",
             "M-039"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Supply",
               "candidate_missions": [
                 "M-031",
                 "M-034"
-              ]
+              ],
+              "resolved_to": "M-031",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -2484,7 +2602,10 @@
       "owner_role": "Chief Engineer",
       "risk_class": "C",
       "gate": "G2",
-      "dependencies": [],
+      "dependencies": [
+        "M-030",
+        "M-040"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -2525,8 +2646,16 @@
         "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-030",
+            "M-040"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Capacity"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "H2",
               "candidate_missions": [
@@ -2535,18 +2664,19 @@
                 "M-032",
                 "M-033",
                 "M-040"
-              ]
+              ],
+              "resolved_to": "M-040",
+              "binding": "producer"
             },
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Capacity"
           ]
         }
       }
@@ -2609,7 +2739,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "VendorCurves"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2673,7 +2805,9 @@
           "unresolved_inputs": [
             "Cooling",
             "Compression"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2737,7 +2871,9 @@
           "unresolved_inputs": [
             "Climate",
             "Cooling"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2751,7 +2887,9 @@
       "owner_role": "Electrical/Grid",
       "risk_class": "C",
       "gate": "G2",
-      "dependencies": [],
+      "dependencies": [
+        "M-030"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -2792,19 +2930,25 @@
         "risk_class_basis": "담당 'Electrical/Grid' 의 'Electrical' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-030"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "GridData",
+            "MW"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "GridData",
-            "MW"
           ]
         }
       }
@@ -2867,7 +3011,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "PowerSpec"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2883,8 +3029,7 @@
       "gate": "G2",
       "dependencies": [
         "M-014",
-        "M-045",
-        "M-058"
+        "M-045"
       ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
@@ -2928,11 +3073,17 @@
         "dependency_derivation": {
           "resolved_from_io_chain": [
             "M-014",
-            "M-045",
-            "M-058"
+            "M-045"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [
+            {
+              "input_token": "SLD",
+              "produced_by": "M-058"
+            }
+          ],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -2991,7 +3142,9 @@
           "unresolved_inputs": [
             "Generator",
             "GridRules"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3006,7 +3159,8 @@
       "risk_class": "A",
       "gate": "G2",
       "dependencies": [
-        "M-012"
+        "M-012",
+        "M-047"
       ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
@@ -3049,20 +3203,25 @@
         "risk_class_verified": false,
         "dependency_derivation": {
           "resolved_from_io_chain": [
-            "M-012"
+            "M-012",
+            "M-047"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Size"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Grid",
               "candidate_missions": [
                 "M-045",
                 "M-047",
                 "M-048"
-              ]
+              ],
+              "resolved_to": "M-047",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Size"
           ]
         }
       }
@@ -3079,6 +3238,7 @@
       "gate": "G2",
       "dependencies": [
         "M-041",
+        "M-048",
         "M-049"
       ],
       "input_contract": {
@@ -3123,19 +3283,24 @@
         "dependency_derivation": {
           "resolved_from_io_chain": [
             "M-041",
+            "M-048",
             "M-049"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Grid",
               "candidate_missions": [
                 "M-045",
                 "M-047",
                 "M-048"
-              ]
+              ],
+              "resolved_to": "M-048",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3149,7 +3314,11 @@
       "owner_role": "Chief Engineer",
       "risk_class": "C",
       "gate": "G3",
-      "dependencies": [],
+      "dependencies": [
+        "M-010",
+        "M-040",
+        "M-050"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -3190,14 +3359,23 @@
         "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-010",
+            "M-040",
+            "M-050"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Project",
               "candidate_missions": [
                 "M-001",
                 "M-010"
-              ]
+              ],
+              "resolved_to": "M-010",
+              "binding": "producer"
             },
             {
               "input_token": "H2",
@@ -3207,17 +3385,20 @@
                 "M-032",
                 "M-033",
                 "M-040"
-              ]
+              ],
+              "resolved_to": "M-040",
+              "binding": "producer"
             },
             {
               "input_token": "Power",
               "candidate_missions": [
                 "M-041",
                 "M-050"
-              ]
+              ],
+              "resolved_to": "M-050",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3276,7 +3457,9 @@
             "M-051"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3291,6 +3474,7 @@
       "risk_class": "C",
       "gate": "G3",
       "dependencies": [
+        "M-040",
         "M-042",
         "M-052"
       ],
@@ -3335,10 +3519,14 @@
         "risk_class_verified": false,
         "dependency_derivation": {
           "resolved_from_io_chain": [
+            "M-040",
             "M-042",
             "M-052"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "H2",
               "candidate_missions": [
@@ -3347,10 +3535,11 @@
                 "M-032",
                 "M-033",
                 "M-040"
-              ]
+              ],
+              "resolved_to": "M-040",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3364,7 +3553,9 @@
       "owner_role": "Civil/Mechanical",
       "risk_class": "C",
       "gate": "G3",
-      "dependencies": [],
+      "dependencies": [
+        "M-030"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -3405,19 +3596,25 @@
         "risk_class_basis": "담당 'Civil/Mechanical' 의 'Civil' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-030"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Equipment",
+            "Zones"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Equipment",
-            "Zones"
           ]
         }
       }
@@ -3479,7 +3676,9 @@
             "Sources",
             "Inventory",
             "Ventilation"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3541,7 +3740,9 @@
             "M-052"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3606,7 +3807,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Pressure"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3620,7 +3823,9 @@
       "owner_role": "Electrical Lead",
       "risk_class": "C",
       "gate": "G3",
-      "dependencies": [],
+      "dependencies": [
+        "M-050"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -3660,14 +3865,21 @@
         "risk_class_basis": "담당 'Electrical Lead' 의 'Electrical' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-050"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Power",
               "candidate_missions": [
                 "M-041",
                 "M-050"
-              ]
+              ],
+              "resolved_to": "M-050",
+              "binding": "producer"
             },
             {
               "input_token": "Grid",
@@ -3675,10 +3887,12 @@
                 "M-045",
                 "M-047",
                 "M-048"
-              ]
+              ],
+              "resolved_to": "M-050",
+              "binding": "gate_precondition",
+              "note": "다른 입력으로 이미 선행관계에 있어 간선이 추가되지 않는다"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3740,7 +3954,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Hazards"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -3756,6 +3972,7 @@
       "gate": "G3",
       "dependencies": [
         "M-052",
+        "M-053",
         "M-054",
         "M-058"
       ],
@@ -3802,19 +4019,24 @@
         "dependency_derivation": {
           "resolved_from_io_chain": [
             "M-052",
+            "M-053",
             "M-054",
             "M-058"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Balance",
               "candidate_missions": [
                 "M-044",
                 "M-053"
-              ]
+              ],
+              "resolved_to": "M-053",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3829,6 +4051,7 @@
       "risk_class": "C",
       "gate": "G3",
       "dependencies": [
+        "M-003",
         "M-004"
       ],
       "input_contract": {
@@ -3871,18 +4094,23 @@
         "risk_class_verified": false,
         "dependency_derivation": {
           "resolved_from_io_chain": [
+            "M-003",
             "M-004"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Archetype",
               "candidate_missions": [
                 "M-003",
                 "M-031"
-              ]
+              ],
+              "resolved_to": "M-003",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -3944,7 +4172,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "H2Facilities"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4005,7 +4235,9 @@
             "Inventory",
             "Pressure",
             "Facility"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4066,7 +4298,9 @@
             "Layout",
             "FireLoad",
             "Access"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4131,7 +4365,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Modes"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4190,7 +4426,9 @@
           "unresolved_inputs": [
             "Nodes",
             "Safeguards"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4251,7 +4489,9 @@
             "LeakCases",
             "Weather",
             "Ignition"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4310,7 +4550,9 @@
           "unresolved_inputs": [
             "Inventory",
             "Process"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4324,7 +4566,9 @@
       "owner_role": "Environment",
       "risk_class": "C",
       "gate": "G3",
-      "dependencies": [],
+      "dependencies": [
+        "M-030"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -4365,19 +4609,25 @@
         "risk_class_basis": "담당 'Environment' 이 규칙에 없어 보수적으로 C",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-030"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Capacity",
+            "Emissions"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Capacity",
-            "Emissions"
           ]
         }
       }
@@ -4443,7 +4693,9 @@
             "M-069"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4457,7 +4709,10 @@
       "owner_role": "PMO/Engineering",
       "risk_class": "C",
       "gate": "G4",
-      "dependencies": [],
+      "dependencies": [
+        "M-060",
+        "M-070"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -4497,25 +4752,34 @@
         "risk_class_basis": "담당 'PMO/Engineering' 의 'Engineering' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-060",
+            "M-070"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Concept",
               "candidate_missions": [
                 "M-057",
                 "M-059",
                 "M-060"
-              ]
+              ],
+              "resolved_to": "M-060",
+              "binding": "producer"
             },
             {
               "input_token": "Permit",
               "candidate_missions": [
                 "M-063",
                 "M-070"
-              ]
+              ],
+              "resolved_to": "M-070",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -4574,7 +4838,9 @@
             "M-071"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4636,7 +4902,9 @@
             "M-056"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4698,7 +4966,9 @@
             "M-056"
           ],
           "ambiguous_inputs": [],
-          "unresolved_inputs": []
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4760,7 +5030,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "CommercialTerms"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4819,7 +5091,9 @@
           "unresolved_inputs": [
             "Bids",
             "ScoringModel"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4878,7 +5152,9 @@
           "unresolved_inputs": [
             "Risk",
             "Funding"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -4942,7 +5218,9 @@
           "unresolved_inputs": [
             "Procurement",
             "Permits"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5006,7 +5284,9 @@
           "unresolved_inputs": [
             "Bids",
             "Quantities"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5022,6 +5302,7 @@
       "gate": "G4",
       "dependencies": [
         "M-019",
+        "M-070",
         "M-077"
       ],
       "input_contract": {
@@ -5066,18 +5347,23 @@
         "dependency_derivation": {
           "resolved_from_io_chain": [
             "M-019",
+            "M-070",
             "M-077"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Permit",
               "candidate_missions": [
                 "M-063",
                 "M-070"
-              ]
+              ],
+              "resolved_to": "M-070",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -5139,7 +5425,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "ApprovedChanges"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5201,7 +5489,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Permits"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5217,6 +5507,7 @@
       "gate": "G5",
       "dependencies": [
         "M-026",
+        "M-030",
         "M-081"
       ],
       "input_contract": {
@@ -5261,18 +5552,23 @@
         "dependency_derivation": {
           "resolved_from_io_chain": [
             "M-026",
+            "M-030",
             "M-081"
           ],
-          "ambiguous_inputs": [
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Site",
               "candidate_missions": [
                 "M-024",
                 "M-030"
-              ]
+              ],
+              "resolved_to": "M-030",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": []
+          ]
         }
       }
     },
@@ -5334,7 +5630,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "InspectionPlan"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5398,7 +5696,9 @@
           "unresolved_inputs": [
             "Foundation",
             "Lifting"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5459,7 +5759,9 @@
             "Assets",
             "ITP",
             "Inspections"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5473,7 +5775,9 @@
       "owner_role": "Commissioning",
       "risk_class": "C",
       "gate": "G6",
-      "dependencies": [],
+      "dependencies": [
+        "M-086"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -5513,18 +5817,24 @@
         "risk_class_basis": "담당 'Commissioning' 의 'Commissioning' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-086"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Installation"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Quality",
               "candidate_missions": [
                 "M-033",
                 "M-086"
-              ]
+              ],
+              "resolved_to": "M-086",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Installation"
           ]
         }
       }
@@ -5584,7 +5894,9 @@
           "unresolved_inputs": [
             "Boundaries",
             "Hazards"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5598,7 +5910,9 @@
       "owner_role": "Commissioning/QA",
       "risk_class": "C",
       "gate": "G6",
-      "dependencies": [],
+      "dependencies": [
+        "M-088"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -5638,8 +5952,15 @@
         "risk_class_basis": "담당 'Commissioning/QA' 의 'Commissioning' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-088"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "GridConditions"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Plan",
               "candidate_missions": [
@@ -5648,11 +5969,10 @@
                 "M-054",
                 "M-063",
                 "M-088"
-              ]
+              ],
+              "resolved_to": "M-088",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "GridConditions"
           ]
         }
       }
@@ -5714,7 +6034,9 @@
             "Tests",
             "AsBuilt",
             "O&M"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5775,7 +6097,9 @@
             "AsBuilt",
             "Tags",
             "Sensors"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5838,7 +6162,9 @@
             "Pressure",
             "Purity",
             "Alarms"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5903,7 +6229,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Contracts"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -5968,7 +6296,9 @@
           "ambiguous_inputs": [],
           "unresolved_inputs": [
             "Failures"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6029,7 +6359,9 @@
             "Alarms",
             "Incidents",
             "Procedures"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6090,7 +6422,9 @@
             "Permits",
             "Inspections",
             "Operations"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6151,7 +6485,9 @@
             "H2Price",
             "PowerPrice",
             "Limits"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6210,7 +6546,9 @@
           "unresolved_inputs": [
             "ChangeRequest",
             "Impact"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6269,7 +6607,9 @@
           "unresolved_inputs": [
             "MissionResults",
             "Reviews"
-          ]
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": []
         }
       }
     },
@@ -6283,7 +6623,9 @@
       "owner_role": "Product/AI",
       "risk_class": "B",
       "gate": "G7",
-      "dependencies": [],
+      "dependencies": [
+        "M-010"
+      ],
       "input_contract": {
         "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
         "required_fields": [
@@ -6325,19 +6667,25 @@
         "risk_class_basis": "담당 'Product/AI' 의 'AI' 로부터 규칙 도출",
         "risk_class_verified": false,
         "dependency_derivation": {
-          "resolved_from_io_chain": [],
-          "ambiguous_inputs": [
+          "resolved_from_io_chain": [
+            "M-010"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Evidence",
+            "LiveData"
+          ],
+          "forward_references": [],
+          "resolved_ambiguities": [
             {
               "input_token": "Project",
               "candidate_missions": [
                 "M-001",
                 "M-010"
-              ]
+              ],
+              "resolved_to": "M-010",
+              "binding": "producer"
             }
-          ],
-          "unresolved_inputs": [
-            "Evidence",
-            "LiveData"
           ]
         }
       }

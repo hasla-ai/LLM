@@ -33,8 +33,10 @@
       "rule": "R3 단위 — Intent 는 정규화 이후(M-002 NormalizedIntent)를 쓴다. CLAUDE.md 1절 2항",
       "basis": "정규화 이후를 쓴다",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-006",
@@ -60,8 +62,10 @@
       "rule": "개별근거",
       "basis": "카탈로그 순서상 M-002 가 앞선다. 다만 완전성 검사는 정규화 前이 맞다는 반론이 가능",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-010",
@@ -87,8 +91,10 @@
       "rule": "R3 단위 — Intent 는 정규화 이후(M-002 NormalizedIntent)를 쓴다. CLAUDE.md 1절 2항",
       "basis": "정규화 이후를 쓴다",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-031",
@@ -114,8 +120,10 @@
       "rule": "개별근거",
       "basis": "단계교차지만 토큰이 Intent 를 명시. R3 적용",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-031",
@@ -141,8 +149,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-037",
@@ -168,8 +178,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-040",
@@ -195,8 +207,10 @@
       "rule": "개별근거",
       "basis": "같은 단계. 게이트 입력 'Supply·Storage·Supplier' 중 Supply 는 공급경로(H2SupplyArchetype)",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-041",
@@ -243,8 +257,10 @@
       "rule": "R2 단계내 — 같은 단계 안에서는 해당 엔티티를 실제 산출한 미션에 건다",
       "basis": "같은 단계 최종 산출",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-041",
@@ -270,8 +286,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-045",
@@ -297,8 +315,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-049",
@@ -331,8 +351,10 @@
       "rule": "개별근거",
       "basis": "같은 단계. 시장경로 선정은 연계용량·계통조건이 필요하므로 GridStudyPackage",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-050",
@@ -365,8 +387,10 @@
       "rule": "개별근거",
       "basis": "같은 단계 게이트. 계통 산출물의 마지막인 GridCompliance",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-051",
@@ -392,8 +416,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 0 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-051",
@@ -440,8 +466,10 @@
       "rule": "R2 단계내 — 같은 단계 안에서는 해당 엔티티를 실제 산출한 미션에 건다",
       "basis": "같은 단계 최종 산출",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-051",
@@ -467,8 +495,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 4 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-053",
@@ -515,8 +545,10 @@
       "rule": "R2 단계내 — 같은 단계 안에서는 해당 엔티티를 실제 산출한 미션에 건다",
       "basis": "같은 단계 최종 산출",
       "confidence": "검토필요",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-054",
@@ -542,8 +574,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-058",
@@ -569,8 +603,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 4 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-058",
@@ -603,8 +639,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 4 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-060",
@@ -630,8 +668,10 @@
       "rule": "개별근거",
       "basis": "같은 단계 개념설계 산출물 BalanceModel",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-061",
@@ -657,8 +697,10 @@
       "rule": "개별근거",
       "basis": "법규 매트릭스는 발전소 유형(PlantArchetype)이 기준. H2SupplyArchetype 아님",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-069",
@@ -684,8 +726,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-071",
@@ -718,8 +762,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 5 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-071",
@@ -745,8 +791,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 6 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-080",
@@ -772,8 +820,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 6 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-083",
@@ -799,8 +849,10 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 2 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-087",
@@ -826,8 +878,10 @@
       "rule": "개별근거",
       "basis": "같은 단계. 시공 품질 기록(QualityDossier)",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-089",
@@ -874,8 +928,10 @@
       "rule": "개별근거",
       "basis": "같은 단계. 입력 'Plan·GridConditions' 의 Plan 은 CommissioningPlan",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     },
     {
       "mission_id": "M-100",
@@ -901,8 +957,17 @@
       "rule": "R1 단계교차 — 다른 단계 산출물은 그 단계의 종결·게이트 미션에 건다 (선행조건 계약)",
       "basis": "Phase 0 종결 미션",
       "confidence": "권장",
-      "status": "proposed",
-      "decided_by": null
+      "status": "confirmed",
+      "decided_by": "PMO + Chief Engineer",
+      "decided_at": "2026-09-23",
+      "decision_ref": "D-028"
     }
-  ]
+  ],
+  "approval": {
+    "decision_ref": "D-028",
+    "decided_at": "2026-09-23",
+    "decided_by": "PMO + Chief Engineer",
+    "scope": "29건 전건을 제안값으로 승인",
+    "note": "confidence=검토필요 8건도 제안값으로 승인했다. 각 항목의 basis 에 반론을 남겨 두었으므로 설계 진행 중 반대 근거가 나오면 재검토한다. 재검토 시 status 를 proposed 로 되돌리고 decision-log 에 후속 결정을 남긴다."
+  }
 }
