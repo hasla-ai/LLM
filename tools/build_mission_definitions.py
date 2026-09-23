@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "docs" / "03-governance" / "mission-catalog.md"
 SCHEMA = ROOT / "schemas" / "mission-definition.schema.json"
 OUT = ROOT / "docs" / "03-governance" / "mission-definitions.draft.json"
+DECISIONS = ROOT / "docs" / "03-governance" / "mission-dependency-decisions.json"
 
 TODO = "TODO-AUTHOR"
 SCHEMA_VERSION = "1.0.0"
@@ -127,8 +128,35 @@ def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
     return out
 
 
+def load_confirmed_decisions() -> dict[tuple[str, str], str]:
+    """결정지에서 status=='confirmed' 인 항목만 반영한다. proposed 는 무시한다."""
+    if not DECISIONS.exists():
+        return {}
+    doc = json.loads(DECISIONS.read_text(encoding="utf-8"))
+    return {
+        (d["mission_id"], d["input_token"]): d["proposed"]
+        for d in doc.get("decisions", [])
+        if d.get("status") == "confirmed" and d.get("proposed")
+    }
+
+
 def build(rows: list[dict], enum: list[str]) -> list[dict]:
     deps = resolve_dependencies(rows)
+    confirmed = load_confirmed_decisions()
+    for row in rows:
+        dep = deps[row["id"]]
+        still: list[dict] = []
+        for amb in dep["ambiguous"]:
+            pick = confirmed.get((row["id"], amb["input_token"]))
+            if pick and pick in amb["candidate_missions"]:
+                if pick not in dep["resolved"]:
+                    dep["resolved"].append(pick)
+                amb["resolved_to"] = pick
+            else:
+                still.append(amb)
+        dep["resolved"] = sorted(dep["resolved"])
+        dep["ambiguous"] = still
+
     defs: list[dict] = []
     for row in rows:
         dep = deps[row["id"]]
@@ -192,7 +220,11 @@ def main() -> int:
         return 1
 
     defs = build(rows, enum)
-    deps = resolve_dependencies(rows)
+    deps = {d["mission_id"]: d["extensions"]["dependency_derivation"] for d in defs}
+    deps = {k: {"resolved": v["resolved_from_io_chain"],
+                "ambiguous": v["ambiguous_inputs"],
+                "external": v["unresolved_inputs"]} for k, v in deps.items()}
+    confirmed = load_confirmed_decisions()
 
     n_amb = sum(len(d["ambiguous"]) for d in deps.values())
     n_ext = sum(len(d["external"]) for d in deps.values())
@@ -208,6 +240,8 @@ def main() -> int:
     print(f"  입력 사슬로 확정한 선행관계   {n_res:>3}건 ({with_dep}개 미션)")
     print(f"  모호해서 확정 못 한 입력      {n_amb:>3}건 ({with_amb}개 미션)")
     print(f"  산출 미션이 없는 외부 입력    {n_ext:>3}건")
+    if confirmed:
+        print(f"  결정지에서 반영한 확정     {len(confirmed):>3}건")
     print()
     print("[자격자 작성이 필요한 필드]")
     for field, count in [
