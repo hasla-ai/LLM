@@ -168,6 +168,8 @@ class MissionDefinitionContractTests(unittest.TestCase):
         minutes = SECOND_MEETING.read_text(encoding="utf-8")
 
         self.assertIn("D-035", minutes)
+        self.assertIn("D-036", minutes)
+        self.assertIn("6c529d5", minutes)
         self.assertIn("proposed_not_approved", minutes)
         self.assertIn("정확일치", minutes)
         self.assertIn("부분일치", minutes)
@@ -175,6 +177,7 @@ class MissionDefinitionContractTests(unittest.TestCase):
             self.assertIn(finding_id, minutes)
         self.assertIn("qualified_judgment_required", minutes)
         self.assertIn("HOLD", minutes)
+        self.assertIn("미션 13건과 단위 후보 33건", minutes)
 
 
 if __name__ == "__main__":
