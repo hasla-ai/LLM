@@ -281,6 +281,64 @@
             },
             "local_path_outside_repo": {
               "type": "string"
+            },
+            "pages": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pdf_mod_date": {
+              "type": "string"
+            }
+          }
+        },
+        "scope_verified": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "기준 본문에서 직접 확인한 적용범위. 추정이 아니라 조문 인용이다.",
+          "required": [
+            "clause",
+            "text"
+          ],
+          "properties": {
+            "clause": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "upper_bound_fuel_input_kw": {
+              "type": "number"
+            },
+            "note": {
+              "type": "string"
+            }
+          }
+        },
+        "applicability_to_project": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "본 프로젝트 적용 여부. 적합성 판정이 아니라 적용범위 대조 결과다.",
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "undetermined"
+              ]
+            },
+            "basis": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "string"
+            },
+            "caution": {
+              "type": "string"
             }
           }
         }

@@ -15,7 +15,8 @@
     "artifact_download": "partially_available",
     "notes": [
       "정정 (2026-09-23). 앞서 '원문 바이트를 받을 수 없다'고 기록했으나 틀렸다. WebFetch 는 바이너리 응답을 로컬 파일로 저장하며, h2hub 첨부 경로에서 1.2MB PDF 를 받아 sha256 을 산출했다. 다만 cyber.kgs.or.kr 은 HTTP 400 을 반환해 받을 수 없고, 받은 PDF 도 본문 추출에 실패해 내용은 확인하지 못했다.",
-      "HTTP 400 — 세 가지 경로(코드 PDF, introduce 페이지, 슬래시 제거)에서 모두 실패"
+      "HTTP 400 — 세 가지 경로(코드 PDF, introduce 페이지, 슬래시 제거)에서 모두 실패",
+      "PDF 본문 추출은 pypdf 설치 후 성공했다. 앞서 'CID 인코딩이라 추출 불가'라고 한 것은 라이브러리 부재 때문이었다."
     ]
   },
   "citations": [
@@ -56,30 +57,34 @@
       "citation_id": "CIT-KGS-AH371",
       "kind": "kr_technical_code",
       "identifier": "KGS AH371",
-      "title_verified": "고정형 연료전지 제조의 시설·기술·검사 기준",
-      "current_edition": "'24.7.23. 개정",
+      "title_verified": "고정형 연료전지 제조의 시설·기술·검사 기준 (Facility/Technical/Inspection Code for Manufacture of Gas Fuel Cells)",
+      "current_edition": "KGS AH371 2024",
       "superseded_edition": null,
       "effective_date": "2024-07-23",
-      "statutory_basis": null,
+      "statutory_basis": "「수소경제 육성 및 수소 안전관리에 관한 법률」 제48조제1항에 따라 「고압가스 안전관리법」 제33조의2에 따른 가스기술기준위원회 심의·의결(안건번호 제2024-3호, 2024.4.19)을 거쳐 산업통상자원부장관 승인(산업통상자원부 공고 제2024-560호, 2024.7.23)",
       "url": "https://h2hub.or.kr/main/info/regulation_info.do?mode=view&articleNo=2186",
       "retrieved_at": "2026-09-23",
-      "verification_method": "WebFetch — 수소경제 종합정보포털 규제개선 정보 페이지 직접 조회",
+      "verification_method": "원문 PDF 76쪽을 pypdf 로 추출해 표제지·제개정이력·적용범위를 직접 확인",
       "verified": [
-        "코드번호",
-        "기준 명칭",
-        "개정일"
+        "코드번호 KGS AH371 2024",
+        "기준 명칭(국문·영문)",
+        "제정 2021.7.5 (공고 제2021-518호)",
+        "개정 이력 7회, 최종 2024.7.23 (공고 제2024-560호)",
+        "심의·의결 2024.4.19 (안건 제2024-3호)",
+        "근거 법령",
+        "적용범위 1.1.1",
+        "총 76쪽",
+        "문서 내 저작권 제한 문구 없음"
       ],
       "not_verified": [
-        "제정일",
-        "근거 법령",
-        "조문 내용",
-        "발전소 규모 적용 범위",
-        "내려받은 PDF 가 AH371 본문인지"
+        "본 프로젝트에 적용되는 다른 KGS 코드가 무엇인지",
+        "조문 전체의 내용상 정합성"
       ],
       "relates_to": [
-        "고정형 연료전지 발전 설비",
-        "M-068 screen_psm_applicability",
-        "M-063 build_gas_permit_path"
+        "소용량 고정형 연료전지에 한정",
+        "본 프로젝트 비적용",
+        "M-062 map_kgs_codes",
+        "M-068 screen_psm_applicability"
       ],
       "local_artifact": null,
       "sha256": null,
@@ -90,20 +95,34 @@
         "media_type": "application/pdf",
         "bytes": 1272550,
         "sha256": "de20d574004254b01d90b3304df0e50637c6a11daab17e3df179f411cb898239",
-        "pdf_version": "1.6",
+        "pdf_version": "1.4",
         "pdf_creator": "Hwp 2022 12.0.0.3437",
         "pdf_producer": "Hancom PDF 1.3.0.547",
         "pdf_creation_date": "2024-07-22T09:25:53+09:00",
         "authentication_required": false,
-        "content_verified": false,
-        "content_verification_attempt": "PDF 본문은 CID 인코딩이고 ToUnicode CMap 커버리지가 불완전해 텍스트를 신뢰성 있게 추출하지 못했다. pypdf·pdfminer·poppler 모두 환경에 없다. 이 PDF 가 AH371 본문이라는 것은 확인되지 않았다.",
+        "content_verified": true,
+        "content_verification_attempt": "pypdf 6.19.0 으로 76쪽 전체 텍스트 추출 성공. 표제지에 'KGS AH371 2024' 명시.",
         "provenance_support": [
           "h2hub 규제개선 정보 게시물 제목이 '고정형 연료전지 제조의 시설·기술·검사 기준(KGS AH371)('24.7.23. 개정)' 이다",
           "PDF 생성일 2024-07-22 가 개정일 2024-07-23 의 하루 전으로 정합적이다"
         ],
-        "import_status": "not_imported",
-        "import_blocker": "재배포 조건 미확인. 저장소 커밋 전에 KGS 코드의 저작권·재배포 허용 여부를 확인해야 한다.",
-        "local_path_outside_repo": "tool-results/webfetch-1790130405354-bm2bvn.pdf"
+        "import_status": "rejected",
+        "import_blocker": "재배포 조건 불충족. h2hub 저작권 정책은 공공누리 표시가 부착된 자료만 자유이용을 허용하고, 그 외 자료는 무단 복제·배포·개작을 금지한다. 이 PDF 에는 공공누리 표시가 없고 저작권자도 H2KOREA 가 아니라 가스기술기준위원회·한국가스안전공사 계열로 보인다. 저장소에 커밋하지 않는다. 필요하면 발행처에서 직접 반입하고 이용허락을 확인한다.",
+        "local_path_outside_repo": "tool-results/webfetch-1790130405354-bm2bvn.pdf",
+        "pages": 76,
+        "pdf_mod_date": "2024-07-23T09:45:17+09:00"
+      },
+      "scope_verified": {
+        "clause": "1.1.1",
+        "text": "「수소경제 육성 및 수소 안전관리에 관한 법률 시행규칙」 제2조제3항제1호가목에 따른 연료소비량이 232.6 ㎾(20만 ㎉/h) 이하인 고정형 연료전지와 그 부대설비",
+        "upper_bound_fuel_input_kw": 232.6,
+        "note": "본문 내 버너 안전차단시간표·자동제어 허용조건표도 '120 초과 232.6 이하'에서 끝난다. 상한이 일관된다."
+      },
+      "applicability_to_project": {
+        "verdict": "not_applicable",
+        "basis": "본 프로젝트는 총발전단 20 MW 다(CLAUDE.md 7절 교차검증 기준). app/calc.py 실행값 기준 연료투입은 42,105 kW 로 AH371 적용 상한 232.6 kW 의 약 181배다.",
+        "confidence": "high — 적용범위 조문과 프로젝트 규모 모두 문서로 확인됨",
+        "caution": "적용 코드가 무엇인지는 확인하지 않았다. 추측하지 않는다. 발전용 대용량 연료전지에 적용되는 기준은 자격자가 관할과 함께 확정한다."
       }
     },
     {
@@ -170,8 +189,11 @@
   ],
   "decision_ref": "D-037",
   "findings": [
-    "KGS 상세기준 원문 PDF 는 인증 없이 내려받을 수 있다. 단 경로는 cyber.kgs.or.kr 이 아니라 h2hub 첨부다.",
-    "offline-source-register 의 KNW-KR-KGS-CODE 는 코드 본문이 아니라 kgs.or.kr 탐색 페이지(92KB HTML)를 캐시한 것이다. metadata_only 가 맞다.",
-    "따라서 KGS 를 baseline 근거로 올리려면 본문 PDF 반입이 필요하며, 그 경로는 열려 있다. 남은 장애는 재배포 조건 확인과 본문 내용 검증이다."
+    "KGS 상세기준 원문 PDF 는 인증 없이 내려받을 수 있다. 경로는 cyber.kgs.or.kr(HTTP 400)이 아니라 h2hub 첨부다.",
+    "받은 PDF 는 KGS AH371 2024 본문이 맞다. 76쪽, 표제지·제개정이력·적용범위를 직접 확인했다.",
+    "**AH371 은 본 프로젝트에 적용되지 않는다.** 적용범위가 연료소비량 232.6 kW 이하인 소용량 고정형 연료전지이고, 본 프로젝트는 연료투입 약 42 MW 다. 앞서 이 코드를 '고정형 연료전지 발전 설비' 관련으로 등록했던 것은 범위 미확인 상태의 추정이었다.",
+    "재배포는 허용되지 않는 것으로 본다. h2hub 정책상 공공누리 표시가 없는 자료는 무단 복제·배포 금지이며 이 PDF 에는 표시가 없다. 반입하지 않았다.",
+    "offline-source-register 의 KNW-KR-KGS-CODE 는 코드 본문이 아니라 kgs.or.kr 탐색 페이지(92KB HTML)다. metadata_only 판정은 옳았다.",
+    "본 프로젝트 규모에 적용되는 KGS 코드가 무엇인지는 확인하지 않았다. 추측하지 않는다."
   ]
 }
