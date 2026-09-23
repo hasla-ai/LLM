@@ -1,7 +1,8 @@
 """Forge H2 — 카탈로그에서 미션 정의 골격을 생성한다 (F-02).
 
-정본 `docs/03-governance/mission-catalog.md` 에서 기계적으로 도출 가능한 필드만 채우고,
-사람이 판단해야 하는 필드는 채우지 않고 표시만 남긴다.
+정본 `docs/03-governance/mission-catalog.md` 에서 기계적으로 도출 가능한 필드를 채우고,
+사람이 작성한 내용 초안은 `docs/03-governance/mission-content-draft.json`에서 병합한다.
+내용 초안은 자격자 검토 전까지 기준선이 아니다.
 
 도출 가능 (카탈로그가 직접 갖고 있음)
   mission_id · code · phase · owner_role · gate · output_contract.required_fields
@@ -9,7 +10,7 @@
 규칙 도출 (규칙을 명시하고 근거를 extensions 에 남김, 확인 필요)
   risk_class · review_policy · executor
 
-도출 불가 (자격자 작성 필요)
+도출 불가 (자격자 작성 또는 검토 필요)
   purpose · dependencies 일부 · completion_criteria · block_conditions
   input_contract.required_fields 일부
 
@@ -33,6 +34,8 @@ CATALOG = ROOT / "docs" / "03-governance" / "mission-catalog.md"
 SCHEMA = ROOT / "schemas" / "mission-definition.schema.json"
 OUT = ROOT / "docs" / "03-governance" / "mission-definitions.draft.json"
 DECISIONS = ROOT / "docs" / "03-governance" / "mission-dependency-decisions.json"
+ALIASES = ROOT / "docs" / "03-governance" / "entity-alias-registry.json"
+CONTENT = ROOT / "docs" / "03-governance" / "mission-content-draft.json"
 
 TODO = "TODO-AUTHOR"
 SCHEMA_VERSION = "1.0.0"
@@ -89,6 +92,18 @@ def parse_catalog(path: Path) -> list[dict]:
     return rows
 
 
+def load_confirmed_aliases() -> dict[tuple[str, str], str]:
+    """별칭 등록부에서 status=='confirmed' 인 것만 반영한다."""
+    if not ALIASES.exists():
+        return {}
+    doc = json.loads(ALIASES.read_text(encoding="utf-8"))
+    return {
+        (a["mission_id"], a["input_token"]): a["alias_of"]
+        for a in doc.get("aliases", [])
+        if a.get("status") == "confirmed" and a.get("alias_of")
+    }
+
+
 def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
     """산출물→입력 사슬로 선행관계를 도출한다. 모호하면 확정하지 않는다."""
     produced: dict[str, str] = {}
@@ -96,6 +111,7 @@ def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
         for token in split_tokens(row["outputs"]):
             produced[token] = row["id"]
     order = {row["id"]: i for i, row in enumerate(rows)}
+    aliases = load_confirmed_aliases()
 
     out: dict[str, dict] = {}
     for row in rows:
@@ -104,6 +120,8 @@ def resolve_dependencies(rows: list[dict]) -> dict[str, dict]:
         external: list[str] = []
         forward: list[dict] = []
         for token in split_tokens(row["inputs"]):
+            # 확인된 별칭은 정본 엔티티 이름으로 바꿔 해소한다. 정본은 고치지 않는다.
+            token = aliases.get((row["id"], token), token)
             if token in produced and produced[token] != row["id"]:
                 dep = produced[token]
                 # 선행관계는 앞선 미션만 될 수 있다. 뒤 미션을 가리키면 정본의
@@ -147,7 +165,45 @@ def load_confirmed_decisions() -> dict[tuple[str, str], str]:
     }
 
 
-def build(rows: list[dict], enum: list[str]) -> list[dict]:
+def load_mission_content() -> dict[str, dict]:
+    """카탈로그 미션별 목적·완료·차단 초안을 읽는다."""
+    if not CONTENT.exists():
+        return {}
+    doc = json.loads(CONTENT.read_text(encoding="utf-8"))
+    missions = doc.get("missions", {})
+    if not isinstance(missions, dict):
+        raise ValueError("mission-content-draft.json의 missions는 객체여야 한다")
+    return missions
+
+
+def validate_mission_content(rows: list[dict], content: dict[str, dict]) -> list[str]:
+    """내용 초안이 100개 카탈로그 미션을 빠짐없이 덮는지 검사한다."""
+    catalog_ids = {row["id"] for row in rows}
+    content_ids = set(content)
+    errors: list[str] = []
+    for mission_id in sorted(content_ids - catalog_ids):
+        errors.append(f"내용 원장에 카탈로그에 없는 미션이 있다: {mission_id}")
+    for mission_id in sorted(catalog_ids - content_ids):
+        errors.append(f"내용 원장에 미션이 없다: {mission_id}")
+    for mission_id in sorted(catalog_ids & content_ids):
+        item = content[mission_id]
+        if not isinstance(item, dict):
+            errors.append(f"내용 원장 항목이 객체가 아니다: {mission_id}")
+            continue
+        for field in ("purpose", "completion_criteria", "block_conditions"):
+            value = item.get(field)
+            if field == "purpose":
+                if not isinstance(value, str) or not value.strip() or TODO in value:
+                    errors.append(f"{mission_id}.{field}가 비어 있거나 TODO다")
+            elif not isinstance(value, list) or not value or any(
+                not isinstance(entry, str) or not entry.strip() or TODO in entry
+                for entry in value
+            ):
+                errors.append(f"{mission_id}.{field}가 비어 있거나 TODO다")
+    return errors
+
+
+def build(rows: list[dict], enum: list[str], content: dict[str, dict]) -> list[dict]:
     deps = resolve_dependencies(rows)
     confirmed = load_confirmed_decisions()
     order = {row["id"]: i for i, row in enumerate(rows)}
@@ -179,18 +235,30 @@ def build(rows: list[dict], enum: list[str]) -> list[dict]:
         dep["applied"] = applied
 
     defs: list[dict] = []
+    content_status = "draft_content_pending_contracts" if content else "draft_incomplete"
     for row in rows:
         dep = deps[row["id"]]
         risk, risk_basis = risk_class_for(row["owner"])
         needs_review = risk in ("C", "D")
         outputs = split_tokens(row["outputs"])
 
+        authored = content.get(row["id"], {})
+        purpose = authored.get(
+            "purpose", f"{TODO} — 카탈로그에 목적 문장이 없다. 자격자가 작성한다."
+        )
+        completion_criteria = authored.get(
+            "completion_criteria", [f"{TODO} — 완료 판정기준 미작성"]
+        )
+        block_conditions = authored.get(
+            "block_conditions", [f"{TODO} — 차단조건 미작성"]
+        )
+
         defs.append({
             "mission_id": row["id"],
             "schema_version": SCHEMA_VERSION,
             "code": row["code"],
             "name": row["code"].replace("_", " "),
-            "purpose": f"{TODO} — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+            "purpose": purpose,
             "phase": enum[row["phase"]],
             "owner_role": row["owner"],
             "risk_class": risk,
@@ -207,8 +275,8 @@ def build(rows: list[dict], enum: list[str]) -> list[dict]:
                 "required_fields": outputs,
                 "quality_checks": [f"{TODO} — 품질검사 조건 미작성"],
             },
-            "completion_criteria": [f"{TODO} — 완료 판정기준 미작성"],
-            "block_conditions": [f"{TODO} — 차단조건 미작성"],
+            "completion_criteria": completion_criteria,
+            "block_conditions": block_conditions,
             "review_policy": {
                 "required": needs_review,
                 "review_role": row["owner"],
@@ -220,7 +288,12 @@ def build(rows: list[dict], enum: list[str]) -> list[dict]:
                 "source_of_truth": "docs/03-governance/mission-catalog.md",
                 "catalog_phase_index": row["phase"],
                 "generated_by": "tools/build_mission_definitions.py",
-                "authoring_status": "draft_incomplete",
+                "authoring_status": content_status,
+                "mission_content_source": (
+                    "docs/03-governance/mission-content-draft.json"
+                    if content
+                    else None
+                ),
                 "risk_class_basis": risk_basis,
                 "risk_class_verified": False,
                 "dependency_derivation": {
@@ -242,7 +315,15 @@ def main() -> int:
         print(f"카탈로그에서 미션 {len(rows)}개를 읽었다. 100개가 아니다.")
         return 1
 
-    defs = build(rows, enum)
+    content = load_mission_content()
+    content_errors = validate_mission_content(rows, content) if content else []
+    if content_errors:
+        print("미션 내용 원장 검사 실패:")
+        for error in content_errors[:20]:
+            print(f"  - {error}")
+        return 1
+
+    defs = build(rows, enum, content)
     deps = {d["mission_id"]: d["extensions"]["dependency_derivation"] for d in defs}
     deps = {k: {"resolved": v["resolved_from_io_chain"],
                 "ambiguous": v["ambiguous_inputs"],
@@ -257,7 +338,7 @@ def main() -> int:
     with_dep = sum(1 for d in deps.values() if d["resolved"])
     with_amb = sum(1 for d in deps.values() if d["ambiguous"])
 
-    print("Forge H2 — 미션 정의 골격 생성 (F-02)")
+    print("Forge H2 — 미션 정의 초안 생성 (F-02)")
     print("=" * 52)
     print(f"정본: {CATALOG.relative_to(ROOT).as_posix()}  미션 {len(rows)}개")
     print()
@@ -273,16 +354,37 @@ def main() -> int:
                 print(f"      {mid} 의 입력 '{f['input_token']}' 을 뒤 미션 {f['produced_by']} 이 산출한다")
     if confirmed:
         print(f"  결정지에서 반영한 확정     {len(confirmed):>3}건")
+    n_alias = len(load_confirmed_aliases())
+    if n_alias:
+        print(f"  별칭 등록부로 이은 입력    {n_alias:>3}건")
     print()
-    print("[자격자 작성이 필요한 필드]")
-    for field, count in [
-        ("purpose", len(defs)),
-        ("completion_criteria", len(defs)),
-        ("block_conditions", len(defs)),
-        ("output_contract.quality_checks", len(defs)),
-        ("input_contract.schema_ref", len(defs)),
-        ("output_contract.schema_ref", len(defs)),
-    ]:
+    authored_fields = {
+        "purpose": sum(
+            1 for d in defs if TODO not in d["purpose"]
+        ),
+        "completion_criteria": sum(
+            1 for d in defs if all(TODO not in item for item in d["completion_criteria"])
+        ),
+        "block_conditions": sum(
+            1 for d in defs if all(TODO not in item for item in d["block_conditions"])
+        ),
+    }
+    print("[미션 내용 초안]")
+    for field, count in authored_fields.items():
+        print(f"  {field:<32} {count:>3}/100")
+    print("[추가 자격자 작성이 필요한 필드 — 미작성 건수]")
+    remaining_fields = {
+        "output_contract.quality_checks": sum(
+            1 for d in defs if any(TODO in item for item in d["output_contract"]["quality_checks"])
+        ),
+        "input_contract.schema_ref": sum(
+            1 for d in defs if TODO in d["input_contract"]["schema_ref"]
+        ),
+        "output_contract.schema_ref": sum(
+            1 for d in defs if TODO in d["output_contract"]["schema_ref"]
+        ),
+    }
+    for field, count in remaining_fields.items():
         print(f"  {field:<32} {count:>3}/100")
     print()
     print("[규칙으로 제안한 필드 — 확인 필요]")
@@ -299,13 +401,15 @@ def main() -> int:
 
     payload = {
         "schema_version": SCHEMA_VERSION,
-        "title": "Forge H2 미션 정의 골격 (초안)",
+        "title": "Forge H2 미션 정의 초안",
         "source_of_truth": "docs/03-governance/mission-catalog.md",
         "item_schema": "schemas/mission-definition.schema.json",
-        "authoring_status": "draft_incomplete",
+        "authoring_status": (
+            "draft_content_pending_contracts" if content else "draft_incomplete"
+        ),
         "warning": (
-            "자동 생성된 골격이다. TODO-AUTHOR 가 남아 있는 항목은 미완성이며 "
-            "기준선으로 승격하거나 미션 실행 근거로 사용하지 않는다."
+            "카탈로그와 미션 내용 초안에서 생성했다. 입력·출력 스키마와 품질검사가 "
+            "TODO-AUTHOR인 항목은 미완성이며 기준선으로 승격하거나 미션 실행 근거로 사용하지 않는다."
         ),
         "generated_by": "tools/build_mission_definitions.py",
         "missions": defs,
