@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-h2.local/schemas/verified-citations.schema.json",
+  "title": "Forge H2 Verified Citation Register",
+  "description": "Bibliographic verification only; not an evidence or baseline register.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "project_id",
+    "version",
+    "purpose",
+    "policy",
+    "verification_channel",
+    "citations",
+    "decision_ref"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "verification_channel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "shell_network",
+        "artifact_download"
+      ],
+      "properties": {
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shell_network": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_download": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "채널의 제약·정정 사항."
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/citation"
+      }
+    },
+    "decision_ref": {
+      "type": "string",
+      "pattern": "^D-[0-9]{3}$"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "이 등록부를 만들며 확인된 사실. 인용이 아니라 조사 결과다."
+    }
+  },
+  "$defs": {
+    "citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "citation_id",
+        "kind",
+        "identifier",
+        "title_verified",
+        "current_edition",
+        "superseded_edition",
+        "effective_date",
+        "statutory_basis",
+        "url",
+        "retrieved_at",
+        "verification_method",
+        "verified",
+        "not_verified",
+        "relates_to",
+        "local_artifact",
+        "sha256",
+        "baseline_eligible"
+      ],
+      "properties": {
+        "citation_id": {
+          "type": "string",
+          "pattern": "^CIT-[A-Z0-9-]+$"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title_verified": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_edition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "superseded_edition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effective_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statutory_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "verification_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verified": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "not_verified": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "relates_to": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "local_artifact": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "baseline_eligible": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string"
+        },
+        "artifact_candidate": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "원문 후보를 내려받았으나 아직 저장소에 반입하지 않은 상태. local_artifact 와 구분한다.",
+          "required": [
+            "url",
+            "retrieved_at",
+            "sha256",
+            "bytes",
+            "content_verified",
+            "import_status"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "retrieved_at": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "media_type": {
+              "type": "string"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "pdf_version": {
+              "type": "string"
+            },
+            "pdf_creator": {
+              "type": "string"
+            },
+            "pdf_producer": {
+              "type": "string"
+            },
+            "pdf_creation_date": {
+              "type": "string"
+            },
+            "authentication_required": {
+              "type": "boolean"
+            },
+            "content_verified": {
+              "type": "boolean"
+            },
+            "content_verification_attempt": {
+              "type": "string"
+            },
+            "provenance_support": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "import_status": {
+              "type": "string",
+              "enum": [
+                "not_imported",
+                "imported",
+                "rejected"
+              ]
+            },
+            "import_blocker": {
+              "type": "string"
+            },
+            "local_path_outside_repo": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
