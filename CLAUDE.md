@@ -54,7 +54,8 @@ workflow/             process-agent-map.json — M-001~M-100 Agent 라우팅
 agents/               registry.json, international-overlay.json
 app/                  FastAPI + SQLite. main.py, calc.py, static/
 tools/                validate_formulas.py, check_phase_alignment.py,
-                      build_mission_definitions.py, check_mission_definitions.py
+                      build_mission_definitions.py, check_mission_definitions.py,
+                      audit_catalog_io.py
 forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 ```
 
@@ -91,6 +92,7 @@ python -m security.audit
 | ~~F-03~~ | ~~app/main.py 의 계산 결함 4건~~ **해소됨 (2026-09-23).** `/api/mvp/feasibility` 가 공식 라이브러리 기반 계산 커널을 호출하고, 총발전단·순출력·사용가능 저장비율·압력/온도/Z 기반 밀도를 반환한다. | SCRUM-35 |
 | ~~F-05~~ | ~~기존 공식 15개 중 14개에 validation_cases 가 없다. CI 없음~~ **해소됨 (2026-09-23, D-027).** 공식 15개 모두 validation case를 갖고 CI에서 검증한다. | SCRUM-36 |
 | F-06 | 정본 카탈로그에 전방참조가 있다. `M-047`(Phase 4)의 입력 `SLD` 를 `M-058`(Phase 5)이 산출한다. 선행관계로 만들면 순환이 생겨 `forward_references` 로 분리했고 M-047 의 입력 계약은 불완전하다. 자격자 결정 필요. | — |
+| F-07 | 정본의 입력·출력 칸이 공통 엔티티 어휘가 아니다. 입력 235건 중 앞선 산출물과 연결되는 것은 101건(42%)뿐. 고아 산출 37건, 미산출 입력 129건, 명명 드리프트 4건. 엔티티 사전 수립이 F-02 의 실질적 선행조건이다. `tools/audit_catalog_io.py` | — |
 
 F-01 이 해소되어 이제 `phase` 값을 스키마대로 쓸 수 있다. 사용 가능한 값은
 `intake · business · site · hydrogen · power_grid · concept_design · safety_permit ·
