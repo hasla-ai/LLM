@@ -1,0 +1,6346 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Forge H2 미션 정의 골격 (초안)",
+  "source_of_truth": "docs/03-governance/mission-catalog.md",
+  "item_schema": "schemas/mission-definition.schema.json",
+  "authoring_status": "draft_incomplete",
+  "warning": "자동 생성된 골격이다. TODO-AUTHOR 가 남아 있는 항목은 미완성이며 기준선으로 승격하거나 미션 실행 근거로 사용하지 않는다.",
+  "generated_by": "tools/build_mission_definitions.py",
+  "missions": [
+    {
+      "mission_id": "M-001",
+      "schema_version": "1.0.0",
+      "code": "capture_intent",
+      "name": "capture intent",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "Product Owner",
+      "risk_class": "A",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "RawBrief"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ProjectIntent"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Product Owner",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Product Owner' 의 'Product' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "RawBrief"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-002",
+      "schema_version": "1.0.0",
+      "code": "normalize_units",
+      "name": "normalize units",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "Data Lead",
+      "risk_class": "B",
+      "gate": "G0",
+      "dependencies": [
+        "M-001"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "ProjectIntent"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "NormalizedIntent"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Data Lead",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Data Lead' 의 'Data' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-001"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-003",
+      "schema_version": "1.0.0",
+      "code": "classify_plant_archetype",
+      "name": "classify plant archetype",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Intent"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PlantArchetype"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Intent",
+              "candidate_missions": [
+                "M-001",
+                "M-002"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-004",
+      "schema_version": "1.0.0",
+      "code": "resolve_jurisdiction",
+      "name": "resolve jurisdiction",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "Regulatory",
+      "risk_class": "C",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Site",
+          "국가",
+          "지역"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "Jurisdiction"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Site",
+            "국가",
+            "지역"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-005",
+      "schema_version": "1.0.0",
+      "code": "map_authorities",
+      "name": "map authorities",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "PMO",
+      "risk_class": "A",
+      "gate": "G0",
+      "dependencies": [
+        "M-003",
+        "M-004"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Jurisdiction",
+          "Archetype"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AuthorityMatrix"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-003",
+            "M-004"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-006",
+      "schema_version": "1.0.0",
+      "code": "check_completeness",
+      "name": "check completeness",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "PMO",
+      "risk_class": "A",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Intent"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "MissingFieldList"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Intent",
+              "candidate_missions": [
+                "M-001",
+                "M-002"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-007",
+      "schema_version": "1.0.0",
+      "code": "register_assumptions",
+      "name": "register assumptions",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "PMO",
+      "risk_class": "A",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "MissingFields",
+          "Defaults"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AssumptionRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "MissingFields",
+            "Defaults"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-008",
+      "schema_version": "1.0.0",
+      "code": "triage_hazards",
+      "name": "triage hazards",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "HSE",
+      "risk_class": "C",
+      "gate": "G0",
+      "dependencies": [
+        "M-003"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Archetype",
+          "H2",
+          "Capacity"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "InitialHazardClass"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-003"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2",
+            "Capacity"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-009",
+      "schema_version": "1.0.0",
+      "code": "set_kill_criteria",
+      "name": "set kill criteria",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "Sponsor",
+      "risk_class": "D",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Budget",
+          "Schedule",
+          "Target"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "KillCriteria"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Sponsor",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Sponsor' 의 'Sponsor' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Budget",
+            "Schedule",
+            "Target"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-010",
+      "schema_version": "1.0.0",
+      "code": "create_project_graph",
+      "name": "create project graph",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "intake",
+      "owner_role": "PMO",
+      "risk_class": "A",
+      "gate": "G0",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Intent",
+          "Assumptions"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ProjectState"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 0,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Intent",
+              "candidate_missions": [
+                "M-001",
+                "M-002"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Assumptions"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-011",
+      "schema_version": "1.0.0",
+      "code": "forecast_load",
+      "name": "forecast load",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Commercial",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "OfftakerData"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "LoadProfile"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial' 의 'Commercial' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "OfftakerData"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-012",
+      "schema_version": "1.0.0",
+      "code": "define_offtake",
+      "name": "define offtake",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Commercial",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-011"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Load",
+          "Contracts"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "OfftakeSpec"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial' 의 'Commercial' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-011"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Contracts"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-013",
+      "schema_version": "1.0.0",
+      "code": "derive_energy_target",
+      "name": "derive energy target",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Power Lead",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [
+        "M-011"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Load",
+          "Hours"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EnergyTarget"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Power Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Power Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-011"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Hours"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-014",
+      "schema_version": "1.0.0",
+      "code": "build_dispatch_cases",
+      "name": "build dispatch cases",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Power Lead",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [
+        "M-013"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Energy",
+          "H2Availability"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "DispatchCases"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Power Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Power Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-013"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Availability"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-015",
+      "schema_version": "1.0.0",
+      "code": "define_h2_economics",
+      "name": "define h2 economics",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Commercial",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "H2Source",
+          "Volume"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2CommercialSpec"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial' 의 'Commercial' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Source",
+            "Volume"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-016",
+      "schema_version": "1.0.0",
+      "code": "build_h2_price_scenarios",
+      "name": "build h2 price scenarios",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Finance",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Quotes",
+          "Transport"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PriceScenarios"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Finance' 의 'Finance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Quotes",
+            "Transport"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-017",
+      "schema_version": "1.0.0",
+      "code": "build_revenue_case",
+      "name": "build revenue case",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Finance",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-012",
+        "M-014"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Offtake",
+          "Dispatch"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "RevenueCases"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Finance' 의 'Finance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-012",
+            "M-014"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-018",
+      "schema_version": "1.0.0",
+      "code": "estimate_capex_opex",
+      "name": "estimate capex opex",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Finance",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-003"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Archetype",
+          "Capacity",
+          "Site"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CostRange"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Finance' 의 'Finance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-003"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Capacity",
+            "Site"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-019",
+      "schema_version": "1.0.0",
+      "code": "build_finance_case",
+      "name": "build finance case",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Finance",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-017",
+        "M-018"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Cost",
+          "Revenue",
+          "Funding"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "FinanceCase"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Finance' 의 'Finance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-017",
+            "M-018"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Funding"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-020",
+      "schema_version": "1.0.0",
+      "code": "business_go_no_go",
+      "name": "business go no go",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "business",
+      "owner_role": "Sponsor",
+      "risk_class": "D",
+      "gate": "G1",
+      "dependencies": [
+        "M-009",
+        "M-019"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "FinanceCase",
+          "KillCriteria"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "DevelopmentGate"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Sponsor",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 1,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Sponsor' 의 'Sponsor' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-009",
+            "M-019"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-021",
+      "schema_version": "1.0.0",
+      "code": "geocode_site",
+      "name": "geocode site",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "GIS/Data",
+      "risk_class": "B",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Address",
+          "Coordinates"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CoordinateRef"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "GIS/Data",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'GIS/Data' 의 'Data' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Address",
+            "Coordinates"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-022",
+      "schema_version": "1.0.0",
+      "code": "load_cadastral_parcels",
+      "name": "load cadastral parcels",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "GIS/Data",
+      "risk_class": "B",
+      "gate": "G1",
+      "dependencies": [
+        "M-021"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Coordinate"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ParcelSet"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "GIS/Data",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'GIS/Data' 의 'Data' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-021"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-023",
+      "schema_version": "1.0.0",
+      "code": "check_land_use",
+      "name": "check land use",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "Civil/Regulatory",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [
+        "M-022"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Parcel",
+          "Zoning"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "LandConstraintSet"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Civil/Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Civil/Regulatory' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-022"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Zoning"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-024",
+      "schema_version": "1.0.0",
+      "code": "verify_site_control",
+      "name": "verify site control",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "Commercial",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-022"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Parcel",
+          "RightsDocs"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SiteControl"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial' 의 'Commercial' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-022"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "RightsDocs"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-025",
+      "schema_version": "1.0.0",
+      "code": "analyze_topography",
+      "name": "analyze topography",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "Civil",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [
+        "M-022"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Elevation",
+          "Parcel"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CivilBasis"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Civil",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Civil' 의 'Civil' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-022"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Elevation"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-026",
+      "schema_version": "1.0.0",
+      "code": "screen_geology",
+      "name": "screen geology",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "Civil",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [
+        "M-024"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Geology",
+          "Site"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "GeotechnicalScreen"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Civil",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Civil' 의 'Civil' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-024"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Geology"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-027",
+      "schema_version": "1.0.0",
+      "code": "screen_natural_hazards",
+      "name": "screen natural hazards",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "HSE/Civil",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "HazardLayers"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "HazardMap"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE/Civil",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE/Civil' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "HazardLayers"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-028",
+      "schema_version": "1.0.0",
+      "code": "screen_protected_areas",
+      "name": "screen protected areas",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "Environment",
+      "risk_class": "C",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Ecology",
+          "CulturalLayers"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EnvironmentalScreen"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Environment",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Environment' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Ecology",
+            "CulturalLayers"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-029",
+      "schema_version": "1.0.0",
+      "code": "analyze_access_logistics",
+      "name": "analyze access logistics",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "EPC",
+      "risk_class": "B",
+      "gate": "G1",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Roads",
+          "Equipment"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "LogisticsScreen"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "EPC",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'EPC' 의 'EPC' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Roads",
+            "Equipment"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-030",
+      "schema_version": "1.0.0",
+      "code": "rank_site_candidates",
+      "name": "rank site candidates",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "site",
+      "owner_role": "PMO",
+      "risk_class": "A",
+      "gate": "G1",
+      "dependencies": [
+        "M-018"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Candidates",
+          "Constraints",
+          "Cost"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "RankedSites"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 2,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO' 의 'PMO' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-018"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Candidates",
+            "Constraints"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-031",
+      "schema_version": "1.0.0",
+      "code": "select_supply_path",
+      "name": "select supply path",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Hydrogen Lead",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Intent",
+          "Site",
+          "Market"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2SupplyArchetype"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Hydrogen Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Hydrogen Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Intent",
+              "candidate_missions": [
+                "M-001",
+                "M-002"
+              ]
+            },
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Market"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-032",
+      "schema_version": "1.0.0",
+      "code": "verify_hydrogen_origin",
+      "name": "verify hydrogen origin",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Regulatory",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "SupplierDocs"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2Origin"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "SupplierDocs"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-033",
+      "schema_version": "1.0.0",
+      "code": "specify_hydrogen_quality",
+      "name": "specify hydrogen quality",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Hydrogen Lead",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-031"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Vendor",
+          "Supply"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2QualitySpec"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Hydrogen Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Hydrogen Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-031"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Vendor"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-034",
+      "schema_version": "1.0.0",
+      "code": "match_supply_demand",
+      "name": "match supply demand",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Hydrogen Lead",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-014"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "H2Profile",
+          "Dispatch"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SupplyDemandFit"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Hydrogen Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Hydrogen Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-014"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Profile"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-035",
+      "schema_version": "1.0.0",
+      "code": "size_storage",
+      "name": "size storage",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Mechanical",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "H2Profile",
+          "Autonomy"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "StorageSpec"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Mechanical",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Mechanical' 의 'Mechanical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Profile",
+            "Autonomy"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-036",
+      "schema_version": "1.0.0",
+      "code": "size_compression_regulation",
+      "name": "size compression regulation",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Mechanical/Piping",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Pressures",
+          "Flow"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ConditioningSpec"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Mechanical/Piping",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Mechanical/Piping' 의 'Mechanical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Pressures",
+            "Flow"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-037",
+      "schema_version": "1.0.0",
+      "code": "plan_transport_route",
+      "name": "plan transport route",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Logistics",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Source",
+          "Site",
+          "Roads"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "DeliveryPlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Logistics",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Logistics' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Source",
+            "Roads"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-038",
+      "schema_version": "1.0.0",
+      "code": "design_supply_redundancy",
+      "name": "design supply redundancy",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Hydrogen Lead",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-034"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Demand",
+          "Suppliers"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ReliabilityCase"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Hydrogen Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Hydrogen Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-034"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Suppliers"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-039",
+      "schema_version": "1.0.0",
+      "code": "audit_supplier",
+      "name": "audit supplier",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Procurement",
+      "risk_class": "B",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Certificates",
+          "References"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SupplierScore"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Procurement",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Procurement' 의 'Procurement' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Certificates",
+            "References"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-040",
+      "schema_version": "1.0.0",
+      "code": "h2_ready_gate",
+      "name": "h2 ready gate",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "hydrogen",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-035",
+        "M-039"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Supply",
+          "Storage",
+          "Supplier"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2ReadyDecision"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 3,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-035",
+            "M-039"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Supply",
+              "candidate_missions": [
+                "M-031",
+                "M-034"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-041",
+      "schema_version": "1.0.0",
+      "code": "select_power_technology",
+      "name": "select power technology",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Capacity",
+          "H2",
+          "Site"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PowerBlockOption"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "H2",
+              "candidate_missions": [
+                "M-015",
+                "M-031",
+                "M-032",
+                "M-033",
+                "M-040"
+              ]
+            },
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Capacity"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-042",
+      "schema_version": "1.0.0",
+      "code": "simulate_power_performance",
+      "name": "simulate power performance",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Power Lead",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-014"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "VendorCurves",
+          "Dispatch"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PerformanceModel"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Power Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Power Lead' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-014"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "VendorCurves"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-043",
+      "schema_version": "1.0.0",
+      "code": "calculate_auxiliary_load",
+      "name": "calculate auxiliary load",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Mechanical/Electrical",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-041"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Power",
+          "Cooling",
+          "Compression"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AuxLoad"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Mechanical/Electrical",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Mechanical/Electrical' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-041"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Cooling",
+            "Compression"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-044",
+      "schema_version": "1.0.0",
+      "code": "calculate_heat_water_balance",
+      "name": "calculate heat water balance",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Mechanical/Environment",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-041"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Power",
+          "Climate",
+          "Cooling"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "UtilityBalance"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Mechanical/Environment",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Mechanical/Environment' 의 'Mechanical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-041"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Climate",
+            "Cooling"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-045",
+      "schema_version": "1.0.0",
+      "code": "screen_grid_points",
+      "name": "screen grid points",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Electrical/Grid",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Site",
+          "GridData",
+          "MW"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "GridPointCandidates"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Electrical/Grid",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Electrical/Grid' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "GridData",
+            "MW"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-046",
+      "schema_version": "1.0.0",
+      "code": "request_grid_preconsultation",
+      "name": "request grid preconsultation",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Electrical/Grid",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-045"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "GridPoint",
+          "PowerSpec"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PreconsultationResult"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Electrical/Grid",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Electrical/Grid' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-045"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "PowerSpec"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-047",
+      "schema_version": "1.0.0",
+      "code": "run_interconnection_study",
+      "name": "run interconnection study",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Electrical/Grid",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-014",
+        "M-045",
+        "M-058"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "GridPoint",
+          "SLD",
+          "Dispatch"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "GridStudyPackage"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Electrical/Grid",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Electrical/Grid' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-014",
+            "M-045",
+            "M-058"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-048",
+      "schema_version": "1.0.0",
+      "code": "check_power_quality",
+      "name": "check power quality",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Electrical/Grid",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Generator",
+          "GridRules"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "GridCompliance"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Electrical/Grid",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Electrical/Grid' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Generator",
+            "GridRules"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-049",
+      "schema_version": "1.0.0",
+      "code": "select_market_route",
+      "name": "select market route",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Commercial",
+      "risk_class": "A",
+      "gate": "G2",
+      "dependencies": [
+        "M-012"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Size",
+          "Offtake",
+          "Grid"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "MarketRoute"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial' 의 'Commercial' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-012"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Grid",
+              "candidate_missions": [
+                "M-045",
+                "M-047",
+                "M-048"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Size"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-050",
+      "schema_version": "1.0.0",
+      "code": "power_grid_ready_gate",
+      "name": "power grid ready gate",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "power_grid",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G2",
+      "dependencies": [
+        "M-041",
+        "M-049"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Power",
+          "Grid",
+          "Market"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PowerReadyDecision"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 4,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-041",
+            "M-049"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Grid",
+              "candidate_missions": [
+                "M-045",
+                "M-047",
+                "M-048"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-051",
+      "schema_version": "1.0.0",
+      "code": "freeze_design_basis",
+      "name": "freeze design basis",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Project",
+          "H2",
+          "Power"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "DesignBasis"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Project",
+              "candidate_missions": [
+                "M-001",
+                "M-010"
+              ]
+            },
+            {
+              "input_token": "H2",
+              "candidate_missions": [
+                "M-015",
+                "M-031",
+                "M-032",
+                "M-033",
+                "M-040"
+              ]
+            },
+            {
+              "input_token": "Power",
+              "candidate_missions": [
+                "M-041",
+                "M-050"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-052",
+      "schema_version": "1.0.0",
+      "code": "generate_process_flow",
+      "name": "generate process flow",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Process Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-051"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "DesignBasis"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PFD"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Process Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Process Lead' 의 'Process' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-051"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-053",
+      "schema_version": "1.0.0",
+      "code": "calculate_mass_energy_balance",
+      "name": "calculate mass energy balance",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Process Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-042",
+        "M-052"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "H2",
+          "Performance"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "BalanceModel"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Process Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Process Lead' 의 'Process' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-042",
+            "M-052"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "H2",
+              "candidate_missions": [
+                "M-015",
+                "M-031",
+                "M-032",
+                "M-033",
+                "M-040"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-054",
+      "schema_version": "1.0.0",
+      "code": "generate_plot_plan",
+      "name": "generate plot plan",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Civil/Mechanical",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Site",
+          "Equipment",
+          "Zones"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PlotPlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Civil/Mechanical",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Civil/Mechanical' 의 'Civil' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Equipment",
+            "Zones"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-055",
+      "schema_version": "1.0.0",
+      "code": "classify_hazardous_areas",
+      "name": "classify hazardous areas",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "HSE/Process",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Sources",
+          "Inventory",
+          "Ventilation"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "HazardousArea"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE/Process",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE/Process' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Sources",
+            "Inventory",
+            "Ventilation"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-056",
+      "schema_version": "1.0.0",
+      "code": "build_equipment_register",
+      "name": "build equipment register",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Engineering",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-051",
+        "M-052"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "DesignBasis"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EquipmentRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Engineering",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Engineering' 의 'Engineering' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-051",
+            "M-052"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-057",
+      "schema_version": "1.0.0",
+      "code": "route_piping",
+      "name": "route piping",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Piping Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-052",
+        "M-054"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "PlotPlan",
+          "Pressure"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PipingConcept"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Piping Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Piping Lead' 의 'Piping' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-052",
+            "M-054"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Pressure"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-058",
+      "schema_version": "1.0.0",
+      "code": "generate_single_line_diagram",
+      "name": "generate single line diagram",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Electrical Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Power",
+          "Grid"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SLD"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Electrical Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Electrical Lead' 의 'Electrical' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Power",
+              "candidate_missions": [
+                "M-041",
+                "M-050"
+              ]
+            },
+            {
+              "input_token": "Grid",
+              "candidate_missions": [
+                "M-045",
+                "M-047",
+                "M-048"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-059",
+      "schema_version": "1.0.0",
+      "code": "define_icss_safety_concept",
+      "name": "define icss safety concept",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "ICSS Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-052"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "Hazards"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ICSSConcept"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "ICSS Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'ICSS Lead' 의 'ICSS' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-052"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Hazards"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-060",
+      "schema_version": "1.0.0",
+      "code": "review_concept_package",
+      "name": "review concept package",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "concept_design",
+      "owner_role": "Chief Engineer",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-052",
+        "M-054",
+        "M-058"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "Balance",
+          "Plot",
+          "SLD"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ConceptReview"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 5,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-052",
+            "M-054",
+            "M-058"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Balance",
+              "candidate_missions": [
+                "M-044",
+                "M-053"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-061",
+      "schema_version": "1.0.0",
+      "code": "build_legal_requirement_matrix",
+      "name": "build legal requirement matrix",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "Regulatory",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-004"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Jurisdiction",
+          "Archetype"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "LegalMatrix"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-004"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Archetype",
+              "candidate_missions": [
+                "M-003",
+                "M-031"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-062",
+      "schema_version": "1.0.0",
+      "code": "map_kgs_codes",
+      "name": "map kgs codes",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "Regulatory/HSE",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-056"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "H2Facilities",
+          "Equipment"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "KGSMatrix"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory/HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory/HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-056"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Facilities"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-063",
+      "schema_version": "1.0.0",
+      "code": "build_gas_permit_path",
+      "name": "build gas permit path",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "Regulatory",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Inventory",
+          "Pressure",
+          "Facility"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "GasPermitPlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Inventory",
+            "Pressure",
+            "Facility"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-064",
+      "schema_version": "1.0.0",
+      "code": "build_fire_safety_basis",
+      "name": "build fire safety basis",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "Fire Lead",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Layout",
+          "FireLoad",
+          "Access"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "FireSafetyBasis"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Fire Lead",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Fire Lead' 의 'Fire' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Layout",
+            "FireLoad",
+            "Access"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-065",
+      "schema_version": "1.0.0",
+      "code": "run_hazid",
+      "name": "run hazid",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "HSE",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-052",
+        "M-054"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "PFD",
+          "Plot",
+          "Modes"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "HAZIDRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-052",
+            "M-054"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Modes"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-066",
+      "schema_version": "1.0.0",
+      "code": "run_hazop_lopa",
+      "name": "run hazop lopa",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "HSE/Process",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Nodes",
+          "Safeguards"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SafeguardRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE/Process",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE/Process' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Nodes",
+            "Safeguards"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-067",
+      "schema_version": "1.0.0",
+      "code": "run_consequence_analysis",
+      "name": "run consequence analysis",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "HSE",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "LeakCases",
+          "Weather",
+          "Ignition"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ConsequenceModel"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "LeakCases",
+            "Weather",
+            "Ignition"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-068",
+      "schema_version": "1.0.0",
+      "code": "screen_psm_applicability",
+      "name": "screen psm applicability",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "HSE/Regulatory",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Inventory",
+          "Process"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PSMDecision"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE/Regulatory",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE/Regulatory' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Inventory",
+            "Process"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-069",
+      "schema_version": "1.0.0",
+      "code": "screen_environmental_path",
+      "name": "screen environmental path",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "Environment",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Site",
+          "Capacity",
+          "Emissions"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EIAPath"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Environment",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Environment' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Capacity",
+            "Emissions"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-070",
+      "schema_version": "1.0.0",
+      "code": "permit_readiness_gate",
+      "name": "permit readiness gate",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "safety_permit",
+      "owner_role": "HSE Authority",
+      "risk_class": "C",
+      "gate": "G3",
+      "dependencies": [
+        "M-061",
+        "M-064",
+        "M-069"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Legal",
+          "Safety",
+          "EIA"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PermitReadiness"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "HSE Authority",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 6,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'HSE Authority' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-061",
+            "M-064",
+            "M-069"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-071",
+      "schema_version": "1.0.0",
+      "code": "define_feed_scope",
+      "name": "define feed scope",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "PMO/Engineering",
+      "risk_class": "C",
+      "gate": "G4",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Concept",
+          "Permit"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "FEEDScope"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "PMO/Engineering",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO/Engineering' 의 'Engineering' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Concept",
+              "candidate_missions": [
+                "M-057",
+                "M-059",
+                "M-060"
+              ]
+            },
+            {
+              "input_token": "Permit",
+              "candidate_missions": [
+                "M-063",
+                "M-070"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-072",
+      "schema_version": "1.0.0",
+      "code": "run_discipline_calculations",
+      "name": "run discipline calculations",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Discipline Leads",
+      "risk_class": "C",
+      "gate": "G4",
+      "dependencies": [
+        "M-071"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "FEEDScope"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CalculationSet"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Discipline Leads",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Discipline Leads' 이 규칙에 없어 보수적으로 C",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-071"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-073",
+      "schema_version": "1.0.0",
+      "code": "generate_vendor_datasheets",
+      "name": "generate vendor datasheets",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Procurement/Engineering",
+      "risk_class": "C",
+      "gate": "G4",
+      "dependencies": [
+        "M-051",
+        "M-056"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Equipment",
+          "DesignBasis"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "VendorDataSheets"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Procurement/Engineering",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Procurement/Engineering' 의 'Engineering' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-051",
+            "M-056"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-074",
+      "schema_version": "1.0.0",
+      "code": "identify_long_lead_items",
+      "name": "identify long lead items",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Procurement",
+      "risk_class": "B",
+      "gate": "G4",
+      "dependencies": [
+        "M-049",
+        "M-056"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Equipment",
+          "Market"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "LongLeadRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Procurement",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Procurement' 의 'Procurement' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-049",
+            "M-056"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-075",
+      "schema_version": "1.0.0",
+      "code": "generate_rfp",
+      "name": "generate rfp",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Commercial/Procurement",
+      "risk_class": "B",
+      "gate": "G4",
+      "dependencies": [
+        "M-071"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "FEED",
+          "CommercialTerms"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "RFP"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Commercial/Procurement",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial/Procurement' 의 'Procurement' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-071"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "CommercialTerms"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-076",
+      "schema_version": "1.0.0",
+      "code": "evaluate_bids",
+      "name": "evaluate bids",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Procurement/Engineering",
+      "risk_class": "C",
+      "gate": "G4",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Bids",
+          "ScoringModel"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "BidMatrix"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Procurement/Engineering",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Procurement/Engineering' 의 'Engineering' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Bids",
+            "ScoringModel"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-077",
+      "schema_version": "1.0.0",
+      "code": "select_epc_strategy",
+      "name": "select epc strategy",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Commercial/Sponsor",
+      "risk_class": "D",
+      "gate": "G4",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Risk",
+          "Funding"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EPCStrategy"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Commercial/Sponsor",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commercial/Sponsor' 의 'Sponsor' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Risk",
+            "Funding"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-078",
+      "schema_version": "1.0.0",
+      "code": "build_baseline_schedule",
+      "name": "build baseline schedule",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "PMO/EPC",
+      "risk_class": "B",
+      "gate": "G4",
+      "dependencies": [
+        "M-071"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Scope",
+          "Procurement",
+          "Permits"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "BaselineSchedule"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "PMO/EPC",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO/EPC' 의 'EPC' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-071"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Procurement",
+            "Permits"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-079",
+      "schema_version": "1.0.0",
+      "code": "estimate_class_cost",
+      "name": "estimate class cost",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Finance",
+      "risk_class": "A",
+      "gate": "G4",
+      "dependencies": [
+        "M-071"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "FEED",
+          "Bids",
+          "Quantities"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CostEstimate"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Finance' 의 'Finance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-071"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Bids",
+            "Quantities"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-080",
+      "schema_version": "1.0.0",
+      "code": "investment_ntp_gate",
+      "name": "investment ntp gate",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "feed_epc",
+      "owner_role": "Sponsor",
+      "risk_class": "D",
+      "gate": "G4",
+      "dependencies": [
+        "M-019",
+        "M-077"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Finance",
+          "Permit",
+          "EPC"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "NTPDecision"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Sponsor",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 7,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Sponsor' 의 'Sponsor' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-019",
+            "M-077"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Permit",
+              "candidate_missions": [
+                "M-063",
+                "M-070"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-081",
+      "schema_version": "1.0.0",
+      "code": "issue_ifc_drawings",
+      "name": "issue ifc drawings",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Chief Engineer/EPC",
+      "risk_class": "C",
+      "gate": "G5",
+      "dependencies": [
+        "M-071"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "FEED",
+          "ApprovedChanges"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "IFCSet"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Chief Engineer/EPC",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Chief Engineer/EPC' 의 'Chief Engineer' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-071"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "ApprovedChanges"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-082",
+      "schema_version": "1.0.0",
+      "code": "track_permit_conditions",
+      "name": "track permit conditions",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Regulatory/PMO",
+      "risk_class": "C",
+      "gate": "G5",
+      "dependencies": [
+        "M-081"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Permits",
+          "IFC"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PermitConditionTracker"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory/PMO",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory/PMO' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-081"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Permits"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-083",
+      "schema_version": "1.0.0",
+      "code": "execute_civil_works",
+      "name": "execute civil works",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Construction",
+      "risk_class": "B",
+      "gate": "G5",
+      "dependencies": [
+        "M-026",
+        "M-081"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Site",
+          "Geotech",
+          "IFC"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CivilWorkPackage"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Construction",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Construction' 의 'Construction' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-026",
+            "M-081"
+          ],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Site",
+              "candidate_missions": [
+                "M-024",
+                "M-030"
+              ]
+            }
+          ],
+          "unresolved_inputs": []
+        }
+      }
+    },
+    {
+      "mission_id": "M-084",
+      "schema_version": "1.0.0",
+      "code": "manage_fat",
+      "name": "manage fat",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "QA/Procurement",
+      "risk_class": "C",
+      "gate": "G5",
+      "dependencies": [
+        "M-056"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Equipment",
+          "InspectionPlan"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "FATRecords"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "QA/Procurement",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'QA/Procurement' 의 'QA' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-056"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "InspectionPlan"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-085",
+      "schema_version": "1.0.0",
+      "code": "install_equipment",
+      "name": "install equipment",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Construction",
+      "risk_class": "B",
+      "gate": "G5",
+      "dependencies": [
+        "M-056"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Equipment",
+          "Foundation",
+          "Lifting"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AssetRegister"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Construction",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Construction' 의 'Construction' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-056"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Foundation",
+            "Lifting"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-086",
+      "schema_version": "1.0.0",
+      "code": "run_qa_qc",
+      "name": "run qa qc",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "QA/QC",
+      "risk_class": "C",
+      "gate": "G5",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Assets",
+          "ITP",
+          "Inspections"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "QualityDossier"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "QA/QC",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'QA/QC' 의 'QA' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Assets",
+            "ITP",
+            "Inspections"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-087",
+      "schema_version": "1.0.0",
+      "code": "precommission_systems",
+      "name": "precommission systems",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Commissioning",
+      "risk_class": "C",
+      "gate": "G6",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Installation",
+          "Quality"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "PrecommissionStatus"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Commissioning",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commissioning' 의 'Commissioning' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Quality",
+              "candidate_missions": [
+                "M-033",
+                "M-086"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Installation"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-088",
+      "schema_version": "1.0.0",
+      "code": "generate_commissioning_plan",
+      "name": "generate commissioning plan",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Commissioning/HSE",
+      "risk_class": "C",
+      "gate": "G6",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Boundaries",
+          "Hazards"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CommissioningPlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Commissioning/HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commissioning/HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Boundaries",
+            "Hazards"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-089",
+      "schema_version": "1.0.0",
+      "code": "run_performance_safety_tests",
+      "name": "run performance safety tests",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Commissioning/QA",
+      "risk_class": "C",
+      "gate": "G6",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Plan",
+          "GridConditions"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AcceptanceResults"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Commissioning/QA",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Commissioning/QA' 의 'Commissioning' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Plan",
+              "candidate_missions": [
+                "M-003",
+                "M-037",
+                "M-054",
+                "M-063",
+                "M-088"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "GridConditions"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-090",
+      "schema_version": "1.0.0",
+      "code": "prepare_cod_handover",
+      "name": "prepare cod handover",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "construction",
+      "owner_role": "Operations",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Tests",
+          "AsBuilt",
+          "O&M"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "CODPackage"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Operations",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 8,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations' 의 'Operations' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Tests",
+            "AsBuilt",
+            "O&M"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-091",
+      "schema_version": "1.0.0",
+      "code": "build_asset_digital_twin",
+      "name": "build asset digital twin",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Operations/Data",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "AsBuilt",
+          "Tags",
+          "Sensors"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "AssetTwin"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Operations/Data",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations/Data' 의 'Operations' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "AsBuilt",
+            "Tags",
+            "Sensors"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-092",
+      "schema_version": "1.0.0",
+      "code": "ingest_h2_telemetry",
+      "name": "ingest h2 telemetry",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Operations/Data",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Flow",
+          "Pressure",
+          "Purity",
+          "Alarms"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "H2Telemetry"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Operations/Data",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations/Data' 의 'Operations' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Flow",
+            "Pressure",
+            "Purity",
+            "Alarms"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-093",
+      "schema_version": "1.0.0",
+      "code": "calculate_kpis",
+      "name": "calculate kpis",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Operations/Finance",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [
+        "M-014",
+        "M-092"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Telemetry",
+          "Dispatch",
+          "Contracts"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "KPIStream"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Operations/Finance",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations/Finance' 의 'Operations' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-014",
+            "M-092"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Contracts"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-094",
+      "schema_version": "1.0.0",
+      "code": "predict_maintenance",
+      "name": "predict maintenance",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Maintenance/Data",
+      "risk_class": "C",
+      "gate": "G7",
+      "dependencies": [
+        "M-091",
+        "M-092"
+      ],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Twin",
+          "Telemetry",
+          "Failures"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "MaintenancePlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Maintenance/Data",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Maintenance/Data' 의 'Maintenance' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [
+            "M-091",
+            "M-092"
+          ],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Failures"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-095",
+      "schema_version": "1.0.0",
+      "code": "manage_safety_events",
+      "name": "manage safety events",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Operations/HSE",
+      "risk_class": "C",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Alarms",
+          "Incidents",
+          "Procedures"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "SafetyEvent"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Operations/HSE",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations/HSE' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Alarms",
+            "Incidents",
+            "Procedures"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-096",
+      "schema_version": "1.0.0",
+      "code": "build_compliance_ledger",
+      "name": "build compliance ledger",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Regulatory/QA",
+      "risk_class": "C",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Permits",
+          "Inspections",
+          "Operations"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "ComplianceLedger"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "Regulatory/QA",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Regulatory/QA' 의 'Regulatory' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "Permits",
+            "Inspections",
+            "Operations"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-097",
+      "schema_version": "1.0.0",
+      "code": "optimize_dispatch",
+      "name": "optimize dispatch",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Operations/Commercial",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "H2Price",
+          "PowerPrice",
+          "Limits"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "DispatchPlan"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Operations/Commercial",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Operations/Commercial' 의 'Operations' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "H2Price",
+            "PowerPrice",
+            "Limits"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-098",
+      "schema_version": "1.0.0",
+      "code": "run_management_of_change",
+      "name": "run management of change",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "PMO/HSE/Engineering",
+      "risk_class": "C",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "ChangeRequest",
+          "Impact"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "MOCDecision"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": true,
+        "review_role": "PMO/HSE/Engineering",
+        "approval_required_for_baseline": true
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'PMO/HSE/Engineering' 의 'HSE' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "ChangeRequest",
+            "Impact"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-099",
+      "schema_version": "1.0.0",
+      "code": "build_evaluation_dataset",
+      "name": "build evaluation dataset",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "AI Safety/Data",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "MissionResults",
+          "Reviews"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "EvaluationDataset"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "AI Safety/Data",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'AI Safety/Data' 의 'Data' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [],
+          "unresolved_inputs": [
+            "MissionResults",
+            "Reviews"
+          ]
+        }
+      }
+    },
+    {
+      "mission_id": "M-100",
+      "schema_version": "1.0.0",
+      "code": "operate_engineering_copilot",
+      "name": "operate engineering copilot",
+      "purpose": "TODO-AUTHOR — 카탈로그에 목적 문장이 없다. 자격자가 작성한다.",
+      "phase": "operations",
+      "owner_role": "Product/AI",
+      "risk_class": "B",
+      "gate": "G7",
+      "dependencies": [],
+      "input_contract": {
+        "schema_ref": "TODO-AUTHOR — 입력 스키마 미지정",
+        "required_fields": [
+          "Project",
+          "Evidence",
+          "LiveData"
+        ],
+        "optional_fields": [],
+        "accepts_unknowns": false
+      },
+      "output_contract": {
+        "schema_ref": "TODO-AUTHOR — 출력 스키마 미지정",
+        "required_fields": [
+          "NextMission",
+          "Alert"
+        ],
+        "quality_checks": [
+          "TODO-AUTHOR — 품질검사 조건 미작성"
+        ]
+      },
+      "completion_criteria": [
+        "TODO-AUTHOR — 완료 판정기준 미작성"
+      ],
+      "block_conditions": [
+        "TODO-AUTHOR — 차단조건 미작성"
+      ],
+      "review_policy": {
+        "required": false,
+        "review_role": "Product/AI",
+        "approval_required_for_baseline": false
+      },
+      "executor": "hybrid",
+      "implementation_ref": null,
+      "extensions": {
+        "source_of_truth": "docs/03-governance/mission-catalog.md",
+        "catalog_phase_index": 9,
+        "generated_by": "tools/build_mission_definitions.py",
+        "authoring_status": "draft_incomplete",
+        "risk_class_basis": "담당 'Product/AI' 의 'AI' 로부터 규칙 도출",
+        "risk_class_verified": false,
+        "dependency_derivation": {
+          "resolved_from_io_chain": [],
+          "ambiguous_inputs": [
+            {
+              "input_token": "Project",
+              "candidate_missions": [
+                "M-001",
+                "M-010"
+              ]
+            }
+          ],
+          "unresolved_inputs": [
+            "Evidence",
+            "LiveData"
+          ]
+        }
+      }
+    }
+  ]
+}

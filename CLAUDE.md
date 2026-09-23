@@ -53,7 +53,8 @@ knowledge/            catalog.json, agent-databases/, formula-library.json,
 workflow/             process-agent-map.json — M-001~M-100 Agent 라우팅
 agents/               registry.json, international-overlay.json
 app/                  FastAPI + SQLite. main.py, calc.py, static/
-tools/                validate_formulas.py, check_phase_alignment.py
+tools/                validate_formulas.py, check_phase_alignment.py,
+                      build_mission_definitions.py, check_mission_definitions.py
 forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 ```
 
@@ -64,9 +65,10 @@ forge_model/          로컬 코딩모델 학습 (legacy_prototype)
 ```
 python tools/validate_formulas.py
 python tools/check_phase_alignment.py
+python tools/check_mission_definitions.py
 ```
 
-기대: 검증 케이스 실패 0, 스키마 실패 0, 단계 불일치 0.
+기대: 검증 케이스 실패 0, 스키마 실패 0, 단계 불일치 0, 미션정의 불일치 0.
 스키마가 0건으로 나오면 `pip install jsonschema` 로 켠다.
 
 단계(phase) 분류의 정본은 `docs/03-governance/mission-catalog.md` 다 (D-024).
@@ -82,14 +84,14 @@ python tools/check_phase_alignment.py
 | ID | 내용 | Jira |
 |---|---|---|
 | ~~F-01~~ | ~~단계 분류가 세 파일에서 다르다~~ **해소됨 (2026-09-23, D-024).** 카탈로그를 정본으로 삼아 workflow 맵을 v1.1.0 으로 재작성. `check_phase_alignment.py` 가 회귀를 막는다. | SCRUM-34 |
-| F-02 | mission-catalog.md 가 mission-definition.schema.json 의 필수 필드(dependencies, completion_criteria, block_conditions)를 갖고 있지 않다. | — |
+| F-02 | mission-catalog.md 가 스키마 필수 필드를 갖고 있지 않다. 골격 `mission-definitions.draft.json` 생성됨 (스키마 100/100, **내용완결 0/100**). 100개 미션의 목적·완료기준·차단조건과 모호한 선행관계 29건은 자격자 작성 대기. `mission-library-100.json` 은 이식 원본이 아니다 (D-025). | — |
 | F-03 | app/main.py 의 계산 결함 4건. 수정 모듈은 app/calc.py 에 있고 교체는 미완. | SCRUM-35 |
 | F-05 | 기존 공식 15개 중 14개에 validation_cases 가 없다. CI 없음. | SCRUM-36 |
 
 F-01 이 해소되어 이제 `phase` 값을 스키마대로 쓸 수 있다. 사용 가능한 값은
 `intake · business · site · hydrogen · power_grid · concept_design · safety_permit ·
 feed_epc · construction · operations` 이며 카탈로그 Phase 0~9 와 1:1 대응한다.
-남은 선행조건은 F-02(미션 속성 이식)다.
+남은 선행조건은 F-02 다. `TODO-AUTHOR` 가 남은 미션 정의는 기준선으로 승격하거나 미션 실행 근거로 쓰지 않는다.
 
 ## 6. app/main.py 계산 결함 (F-03)
 

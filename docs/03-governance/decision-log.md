@@ -38,6 +38,7 @@
 | D-022 | 2026-09-22 | SCRUM-29 계산 커널과 SCRUM-39 코드 보호는 기존 SCRUM-18·G0–G7의 순서·의미·Evidence 구조를 변경하지 않는 교차 절단 통제로 편입한다. | 계산 재현성과 기존 프로그램 보호를 동시에 확보해야 함 | G1/G2/G3/G4/G6/G7 계산 미션과 모든 릴리스·변경 검토에 영향 | PMO + Chief Engineer + AI/Platform + Cybersecurity | Under Review |
 | D-023 | 2026-09-22 | 다른 Agent가 작성한 SCRUM-29 후보 산출물은 canonical 경로로 추가하되 `app/main.py`와 기존 SCRUM-18 실행흐름은 교체하지 않는다. | 계산 결함·공식 검증을 반영하면서 기존 프로그램 불변 원칙을 지켜야 함 | H2 공식 라이브러리·독립 계산 모듈·검증 러너·F-01/F-02 결함 해결 순서 | Chief Engineer + PMO + AI/Platform | Under Review |
 | D-024 | 2026-09-23 | 단계(phase) 분류의 정본은 `docs/03-governance/mission-catalog.md`로 하고, `schemas/mission-definition.schema.json`의 phase enum과 `workflow/process-agent-map.json`의 단계별 미션 배정·Gate를 카탈로그에 맞춘다. 카탈로그에 없는 `commissioning` 단계는 제거하고 해당 Agent·산출물·차단조건을 `construction`으로 흡수한다. | 카탈로그만이 100개 미션 전건의 ID·함수·입력·출력·담당·Gate를 한 표에 갖고 있어 다른 두 파일이 카탈로그에서 파생될 수 있다. 역방향은 불가능하다. 또한 스키마 enum은 이미 카탈로그의 10단계와 이름·순서가 일치했으므로 카탈로그 채택 시 변경량이 가장 작다. | workflow 맵 35건 불일치 해소, 미션 100개 전건의 Agent 라우팅 정정, `concept_design` 단계 신설, F-01 종결. F-02 미션 속성 이식과 SCRUM-34 착수 가능 | PMO + Chief Engineer | Approved |
+| D-025 | 2026-09-23 | `mission-library-100.json` 을 미션 속성 이식 원본으로 쓰지 않고 참고 자료로만 남긴다. 미션 정의는 정본 카탈로그에서 생성하고, 기계로 도출할 수 없는 필드는 자격자가 작성한다. | 두 문서는 서로 다른 100개 미션 분해다. 산출물 엔티티가 대응하는 미션이 100건 중 3건뿐이고 단계·게이트 구성(G0~G9 COD 종료 vs G0~G7 운영 포함)이 다르다. ID 를 맞춰 병합하면 97개 미션에 틀린 선행관계·완료기준·차단조건이 들어간다. | F-02 해소 경로 변경. `mission-definitions.draft.json` 100건 생성(스키마 100/100·내용완결 0/100), 모호한 선행관계 29건과 100개 미션의 완료기준·차단조건은 자격자 작성 대기 | PMO + Chief Engineer | Approved |
 
 ## 의사결정 기록 양식
 
